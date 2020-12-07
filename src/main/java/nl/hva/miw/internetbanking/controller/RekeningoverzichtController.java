@@ -20,7 +20,7 @@ public class RekeningoverzichtController {
         return "pages/rekeningoverzicht";
     }
 
-    @GetMapping("/nieuwe_klant") // http://localhost:8080/nieuwe-klant
+    @GetMapping("/nieuwe-klant") // http://localhost:8080/nieuwe-klant
     public String nieuweKlantHandler() {
         return "";
     } // TODO: verwijzen naar nieuwe klant pagina
