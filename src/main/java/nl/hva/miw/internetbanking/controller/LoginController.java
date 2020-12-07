@@ -34,7 +34,7 @@ public class LoginController {
             return "pages/rekeningoverzicht";
         }
         else {
-            return "foutpagina";
+            return "pages/foutpagina";
         }
     }
 

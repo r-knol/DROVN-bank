@@ -22,5 +22,4 @@ public class JdbcKlantDao implements KlantDao { //implementatie van de interface
         final String sql = "SELECT * FROM klant WHERE gebruikersnaam = ?";
         return jdbcTemplate.queryForObject(sql, new KlantRowMapper(), gebruikersnaam);
     }
-
 }
