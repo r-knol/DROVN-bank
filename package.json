@@ -1,0 +1,26 @@
+{
+  "name": "internet-bankieren-webapplicatie",
+  "version": "0.0.1",
+  "description": "Internet Bankieren Webapplicatie",
+  "main": "index.js",
+  "scripts": {
+    "scss": "node-sass src/main/resources/scss -o target/classes/static/css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.fdmci.hva.nl:MIW2/cohort-21-se/internet-bankieren/team-2/internet-bankieren-webapplicatie.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.fdmci.hva.nl/MIW2/cohort-21-se/internet-bankieren/team-2/internet-bankieren-webapplicatie/-/issues"
+  },
+  "homepage": "https://gitlab.fdmci.hva.nl/MIW2/cohort-21-se/internet-bankieren/team-2/internet-bankieren-webapplicatie",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "copyfiles": "^2.1.0",
+    "jquery": "^3.4.1",
+    "node-sass": "4.12.0",
+    "popper.js": "^1.15.0"
+  }
+}
