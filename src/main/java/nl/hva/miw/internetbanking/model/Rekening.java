@@ -10,7 +10,7 @@ public abstract class Rekening {
     private String IBAN;
     private List<Transactie> transactieHistorie;
 
-    public Rekening(long rekeningID, double saldo, String IBAN, List<Transactie> transactieHistorie) {
+    public Rekening(long rekeningID, double saldo, String IBAN) {
         this.rekeningID = rekeningID;
         this.saldo = saldo;
         this.IBAN = IBAN;
