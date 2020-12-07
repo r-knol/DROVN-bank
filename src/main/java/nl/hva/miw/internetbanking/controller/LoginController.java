@@ -28,16 +28,13 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/login") // controller praat alleen tegen service
+    @PostMapping("/login") // Controller praat alleen tegen service
     public String handleLogin(@RequestParam String gebruikersnaam, String wachtwoord) { // Gaat iets doen met ingevoerde G en W
-        if (klantService.valideerLogin(gebruikersnaam, wachtwoord)) { // roept service op
+        if (klantService.valideerLogin(gebruikersnaam, wachtwoord)) { // Roept service op
             return "pages/rekeningoverzicht";
         }
         else {
             return "pages/foutpagina";
         }
     }
-
-    // submit requesthandler (om request van inloggen (OK) af te handelen)
-    // password controleren, foutpagina of toegang
 }

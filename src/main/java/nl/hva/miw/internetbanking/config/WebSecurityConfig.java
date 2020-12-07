@@ -10,8 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception { // Spring security vooralsnog
-        // omzeilen
+    protected void configure(HttpSecurity http) throws Exception { // Spring security vooralsnog omzeilen
         http
                 .authorizeRequests()
                 .anyRequest()
@@ -33,5 +32,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //                .and()
         //                .httpBasic();
     }
-
 }

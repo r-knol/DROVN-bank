@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class JdbcKlantDao implements KlantDao { //implementatie van de interface
+public class JdbcKlantDao implements KlantDao { // Implementatie van de interface KlantDao
 
     private JdbcTemplate jdbcTemplate;
 
@@ -18,7 +18,7 @@ public class JdbcKlantDao implements KlantDao { //implementatie van de interface
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public Klant getKlantByGebruikersnaam(String gebruikersnaam) { // haalt data op
+    public Klant getKlantByGebruikersnaam(String gebruikersnaam) { // Haalt data op uit MySQL
         final String sql = "SELECT * FROM klant WHERE gebruikersnaam = ?";
         return jdbcTemplate.queryForObject(sql, new KlantRowMapper(), gebruikersnaam);
     }

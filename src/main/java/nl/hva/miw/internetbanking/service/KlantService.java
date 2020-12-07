@@ -11,11 +11,11 @@ public class KlantService {
     private KlantDao klantDao;
 
     @Autowired
-    public KlantService(KlantDao klantDao) { // zorgt jdbc klantdao object wordt geïnjecteerd
+    public KlantService(KlantDao klantDao) { // Zorgt dat JdbcKlantDao object wordt geïnjecteerd
         this.klantDao = klantDao;
     }
 
-    public boolean valideerLogin(String gebruikersnaam, String wachtwoord) { // checkt gegevens
+    public boolean valideerLogin(String gebruikersnaam, String wachtwoord) { // Checkt ingevoerde gegevens
         Klant klant = klantDao.getKlantByGebruikersnaam(gebruikersnaam);
         return klant != null && klant.getWachtwoord().equals(wachtwoord);
     }
