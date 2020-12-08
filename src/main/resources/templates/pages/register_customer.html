@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registratie particuliere klant</title>
+</head>
+<body>
+
+<div class="container">
+    <div>
+        <h1>Registratie Klant</h1>
+        <form action="#" th:action="@{/registreer_klant}" th:object="${customer}" method="post">
+            <table class="table table-striped">
+                <tr>
+                    <td>Gebruikersnaam:</td>
+                    <td><input type="text" th:field="*{username}" /></td>
+                </tr>
+                <tr>
+                    <td>Wachtwoord:</td>
+                    <td><input type="password" th:field="*{password}"
+                    required minlength="6" maxlength="10"/></td>
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>
