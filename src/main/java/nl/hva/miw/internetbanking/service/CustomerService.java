@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CustomerService implements GenericService {
 
@@ -33,7 +35,19 @@ public class CustomerService implements GenericService {
 
     @Override
     public void saveLegalPerson(LegalPerson legalPerson) {
-
+        this.customerRepository.save(legalPerson);
     }
 
+    @Override
+    public Customer getCustomerById(long id) {
+        Optional<Customer> optional = customerRepository.findById(id);
+        Customer employee = null;
+        if (optional.isPresent()) {
+            employee = optional.get();
+        }
+        else {
+            throw new RuntimeException("Employee not found for id :: " + id);
+        }
+        return employee;
+    }
 }

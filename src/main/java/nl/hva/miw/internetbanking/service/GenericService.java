@@ -8,5 +8,6 @@ public interface GenericService {
     void saveCustomer(Customer customer);
     void saveNaturalPerson(NaturalPerson naturalPerson);
     void saveLegalPerson(LegalPerson legalPerson);
+    Customer getCustomerById(long id);
 
 }

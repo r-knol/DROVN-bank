@@ -1,9 +1,9 @@
 package nl.hva.miw.internetbanking.model;
 import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@Table(name="naturalperson")
+//@PrimaryKeyJoinColumn(name = "customerID")
 public class NaturalPerson extends Customer {
 
     private String initials;

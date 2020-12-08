@@ -14,8 +14,17 @@
 <div class="container">
     <div>
         <h1>Registratie Particuliere Klant</h1>
-        <form action="#" th:action="@{/registreer_particulier}" th:object="${naturalperson}" method="post">
+        <form action="#" th:action="@{/registreerparticulier}" th:object="${naturalperson}" method="post">
             <table class="table table-striped">
+                <tr>
+                    <td>Gebruikersnaam:</td>
+                    <td><input type="text" th:field="*{username}" /></td>
+                </tr>
+                <tr>
+                    <td>Wachtwoord:</td>
+                    <td><input type="password" th:field="*{password}"
+                               required minlength="6" maxlength="10"/></td>
+                </tr>
                 <tr>
                     <td>Initialen:</td>
                     <td><input type="text" th:field="*{initials}" /></td>

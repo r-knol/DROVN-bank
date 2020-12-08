@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -24,32 +26,35 @@ public class RegisterController {
         logger.warn("New RegisterController.");
     }
 
-    @GetMapping("/registreer_klant")
-    public String showSignUpFormCustomer(Model model) { // Model nodig om nieuw Customer object mee te sturen
-        Customer c = new Customer();
-        model.addAttribute("customer", c);
-        return "pages/register_customer";
-    }
-
-    @GetMapping("/registreerParticulier")
+    //-----------------------------------------// particulier
+    @GetMapping("/registreerparticulier")
     public String showSignUpFormNatural(Model model) { // Model nodig om nieuw Customer object mee te sturen
         NaturalPerson np = new NaturalPerson();
         model.addAttribute("naturalperson", np);
         return "pages/register_private";
     }
 
-    @GetMapping("/registreerZakelijk")
-    public String showSignUpFormLegal(Model model) { // Model nodig om nieuw Customer object mee te sturen
-        LegalPerson lp = new LegalPerson();
-        model.addAttribute("legalperson", lp);
-        return "pages/register_legal";
-    }
-
-    @PostMapping("/registreer_particulier")
-    public String processRegistrationPrivate(NaturalPerson naturalPerson) {
+    @PostMapping("/registreerparticulier")
+    public String saveRegistrationPrivate(@ModelAttribute("naturalperson") NaturalPerson naturalPerson) {
         customerService.saveNaturalPerson(naturalPerson);
         return "pages/confirmation_page";
     }
+
+    //-----------------------------------------// zakelijk
+    @GetMapping("/registreerzakelijk")
+    public String showSignUpFormLegal(Model model) { // Model nodig om nieuw Customer object mee te sturen
+        LegalPerson lp = new LegalPerson();
+        model.addAttribute("legalperson", lp);
+        return "pages/confirmation_page";
+    }
+
+    @PostMapping("/registreerzakelijk")
+    public String saveRegistrationLegal(@ModelAttribute("legalperson") LegalPerson legalPerson) {
+        customerService.saveLegalPerson(legalPerson);
+        return "pages/confirmation_page";
+    }
+
+
 
 
 }

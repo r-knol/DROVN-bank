@@ -3,7 +3,7 @@ package nl.hva.miw.internetbanking.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="customer")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Customer {
 
     @Id

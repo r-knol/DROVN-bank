@@ -14,7 +14,7 @@
 <div class="container">
     <div>
         <h1>Registratie Klant</h1>
-        <form action="#" th:action="@{/registreer_klant}" th:object="${customer}" method="post">
+        <form action="#" th:action="@{/registreerklant}" th:object="${customer}" method="post">
             <table class="table table-striped">
                 <tr>
                     <td>Gebruikersnaam:</td>
@@ -26,7 +26,8 @@
                     required minlength="6" maxlength="10"/></td>
                 </tr>
             </table>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <a th:href="@{'/registreerparticulier/' + ${customer.id}}">Particulier</a>
+            <a th:href="@{'/registreerzakelijk/' + ${customer.id}}">Zakelijk</a>
         </form>
     </div>
 </div>
