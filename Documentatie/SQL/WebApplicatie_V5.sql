@@ -81,9 +81,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `WebApplicatie_DROVN_Bank`.`Medewerker`
+-- Table `WebApplicatie_DROVN_Bank`.`Employee`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`Medewerker` (
+CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`Employee` (
   `employeeID` BIGINT(10) NOT NULL,
   `role` VARCHAR(45) NOT NULL,
   INDEX `fk_Medewerker_NatuurlijkPersoon1_idx` (`employeeID` ASC) VISIBLE,
