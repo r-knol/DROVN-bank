@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registratie particuliere klant</title>
+</head>
+<body>
+
+<div class="container">
+    <div>
+        <h1>Registratie Particuliere Klant</h1>
+        <form action="#" th:action="@{/registreerparticulier}" th:object="${naturalperson}" method="post">
+            <table class="table table-striped">
+                <tr>
+                    <td>Gebruikersnaam:</td>
+                    <td><input type="text" th:field="*{username}" /></td>
+                </tr>
+                <tr>
+                    <td>Wachtwoord:</td>
+                    <td><input type="password" th:field="*{password}"
+                               required minlength="6" maxlength="10"/></td>
+                </tr>
+                <tr>
+                    <td>Initialen:</td>
+                    <td><input type="text" th:field="*{initials}" /></td>
+                </tr>
+                <tr>
+                    <td>Voornaam:</td>
+                    <td><input type="text" th:field="*{firstName}" /></td>
+                <tr>
+                    <td>Tussenvoegsel:</td>
+                    <td><input type="text" th:field="*{preposition}" /></td>
+                </tr>
+                <tr>
+                    <td>Achternaam:</td>
+                    <td><input type="text" th:field="*{surName}" /></td>
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

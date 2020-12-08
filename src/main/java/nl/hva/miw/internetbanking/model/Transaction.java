@@ -4,15 +4,16 @@ import java.time.LocalDateTime;
 
 public class Transaction {
 
-    private int transactionId;
+    private long transactionID;
     private String debetAccountNo;
     private String creditAccountNo;
     private double amount;
     private String description;
     private LocalDateTime dateTime;
 
-    public Transaction(int transactionId, String debetAccountNo, String creditAccountNo, double amount, String description, LocalDateTime dateTime) {
-        this.transactionId = transactionId;
+    public Transaction(long transactionID, String debetAccountNo,
+                       String creditAccountNo, double amount, String description, LocalDateTime dateTime) {
+        this.transactionID = transactionID;
         this.debetAccountNo = debetAccountNo;
         this.creditAccountNo = creditAccountNo;
         this.amount = amount;
@@ -23,12 +24,12 @@ public class Transaction {
     public Transaction() {
     }
 
-    public int getTransactionId() {
-        return transactionId;
+    public long getTransactionID() {
+        return transactionID;
     }
 
-    public void setTransactionId(int transactionId) {
-        this.transactionId = transactionId;
+    public void setTransactionID(long transactionID) {
+        this.transactionID = transactionID;
     }
 
     public String getDebetAccountNo() {
@@ -74,7 +75,7 @@ public class Transaction {
     @Override
     public String toString() {
         return "Transaction{" +
-                "transactionId=" + transactionId +
+                "transactionID=" + transactionID +
                 ", debetAccountNo='" + debetAccountNo + '\'' +
                 ", creditAccountNo='" + creditAccountNo + '\'' +
                 ", amount=" + amount +

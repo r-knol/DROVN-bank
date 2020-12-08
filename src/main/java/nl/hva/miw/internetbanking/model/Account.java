@@ -3,29 +3,26 @@ package nl.hva.miw.internetbanking.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account {
+public abstract class Account {
 
-    private long accountId;
+    private long accountID;
     private double balance;
-    private String IBAN;
-    private List<Transaction> transactionHistory;
+    private String iban;
+    private List<Transaction> transactions;
 
-    public Account(long accountId, double balance, String IBAN, List<Transaction> transactionHistory) {
-        this.accountId = accountId;
+    public Account(long accountID, double balance, String iban) {
+        this.accountID = accountID;
         this.balance = balance;
-        this.IBAN = IBAN;
-        this.transactionHistory = transactionHistory;
+        this.iban = iban;
+        this.transactions = new ArrayList<>();
     }
 
-    public Account() {
+    public long getAccountID() {
+        return accountID;
     }
 
-    public long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(long accountId) {
-        this.accountId = accountId;
+    public void setAccountID(long accountID) {
+        this.accountID = accountID;
     }
 
     public double getBalance() {
@@ -36,29 +33,29 @@ public class Account {
         this.balance = balance;
     }
 
-    public String getIBAN() {
-        return IBAN;
+    public String getIban() {
+        return iban;
     }
 
-    public void setIBAN(String IBAN) {
-        this.IBAN = IBAN;
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
-    public List<Transaction> getTransactionHistory() {
-        return transactionHistory;
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public void setTransactionHistory(List<Transaction> transactionHistory) {
-        this.transactionHistory = transactionHistory;
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     @Override
     public String toString() {
         return "Account{" +
-                "accountId=" + accountId +
+                "accountID=" + accountID +
                 ", balance=" + balance +
-                ", IBAN='" + IBAN + '\'' +
-                ", transactionHistory=" + transactionHistory +
+                ", iban='" + iban + '\'' +
+                ", transactions=" + transactions +
                 '}';
     }
 }
