@@ -7,7 +7,15 @@
 </head>
 <body>
     <h1>Rekeningoverzicht</h1>
-    <p>Hier komt het rekeningoverzicht</p>
+    <p th:if="${allAccountsList.isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
+    <table th:unless="${allAccountsList.isEmpty()}">
+        <tr>
+            <th>rekeningnummer</th>
+            <th>tenaamstelling</th>
+            <th>saldo</th>
+        </tr>
+
+    </table>
     <p>Nog geen klant? <a href="/nieuwe-klant">Registreer dan hier</a></p>
 </body>
 </html>
