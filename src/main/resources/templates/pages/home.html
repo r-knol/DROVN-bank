@@ -9,13 +9,14 @@
     <div id="main-content" class="row">
         <main role="main" class="min-vw-100">
             <div class="jumbotron mb-5"
-                 style="background: #ffffff url('https://www.antconsult.vn/wp-content/uploads/Banking-regulatory-in-Vietnam.jpg') no-repeat right top; background-size: cover;">
-                <div class="container pt-5 pb-5">
-                    <h1 class="display-3">This is the homepage</h1>
-                    <p>This is a template for a simple marketing or informational website. It includes a large callout
-                        called a jumbotron and three supporting pieces of content. Use it as a starting point to create
-                        something more unique.</p>
-                    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
+                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/happy-online-banking.jpg'); background-position: left center; background-repeat: no-repeat; background-size: cover;">
+                <div class="container pt-5 pb-5 text-white">
+                    <h1><span class="display-5"><span class="text-blue">Online bank</span> | <span class="text-orange">Persoonlijke service</span>
+                    </h1>
+                    <p class="mb-0">Bij DROVN regel je al je financiële zaken gemakkelijk zelf online.</p>
+                    <p>Heb je liever persoonlijk contact? Dan staan onze service-medewerkers voor je klaar!</p>
+                    <p class="mt-5"><a class="btn btn-primary btn-lg" style="font-size: initial;" href="#"
+                                       role="button">Meer over service »</a></p>
                 </div>
             </div>
             <div class="container pt-5">
@@ -86,5 +87,6 @@
     </main> -->
 
 </div> <!-- /container - #page -->
+<div th:replace="fragments/scripts :: scripts-before-closing-tag"></div>
 </body>
 </html>

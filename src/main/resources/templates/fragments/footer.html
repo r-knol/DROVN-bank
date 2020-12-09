@@ -1,8 +1,51 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
-<footer th:fragment="footer-default" class="fixed-bottom text-center pb-2 pt-2">
-    <container class="container-fluid text-black-50">
-        <span>Copyright &copy; 2020 MIW Cohort 21 - Team 2. Alle rechten voorbehouden.</span>
-    </container>
+<footer th:fragment="footer-default" class="fixed-bottom text-left text-white-50 bg-dark pb-2 pt-4">
+    <div class="container-fluid">
+        <div id="cookies" class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h3>Ook wij gebruiken cookies</h3>
+                        </div>
+                        <div class="col-lg-10">
+                            <p>Door op 'Akkoord' te klikken, accepteer je alle cookies (en vergelijkbare technieken) op
+                                onze website en in de app. Hiermee kunnen wij en derden jouw internetgedrag op onze
+                                website volgen en verwerken daarbij jouw persoonsgegevens. Door ons en derden kan een
+                                profiel worden gemaakt waarmee gepersonaliseerde advertenties kunnen worden getoond.
+                                Door op ‘instellingen wijzigen’ te klikken, kun je een andere cookie voorkeur
+                                kiezen.</p>
+                        </div>
+                        <div class="col-lg-2">
+                            <a class="btn btn-primary float-lg-right w-100" data-toggle="collapse" href="#cookies"
+                               aria-expanded="true" aria-controls="cookies">
+                                Akkoord
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-lg-12 pl-0 pr-0">
+                <ul class="list-group-horizontal-lg list-inline float-lg-left">
+                    <li class="list-inline-item">
+                        <a class="text-muted" href="#">Voorwaarden</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="text-muted" href="#">Toegankelijkheid</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="text-muted" href="#">Disclaimer</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="text-muted" href="#">Privacy & Cookies</a>
+                    </li>
+                </ul>
+                <span class="float-lg-right text-muted">Copyright &copy; 2020 MIW Cohort 21 - Team 2. Alle rechten voorbehouden.</span>
+            </div>
+        </div>
+    </div>
 </footer>
 </html>
