@@ -6,15 +6,18 @@
     <title>Rekeningoverzicht</title>
 </head>
 <body>
-    <h1>Rekeningoverzicht</h1>
+    <h1 >Rekeningoverzicht van:</h1>
+    <h2 th:text="${fullName}">naam</h2>
     <p th:if="${allAccountsList.isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
     <table th:unless="${allAccountsList.isEmpty()}">
         <tr>
             <th>IBAN</th>
+            <th>tenaamstelling</th>
             <th>saldo</th>
         </tr>
         <tr th:each="a : ${allAccountsList}">
             <td th:text="${a.iban}"></td>
+            <td th:text="${fullName}"></td>
             <td th:text="${a.balance}"></td>
         </tr>
     </table>

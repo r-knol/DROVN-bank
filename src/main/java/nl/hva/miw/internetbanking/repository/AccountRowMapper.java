@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+// aangemaakt door Nina 09-12-2020
+
 public class AccountRowMapper implements RowMapper<Account> {
 
     @Override
