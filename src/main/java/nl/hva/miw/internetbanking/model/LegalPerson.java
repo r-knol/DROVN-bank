@@ -1,10 +1,5 @@
 package nl.hva.miw.internetbanking.model;
 
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-
-@Entity
-//@PrimaryKeyJoinColumn(name = "customerID")
 public class LegalPerson extends Customer {
 
     private String companyName;
