@@ -2,31 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Inloggen</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 </head>
 <body>
 
-    <h1>Login</h1>
-    <form action="login" method="post">
-        <table>
-            <tr>
-                <td><label>Gebruikersnaam</label></td>
-                <td><input type="text" name="userName"></td>
-            </tr>
-            <tr>
-                <td><label>Wachtwoord</label></td>
-                <td><input type="password" name="password"></td>
-            </tr>
-            <tr>
-                <td><input type="submit" name="OK" value="OK"></td>
-            </tr>
-        </table>
-    </form>
+    <div class="container-my-3">
+        <div class="row">
+            <div class="col-md-8 mx-auto">
+                <h1>Log hier in</h1>
+                <form th:action="@{/login}" th:object="${customer}" method="post">
+                    <div class="col-md-6 form-group">
+                        <label>Gebruikersnaam</label>
+                        <input type="text" class="form-control" name="userName" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Wachtwoord</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="submit" class="btn btn-primary" value="Inloggen">
+                    </div>
+                </form>
+                <div class="col-md-4 mx-lg-0"> <br/>
+                    <a th:href="@{/}">Ga terug naar home</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>
+
+
