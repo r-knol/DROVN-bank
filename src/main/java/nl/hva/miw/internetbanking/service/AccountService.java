@@ -26,4 +26,9 @@ public class AccountService {
     public List<Account> getAccountsByCustomerId(long customerId) {
         return accountDao.getAccountsByCustomerId(customerId);
     }
+
+    //@Author Veroniek
+    public void saveNewAccount(Account account){
+        accountDao.saveAccount(account);
+    }
 }
