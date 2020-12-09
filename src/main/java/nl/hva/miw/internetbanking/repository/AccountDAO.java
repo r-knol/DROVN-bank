@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface AccountDAO {
     List<Account> getAccountsByCustomerId(long customerId);
+    void saveAccount(Account account);
 }
