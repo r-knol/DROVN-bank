@@ -1,11 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Registratiue</title>
-</head>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head-default (pageTitle='Home', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <body>
-<h1>Registratie</h1>
-<p>Dit wordt de klantregistratiepagina met een getabde box voor particulieren en bedrijven</p>
+<div class="container-fluid min-vh-100" id="page">
+    <div id="header" class="row header-default">
+        <header th:replace="fragments/header :: header-default"></header>
+    </div>
+    <div id="main-content" class="row">
+        <main role="main" class="min-vw-100">
+            <div class="jumbotron mb-5"
+                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/happy-online-banking.jpg'); background-position: left center; background-repeat: no-repeat; background-size: cover;">
+                <div class="container pt-5 pb-5 text-white">
+                    <h1><span class="display-5"><span class="text-blue">Online bank</span> | <span class="text-orange">Persoonlijke service</span></span>
+                    </h1>
+                    <p class="mb-0">Bij DROVN regel je al je financiële zaken gemakkelijk zelf online.</p>
+                    <p>Heb je liever persoonlijk contact? Dan staan onze service-medewerkers voor je klaar!</p>
+                    <p class="mt-5"><a class="btn btn-primary btn-lg" style="font-size: initial;" href="#"
+                                       role="button">Meer over service »</a></p>
+                </div>
+            </div>
+            <div class="container pt-5">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h2>Heading</h2>
+                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
+                            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+                            malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>Heading</h2>
+                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
+                            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+                            malesuada magna mollis euismod. Donec sed odio dui. </p>
+                        <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                    </div>
+                    <div class="col-md-4">
+                        <h2>Heading</h2>
+                        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum
+                            id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+                            condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+                        <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div id="footer" class="row footer-default">
+        <footer th:replace="fragments/footer :: footer-default"></footer>
+    </div>
+</div> <!-- /container - #page -->
+<div th:replace="fragments/scripts :: scripts-before-closing-tag"></div>
 </body>
 </html>
