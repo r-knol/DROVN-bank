@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rekening openen</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1> Bankrekening openen</h1>
+    <hr>
+    <h2> Fijn dat u een rekening bij ons wilt openen.</h2>
+    <h3>  Bevestig uw gegevens en vraag direct aan.</h3>
+    <form action="#" th:action="@{/saveAccount}" th:object="${account}" method="post">
+
+        <!-- Add hidden form field to handle update-->
+        <input type="hidden" th:field="*{customerId}"/>
+        <label>Naam</label>
+        <input type="text" th:field="*{name}"  class="form-control mb-4 col-4">
+        <label>Uw nieuwe rekeningnummer (IBAN)</label>
+        <input type="text" th:field="*{IBAN}" class="form-control mb-4 col-4">
+        <div class="checkbox">
+            <label><input type="checkbox" value=""> Ik ga akkoord met de voorwaarden</label>
+        </div>
+        <a href="#" class="btn btn-primary btn-lg active" role="button">Bevestig</a>
+    </form>
+</div>
+</body>
+</html>
