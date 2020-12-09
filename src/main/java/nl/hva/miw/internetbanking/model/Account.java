@@ -3,7 +3,7 @@ package nl.hva.miw.internetbanking.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Account {
+public class Account {
 
     private long accountID;
     private double balance;
