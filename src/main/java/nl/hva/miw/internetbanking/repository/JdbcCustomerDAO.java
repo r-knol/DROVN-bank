@@ -19,7 +19,6 @@ public class JdbcCustomerDAO implements CustomerDAO {
     @Override
     public Customer getCustomerByUsername(String userName) {
         final String sql = "SELECT * FROM customer WHERE userName = ?";
-        return jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), userName);
+        return jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), userName); //todo: EmptyResultDataAccessException
     }
-     //todo: if Customer result = null
 }

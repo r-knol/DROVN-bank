@@ -17,6 +17,6 @@ public class CustomerService {
 
     public boolean valideerLogin(String userName, String password) { // Checkt ingevoerde gegevens
         Customer customer = customerDAO.getCustomerByUsername(userName);
-        return customer != null && customer.getPassword().equals(password);
+        return customer != null && customer.getUsername().equals(userName) && customer.getPassword().equals(password);
     }
 }
