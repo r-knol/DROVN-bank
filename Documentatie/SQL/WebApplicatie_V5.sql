@@ -17,10 +17,7 @@ USE `WebApplicatie_DROVN_Bank`;
 CREATE USER IF NOT EXISTS 'userWebApplicatie_DROVN_Bank'@'localhost'
     IDENTIFIED WITH caching_sha2_password
         BY 'pwWebApplicatie_DROVN_Bank' PASSWORD EXPIRE NEVER;
-GRANT SELECT ON WebApplicatie_DROVN_Bank.* TO 'userWebApplicatie_DROVN_Bank'@'localhost';
-GRANT INSERT ON WebApplicatie_DROVN_Bank.* TO 'userWebApplicatie_DROVN_Bank'@'localhost';
-GRANT DELETE ON WebApplicatie_DROVN_Bank.* TO 'userWebApplicatie_DROVN_Bank'@'localhost';
-GRANT UPDATE ON WebApplicatie_DROVN_Bank.* TO 'userWebApplicatie_DROVN_Bank'@'localhost';
+GRANT ALL ON WebApplicatie_DROVN_Bank.* TO 'userWebApplicatie_DROVN_Bank'@'localhost';
 
 -- -----------------------------------------------------
 -- Table `WebApplicatie_DROVN_Bank`.`Customer`
