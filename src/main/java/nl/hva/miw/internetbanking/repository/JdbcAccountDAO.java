@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+// aangemaakt door Nina 09-12-2020
+
 @Repository
 public class JdbcAccountDAO implements AccountDAO {
 
