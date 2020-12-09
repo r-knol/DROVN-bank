@@ -17,6 +17,9 @@ public class Account {
         this.transactions = new ArrayList<>();
     }
 
+    public Account() {
+    }
+
     public long getAccountID() {
         return accountID;
     }
