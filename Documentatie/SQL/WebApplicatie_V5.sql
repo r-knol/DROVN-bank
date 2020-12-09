@@ -1,38 +1,49 @@
 -- MySQL Workbench Forward Engineering
 
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0;
+SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
+SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE =
+        'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
 -- Schema WebApplicatie_DROVN_Bank
 -- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `WebApplicatie_DROVN_Bank` DEFAULT CHARACTER SET utf8;
+USE `WebApplicatie_DROVN_Bank`;
 
 -- -----------------------------------------------------
--- Schema WebApplicatie_DROVN_Bank
+-- Database user for Schema WebApplicatie_DROVN_Bank
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `WebApplicatie_DROVN_Bank` DEFAULT CHARACTER SET utf8 ;
-USE `WebApplicatie_DROVN_Bank` ;
+CREATE USER IF NOT EXISTS 'userWebApplicatie_DROVN_Bank'@'localhost'
+    IDENTIFIED WITH caching_sha2_password
+        BY 'pwWebApplicatie_DROVN_Bank' PASSWORD EXPIRE NEVER;
+GRANT SELECT ON WebApplicatie_DROVN_Bank.* TO 'userWebApplicatie_DROVN_Bank'@'localhost';
+GRANT INSERT ON WebApplicatie_DROVN_Bank.* TO 'userWebApplicatie_DROVN_Bank'@'localhost';
+GRANT DELETE ON WebApplicatie_DROVN_Bank.* TO 'userWebApplicatie_DROVN_Bank'@'localhost';
+GRANT UPDATE ON WebApplicatie_DROVN_Bank.* TO 'userWebApplicatie_DROVN_Bank'@'localhost';
 
 -- -----------------------------------------------------
 -- Table `WebApplicatie_DROVN_Bank`.`Customer`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`Customer` (
-  `customerID` BIGINT(10) NOT NULL AUTO_INCREMENT,
-  `userName` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`customerID`))
-ENGINE = InnoDB;
+CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`Customer`
+(
+    `customerID` BIGINT(10)  NOT NULL AUTO_INCREMENT,
+    `userName`   VARCHAR(45) NOT NULL,
+    `password`   VARCHAR(45) NOT NULL,
+    PRIMARY KEY (`customerID`)
+)
+    ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
 -- Table `WebApplicatie_DROVN_Bank`.`NaturalPerson`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`NaturalPerson` (
-  `customerID` BIGINT(10) NOT NULL,
-  `initials` VARCHAR(10) NOT NULL,
-  `firstName` VARCHAR(15) NOT NULL,
-  `preposition` VARCHAR(15) NULL,
+CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`NaturalPerson`
+(
+    `customerID`         BIGINT(10)  NOT NULL,
+    `initials`           VARCHAR(10) NOT NULL,
+    `firstName`          VARCHAR(15) NOT NULL,
+    `preposition`        VARCHAR(15) NULL,
   `surName` VARCHAR(45) NOT NULL,
   `dateOfBirth` DATE NOT NULL,
   `socialSecurityNumber` BIGINT(10) NOT NULL,
