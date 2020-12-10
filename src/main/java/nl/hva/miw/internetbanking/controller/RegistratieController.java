@@ -1,6 +1,6 @@
 package nl.hva.miw.internetbanking.controller;
 
-import nl.hva.miw.internetbanking.data.dto.BusinessRegistrationDto;
+import nl.hva.miw.internetbanking.DTO.BusinessRegistrationDto;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

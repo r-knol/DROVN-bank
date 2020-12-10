@@ -1,4 +1,4 @@
-package nl.hva.miw.internetbanking.data.dto;
+package nl.hva.miw.internetbanking.DTO;
 
 import lombok.Getter;
 import lombok.Setter;
