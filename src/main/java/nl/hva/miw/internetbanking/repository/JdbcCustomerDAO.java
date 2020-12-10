@@ -1,5 +1,7 @@
 package nl.hva.miw.internetbanking.repository;
 
+import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
+import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
@@ -8,23 +10,43 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Repository
 public class JdbcCustomerDAO implements CustomerDAO {
 
     private JdbcTemplate jdbcTemplate;
+    private JdbcAccountDAO jdbcAccountDAO;
 
     @Autowired
-    public JdbcCustomerDAO(JdbcTemplate jdbcTemplate) {
+    public JdbcCustomerDAO(JdbcTemplate jdbcTemplate, JdbcAccountDAO jdbcAccountDAO) {
         super();
         this.jdbcTemplate = jdbcTemplate;
+        this.jdbcAccountDAO = jdbcAccountDAO;
     }
 
-    @Override
-    public Customer getCustomerByUsername(String userName) {
-        final String sql = "SELECT * FROM customer WHERE userName = ?";
-        return jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), userName);
+    @Override //@Richard Knol
+    public CustomerAccountDTO getCustomerByUsernameAndPassword(String userName, String password) {
+        try {
+            final String sql = "SELECT * FROM customer WHERE userName = ? AND password = ?";
+            Customer customer = jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), userName, password);
+            List<Account> accountList = null;
+            if (customer != null) {
+                accountList = jdbcAccountDAO.getAccountsByCustomerId(customer.getId());
+            }
+            return new CustomerAccountDTO(customer, accountList);
+        } catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+    }
+
+    @Override //@Richard Knol
+    public Customer getCustomerById(long id) {
+        final String sql = "SELECT * FROM customer WHERE customerID = ?";
+        return jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), id);
     }
 
     // onderstaande methode toegevoegd door Nina 09-12-2020

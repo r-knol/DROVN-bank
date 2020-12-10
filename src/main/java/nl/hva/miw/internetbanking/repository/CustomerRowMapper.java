@@ -1,5 +1,6 @@
 package nl.hva.miw.internetbanking.repository;
 
+import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.model.Customer;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
@@ -15,4 +16,5 @@ public class CustomerRowMapper implements RowMapper<Customer> {
                 resultSet.getString("userName"),
                 resultSet.getString("password"));
     }
+
 }

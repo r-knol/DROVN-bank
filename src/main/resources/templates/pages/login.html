@@ -13,7 +13,8 @@
         <div class="row">
             <div class="col-md-8 mx-auto">
                 <h1>Log hier in</h1>
-                <form th:action="@{/login}" th:object="${customer}" method="post">
+                <form action="#" th:action="@{/login}" th:object="${customerWithAccountOverview}" method="post">
+                    <!--<input type="hidden" th:field="*{id}" />-->
                     <div class="col-md-6 form-group">
                         <label>Gebruikersnaam</label>
                         <input type="text" class="form-control" name="userName" required>

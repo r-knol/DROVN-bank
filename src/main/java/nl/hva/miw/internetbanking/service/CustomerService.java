@@ -1,5 +1,6 @@
 package nl.hva.miw.internetbanking.service;
 
+import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import nl.hva.miw.internetbanking.repository.CustomerDAO;
@@ -16,13 +17,17 @@ public class CustomerService {
         this.customerDAO = customerDAO;
     }
 
-    public boolean valideerLogin(String userName, String password) { // Checkt ingevoerde gegevens
-        Customer customer = customerDAO.getCustomerByUsername(userName);
-        return customer != null && customer.getPassword().equals(password);
+    public CustomerAccountDTO getCustomerAccountOverview(String userName, String password) {
+        return customerDAO.getCustomerByUsernameAndPassword(userName, password);
     }
 
     // onderstaande methode toegevoegd door Nina 09-12-2020
     public NaturalPerson getNpByCustomerId(long customerId) {
         return customerDAO.getNpByCustomerId(customerId);
     }
+
+    public Customer getCustomerById(long id) {
+        return customerDAO.getCustomerById(id);
+    }
+
 }
