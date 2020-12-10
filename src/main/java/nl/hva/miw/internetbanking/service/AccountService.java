@@ -24,11 +24,11 @@ public class AccountService {
     }
 
     public List<Account> getAccountsByCustomerId(long customerId) {
-//        List<Account> accountList = new ArrayList<>();
-//        Account a = new Account(1234567, 1999.94, "1234NL1234");
-//        Account b = new Account(654321, 80.43, "6543NL4321");
-//        accountList.add(a);
-//        accountList.add(b);
         return accountDao.getAccountsByCustomerId(customerId);
+    }
+
+    //@Author Veroniek
+    public void saveNewAccount(Account account){
+        accountDao.saveAccount(account);
     }
 }

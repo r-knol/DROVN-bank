@@ -32,6 +32,13 @@ public class NaturalPerson extends Customer {
         this.residence = residence;
     }
 
+    public NaturalPerson(String initials, String firstName, String preposition, String surName) {
+        this.initials = initials;
+        this.firstName = firstName;
+        this.preposition = preposition;
+        this.surName = surName;
+    }
+
     public NaturalPerson() {
     }
 

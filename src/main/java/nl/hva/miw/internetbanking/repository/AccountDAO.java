@@ -4,6 +4,9 @@ import nl.hva.miw.internetbanking.model.Account;
 
 import java.util.List;
 
+// aangemaakt door Nina 09-12-2020
+
 public interface AccountDAO {
-    public List<Account> getAccountsByCustomerId(long customerId);
+    List<Account> getAccountsByCustomerId(long customerId);
+    void saveAccount(Account account);
 }
