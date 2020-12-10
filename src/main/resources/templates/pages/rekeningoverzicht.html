@@ -7,15 +7,15 @@
 </head>
 <body>
     <h1>Rekeningoverzicht van:</h1>
-    <h2 th:text="${customerWithAccountOverview.getCustomer().getUsername()}">naam</h2>
-    <!--<p th:if="${allAccountsList.isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
-    <table th:unless="${allAccountsList.isEmpty()}">-->
+    <h2 th:text="${customerWithAccountOverview}">naam</h2>
+    <p th:if="${customerWithAccountOverview.getAccountList().isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
+    <table th:unless="${customerWithAccountOverview.getAccountList().isEmpty()}">
         <tr>
             <th>IBAN</th>
             <th>tenaamstelling</th>
             <th>saldo</th>
         </tr>
-        <tr th:each="a : ${allAccountsList}">
+        <tr th:each="a : ${customerWithAccountOverview.getAccountList()}">
             <td th:text="${a.iban}"></td>
             <td th:text="${fullName}"></td>
             <td th:text="${a.balance}"></td>

@@ -29,7 +29,9 @@ public class JdbcAccountDAO implements AccountDAO {
 
     @Override
     public List<Account> getAccountsByCustomerId(long customerID) {
-        final String sql = "SELECT * FROM Account WHERE customerID = ?";
+        final String sql = "SELECT customer.customerid, customer.username, account.accountid, account.iban, account.balance\n" +
+                "FROM customer_has_account JOIN customer ON customer_has_account.customerID=customer.customerID JOIN account ON\n" +
+                "account.accountID=customer_has_account.accountID WHERE customer.customerID = ?";
         return jdbcTemplate.query(sql, new AccountRowMapper(), customerID);
     }
 

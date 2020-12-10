@@ -2,6 +2,7 @@ package nl.hva.miw.internetbanking.controller;
 
 import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.NaturalPerson;
 import nl.hva.miw.internetbanking.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,9 +28,11 @@ public class LoginController {
     public String handleLogin(@RequestParam String userName, String password, Model model) { // Gaat iets doen met ingevoerde G en W
 
         CustomerAccountDTO c = customerService.getCustomerAccountOverview(userName, password);
+        NaturalPerson np = customerService.getNpByCustomerId(c.getCustomer().getId());
 
         if (c != null) {
             model.addAttribute("customerWithAccountOverview", c);
+            model.addAttribute("naturalPerson", np);
             return "pages/rekeningoverzicht";
         } else {
             return "pages/foutpagina";

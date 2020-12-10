@@ -20,6 +20,10 @@ public class Account {
     public Account() {
     }
 
+    public Account(long accountID) {
+        this.accountID = accountID;
+    }
+
     public long getAccountID() {
         return accountID;
     }
