@@ -43,6 +43,14 @@ public class JdbcCustomerDAO implements CustomerDAO {
         }
     }
 
+    @Override
+    public CustomerAccountDTO getCustomersByAccountId(long accountId) {
+        final String sql = "SELECT * FROM Account WHERE accountID = ?";
+        Account account = jdbcTemplate.queryForObject(sql, new AccountRowMapper(), accountId);
+        List<Customer> customerList = getCustomerByAccountId(accountId);
+        return new CustomerAccountDTO(account, customerList);
+    }
+
     @Override //@Richard Knol
     public Customer getCustomerById(long id) {
         final String sql = "SELECT * FROM customer WHERE customerID = ?";
@@ -78,6 +86,12 @@ public class JdbcCustomerDAO implements CustomerDAO {
 //        throw new ResponseStatusException(NOT_FOUND, "Persoon met id:" + customerId + " kan niet gevonden worden");
 //    }
 
-
+    @Override
+    public List<Customer> getCustomerByAccountId(long accountId) {
+        final String sql = "SELECT customer.customerid, customer.username, customer.password, account.accountid, account.iban, account.balance\n" +
+                "FROM customer_has_account JOIN customer ON customer_has_account.customerID=customer.customerID JOIN account ON\n" +
+                "account.accountID=customer_has_account.accountID WHERE account.accountID = ?";
+        return jdbcTemplate.query(sql, new CustomerRowMapper(), accountId);
+    }
 
 }

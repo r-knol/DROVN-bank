@@ -39,8 +39,7 @@ public class AccountOverviewController {
 
         // search customer info by customer id:
 //        NaturalPerson np = customerService.getNpByCustomerId(customerId);
-//        model.addAttribute("fullName", String
-//                .format("%s %s %s", np.getFirstName(), np.getPreposition(), np.getSurName()));
+
 
         // search accounts by customer id:
 //        List<Account> accountList = accountService.getAccountsByCustomerId(customerId);

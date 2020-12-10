@@ -7,20 +7,25 @@
 </head>
 <body>
     <h1>Rekeningoverzicht van:</h1>
-    <h2 th:text="${customerWithAccountOverview}">naam</h2>
+    <h2 th:text="${customerWithAccountOverview.getCustomer().getUsername()}">naam</h2>
     <p th:if="${customerWithAccountOverview.getAccountList().isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
+
     <table th:unless="${customerWithAccountOverview.getAccountList().isEmpty()}">
         <tr>
             <th>IBAN</th>
-            <th>tenaamstelling</th>
             <th>saldo</th>
+            <th>tenaamstelling</th>
         </tr>
+
         <tr th:each="a : ${customerWithAccountOverview.getAccountList()}">
             <td th:text="${a.iban}"></td>
-            <td th:text="${fullName}"></td>
             <td th:text="${a.balance}"></td>
-        </tr>
+            <td th:text="${accountWithCustomerList.getCustomerList()}"></td>
+    </tr>
+
+
     </table>
-    <p>Nog geen klant? <a href="/registratie">Registreer dan hier</a></p>
+    <h2 th:text="${npList}"></h2>
+    <p>Nog geen rekening? <a href="/rekeningOpenen">Open deze hier!</a></p>
 </body>
 </html>

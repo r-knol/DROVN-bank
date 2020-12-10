@@ -7,6 +7,8 @@ import nl.hva.miw.internetbanking.repository.CustomerDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CustomerService {
 
@@ -28,6 +30,13 @@ public class CustomerService {
 
     public Customer getCustomerById(long id) {
         return customerDAO.getCustomerById(id);
+    }
+
+    public List<Customer> getCustomerByAccountId(long accountId) {
+        return customerDAO.getCustomerByAccountId(accountId);
+    }
+    public CustomerAccountDTO getCustomersByAccount(long accountId) {
+        return customerDAO.getCustomersByAccountId(accountId);
     }
 
 }
