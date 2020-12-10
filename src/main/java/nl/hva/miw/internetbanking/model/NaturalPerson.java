@@ -7,16 +7,19 @@ public class NaturalPerson extends Customer {
     private String preposition;
     private String surName;
     private String dateOfBirth;
-    private long socialSecurityNumber;
+    private String socialSecurityNumber; // changed data type for form input
     private String email;
-    private long phone;
+    private String phone; // changed data type for form input
     private String postalCode;
     private String homeNumber;
     private String street;
     private String residence;
 
-    public NaturalPerson(int id, String username, String password, String initials, String firstName, String preposition, String surName, String dateOfBirth, int socialSecurityNumber,
-                         String email, int phone, String postCode, String homeNumber, String street, String residence) {
+    public NaturalPerson(int id, String username, String password, String initials,
+                         String firstName, String preposition, String surName, String dateOfBirth
+            , String socialSecurityNumber,
+                         String email, String phone, String postCode, String homeNumber,
+                         String street, String residence) {
         super(id, username, password);
         this.initials = initials;
         this.firstName = firstName;
@@ -82,11 +85,11 @@ public class NaturalPerson extends Customer {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public long getSocialSecurityNumber() {
+    public String getSocialSecurityNumber() {
         return socialSecurityNumber;
     }
 
-    public void setSocialSecurityNumber(int socialSecurityNumber) {
+    public void setSocialSecurityNumber(String socialSecurityNumber) {
         this.socialSecurityNumber = socialSecurityNumber;
     }
 
@@ -98,11 +101,11 @@ public class NaturalPerson extends Customer {
         this.email = email;
     }
 
-    public long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

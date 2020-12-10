@@ -6,41 +6,207 @@
     <div id="header" class="row header-default">
         <header th:replace="fragments/header :: header-default"></header>
     </div>
-    <div id="main-content" class="row">
+    <div id="main-content" class="row mb-5">
         <main role="main" class="min-vw-100">
             <div class="jumbotron mb-5"
-                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/happy-online-banking.jpg'); background-position: left center; background-repeat: no-repeat; background-size: cover;">
-                <div class="container pt-5 pb-5 text-white">
-                    <h1><span class="display-5"><span class="text-blue">Online bank</span> | <span class="text-orange">Persoonlijke service</span></span>
-                    </h1>
-                    <p class="mb-0">Bij DROVN regel je al je financiële zaken gemakkelijk zelf online.</p>
-                    <p>Heb je liever persoonlijk contact? Dan staan onze service-medewerkers voor je klaar!</p>
-                    <p class="mt-5"><a class="btn btn-primary btn-lg" style="font-size: initial;" href="#"
-                                       role="button">Meer over service »</a></p>
+                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) ), url('/images/klant-worden.jpg'); background-position: left 70%; background-repeat: no-repeat; background-size: cover;">
+                <div class="container text-white">
+                    <h1>Klant worden</h1>
                 </div>
             </div>
             <div class="container pt-5">
                 <div class="row">
-                    <div class="col-md-4">
-                        <h2>Heading</h2>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-                            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-                            malesuada magna mollis euismod. Donec sed odio dui. </p>
-                        <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
-                    </div>
-                    <div class="col-md-4">
-                        <h2>Heading</h2>
-                        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-                            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-                            malesuada magna mollis euismod. Donec sed odio dui. </p>
-                        <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
-                    </div>
-                    <div class="col-md-4">
-                        <h2>Heading</h2>
-                        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum
-                            id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                            condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                        <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+                    <div class="col-md-12">
+                        <button id="private" class="btn btn-outline-primary rounded-0 pt-3 pb-3 pl-3 pr-3 active"
+                                data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                aria-controls="collapseOne">
+                            Particuliere Klant
+                        </button>
+                        <button id="legal" class="btn btn-outline-primary rounded-0 pt-3 pb-3 pl-3 pr-3 collapsed"
+                                data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                aria-controls="collapseTwo">
+                            Zakelijke Klant
+                        </button>
+                        <div id="accordion" class="pt-5 pb-5">
+
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                 data-parent="#accordion">
+                                <form id="register_private" action="#" class="row" th:action="@{/registration_private}"
+                                      th:object="${personPrivate}" method="post">
+                                    <div class="col-md-12 mt-2 mb-2">
+                                        <h4 class="text-white bg-primary pl-2 pr-2 pt-2 pb-2">Persoonlijke gegevens</h4>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="initials">Voorletters</label>
+                                        <input type="text" id="initials" class="form-control" name="initials"
+                                               th:field="*{initials}"/>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="firstname">Voornaam</label>
+                                        <input type="text" id="firstname" class="form-control" name="firstName"
+                                               th:field="*{firstName}"/>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="preposition">Tussenvoegsel</label>
+                                        <input type="text" id="preposition" class="form-control" name="preposition"
+                                               th:field="*{preposition}"/>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="lastname">Achternaam</label>
+                                        <input type="text" id="lastname" class="form-control" name="surName"
+                                               th:field="*{surName}"/>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="dateOfBirth">Geboortedatum</label>
+                                        <input type="date" id="dateOfBirth" class="form-control" name="dateOfBirth"
+                                               th:field="*{dateOfBirth}"/>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="socialSecurityNumber">Burgerservicenummer (BSN)</label>
+                                        <input type="number" id="socialSecurityNumber" class="form-control"
+                                               name="socialSecurityNumber" aria-describedby="socialSecurityNumberHelp"
+                                               th:field="*{socialSecurityNumber}"/>
+                                        <small id="socialSecurityNumberHelp" class="form-text text-muted">Je unieke,
+                                            9-cijferige persoonsnummer</small>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="email">Emailadres</label>
+                                        <input type="email" id="email" class="form-control" name="email"
+                                               th:field="*{email}"/>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="mobile">Telefoon (mobiel)</label>
+                                        <input type="tel" id="mobile" class="form-control" name="mobile"
+                                               pattern="[0-9]{2}-[0-9]{8}" aria-describedby="mobileHelp"
+                                               th:field="*{phone}"/>
+                                        <small id="mobileHelp" class="form-text text-muted">Format: 06-12345678</small>
+                                    </div>
+                                    <div class="col-md-12 mt-2 mb-2">
+                                        <h4 class="text-white bg-primary pl-2 pr-2 pt-2 pb-2">Adresgegevens</h4>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="postalCode">Postcode</label>
+                                        <input type="text" id="postalCode" class="form-control" name="postalCode"
+                                               aria-describedby="postalCodeHelp" th:field="*{postalCode}"/>
+                                        <small id="postalCodeHelp" class="form-text text-muted">Format: 1234AB</small>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="homeNumber">Huisnr.</label>
+                                        <input type="text" id="homeNumber" class="form-control" name="homeNumber"
+                                               aria-describedby="homeNumberHelp" th:field="*{homeNumber}"/>
+                                        <small id="homeNumberHelp" class="form-text text-muted">Format: 123, 12b,
+                                            123-I</small>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="street">Straat</label>
+                                        <input type="text" id="street" class="form-control" name="street"
+                                               th:field="*{street}"/>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="residence">Appartement, etage</label>
+                                        <input type="text" id="residence" class="form-control" name="residence"
+                                               th:field="*{residence}"/>
+                                    </div>
+                                    <div class="col-md-2 mt-3">
+                                        <input type="submit" form="register_private" class="btn btn-primary"
+                                               value="Bevestigen"/>
+                                    </div>
+                                    <div class="col-md-2 mt-3">
+                                        <input type="reset" form="register_private" class="btn btn-secondary"
+                                               value="Reset"/>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                 data-parent="#accordion">
+                                <form id="register_legal" action="#" class="row" th:action="@{/registration_legal}"
+                                      th:object="${businessRegistrationDto}" method="post">
+                                    <div class="col-md-12 mt-2 mb-2">
+                                        <h4 class="text-white bg-primary pl-2 pr-2 pt-2 pb-2">Bedrijfsgegevens</h4>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="initials">Bedrijfsnaam</label>
+                                        <input type="text" id="companyName" class="form-control" name="companyName"
+                                               th:field="*{company.companyName}"/>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="kvkNumber">KvK-nummer</label>
+                                        <input type="text" id="kvkNumber" class="form-control" name="kvkNumber"
+                                               th:field="*{company.kvkNumber}"/>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="vatNumber">Btw-nummer</label>
+                                        <input type="text" id="vatNumber" class="form-control" name="vatNumber"
+                                               th:field="*{company.vatNumber}"/>
+                                    </div>
+                                    <div class="col-md-12 mt-2 mb-2">
+                                        <h4 class="text-white bg-primary pl-2 pr-2 pt-2 pb-2">Adresgegevens</h4>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="postalCode_legal">Postcode</label>
+                                        <input type="text" id="postalCode_legal" class="form-control"
+                                               name="postalCode_legal" aria-describedby="postalCode_legalHelp"
+                                               th:field="*{company.postalCode}"/>
+                                        <small id="postalCode_legalHelp" class="form-text text-muted">Format:
+                                            1234AB</small>
+                                    </div>
+                                    <div class="col-md-2 form-group">
+                                        <label for="homeNumber_legal">Huisnr.</label>
+                                        <input type="text" id="homeNumber_legal" class="form-control"
+                                               name="homeNumber_legal" aria-describedby="homeNumber_legalHelp"
+                                               th:field="*{company.homeNumber}"/>
+                                        <small id="homeNumber_legalHelp" class="form-text text-muted">Format: 123, 12b,
+                                            123-I</small>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="street_legal">Straat</label>
+                                        <input type="text" id="street_legal" class="form-control" name="street_legal"
+                                               th:field="*{company.street}"/>
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label for="residence_legal">Bedrijfsverzamelgebouw, bedrijventerrein</label>
+                                        <input type="text" id="residence_legal" class="form-control"
+                                               name="residence_legal" th:field="*{company.residence}"/>
+                                    </div>
+
+                                    <div class="col-md-12 mt-2 mb-2">
+                                        <h4 class="text-white bg-primary pl-2 pr-2 pt-2 pb-2">Contactpersoon
+                                            koppelen</h4>
+                                        <p>De contactpersoon voor een zakelijk account moet als particuliere klant bij
+                                            ons bekend zijn.</p>
+                                    </div>
+                                </form>
+                                <div class="col-md-12 d-flex flex-row pl-0 pr-0">
+                                    <form id="check_legal_contact" action="#" class="row"
+                                          th:action="@{/check_legal_contact}" th:object="${businessRegistrationDto}"
+                                          method="post">
+                                        <div class="col-md-2 form-group">
+                                            <label for="contact_legal_username">Gebruikersnaam</label>
+                                            <input type="text" id="contact_legal_username" class="form-control"
+                                                   name="contact_legal_username" th:field="*{contactUsername}"/>
+                                        </div>
+                                        <div class="col-md-2 form-group">
+                                            <label for="contact_legal_password">Wachtwoord</label>
+                                            <input type="text" id="contact_legal_password" class="form-control"
+                                                   name="contact_legal_password" th:field="*{contactPassword}"/>
+                                        </div>
+                                        <div class="col-md-2 mt-3">
+                                            <input type="submit" form="check_legal_contact" class="btn btn-primary"
+                                                   value="Koppelen"/>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-md-2 mt-3">
+                                    <input type="submit" form="register_legal" class="btn btn-primary"
+                                           value="Bevestigen"/>
+                                </div>
+                                <div class="col-md-2 mt-3">
+                                    <input type="reset" form="register_legal" class="btn btn-secondary" value="Reset"/>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -51,5 +217,20 @@
     </div>
 </div> <!-- /container - #page -->
 <div th:replace="fragments/scripts :: scripts-before-closing-tag"></div>
+<script>
+    const $buttonPrivate = $("#private");
+    const $buttonLegal = $("#legal");
+
+    $buttonLegal.on('click', function (event) {
+        event.preventDefault();
+        $(this).toggleClass('active');
+        $buttonPrivate.toggleClass('active');
+    });
+    $buttonPrivate.on('click', function (event) {
+        event.preventDefault();
+        $(this).toggleClass('active');
+        $buttonLegal.toggleClass('active');
+    });
+</script>
 </body>
 </html>

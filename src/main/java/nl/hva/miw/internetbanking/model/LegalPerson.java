@@ -3,7 +3,7 @@ package nl.hva.miw.internetbanking.model;
 public class LegalPerson extends Customer {
 
     private String companyName;
-    private long kvkNumber;
+    private int kvkNumber;
     private String sector;
     private String vatNumber;
     private String postalCode;
@@ -37,7 +37,7 @@ public class LegalPerson extends Customer {
         this.companyName = companyName;
     }
 
-    public long getKvkNumber() {
+    public int getKvkNumber() {
         return kvkNumber;
     }
 
