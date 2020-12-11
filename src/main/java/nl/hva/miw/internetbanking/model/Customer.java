@@ -12,6 +12,10 @@ public class Customer {
         this.password = password;
     }
 
+    public Customer(long id) {
+        this.customerID = id;
+    }
+
     public Customer() {
     }
 

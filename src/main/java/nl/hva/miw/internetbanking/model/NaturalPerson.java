@@ -1,5 +1,14 @@
 package nl.hva.miw.internetbanking.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 public class NaturalPerson extends Customer {
 
     private String initials;
@@ -7,9 +16,9 @@ public class NaturalPerson extends Customer {
     private String preposition;
     private String surName;
     private String dateOfBirth;
-    private String socialSecurityNumber; // changed data type for form input
+    private long socialSecurityNumber;
     private String email;
-    private String phone; // changed data type for form input
+    private long phone;
     private String postalCode;
     private String homeNumber;
     private String street;
@@ -17,9 +26,8 @@ public class NaturalPerson extends Customer {
 
     public NaturalPerson(int id, String username, String password, String initials,
                          String firstName, String preposition, String surName, String dateOfBirth
-            , String socialSecurityNumber,
-                         String email, String phone, String postCode, String homeNumber,
-                         String street, String residence) {
+            , long socialSecurityNumber, String email, long phone, String postalCode,
+                         String homeNumber, String street, String residence) {
         super(id, username, password);
         this.initials = initials;
         this.firstName = firstName;
@@ -29,10 +37,17 @@ public class NaturalPerson extends Customer {
         this.socialSecurityNumber = socialSecurityNumber;
         this.email = email;
         this.phone = phone;
-        this.postalCode = postCode;
+        this.postalCode = postalCode;
         this.homeNumber = homeNumber;
         this.street = street;
         this.residence = residence;
+    }
+
+    public NaturalPerson(long id, String initials, String firstName, String preposition,
+                         String surName, String dateOfBirth, long socialSecurityNumber,
+                         String email, long phone, String postalCode, String homeNumber,
+                         String street, String residence) {
+
     }
 
     public NaturalPerson(String initials, String firstName, String preposition, String surName) {
@@ -42,121 +57,5 @@ public class NaturalPerson extends Customer {
         this.surName = surName;
     }
 
-    public NaturalPerson() {
-    }
-
-    public String getInitials() {
-        return initials;
-    }
-
-    public void setInitials(String initials) {
-        this.initials = initials;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getPreposition() {
-        return preposition;
-    }
-
-    public void setPreposition(String preposition) {
-        this.preposition = preposition;
-    }
-
-    public String getSurName() {
-        return surName;
-    }
-
-    public void setSurName(String surName) {
-        this.surName = surName;
-    }
-
-    public String getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(String dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getSocialSecurityNumber() {
-        return socialSecurityNumber;
-    }
-
-    public void setSocialSecurityNumber(String socialSecurityNumber) {
-        this.socialSecurityNumber = socialSecurityNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postCode) {
-        this.postalCode = postCode;
-    }
-
-    public String getHomeNumber() {
-        return homeNumber;
-    }
-
-    public void setHomeNumber(String homeNumber) {
-        this.homeNumber = homeNumber;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getResidence() {
-        return residence;
-    }
-
-    public void setResidence(String residence) {
-        this.residence = residence;
-    }
-
-    @Override
-    public String toString() {
-        return "NaturalPerson{" +
-                "initials='" + initials + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", preposition='" + preposition + '\'' +
-                ", surName='" + surName + '\'' +
-                ", dateOfBirth='" + dateOfBirth + '\'' +
-                ", socialSecurityNumber=" + socialSecurityNumber +
-                ", email='" + email + '\'' +
-                ", phone=" + phone +
-                ", postCode='" + postalCode + '\'' +
-                ", homeNumber='" + homeNumber + '\'' +
-                ", street='" + street + '\'' +
-                ", residence='" + residence + '\'' +
-                '}';
-    }
 }
 

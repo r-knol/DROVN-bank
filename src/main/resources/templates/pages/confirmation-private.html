@@ -88,7 +88,7 @@
                                 <td th:text="*{personPrivate.street}"></td>
                             </tr>
                             <tr>
-                                <th scope="row" width="50%">Appartement, etage</th>
+                                <th scope="row" width="50%">Woonplaats</th>
                                 <td th:text="*{personPrivate.residence}"></td>
                             </tr>
                             </tbody>
@@ -162,7 +162,7 @@
                             <div class="col-md-2 form-group">
                                 <label for="mobile">Telefoon (mobiel)</label>
                                 <input type="tel" id="mobile" class="form-control" name="mobile"
-                                       pattern="[0-9]{2}-[0-9]{8}" aria-describedby="mobileHelp"
+                                       pattern="[0-9]{10}" aria-describedby="mobileHelp"
                                        th:field="*{personPrivate.phone}"/>
                                 <small id="mobileHelp" class="form-text text-muted">Format: 06-12345678</small>
                             </div>
@@ -188,7 +188,7 @@
                                        th:field="*{personPrivate.street}"/>
                             </div>
                             <div class="col-md-4 form-group">
-                                <label for="residence">Appartement, etage</label>
+                                <label for="residence">Woonplaats</label>
                                 <input type="text" id="residence" class="form-control" name="residence"
                                        th:field="*{personPrivate.residence}"/>
                             </div>
