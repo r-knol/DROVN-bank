@@ -2,6 +2,7 @@ package nl.hva.miw.internetbanking.data.dao;
 
 import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 
 import java.util.List;
@@ -14,6 +15,10 @@ public interface CustomerDAO {
     NaturalPerson getNpByCustomerId(long customerId);
 
     CustomerAccountDTO getCustomersByAccountId(long accountId);
+
+    // onderstaande methode toegevoegd door Nina 11-12-2020
+    // voor Legal Person:
+    LegalPerson getLpByCustomerId(long customerId);
 
     List<Customer> getCustomerByAccountId(long accountId);
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,15 +33,26 @@ public class LoginController {
 
         CustomerAccountDTO c = customerService.getCustomerAccountOverview(userName, password);
         List<Account> accountList = c.getAccountList();
+
         for (Account a : accountList) {
             CustomerAccountDTO b = customerService.getCustomersByAccount(a.getAccountID());
             model.addAttribute("accountWithCustomerList", b);
-            System.out.println(b.getCustomerList());
-        }
 
-//        NaturalPerson np = customerService.getNpByCustomerId(c.getCustomer().getId());
-//        model.addAttribute("fullName", String
-//                .format("%s %s %s", np.getFirstName(), np.getPreposition(), np.getSurName()));
+            System.out.println(b.getCustomerList());
+
+            // lijstje klaarzetten voor namen van customers:
+            List<String> customerNameList = new ArrayList<>();
+
+            // voor alle klanten uit het lijstje:
+            for (Customer klant : b.getCustomerList()) {
+                // maak een String van de customerName met printNameCustomer methode uit CustomerService:
+                String customerName = customerService.printNameCustomer(klant.getId());
+                // voeg deze toe aan het lijstje met customer-namen:
+                customerNameList.add(customerName);
+            }
+            // lijstje met namen toevoegen aan Model:
+            model.addAttribute("customerNameList", customerNameList);
+        }
 
         if (c != null) {
             model.addAttribute("customerWithAccountOverview", c);
