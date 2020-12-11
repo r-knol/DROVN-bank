@@ -1,6 +1,6 @@
 package nl.hva.miw.internetbanking.controller;
 
-import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
+import nl.hva.miw.internetbanking.data.dto.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import nl.hva.miw.internetbanking.service.AccountService;

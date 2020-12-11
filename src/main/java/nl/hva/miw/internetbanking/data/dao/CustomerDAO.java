@@ -1,6 +1,6 @@
 package nl.hva.miw.internetbanking.data.dao;
 
-import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
+import nl.hva.miw.internetbanking.data.dto.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
