@@ -31,7 +31,7 @@
 
                             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                                  data-parent="#accordion">
-                                <form action="#" class="row" th:action="@{/bevestiging-particulier}"
+                                <form action="#" class="row" th:action="@{/registratie-particulier}"
                                       th:object="${registrationDto}" method="post">
                                     <div class="col-md-12 mt-2 mb-3">
                                         <h4 class="border border-dark border-w-2 rounded p-3">Persoonlijke gegevens</h4>
@@ -115,12 +115,12 @@
                                     <div class="col-md-2 form-group">
                                         <label for="username_private">Gebruikersnaam</label>
                                         <input type="text" id="username_private" class="form-control"
-                                               name="username_private" th:field="*{username}"/>
+                                               name="username_private" th:field="*{customer.username}"/>
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label for="password_private">Wachtwoord</label>
                                         <input type="password" id="password_private" class="form-control"
-                                               name="password_private" th:field="*{password}"/>
+                                               name="password_private" th:field="*{customer.password}"/>
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label for="password_private_confirmation">Wachtwoord</label>
@@ -139,13 +139,13 @@
 
                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
                                  data-parent="#accordion">
-                                <form action="#" class="row" th:action="@{/bevestiging-zakelijk}"
+                                <form action="#" class="row" th:action="@{/registratie-zakelijk}"
                                       th:object="${registrationDto}" method="post">
                                     <div class="col-md-12 mt-2 mb-3">
                                         <h4 class="border border-dark border-w-2 rounded p-3">Bedrijfsgegevens</h4>
                                     </div>
                                     <div class="col-md-2 form-group">
-                                        <label for="initials">Bedrijfsnaam</label>
+                                        <label for="companyName">Bedrijfsnaam</label>
                                         <input type="text" id="companyName" class="form-control" name="companyName"
                                                th:field="*{personLegal.companyName}"/>
                                     </div>
@@ -194,12 +194,12 @@
                                     <div class="col-md-2 form-group">
                                         <label for="username_legal">Gebruikersnaam</label>
                                         <input type="text" id="username_legal" class="form-control"
-                                               name="username_legal" th:field="*{username}"/>
+                                               name="username_legal" th:field="*{customer.username}"/>
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label for="password_legal">Wachtwoord</label>
                                         <input type="password" id="password_legal" class="form-control"
-                                               name="password_legal" th:field="*{password}"/>
+                                               name="password_legal" th:field="*{customer.password}"/>
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label for="password_legal_confirmation">Wachtwoord</label>

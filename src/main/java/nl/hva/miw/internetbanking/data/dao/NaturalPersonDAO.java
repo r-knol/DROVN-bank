@@ -1,6 +1,5 @@
 package nl.hva.miw.internetbanking.data.dao;
 
-import lombok.AllArgsConstructor;
 import nl.hva.miw.internetbanking.data.mapper.NaturalPersonRowMapper;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import org.springframework.dao.DataAccessException;
@@ -14,20 +13,21 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-@AllArgsConstructor
 public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
 
     private final JdbcTemplate jdbcTemplate;
+
+    public NaturalPersonDAO(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public void create(NaturalPerson entity) throws NullPointerException, DuplicateKeyException {
         String sql = "INSERT INTO NaturalPerson(customerID, initials, firstName, preposition, " +
                 "surName, dateOfBirth, socialSecurityNumber, email, phone, postalCode, " +
                 "homeNumber, street, residence) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        //KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql); //, new String[]{"customerId
-            // "});
+            PreparedStatement ps = connection.prepareStatement(sql);
             ps.setLong(1, entity.getId());
             ps.setString(2, entity.getInitials());
             ps.setString(3, entity.getFirstName());
@@ -42,7 +42,7 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
             ps.setString(12, entity.getStreet());
             ps.setString(13, entity.getResidence());
             return ps;
-        }); //, keyHolder);
+        });
     }
 
     @Override
@@ -50,9 +50,9 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
         String sql = "SELECT * FROM NaturalPerson WHERE customerID = ?";
         try {
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql,
-                    new NaturalPersonRowMapper(), id)); // found
+                    new NaturalPersonRowMapper(), id));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return Optional.empty(); // not found
+            return Optional.empty();
         }
     }
 
@@ -75,7 +75,7 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
 
     @Override
     public void delete(Long id) throws DataAccessException {
-        jdbcTemplate.update("DELETE FROM NaturalPerson WHERE customerID = " + id);
+        jdbcTemplate.update("DELETE FROM NaturalPerson WHERE customerID = ?", id);
     }
 
     @Override

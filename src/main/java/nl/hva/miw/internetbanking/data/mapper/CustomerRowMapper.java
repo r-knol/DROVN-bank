@@ -10,9 +10,11 @@ public class CustomerRowMapper implements RowMapper<Customer> {
 
     @Override
     public Customer mapRow(ResultSet resultSet, int i) throws SQLException {
-        return new Customer(resultSet.getLong("customerID"),
+        return new Customer(
+                resultSet.getLong("customerID"),
                 resultSet.getString("userName"),
-                resultSet.getString("password"));
+                resultSet.getString("password")
+        );
     }
 
 }

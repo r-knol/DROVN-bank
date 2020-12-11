@@ -2,8 +2,8 @@ package nl.hva.miw.internetbanking.exception;
 
 public class NaturalPersonNotFoundException extends RuntimeException {
 
-    public NaturalPersonNotFoundException(String errorMessage) {
-        super(errorMessage);
+    public NaturalPersonNotFoundException(String message) {
+        super(message);
     }
 
     public NaturalPersonNotFoundException() {

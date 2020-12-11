@@ -3,11 +3,11 @@
 <head th:replace="fragments/head :: head-default (pageTitle='Registratie bevestigen', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <body>
 <div class="container-fluid min-vh-100" id="page">
-    <div id="header" class="row header-default">
+    <div class="row header-default" id="header">
         <header th:replace="fragments/header :: header-default"></header>
     </div>
-    <div id="main-content" class="row mb-5">
-        <main role="main" class="min-vw-100">
+    <div class="row mb-5" id="main-content">
+        <main class="min-vw-100" role="main">
             <div class="jumbotron mb-5"
                  style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) ), url('/images/klant-worden.jpg'); background-position: left 70%; background-repeat: no-repeat; background-size: cover;">
                 <div class="container text-white">
@@ -28,7 +28,7 @@
                         <table class="table table-striped mb-5" th:object="${registrationDto}">
                             <thead class="thead-dark">
                             <tr>
-                                <th scope="col" colspan="2">Bedrijfsgegevens</th>
+                                <th colspan="2" scope="col">Bedrijfsgegevens</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -49,13 +49,13 @@
                         <table class="table table-striped mb-5" th:object="${registrationDto}">
                             <thead class="thead-dark">
                             <tr>
-                                <th scope="col" colspan="2">Accountgegevens</th>
+                                <th colspan="2" scope="col">Accountgegevens</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <th scope="row" width="50%">Gebruikersnaam</th>
-                                <td th:text="*{username}"></td>
+                                <td th:text="*{customer.username}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -64,7 +64,7 @@
                         <table class="table table-striped mb-5" th:object="${registrationDto}">
                             <thead class="thead-dark">
                             <tr>
-                                <th scope="col" colspan="2">Adresgegevens</th>
+                                <th colspan="2" scope="col">Adresgegevens</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -86,87 +86,93 @@
                             </tr>
                             </tbody>
                         </table>
-                        <form action="#" class="row" th:action="@{/bevestiging}" th:object="${registrationDto}"
-                              method="post">
-                            <input type="submit" class="btn btn-primary btn-lg btn-block mt-0 ml-3 mb-4 mr-2 pt-3 pb-3 "
+                        <form action="#" class="row" method="post" th:action="@{/bevestiging-zakelijk}"
+                              th:object="${registrationDto}">
+                            <input class="btn btn-primary btn-lg btn-block mt-0 ml-3 mb-4 mr-2 pt-3 pb-3 " type="submit"
                                    value="Registratie voltooien"/>
                         </form>
                     </div>
                 </div>
-                <div id="accordion" class="pt-5 pb-5">
-                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                         data-parent="#accordion">
-                        <form action="#" class="row" th:action="@{/bevestiging-zakelijk}"
-                              th:object="${registrationDto}" method="post">
+                <div class="pt-5 pb-5" id="accordion">
+                    <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
+                         id="collapseOne">
+                        <form action="#" class="row" method="post"
+                              th:action="@{/registratie-zakelijk}" th:object="${registrationDto}">
                             <div class="col-md-12 mt-2 mb-3">
                                 <h4 class="border border-dark border-w-2 rounded p-3">Bedrijfsgegevens</h4>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="companyName">Bedrijfsnaam</label>
-                                <input type="text" id="companyName" class="form-control" name="companyName"
-                                       th:field="*{personLegal.companyName}"/>
+                                <input class="form-control" id="companyName" name="companyName"
+                                       th:field="*{personLegal.companyName}"
+                                       type="text"/>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="kvkNumber">KvK-nummer</label>
-                                <input type="text" id="kvkNumber" class="form-control" name="kvkNumber"
-                                       th:field="*{personLegal.kvkNumber}"/>
+                                <input class="form-control" id="kvkNumber" name="kvkNumber"
+                                       th:field="*{personLegal.kvkNumber}"
+                                       type="text"/>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="vatNumber">Btw-nummer</label>
-                                <input type="text" id="vatNumber" class="form-control" name="vatNumber"
-                                       th:field="*{personLegal.vatNumber}"/>
+                                <input class="form-control" id="vatNumber" name="vatNumber"
+                                       th:field="*{personLegal.vatNumber}"
+                                       type="text"/>
                             </div>
                             <div class="col-md-12 mt-5 mb-3">
                                 <h4 class="border border-dark border-w-2 rounded p-3">Adresgegevens</h4>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="postalCode_legal">Postcode</label>
-                                <input type="text" id="postalCode_legal" class="form-control"
-                                       name="postalCode_legal" aria-describedby="postalCode_legalHelp"
-                                       th:field="*{personLegal.postalCode}"/>
-                                <small id="postalCode_legalHelp" class="form-text text-muted">Format:
+                                <input aria-describedby="postalCode_legalHelp" class="form-control"
+                                       id="postalCode_legal"
+                                       name="postalCode_legal" th:field="*{personLegal.postalCode}"
+                                       type="text"/>
+                                <small class="form-text text-muted" id="postalCode_legalHelp">Format:
                                     1234AB</small>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="homeNumber_legal">Huisnr.</label>
-                                <input type="text" id="homeNumber_legal" class="form-control"
-                                       name="homeNumber_legal" aria-describedby="homeNumber_legalHelp"
-                                       th:field="*{personLegal.homeNumber}"/>
-                                <small id="homeNumber_legalHelp" class="form-text text-muted">Format: 123, 12b,
+                                <input aria-describedby="homeNumber_legalHelp" class="form-control"
+                                       id="homeNumber_legal"
+                                       name="homeNumber_legal" th:field="*{personLegal.homeNumber}"
+                                       type="text"/>
+                                <small class="form-text text-muted" id="homeNumber_legalHelp">Format: 123, 12b,
                                     123-I</small>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="street_legal">Straat</label>
-                                <input type="text" id="street_legal" class="form-control" name="street_legal"
-                                       th:field="*{personLegal.street}"/>
+                                <input class="form-control" id="street_legal" name="street_legal"
+                                       th:field="*{personLegal.street}"
+                                       type="text"/>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="residence_legal">Plaats</label>
-                                <input type="text" id="residence_legal" class="form-control"
-                                       name="residence_legal" th:field="*{personLegal.residence}"/>
+                                <input class="form-control" id="residence_legal" name="residence_legal"
+                                       th:field="*{personLegal.residence}" type="text"/>
                             </div>
                             <div class="col-md-12 mt-5 mb-3">
                                 <h4 class="border border-dark border-w-2 rounded p-3">Accountgegevens</h4>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="username_legal">Gebruikersnaam</label>
-                                <input type="text" id="username_legal" class="form-control"
-                                       name="username_legal" th:field="*{username}"/>
+                                <input class="form-control" id="username_legal" name="username_legal"
+                                       th:field="*{customer.username}" type="text"/>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="password_legal">Wachtwoord</label>
-                                <input type="password" id="password_legal" class="form-control"
-                                       name="password_legal" th:field="*{password}"/>
+                                <input class="form-control" id="password_legal" name="password_legal"
+                                       th:field="*{customer.password}" type="password"/>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="password_legal_confirmation">Wachtwoord</label>
-                                <input type="password" id="password_legal_confirmation"
-                                       name="password_legal_confirmation" class="form-control"
-                                       th:field="*{passwordConfirmation}"/>
+                                <input class="form-control" id="password_legal_confirmation"
+                                       name="password_legal_confirmation" th:field="*{passwordConfirmation}"
+                                       type="password"/>
                             </div>
                             <div class="col-md-12 mt-3">
                                 <div class="col-md-6 pl-0">
-                                    <input type="submit" class="btn btn-secondary btn-lg btn-block mt-4 mb-4 pt-3 pb-3"
+                                    <input class="btn btn-secondary btn-lg btn-block mt-4 mb-4 pt-3 pb-3" type="submit"
                                            value="Gegevens wijzigen"/>
                                 </div>
                             </div>
@@ -174,12 +180,11 @@
                     </div>
                 </div>
             </div>
+        </main>
     </div>
-    </main>
-</div>
-<div id="footer" class="row footer-default">
-    <footer th:replace="fragments/footer :: footer-default"></footer>
-</div>
+    <div class="row footer-default" id="footer">
+        <footer th:replace="fragments/footer :: footer-default"></footer>
+    </div>
 </div> <!-- /container - #page -->
 <div th:replace="fragments/scripts :: scripts-before-closing-tag"></div>
 <script>

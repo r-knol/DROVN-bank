@@ -1,21 +1,22 @@
 package nl.hva.miw.internetbanking.data.repository;
 
-import lombok.AllArgsConstructor;
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
 import nl.hva.miw.internetbanking.exception.NaturalPersonNotFoundException;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Component // not @Repository because this is a custom Repository
-@AllArgsConstructor
+@org.springframework.stereotype.Repository
 public class NaturalPersonRepository implements Repository<NaturalPerson, Long> {
 
     private final NaturalPersonDAO naturalPersonDAO;
+
+    public NaturalPersonRepository(NaturalPersonDAO naturalPersonDAO) {
+        this.naturalPersonDAO = naturalPersonDAO;
+    }
 
     @Override
     public List<NaturalPerson> findAll() {
