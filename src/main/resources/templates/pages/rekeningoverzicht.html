@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
 <head>
     <meta charset="UTF-8">
     <title>Rekeningoverzicht</title>
@@ -10,22 +12,23 @@
     <h2 th:text="${customerWithAccountOverview.getCustomer().getUsername()}">naam</h2>
     <p th:if="${customerWithAccountOverview.getAccountList().isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
 
-    <table th:unless="${customerWithAccountOverview.getAccountList().isEmpty()}">
+    <table class="table table-bordered" th:unless="${customerWithAccountOverview.getAccountList().isEmpty()}">
+        <thead class="thead-light">
         <tr>
-            <th>IBAN</th>
-            <th>saldo</th>
-            <th>tenaamstelling</th>
+            <th scope="col">IBAN</th>
+            <th scope="col">Tenaamstelling</th>
+            <th scope="col">Saldo</th>
         </tr>
-
+        </thead>
+        <tbody>
         <tr th:each="a : ${customerWithAccountOverview.getAccountList()}">
             <td th:text="${a.iban}"></td>
+            <td> <ul> <li th:each="c : ${accountWithCustomerList.getCustomerList()}" th:text="${c.getUsername()}"></li></ul></td>
             <td th:text="${a.balance}"></td>
-            <td th:text="${accountWithCustomerList.getCustomerList()}"></td>
-    </tr>
-
-
+        </tr>
+        </tbody>
     </table>
-    <h2 th:text="${npList}"></h2>
+
     <p>Nog geen rekening? <a href="/rekeningOpenen">Open deze hier!</a></p>
 </body>
 </html>
