@@ -31,10 +31,7 @@ public class LoginController {
     public String handleLogin(@RequestParam String userName, String password, Model model) { // Gaat iets doen met ingevoerde G en W
 
         CustomerAccountDTO c = customerService.getCustomerAccountOverview(userName, password);
-
-
         List<Account> accountList = c.getAccountList();
-
         for (Account a : accountList) {
             CustomerAccountDTO b = customerService.getCustomersByAccount(a.getAccountID());
             model.addAttribute("accountWithCustomerList", b);
