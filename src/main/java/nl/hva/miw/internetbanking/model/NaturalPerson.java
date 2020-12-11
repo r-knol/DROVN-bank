@@ -47,6 +47,19 @@ public class NaturalPerson extends Customer {
                          String surName, String dateOfBirth, long socialSecurityNumber,
                          String email, long phone, String postalCode, String homeNumber,
                          String street, String residence) {
+        super(id);
+        this.initials = initials;
+        this.firstName = firstName;
+        this.preposition = preposition;
+        this.surName = surName;
+        this.dateOfBirth = dateOfBirth;
+        this.socialSecurityNumber = socialSecurityNumber;
+        this.email = email;
+        this.phone = phone;
+        this.postalCode = postalCode;
+        this.homeNumber = homeNumber;
+        this.street = street;
+        this.residence = residence;
 
     }
 
