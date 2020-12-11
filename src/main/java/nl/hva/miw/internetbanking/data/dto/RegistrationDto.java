@@ -4,9 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
+import org.springframework.stereotype.Component;
 
 @Getter
 @Setter
+@Component
 public class RegistrationDto {
 
     private static final String EMPTY_STRING = "";

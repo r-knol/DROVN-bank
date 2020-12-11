@@ -1,12 +1,11 @@
 package nl.hva.miw.internetbanking.data.dao;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
 public interface DAO<T, ID> {
 
-    ID create(T entity) throws NullPointerException, SQLIntegrityConstraintViolationException;
+    void create(T entity);
 
     Optional<T> read(ID id);
 

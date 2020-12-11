@@ -43,6 +43,7 @@ public class RegistrationController {
 
     @PostMapping("/bevestiging")
     public String confirmationHandler(RedirectAttributes redirectAttributes) {
+        registrationService.saveNaturalPerson();
         redirectAttributes.addFlashAttribute("accountCreated", "true");
         LOGGER.warn("BEVESTIGING (POST): " + registrationService.getRegistrationDto().toString());
         return "redirect:/";
