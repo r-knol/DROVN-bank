@@ -1,6 +1,6 @@
 package nl.hva.miw.internetbanking.data.dao;
 
-import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
+import nl.hva.miw.internetbanking.data.dto.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.NaturalPersonRowMapper;
@@ -42,7 +42,7 @@ public class JdbcCustomerDAO implements CustomerDAO {
         }
     }
 
-    @Override
+    @Override //todo: deze wordt gebruikt in handleLogin
     public CustomerAccountDTO getCustomersByAccountId(long accountId) {
         final String sql = "SELECT * FROM Account WHERE accountID = ?";
         Account account = jdbcTemplate.queryForObject(sql, new AccountRowMapper(), accountId);

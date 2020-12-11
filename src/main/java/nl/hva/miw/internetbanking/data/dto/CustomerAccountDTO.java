@@ -1,4 +1,4 @@
-package nl.hva.miw.internetbanking.DTO;
+package nl.hva.miw.internetbanking.data.dto;
 
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
@@ -12,7 +12,7 @@ public class CustomerAccountDTO {
     private Account account;
     private List<Customer> customerList;
 
-    public CustomerAccountDTO(Customer customer, List<Account> list) {
+    public CustomerAccountDTO(Customer customer, List<Account> list) { //todo: aparte klassen maken
         this.customer = customer;
         this.accountList = list;
     }

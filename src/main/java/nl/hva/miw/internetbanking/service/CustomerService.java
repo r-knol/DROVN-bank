@@ -1,6 +1,6 @@
 package nl.hva.miw.internetbanking.service;
 
-import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
+import nl.hva.miw.internetbanking.data.dto.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
@@ -19,7 +19,7 @@ public class CustomerService {
         this.customerDAO = customerDAO;
     }
 
-    public CustomerAccountDTO getCustomerAccountOverview(String userName, String password) {
+    public CustomerAccountDTO getCustomerByUsernameAndPassword(String userName, String password) {
         return customerDAO.getCustomerByUsernameAndPassword(userName, password);
     }
 
@@ -35,6 +35,7 @@ public class CustomerService {
     public List<Customer> getCustomerByAccountId(long accountId) {
         return customerDAO.getCustomerByAccountId(accountId);
     }
+
     public CustomerAccountDTO getCustomersByAccount(long accountId) {
         return customerDAO.getCustomersByAccountId(accountId);
     }
