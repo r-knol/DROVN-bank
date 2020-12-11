@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head-default (pageTitle='Registratie bevestigen', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
+<body>
+<div class="container-fluid min-vh-100" id="page">
+    <div id="header" class="row header-default">
+        <header th:replace="fragments/header :: header-default"></header>
+    </div>
+    <div id="main-content" class="row mb-5">
+        <main role="main" class="min-vw-100">
+            <div class="jumbotron mb-5"
+                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) ), url('/images/klant-worden.jpg'); background-position: left 70%; background-repeat: no-repeat; background-size: cover;">
+                <div class="container text-white">
+                    <h1>Controleer je gegevens</h1>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 mb-4">
+                        <div class="alert alert-success d-flex flex-row align-items-center" role="alert">
+                            <i class="fas fa-info-circle" style="font-size: 2.5rem; padding-right: 20px;"></i>
+                            <span>We hebben de volgende gegevens van je ontvangen. Controleer je gegevens en gebruik de knop
+                            'registratie voltooien' om deze te bevestigen, of gebruik het formulier hieronder om eventuele fouten
+                                te herstellen. Het wachtwoord wordt om veiligheidsredenen niet getoond.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 table-responsive-md">
+                        <table class="table table-striped mb-5" th:object="${registrationDto}">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" colspan="2">Persoonlijke gegevens</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row" width="50%">Voorletters</th>
+                                <td th:text="*{personPrivate.initials}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" width="50%">Voornaam</th>
+                                <td th:text="*{personPrivate.firstName}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" width="50%">Tussenvoegsel</th>
+                                <td th:text="*{personPrivate.preposition}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" width="50%">Achternaam</th>
+                                <td th:text="*{personPrivate.surName}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" width="50%">Geboortedatum</th>
+                                <td th:text="*{personPrivate.dateOfBirth}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" width="50%">Burgerservicenummer (BSN)</th>
+                                <td th:text="*{personPrivate.socialSecurityNumber}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" width="50%">Emailadres</th>
+                                <td th:text="*{personPrivate.email}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" width="50%">Telefoon (mobiel)</th>
+                                <td th:text="*{personPrivate.phone}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-6 table-responsive-md">
+                        <table class="table table-striped mb-5" th:object="${registrationDto}">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" colspan="2">Adresgegevens</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row" width="50%">Postcode</th>
+                                <td th:text="*{personPrivate.postalCode}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" width="50%">Huisnummer + toevoeging</th>
+                                <td th:text="*{personPrivate.homeNumber}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" width="50%">Straat</th>
+                                <td th:text="*{personPrivate.street}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" width="50%">Appartement, etage</th>
+                                <td th:text="*{personPrivate.residence}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-striped mb-5" th:object="${registrationDto}">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col" colspan="2">Accountgegevens</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row" width="50%">Gebruikersnaam</th>
+                                <td th:text="*{username}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <form action="#" class="row" th:action="@{/bevestiging}" th:object="${registrationDto}"
+                              method="post">
+                            <input type="submit" class="btn btn-primary btn-lg btn-block mt-0 ml-3 mb-4 mr-2 pt-3 pb-3 "
+                                   value="Registratie voltooien"/>
+                        </form>
+                    </div>
+                </div>
+                <div id="accordion" class="pt-5 pb-5">
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                         data-parent="#accordion">
+                        <form action="#" class="row" th:action="@{/bevestiging-particulier}"
+                              th:object="${registrationDto}" method="post">
+                            <div class="col-md-12 mt-2 mb-3">
+                                <h4 class="border border-dark border-w-2 rounded p-3">Persoonlijke gegevens</h4>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="initials">Voorletters</label>
+                                <input type="text" id="initials" class="form-control" name="initials"
+                                       th:field="*{personPrivate.initials}"/>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="firstname">Voornaam</label>
+                                <input type="text" id="firstname" class="form-control" name="firstName"
+                                       th:field="*{personPrivate.firstName}"/>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="preposition">Tussenvoegsel</label>
+                                <input type="text" id="preposition" class="form-control" name="preposition"
+                                       th:field="*{personPrivate.preposition}"/>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="lastname">Achternaam</label>
+                                <input type="text" id="lastname" class="form-control" name="surName"
+                                       th:field="*{personPrivate.surName}"/>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="dateOfBirth">Geboortedatum</label>
+                                <input type="date" id="dateOfBirth" class="form-control" name="dateOfBirth"
+                                       th:field="*{personPrivate.dateOfBirth}"/>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="socialSecurityNumber">Burgerservicenummer (BSN)</label>
+                                <input type="number" id="socialSecurityNumber" class="form-control"
+                                       name="socialSecurityNumber" aria-describedby="socialSecurityNumberHelp"
+                                       th:field="*{personPrivate.socialSecurityNumber}"/>
+                                <small id="socialSecurityNumberHelp" class="form-text text-muted">Je unieke,
+                                    9-cijferige persoonsnummer</small>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="email">Emailadres</label>
+                                <input type="email" id="email" class="form-control" name="email"
+                                       th:field="*{personPrivate.email}"/>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="mobile">Telefoon (mobiel)</label>
+                                <input type="tel" id="mobile" class="form-control" name="mobile"
+                                       pattern="[0-9]{2}-[0-9]{8}" aria-describedby="mobileHelp"
+                                       th:field="*{personPrivate.phone}"/>
+                                <small id="mobileHelp" class="form-text text-muted">Format: 06-12345678</small>
+                            </div>
+                            <div class="col-md-12 mt-5 mb-3">
+                                <h4 class="border border-dark border-w-2 rounded p-3">Adresgegevens</h4>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="postalCode">Postcode</label>
+                                <input type="text" id="postalCode" class="form-control" name="postalCode"
+                                       aria-describedby="postalCodeHelp" th:field="*{personPrivate.postalCode}"/>
+                                <small id="postalCodeHelp" class="form-text text-muted">Format: 1234AB</small>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="homeNumber">Huisnr.</label>
+                                <input type="text" id="homeNumber" class="form-control" name="homeNumber"
+                                       aria-describedby="homeNumberHelp" th:field="*{personPrivate.homeNumber}"/>
+                                <small id="homeNumberHelp" class="form-text text-muted">Format: 123, 12b,
+                                    123-I</small>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="street">Straat</label>
+                                <input type="text" id="street" class="form-control" name="street"
+                                       th:field="*{personPrivate.street}"/>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="residence">Appartement, etage</label>
+                                <input type="text" id="residence" class="form-control" name="residence"
+                                       th:field="*{personPrivate.residence}"/>
+                            </div>
+                            <div class="col-md-12 mt-5 mb-3">
+                                <h4 class="border border-dark border-w-2 rounded p-3">Accountgegevens</h4>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="username_private">Gebruikersnaam</label>
+                                <input type="text" id="username_private" class="form-control"
+                                       name="username_private" th:field="*{username}"/>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="password_private">Wachtwoord</label>
+                                <input type="password" id="password_private" name="password_private"
+                                       class="form-control" th:field="*{password}"/>
+                            </div>
+                            <div class="col-md-2 form-group">
+                                <label for="password_private_confirmation">Wachtwoord</label>
+                                <input type="password" id="password_private_confirmation"
+                                       name="password_private_confirmation" class="form-control"
+                                       th:field="*{passwordConfirmation}"/>
+                            </div>
+                            <div class="col-md-12 mt-3">
+                                <div class="col-md-6 pl-0">
+                                    <input type="submit" class="btn btn-secondary btn-lg btn-block mt-4 mb-4 pt-3 pb-3"
+                                           value="Gegevens wijzigen"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </main>
+</div>
+<div id="footer" class="row footer-default">
+    <footer th:replace="fragments/footer :: footer-default"></footer>
+</div>
+</div> <!-- /container - #page -->
+<div th:replace="fragments/scripts :: scripts-before-closing-tag"></div>
+<script>
+    const $buttonPrivate = $("#private");
+    const $buttonLegal = $("#legal");
+
+    $buttonLegal.on('click', function (event) {
+        event.preventDefault();
+        $(this).toggleClass('active');
+        $buttonPrivate.toggleClass('active');
+    });
+    $buttonPrivate.on('click', function (event) {
+        event.preventDefault();
+        $(this).toggleClass('active');
+        $buttonLegal.toggleClass('active');
+    });
+</script>
+</body>
+</html>
