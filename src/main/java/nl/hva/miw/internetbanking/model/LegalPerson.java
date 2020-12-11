@@ -7,13 +7,13 @@ public class LegalPerson extends Customer {
     private String sector;
     private String vatNumber;
     private String postalCode;
-    private String homeNumber;
+    private int homeNumber;
     private String street;
     private String residence;
     //private NaturalPerson accountmanager;
 
     public LegalPerson(int id, String username, String password, String companyName, int kvkNumber, String sector, String vatNumber, String postalCode,
-                       String homeNumber, String street, String residence, NaturalPerson accountmanager) {
+                       int homeNumber, String street, String residence, NaturalPerson accountmanager) {
         super(id, username, password);
         this.companyName = companyName;
         this.kvkNumber = kvkNumber;
@@ -24,6 +24,17 @@ public class LegalPerson extends Customer {
         this.street = street;
         this.residence = residence;
         //this.accountmanager = accountmanager;
+    }
+
+    public LegalPerson(String companyName, int kvkNumber, String sector, String vatNumber, String postalCode, int homeNumber, String street, String residence) {
+        this.companyName = companyName;
+        this.kvkNumber = kvkNumber;
+        this.sector = sector;
+        this.vatNumber = vatNumber;
+        this.postalCode = postalCode;
+        this.homeNumber = homeNumber;
+        this.street = street;
+        this.residence = residence;
     }
 
     public LegalPerson() {
@@ -69,11 +80,11 @@ public class LegalPerson extends Customer {
         this.postalCode = postalCode;
     }
 
-    public String getHomeNumber() {
+    public int getHomeNumber() {
         return homeNumber;
     }
 
-    public void setHomeNumber(String homeNumber) {
+    public void setHomeNumber(int homeNumber) {
         this.homeNumber = homeNumber;
     }
 

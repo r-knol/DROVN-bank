@@ -3,9 +3,11 @@ package nl.hva.miw.internetbanking.data.dao;
 import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.NaturalPersonRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -61,29 +63,23 @@ public class JdbcCustomerDAO implements CustomerDAO {
     public NaturalPerson getNpByCustomerId(long customerId) {
         final String sql = "SELECT * FROM NaturalPerson WHERE customerID = ?";
         NaturalPerson np = jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(), customerId);
-        if (!np.equals(null)) {
+//        if (!np.equals(null)) {
             return np;
-        }
+//        }
 
         //todo: if Customer result = null
-
         //throw new ResponseStatusException(NOT_FOUND, "Persoon met id:" + customerId + " kan niet gevonden worden");
-        return null;
     }
 
 
-    // onderstaande methode toegevoegd door Nina 09-12-2020
+    // onderstaande methode toegevoegd door Nina 11-12-2020
     // voor Legal Person:
-//    @Override
-//    public LegalPerson getLpByCustomerId(long customerId) {
-//       final String sql = "SELECT * FROM LegalPerson WHERE customerID = ?";
-//        LegalPerson lp = jdbcTemplate.queryForObject(sql, new LegalPersonRowMapper(), customerId);
-//            if (!lp.equals(null)) {
-//                return lp;
-//            }
-//
-//        throw new ResponseStatusException(NOT_FOUND, "Persoon met id:" + customerId + " kan niet gevonden worden");
-//    }
+    @Override
+    public LegalPerson getLpByCustomerId(long customerId) {
+       final String sql = "SELECT * FROM LegalPerson WHERE customerID = ?";
+        LegalPerson lp = jdbcTemplate.queryForObject(sql, new LegalPersonRowMapper(), customerId);
+                return lp;
+    }
 
     @Override
     public List<Customer> getCustomerByAccountId(long accountId) {
