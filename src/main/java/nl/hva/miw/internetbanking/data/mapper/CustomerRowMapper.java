@@ -1,8 +1,6 @@
-package nl.hva.miw.internetbanking.repository;
+package nl.hva.miw.internetbanking.data.mapper;
 
-import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.model.Customer;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

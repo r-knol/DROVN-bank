@@ -1,4 +1,4 @@
-package nl.hva.miw.internetbanking.repository;
+package nl.hva.miw.internetbanking.data.dao;
 
 import nl.hva.miw.internetbanking.model.Account;
 

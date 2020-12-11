@@ -1,18 +1,17 @@
-package nl.hva.miw.internetbanking.repository;
+package nl.hva.miw.internetbanking.data.dao;
 
 import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
+import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.NaturalPersonRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
-import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Repository
 public class JdbcCustomerDAO implements CustomerDAO {

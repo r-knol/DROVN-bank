@@ -1,12 +1,10 @@
-package nl.hva.miw.internetbanking.repository;
+package nl.hva.miw.internetbanking.data.dao;
 
 import nl.hva.miw.internetbanking.DTO.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.model.Customer;
-import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CustomerDAO {
     CustomerAccountDTO getCustomerByUsernameAndPassword(String userName, String password);

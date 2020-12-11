@@ -1,4 +1,4 @@
-package nl.hva.miw.internetbanking.repository;
+package nl.hva.miw.internetbanking.data.mapper;
 
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import org.springframework.jdbc.core.RowMapper;

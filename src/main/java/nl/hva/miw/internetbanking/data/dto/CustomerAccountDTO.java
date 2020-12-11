@@ -3,7 +3,6 @@ package nl.hva.miw.internetbanking.DTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerAccountDTO {
