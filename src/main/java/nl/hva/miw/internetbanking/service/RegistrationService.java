@@ -26,10 +26,12 @@ public class RegistrationService {
         registerCustomer();
         registrationDto.getPersonPrivate().setId((int) registrationDto.getCustomer().getId());
         naturalPersonRepository.save(registrationDto.getPersonPrivate());
+        log.debug("registerNaturalPerson() called:\n{}", registrationDto.getPersonPrivate());
     }
 
     private void registerCustomer() {
         customerRepository.save(registrationDto.getCustomer());
+        log.debug("registerCustomer() called:\n{}", registrationDto.getCustomer());
     }
 
     // TODO: Implement method
@@ -38,8 +40,7 @@ public class RegistrationService {
     }
 
     public RegistrationDto getRegistrationDto() {
-        RegistrationDto registrationDto = this.registrationDto;
-        return registrationDto; // Now not returning direct reference to instance variable
+        return registrationDto;
     }
 
     public void setRegistrationDto(RegistrationDto registrationDto) {

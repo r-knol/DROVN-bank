@@ -1,11 +1,8 @@
 package nl.hva.miw.internetbanking.data.repository;
 
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
-import nl.hva.miw.internetbanking.exception.NaturalPersonNotFoundException;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
-import org.springframework.dao.DuplicateKeyException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,24 +18,27 @@ public class NaturalPersonRepository implements Repository<NaturalPerson, Long> 
     @Override
     public List<NaturalPerson> findAll() {
         Optional<List<NaturalPerson>> naturalPersonOptional = naturalPersonDAO.list();
-        return naturalPersonOptional.orElse(new ArrayList<>());
+        return naturalPersonOptional.orElse(List.of()); // returns immutable list
     }
 
     @Override
-    public NaturalPerson findById(Long id) throws NaturalPersonNotFoundException {
-        Optional<NaturalPerson> naturalPersonOptional = naturalPersonDAO.read(id);
-        return naturalPersonOptional.orElseThrow(() -> new NaturalPersonNotFoundException(
-                "NaturalPerson with id '" + id + "' not found!"));
+    public Optional<NaturalPerson> findById(Long id) {
+        return naturalPersonDAO.read(id);
     }
 
     @Override
-    public void save(NaturalPerson entity) throws DuplicateKeyException {
+    public void save(NaturalPerson entity) {
         naturalPersonDAO.create(entity);
     }
 
     @Override
     public void update(NaturalPerson entity) {
         naturalPersonDAO.update(entity);
+    }
+
+    @Override
+    public void delete(NaturalPerson entity) {
+        naturalPersonDAO.delete(entity.getId());
     }
 
     @Override
