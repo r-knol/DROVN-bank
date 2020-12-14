@@ -5,6 +5,8 @@ import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +16,12 @@ import java.util.List;
 public class CustomerService {
 
     private CustomerDAO customerDAO;
+    private Logger logger = LoggerFactory.getLogger(CustomerService.class);
 
     @Autowired
     public CustomerService(CustomerDAO customerDAO) { // Zorgt dat JdbcKlantDao object wordt geïnjecteerd
         this.customerDAO = customerDAO;
+        logger.warn("New CustomerDao.");
     }
 
     public CustomerAccountDTO getCustomerByUsernameAndPassword(String userName, String password) {
@@ -36,22 +40,31 @@ public class CustomerService {
 
     // // onderstaande methode toegevoegd door Nina 11-12-2020
     public String printNameCustomer(long customerId) {
-        // eerst checken of klant een NaturalPerson is:
-        NaturalPerson np = getNpByCustomerId(customerId);
-        String nameNp;
+        // eerst checken welk type klant het is:
+//        try {
+//            Customer customer = findById(customerId);
 
-//        if (!np.equals(null)) { // als NaturalPerson, dan:
+//        // in case of NaturalPerson:
+//        if (customer instanceof NaturalPerson) {
+//        NaturalPerson np = ((NaturalPerson) customer);
+        NaturalPerson np = getNpByCustomerId(customerId);
             // afhandeling voorvoegsel:
             if (np.getPreposition() != null) {
-                nameNp = String.format("%s %s %s", np.getFirstName(), np.getPreposition(), np.getSurName());
-                return nameNp;
+                return String.format("%s %s %s", np.getFirstName(), np.getPreposition(), np.getSurName());
             }
             // bij geen voorvoegsel:
-            nameNp = String.format("%s %s", np.getFirstName(), np.getSurName());
-            return nameNp;
-            // als het geen NaturalPerson is, dan kijken in tabel LegalPerson:
+            return String.format("%s %s", np.getFirstName(), np.getSurName());
+        }
+//            // als het een LegalPerson is:
+//        if (customer instanceof LegalPerson) {
+//            LegalPerson lp = ((LegalPerson) customer);
+//            return lp.getCompanyName();
 //        }
-    }
+//        } catch (Exception e) {
+//            logger.error("No customer found with ID " + customerId + ".");
+//        }
+//        return null;
+//    }
 
     public Customer getCustomerById(long id) {
         return customerDAO.getCustomerById(id);
