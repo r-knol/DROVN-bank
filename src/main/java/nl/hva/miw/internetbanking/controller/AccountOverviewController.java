@@ -33,8 +33,20 @@ public class AccountOverviewController {
         logger.warn("New AccountOverviewController.");
     }
 
+    // Onderstaand als een customerId beschikbaar is:
     @GetMapping("/rekeningoverzicht") // http://localhost:8080/rekeningoverzicht
     public String accountOverviewHandler(Model model) {
+
+        // search customer info by customer id:
+//        NaturalPerson np = customerService.getNpByCustomerId(customerId);
+
+
+        // search accounts by customer id:
+//        List<Account> accountList = accountService.getAccountsByCustomerId(customerId);
+//        model.addAttribute("allAccountsList", accountList);
+
+//        logger.info("De rekeningen van klantID " + customerId + " worden getoond.");
+
         return "pages/rekeningoverzicht";
     }
 }
