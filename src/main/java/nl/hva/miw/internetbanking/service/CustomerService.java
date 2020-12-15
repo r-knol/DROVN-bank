@@ -65,4 +65,7 @@ public class CustomerService {
         return customerDAO.getCustomersByAccountId(accountId);
     }
 
+  public Customer getCustomerByName(String userName) {
+      return customerDAO.getCutomerByName(userName);
+  }
 }

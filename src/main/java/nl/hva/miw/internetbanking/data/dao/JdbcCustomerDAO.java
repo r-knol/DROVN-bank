@@ -89,4 +89,9 @@ public class JdbcCustomerDAO implements CustomerDAO {
         return jdbcTemplate.query(sql, new CustomerRowMapper(), accountId);
     }
 
+  @Override
+  public Customer getCutomerByName(String userName) {
+    return null;
+  }
+
 }

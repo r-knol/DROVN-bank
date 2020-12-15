@@ -22,6 +22,8 @@ public interface CustomerDAO {
 
     List<Customer> getCustomerByAccountId(long accountId);
 
-    // onderstaande methode toegevoegd door Nina 09-12-2020
+  Customer getCutomerByName(String userName);
+
+  // onderstaande methode toegevoegd door Nina 09-12-2020
     // LegalPerson getLpByCustomerId(long customerId);
 }

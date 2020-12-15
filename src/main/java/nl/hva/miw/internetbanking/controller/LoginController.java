@@ -4,6 +4,7 @@ import nl.hva.miw.internetbanking.data.dto.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.service.CustomerService;
+import nl.hva.miw.internetbanking.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,49 +14,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@SessionAttributes("customer")
 public class LoginController {
 
     private CustomerService customerService;
+    private LoginService loginService;
 
     @Autowired
-    public LoginController(CustomerService customerService) { //@Richard Knol
-        this.customerService = customerService;
+    public LoginController(CustomerService customerService, LoginService loginService) {
+      this.customerService = customerService;
+      this.loginService = loginService;
     }
 
-    @GetMapping("/login") //@Richard Knol
+    @GetMapping("/login")
     public String showLogin() {
         return "pages/login";
     }
 
-    @PostMapping("/login") //@Richard Knol
-    public String handleLogin(@RequestParam String userName, String password, Model model) {
-
-        CustomerAccountDTO c = customerService.getCustomerByUsernameAndPassword(userName, password);
-        if (c != null) {
-            List<Account> accountList = c.getAccountList();
-
-            for (Account a : accountList) {
-                CustomerAccountDTO b = customerService.getCustomersByAccount(a.getAccountID());
-                model.addAttribute("accountWithCustomerList", b);
-
-                System.out.println(b.getCustomerList());
-
-                // lijstje klaarzetten voor namen van customers:
-                List<String> customerNameList = new ArrayList<>();
-
-                // voor alle klanten uit het lijstje:
-                for (Customer klant : b.getCustomerList()) {
-                    // maak een String van de customerName met printNameCustomer methode uit CustomerService:
-                    String customerName = customerService.printNameCustomer(klant.getId());
-                    // voeg deze toe aan het lijstje met customer-namen:
-                    customerNameList.add(customerName);
-                }
-                // lijstje met namen toevoegen aan Model:
-                model.addAttribute("customerNameList", customerNameList);
-            }
-            model.addAttribute("customerWithAccountOverview", c);
-            return "pages/rekeningoverzicht";
+    @PostMapping("/login")
+    public String handleLogin(@RequestParam String userName, @RequestParam String password, Model model) {
+      Customer customer = customerService.getCustomerByName(userName);
+      if (customer != null) {
+        if (loginService.validCustomer(customer, password)) {
+          model.addAttribute("customer", customer);
+          return "pages/rekeningoverzicht";
         }
-        return "pages/foutpagina";
+      }
+      return "pages/foutpagina";
     }
 }
