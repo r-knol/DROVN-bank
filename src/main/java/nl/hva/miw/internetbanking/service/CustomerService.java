@@ -66,7 +66,6 @@ public class CustomerService {
             return Optional.of(customer);
         }
         return Optional.empty();
-        logger.warn("New CustomerDao.");
     }
 
     public CustomerAccountDTO getCustomerByUsernameAndPassword(String userName, String password) {
