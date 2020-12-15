@@ -1,6 +1,7 @@
 package nl.hva.miw.internetbanking.data.mapper;
 
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.CustomerType;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -13,7 +14,8 @@ public class CustomerRowMapper implements RowMapper<Customer> {
         return new Customer(
                 resultSet.getLong("customerID"),
                 resultSet.getString("userName"),
-                resultSet.getString("password")
+                resultSet.getString("password"),
+                CustomerType.valueOf(resultSet.getString("customerType"))
         );
     }
 

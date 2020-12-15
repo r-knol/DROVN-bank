@@ -34,35 +34,35 @@
                             <tbody>
                             <tr>
                                 <th scope="row" width="50%">Voorletters</th>
-                                <td th:text="*{personPrivate.initials}"></td>
+                                <td th:text="*{naturalPerson.initials}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Voornaam</th>
-                                <td th:text="*{personPrivate.firstName}"></td>
+                                <td th:text="*{naturalPerson.firstName}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Tussenvoegsel</th>
-                                <td th:text="*{personPrivate.preposition}"></td>
+                                <td th:text="*{naturalPerson.preposition}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Achternaam</th>
-                                <td th:text="*{personPrivate.surName}"></td>
+                                <td th:text="*{naturalPerson.surName}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Geboortedatum</th>
-                                <td th:text="*{personPrivate.dateOfBirth}"></td>
+                                <td th:text="*{naturalPerson.dateOfBirth}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Burgerservicenummer (BSN)</th>
-                                <td th:text="*{personPrivate.socialSecurityNumber}"></td>
+                                <td th:text="*{naturalPerson.socialSecurityNumber}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Emailadres</th>
-                                <td th:text="*{personPrivate.email}"></td>
+                                <td th:text="*{naturalPerson.email}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Telefoon (mobiel)</th>
-                                <td th:text="*{personPrivate.phone}"></td>
+                                <td th:text="*{naturalPerson.phone}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -77,19 +77,19 @@
                             <tbody>
                             <tr>
                                 <th scope="row" width="50%">Postcode</th>
-                                <td th:text="*{personPrivate.postalCode}"></td>
+                                <td th:text="*{naturalPerson.postalCode}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Huisnummer + toevoeging</th>
-                                <td th:text="*{personPrivate.homeNumber}"></td>
+                                <td th:text="*{naturalPerson.homeNumber}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Straat</th>
-                                <td th:text="*{personPrivate.street}"></td>
+                                <td th:text="*{naturalPerson.street}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Woonplaats</th>
-                                <td th:text="*{personPrivate.residence}"></td>
+                                <td th:text="*{naturalPerson.residence}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -102,7 +102,7 @@
                             <tbody>
                             <tr>
                                 <th scope="row" width="50%">Gebruikersnaam</th>
-                                <td th:text="*{customer.username}"></td>
+                                <td th:text="*{customer.userName}"></td>
                             </tr>
                             </tbody>
                         </table>
@@ -117,61 +117,79 @@
                 <div class="pt-5 pb-5" id="accordion">
                     <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
                          id="collapseOne">
-                        <form action="#" class="row" method="post"
+                        <form action="#" class="row needs-validation" method="post" novalidate
                               th:action="@{/registratie-particulier}" th:object="${registrationDto}">
                             <div class="col-md-12 mt-2 mb-3">
                                 <h4 class="border border-dark border-w-2 rounded p-3">Persoonlijke gegevens</h4>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="initials">Voorletters</label>
-                                <input class="form-control" id="initials" name="initials"
-                                       th:field="*{personPrivate.initials}"
-                                       type="text"/>
+                                <input class="form-control" id="initials" name="initials" required
+                                       th:field="*{naturalPerson.initials}" type="text"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="firstname">Voornaam</label>
-                                <input class="form-control" id="firstname" name="firstName"
-                                       th:field="*{personPrivate.firstName}"
-                                       type="text"/>
+                                <input class="form-control" id="firstname" name="firstName" required
+                                       th:field="*{naturalPerson.firstName}" type="text"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="preposition">Tussenvoegsel</label>
                                 <input class="form-control" id="preposition" name="preposition"
-                                       th:field="*{personPrivate.preposition}"
-                                       type="text"/>
+                                       th:field="*{naturalPerson.preposition}" type="text"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="lastname">Achternaam</label>
-                                <input class="form-control" id="lastname" name="surName"
-                                       th:field="*{personPrivate.surName}"
-                                       type="text"/>
+                                <input class="form-control" id="lastname" name="surName" required
+                                       th:field="*{naturalPerson.surName}" type="text"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="dateOfBirth">Geboortedatum</label>
-                                <input class="form-control" id="dateOfBirth" name="dateOfBirth"
-                                       th:field="*{personPrivate.dateOfBirth}"
-                                       type="date"/>
+                                <input class="form-control" id="dateOfBirth" name="dateOfBirth" required
+                                       th:field="*{naturalPerson.dateOfBirth}" type="date"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="socialSecurityNumber">Burgerservicenummer (BSN)</label>
                                 <input aria-describedby="socialSecurityNumberHelp" class="form-control"
                                        id="socialSecurityNumber"
-                                       name="socialSecurityNumber" th:field="*{personPrivate.socialSecurityNumber}"
-                                       type="number"/>
+                                       name="socialSecurityNumber" required
+                                       th:field="*{naturalPerson.socialSecurityNumber}" type="number"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                                 <small class="form-text text-muted" id="socialSecurityNumberHelp">Je unieke,
                                     9-cijferige persoonsnummer</small>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="email">Emailadres</label>
-                                <input class="form-control" id="email" name="email" th:field="*{personPrivate.email}"
-                                       type="email"/>
+                                <input class="form-control" id="email" name="email" required
+                                       th:field="*{naturalPerson.email}" type="email"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="mobile">Telefoon (mobiel)</label>
                                 <input aria-describedby="mobileHelp" class="form-control" id="mobile" name="mobile"
-                                       pattern="[0-9]{10}" th:field="*{personPrivate.phone}"
-                                       type="tel"/>
-                                <small class="form-text text-muted" id="mobileHelp">Format: 06-12345678</small>
+                                       pattern="[0-9]{10}" required th:field="*{naturalPerson.phone}" type="tel"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
+                                <small class="form-text text-muted" id="mobileHelp">Format: 0612345678</small>
                             </div>
                             <div class="col-md-12 mt-5 mb-3">
                                 <h4 class="border border-dark border-w-2 rounded p-3">Adresgegevens</h4>
@@ -179,47 +197,62 @@
                             <div class="col-md-2 form-group">
                                 <label for="postalCode">Postcode</label>
                                 <input aria-describedby="postalCodeHelp" class="form-control" id="postalCode"
-                                       name="postalCode"
-                                       th:field="*{personPrivate.postalCode}" type="text"/>
+                                       name="postalCode" required th:field="*{naturalPerson.postalCode}" type="text"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                                 <small class="form-text text-muted" id="postalCodeHelp">Format: 1234AB</small>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="homeNumber">Huisnr.</label>
                                 <input aria-describedby="homeNumberHelp" class="form-control" id="homeNumber"
-                                       name="homeNumber"
-                                       th:field="*{personPrivate.homeNumber}" type="text"/>
+                                       name="homeNumber" required th:field="*{naturalPerson.homeNumber}" type="text"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                                 <small class="form-text text-muted" id="homeNumberHelp">Format: 123, 12b,
                                     123-I</small>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="street">Straat</label>
-                                <input class="form-control" id="street" name="street" th:field="*{personPrivate.street}"
-                                       type="text"/>
+                                <input class="form-control" id="street" name="street" required
+                                       th:field="*{naturalPerson.street}" type="text"/>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="residence">Woonplaats</label>
-                                <input class="form-control" id="residence" name="residence"
-                                       th:field="*{personPrivate.residence}"
-                                       type="text"/>
+                                <input class="form-control" id="residence" name="residence" required
+                                       th:field="*{naturalPerson.residence}" type="text"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                             </div>
                             <div class="col-md-12 mt-5 mb-3">
                                 <h4 class="border border-dark border-w-2 rounded p-3">Accountgegevens</h4>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="username_private">Gebruikersnaam</label>
-                                <input class="form-control" id="username_private" name="username_private"
-                                       th:field="*{customer.username}" type="text"/>
+                                <input class="form-control" id="username_private" name="username_private" required
+                                       th:field="*{customer.userName}" type="text"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="password_private">Wachtwoord</label>
-                                <input class="form-control" id="password_private" name="password_private"
+                                <input class="form-control" id="password_private" name="password_private" required
                                        th:field="*{customer.password}" type="password"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="password_private_confirmation">Wachtwoord</label>
                                 <input class="form-control" id="password_private_confirmation"
-                                       name="password_private_confirmation" th:field="*{passwordConfirmation}"
+                                       name="password_private_confirmation" required th:field="*{passwordConfirmation}"
                                        type="password"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
                             </div>
                             <div class="col-md-12 mt-3">
                                 <div class="col-md-6 pl-0">
@@ -239,19 +272,24 @@
 </div> <!-- /container - #page -->
 <div th:replace="fragments/scripts :: scripts-before-closing-tag"></div>
 <script>
-    const $buttonPrivate = $("#private");
-    const $buttonLegal = $("#legal");
-
-    $buttonLegal.on('click', function (event) {
-        event.preventDefault();
-        $(this).toggleClass('active');
-        $buttonPrivate.toggleClass('active');
-    });
-    $buttonPrivate.on('click', function (event) {
-        event.preventDefault();
-        $(this).toggleClass('active');
-        $buttonLegal.toggleClass('active');
-    });
+    // Script for custom form-validation
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            // Fetch all forms for custom validation
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over the forms and prevent submission
+            var validation = Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
 </script>
 </body>
 </html>

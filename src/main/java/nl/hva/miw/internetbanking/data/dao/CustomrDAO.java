@@ -2,9 +2,6 @@ package nl.hva.miw.internetbanking.data.dao;
 
 import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
 import nl.hva.miw.internetbanking.model.Customer;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -25,44 +22,46 @@ public class CustomrDAO implements DAO<Customer, Long> {
     }
 
     @Override
-    public void create(Customer entity) throws NullPointerException, DuplicateKeyException {
-        String sql = "INSERT INTO Customer(userName, password) VALUES(?,?)";
+    public void create(Customer customer) {
+        String sql = "INSERT INTO Customer(userName, password, customerType) VALUES(?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"customerId"});
-            ps.setString(1, entity.getUsername());
-            ps.setString(2, entity.getPassword());
+            ps.setString(1, customer.getUserName());
+            ps.setString(2, customer.getPassword());
+            ps.setString(3, customer.getCustomerType().name());
             return ps;
         }, keyHolder);
         int id = Objects.requireNonNull(keyHolder.getKey()).intValue();
-        entity.setId(id);
+        customer.setCustomerID(id);
     }
 
     @Override
     public Optional<Customer> read(Long id) {
         String sql = "SELECT * FROM Customer WHERE customerID = ?";
-        try {
-            return Optional.ofNullable(jdbcTemplate.queryForObject(sql,
-                    new CustomerRowMapper(), id));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return Optional.empty();
-        }
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), id));
     }
 
     @Override
-    public void update(Customer entity) throws DataAccessException {
+    public void update(Customer customer) {
         String sql = "UPDATE Customer SET userName = ?, password = ? WHERE customerID = ?";
-        jdbcTemplate.update(sql, entity.getUsername(), entity.getPassword(), entity.getId());
+        jdbcTemplate.update(sql, customer.getUserName(), customer.getPassword(),
+                customer.getCustomerID());
     }
 
     @Override
-    public void delete(Long id) throws DataAccessException {
+    public void delete(Customer customer) {
+        jdbcTemplate.update("DELETE FROM Customer WHERE customerID = ?", customer.getCustomerID());
+    }
+
+    @Override
+    public void deleteById(Long id) {
         jdbcTemplate.update("DELETE FROM Customer WHERE customerID = ?", id);
     }
 
     @Override
-    public Optional<List<Customer>> list() throws DataAccessException {
-        String sql = "SELECT * FROM NaturalPerson";
+    public Optional<List<Customer>> list() {
+        String sql = "SELECT * FROM Customer";
         return Optional.of(jdbcTemplate.query(sql, new CustomerRowMapper()));
     }
 
