@@ -12,7 +12,9 @@
     <h2 th:text="${customerWithAccountOverview.getCustomer().getUsername()}">naam</h2>
     <p th:if="${customerWithAccountOverview.getAccountList().isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
 
-    <table class="table table-bordered" th:unless="${customerWithAccountOverview.getAccountList().isEmpty()}">
+    <table class="table table-bordered"
+            th:unless="${customerWithAccountOverview.getAccountList().isEmpty()}"
+            th:object="${customerWithAccountOverview}">
         <thead class="thead-light">
         <tr>
             <th scope="col">IBAN</th>

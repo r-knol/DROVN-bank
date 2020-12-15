@@ -37,6 +37,8 @@ public class LoginController {
       if (customer != null) {
         if (loginService.validCustomer(customer, password)) {
           model.addAttribute("customer", customer);
+          CustomerAccountDTO customerDto = new CustomerAccountDTO(customer);
+          model.addAttribute("customerWithAccountOverview", customerDto);
           return "pages/rekeningoverzicht";
         }
       }

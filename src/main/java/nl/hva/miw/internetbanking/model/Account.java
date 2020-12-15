@@ -9,12 +9,26 @@ public class Account {
     private double balance;
     private String iban;
     private List<Transaction> transactions;
+    private List<Customer> accountHolders;
 
-    public Account(long accountID, double balance, String iban) {
+  public List<Customer> getAccountHolders() {
+    return accountHolders;
+  }
+
+  public void setAccountHolders(List<Customer> accountHolders) {
+    this.accountHolders = accountHolders;
+  }
+
+  public void addAccountHolder(Customer customer) {
+    this.accountHolders.add(customer);
+  }
+
+  public Account(long accountID, double balance, String iban) {
         this.accountID = accountID;
         this.balance = balance;
         this.iban = iban;
         this.transactions = new ArrayList<>();
+        this.accountHolders = new ArrayList<>();
     }
 
     public Account() {

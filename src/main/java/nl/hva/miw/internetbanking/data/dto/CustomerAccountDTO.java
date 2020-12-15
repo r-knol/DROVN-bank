@@ -9,25 +9,13 @@ public class CustomerAccountDTO {
 
     private Customer customer;
     private List<Account> accountList;
-    private Account account;
-    private List<Customer> customerList;
 
-    public CustomerAccountDTO(Customer customer, List<Account> list) { //todo: aparte klassen maken
-        this.customer = customer;
-        this.accountList = list;
+    public CustomerAccountDTO(Customer customer) {
+      super();
+      this.customer = customer;
     }
 
-    public CustomerAccountDTO(Account account, List<Customer> customerList) {
-        this.account = account;
-        this.customerList = customerList;
-    }
-
-    // companyName
-    // firstName, prepostion, lastNAme
-    // iban, balance
-
-    public CustomerAccountDTO() {
-    }
+    public CustomerAccountDTO() {}
 
 
     public Customer getCustomer() {
@@ -46,29 +34,11 @@ public class CustomerAccountDTO {
         this.accountList = accountList;
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public List<Customer> getCustomerList() {
-        return customerList;
-    }
-
-    public void setCustomerList(List<Customer> customerList) {
-        this.customerList = customerList;
-    }
-
     @Override
     public String toString() {
         return "CustomerAccountDTO{" +
                 "customer=" + customer +
                 ", accountList=" + accountList +
-                ", account=" + account +
-                ", customerList=" + customerList +
                 '}';
     }
 }

@@ -1,7 +1,10 @@
 package nl.hva.miw.internetbanking.service;
 
+import nl.hva.miw.internetbanking.data.dao.AccountDAO;
+import nl.hva.miw.internetbanking.data.dao.JdbcCustomerDAO;
 import nl.hva.miw.internetbanking.data.dto.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
+import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
@@ -14,10 +17,13 @@ import java.util.List;
 public class CustomerService {
 
     private CustomerDAO customerDAO;
+    private AccountDAO accountDAO;
 
     @Autowired
-    public CustomerService(CustomerDAO customerDAO) { // Zorgt dat JdbcKlantDao object wordt geïnjecteerd
-        this.customerDAO = customerDAO;
+    public CustomerService(CustomerDAO customerDAO, AccountDAO accountDAO) { // Zorgt dat JdbcKlantDao object wordt geïnjecteerd
+      super();
+      this.customerDAO = customerDAO;
+      this.accountDAO = accountDAO;
     }
 
     public CustomerAccountDTO getCustomerByUsernameAndPassword(String userName, String password) {
@@ -32,6 +38,13 @@ public class CustomerService {
     // onderstaande methode toegevoegd door Nina 11-12-2020
     public LegalPerson getLpbyCustomerId(long customerId) {
         return customerDAO.getLpByCustomerId(customerId);
+    }
+
+    public Customer createCustomer(long customerId) {
+      Customer customer = customerDAO.getCustomerById(customerId);
+      List<Account> customerAccounts = accountDAO.getAccountsForCustomer(customer);
+      customer.setAccounts(customerAccounts);
+      return customer;
     }
 
     // // onderstaande methode toegevoegd door Nina 11-12-2020

@@ -2,6 +2,7 @@ package nl.hva.miw.internetbanking.data.dao;
 
 import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
+import nl.hva.miw.internetbanking.model.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,4 +38,14 @@ public class JdbcAccountDAO implements AccountDAO {
     @Override
     public void saveAccount(Account account) {
     }
+
+  @Override
+  public List<Account> getAccountsForCustomer(Customer customer) {
+      List<Account> accounts = getAccountsByCustomerId(customer.getId());
+      for (Account acc : accounts) {
+        acc.addAccountHolder(customer);
+        customer.addAccount(acc);
+      }
+    return null;
+  }
 }
