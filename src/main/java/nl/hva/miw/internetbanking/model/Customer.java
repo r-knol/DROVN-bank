@@ -1,38 +1,48 @@
 package nl.hva.miw.internetbanking.model;
 
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+@NoArgsConstructor
+@ToString
 public class Customer {
 
     private long customerID;
     private String userName;
     private String password;
+    private CustomerType customerType;
 
-    public Customer(long id, String username, String password) {
-        this.customerID = id;
-        this.userName = username;
+    public Customer(String userName, String password, CustomerType customerType) {
+        this.userName = userName;
         this.password = password;
+        this.customerType = customerType;
+    }
+
+    public Customer(long customerID, String userName, String password, CustomerType customerType) {
+        this.customerID = customerID;
+        this.userName = userName;
+        this.password = password;
+        this.customerType = customerType;
     }
 
     public Customer(long id) {
         this.customerID = id;
     }
 
-    public Customer() {
-    }
-
-    public long getId() {
+    public long getCustomerID() {
         return customerID;
     }
 
-    public void setId(int id) {
-        this.customerID = id;
+    public void setCustomerID(long customerID) {
+        this.customerID = customerID;
     }
 
-    public String getUsername() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUsername(String username) {
-        this.userName = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -43,12 +53,12 @@ public class Customer {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customerID=" + customerID +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public CustomerType getCustomerType() {
+        return customerType;
     }
+
+    public void setCustomerType(CustomerType customerType) {
+        this.customerType = customerType;
+    }
+
 }

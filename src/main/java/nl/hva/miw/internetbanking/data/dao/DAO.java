@@ -11,8 +11,10 @@ public interface DAO<T, ID> {
 
     void update(T entity);
 
-    void delete(ID id);
+    void delete(T entity);
 
-    Optional<List<T>> list();
+    void deleteById(ID id);
+
+    Optional<List<T>> list(); // TODO: return Iterable
 
 }

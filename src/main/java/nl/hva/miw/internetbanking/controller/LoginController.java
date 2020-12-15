@@ -7,7 +7,9 @@ import nl.hva.miw.internetbanking.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +48,7 @@ public class LoginController {
                 // voor alle klanten uit het lijstje:
                 for (Customer klant : b.getCustomerList()) {
                     // maak een String van de customerName met printNameCustomer methode uit CustomerService:
-                    String customerName = customerService.printNameCustomer(klant.getId());
+                    String customerName = customerService.printNameCustomer(klant.getCustomerID());
                     // voeg deze toe aan het lijstje met customer-namen:
                     customerNameList.add(customerName);
                 }
