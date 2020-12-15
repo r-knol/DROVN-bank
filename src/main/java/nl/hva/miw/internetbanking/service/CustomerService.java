@@ -1,9 +1,8 @@
 package nl.hva.miw.internetbanking.service;
 
 import nl.hva.miw.internetbanking.data.dao.AccountDAO;
-import nl.hva.miw.internetbanking.data.dao.JdbcCustomerDAO;
-import nl.hva.miw.internetbanking.data.dto.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
+import nl.hva.miw.internetbanking.data.dto.CustomerAccountDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.LegalPerson;
@@ -66,9 +65,10 @@ public class CustomerService {
 //        }
     }
 
-    public Customer getCustomerById(long id) {
-        return customerDAO.getCustomerById(id);
-    }
+    // Methode met optional gebruiken
+//    public Customer getCustomerById(long id) {
+//        return customerDAO.getCustomerById(id);
+//    }
 
     public List<Customer> getCustomerByAccountId(long accountId) {
         return customerDAO.getCustomerByAccountId(accountId);

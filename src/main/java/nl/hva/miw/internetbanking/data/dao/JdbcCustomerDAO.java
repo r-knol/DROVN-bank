@@ -35,7 +35,7 @@ public class JdbcCustomerDAO implements CustomerDAO {
             Customer customer = jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), userName, password);
             List<Account> accountList = null;
             if (customer != null) {
-                accountList = jdbcAccountDAO.getAccountsByCustomerId(customer.getId());
+                accountList = jdbcAccountDAO.getAccountsByCustomerId(customer.getCustomerID());
             }
             return new CustomerAccountDTO(customer, accountList);
         } catch (Exception e) {
@@ -76,7 +76,7 @@ public class JdbcCustomerDAO implements CustomerDAO {
     // voor Legal Person:
     @Override
     public LegalPerson getLpByCustomerId(long customerId) {
-       final String sql = "SELECT * FROM LegalPerson WHERE customerID = ?";
+        final String sql = "SELECT * FROM LegalPerson WHERE companyID = ?";
         LegalPerson lp = jdbcTemplate.queryForObject(sql, new LegalPersonRowMapper(), customerId);
                 return lp;
     }
