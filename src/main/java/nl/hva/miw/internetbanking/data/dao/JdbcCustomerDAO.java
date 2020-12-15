@@ -35,21 +35,24 @@ public class JdbcCustomerDAO implements CustomerDAO {
             Customer customer = jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), userName, password);
             List<Account> accountList = null;
             if (customer != null) {
-                accountList = jdbcAccountDAO.getAccountsByCustomerId(customer.getId());
+                accountList = jdbcAccountDAO.getAccountsByCustomerId(customer.getCustomerID());
             }
-            return new CustomerAccountDTO(customer, accountList);
+            return new CustomerAccountDTO(customer);
         } catch (Exception e) {
             System.out.println(e);
             return null;
         }
     }
 
-    @Override //todo: deze wordt gebruikt in handleLogin
+    @Override
+    //todo deze wordt gebruikt in handleLogin
+    //TODO Die hele CustomerAccountDTO moet gerefactored worden.
     public CustomerAccountDTO getCustomersByAccountId(long accountId) {
         final String sql = "SELECT * FROM Account WHERE accountID = ?";
         Account account = jdbcTemplate.queryForObject(sql, new AccountRowMapper(), accountId);
         List<Customer> customerList = getCustomerByAccountId(accountId);
-        return new CustomerAccountDTO(account, customerList);
+        //return new CustomerAccountDTO(account);
+      return null;
     }
 
     @Override //@Richard Knol
@@ -76,7 +79,7 @@ public class JdbcCustomerDAO implements CustomerDAO {
     // voor Legal Person:
     @Override
     public LegalPerson getLpByCustomerId(long customerId) {
-       final String sql = "SELECT * FROM LegalPerson WHERE customerID = ?";
+        final String sql = "SELECT * FROM LegalPerson WHERE companyID = ?";
         LegalPerson lp = jdbcTemplate.queryForObject(sql, new LegalPersonRowMapper(), customerId);
                 return lp;
     }

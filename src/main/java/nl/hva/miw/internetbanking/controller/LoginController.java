@@ -1,17 +1,16 @@
 package nl.hva.miw.internetbanking.controller;
 
 import nl.hva.miw.internetbanking.data.dto.CustomerAccountDTO;
-import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.service.CustomerService;
 import nl.hva.miw.internetbanking.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @SessionAttributes("customer")
