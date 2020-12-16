@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.Optional;
+
 @Controller
 @SessionAttributes("customer")
 public class LoginController {
@@ -32,11 +34,13 @@ public class LoginController {
 
     @PostMapping("/login")
     public String handleLogin(@RequestParam String userName, @RequestParam String password, Model model) {
-      Customer customer = customerService.getCustomerByName(userName);
-      if (customer != null) {
-        if (loginService.validCustomer(customer, password)) {
-          model.addAttribute("customer", customer);
-          CustomerAccountDTO customerDto = new CustomerAccountDTO(customer);
+      Optional<Customer> customer = customerService.getCustomerByUsername(userName);
+
+      if (customer.isPresent()) {
+          Customer customerFound = customer.get();
+        if (loginService.validCustomer(customerFound, password)) {
+          model.addAttribute("customer", customerFound);
+          CustomerAccountDTO customerDto = new CustomerAccountDTO(customerFound);
           model.addAttribute("customerWithAccountOverview", customerDto);
             return "pages/account-overview";
         }
