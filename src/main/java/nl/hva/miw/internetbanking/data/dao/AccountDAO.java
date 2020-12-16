@@ -66,4 +66,9 @@ public class AccountDAO implements DAO<Account, Long> {
         return jdbcTemplate.query(sql, new AccountRowMapper(), customerID);
     }
 
+    public Account getAccountByIban (String iban) {
+        final String sql = "SELECT * FROM account WHERE iban = ?";
+        return jdbcTemplate.queryForObject(sql, new AccountRowMapper(), iban);
+    }
+
 }
