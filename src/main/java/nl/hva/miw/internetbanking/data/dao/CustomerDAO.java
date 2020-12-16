@@ -47,6 +47,12 @@ public class CustomerDAO implements DAO<Customer, Long> {
                 customerID));
     }
 
+    public Optional<Customer> read(String userName) {
+        String sql = "SELECT * FROM Customer WHERE userName = ?";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(),
+                userName));
+    }
+
     @Override
     public void update(Customer customer) {
         String sql = "UPDATE Customer SET userName = ?, password = ? WHERE customerID = ?";
