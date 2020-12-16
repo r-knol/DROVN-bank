@@ -1,6 +1,6 @@
 package nl.hva.miw.internetbanking.service;
 
-import nl.hva.miw.internetbanking.data.dao.AccountDAO;
+import nl.hva.miw.internetbanking.data.dao.OldAccountDAO;
 import nl.hva.miw.internetbanking.model.Account;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,21 +13,21 @@ import java.util.List;
 @Service
 public class AccountService {
 
-    private AccountDAO accountDao;
+    private OldAccountDAO oldAccountDao;
     private Logger logger = LoggerFactory.getLogger(AccountService.class);
 
     @Autowired
-    public AccountService(AccountDAO accountDao) {
-        this.accountDao = accountDao;
+    public AccountService(OldAccountDAO oldAccountDao) {
+        this.oldAccountDao = oldAccountDao;
         logger.warn("New AccountService.");
     }
 
     public List<Account> getAccountsByCustomerId(long customerId) {
-        return accountDao.getAccountsByCustomerId(customerId);
+        return oldAccountDao.getAccountsByCustomerId(customerId);
     }
 
     //@Author Veroniek
     public void saveNewAccount(Account account){
-        accountDao.saveAccount(account);
+        oldAccountDao.saveAccount(account);
     }
 }

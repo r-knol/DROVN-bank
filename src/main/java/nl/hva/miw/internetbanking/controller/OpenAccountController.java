@@ -29,9 +29,10 @@ public class OpenAccountController {
     public String rekeningOpenen(Model model) {
         Account account = new Account();
         model.addAttribute("rekening", account);
-        return "rekeningOpenen";
+        return "pages/open-account";
     }
 
-    //@Author Veroniek methode toevoegen die IBAN genereert, in rekeningOpenen.html toont en daarna opslaan in DB met customerID
+    //@Author Veroniek methode toevoegen die IBAN genereert, in open-account.html toont en daarna
+    // opslaan in DB met customerID
 
 }

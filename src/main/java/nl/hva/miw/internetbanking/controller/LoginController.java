@@ -25,7 +25,7 @@ public class LoginController {
       this.loginService = loginService;
     }
 
-    @GetMapping("/login") //@Richard Knol
+    @GetMapping("/login")
     public String showLogin() {
         return "pages/login";
     }
@@ -38,7 +38,7 @@ public class LoginController {
           model.addAttribute("customer", customer);
           CustomerAccountDTO customerDto = new CustomerAccountDTO(customer);
           model.addAttribute("customerWithAccountOverview", customerDto);
-          return "pages/rekeningoverzicht";
+            return "pages/account-overview";
         }
       }
       return "pages/foutpagina";

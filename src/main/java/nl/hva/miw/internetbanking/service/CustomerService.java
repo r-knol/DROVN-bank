@@ -81,7 +81,7 @@ public class CustomerService {
   //    Optional<Customer> optionalCustomer = getCustomerById(customerId);
   //    if(optionalCustomer.isPresent()) {
   //      Customer customer = optionalCustomer.get();
-  //      List<Account> customerAccounts = accountDAO.getAccountsForCustomer(customer);
+  //      List<Account> customerAccounts = oldAccountDAO.getAccountsForCustomer(customer);
   //      customer.setAccounts(customerAccounts);
   //      return customer;
   //    }
