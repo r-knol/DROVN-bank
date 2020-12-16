@@ -6,8 +6,6 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// aangemaakt door Nina 09-12-2020
-
 public class AccountRowMapper implements RowMapper<Account> {
 
     @Override

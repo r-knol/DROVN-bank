@@ -46,7 +46,15 @@ public class LoginController {
           model.addAttribute("customer", customerFound);
           CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(customerFound);
           customerDto.setAccountList(accountService.getAccountsForCustomer(customerFound));
-          model.addAttribute("customerWithAccountOverview", customerDto);
+
+          // voor alle accounts de bijbehorende customers ophalen:
+            for (Account acc : customerDto.getAccountList()) {
+                acc.setAccountHolders(customerService.getCustomerByAccountId(acc.getAccountID()));
+            }
+            model.addAttribute("customerWithAccountOverview", customerDto);
+
+            // controle op accountholders van Account op plek 0:
+            System.out.println(customerDto.getAccountList().get(0).getAccountHolders());
             return "pages/account-overview";
         }
       }
