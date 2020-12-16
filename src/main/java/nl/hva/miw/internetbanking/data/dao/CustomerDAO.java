@@ -93,7 +93,7 @@ public class CustomerDAO implements DAO<Customer, Long> {
 
     public List<Customer> getCustomerByAccountId(long accountId) {
         final String sql = "SELECT customer.customerid, customer.username, customer.password, " +
-                "account.accountid, account.iban, account.balance\n" +
+                "customer.customerType, account.accountid, account.iban, account.balance\n" +
                 "FROM customer_has_account JOIN customer ON customer_has_account" +
                 ".customerID=customer.customerID JOIN account ON\n" +
                 "account.accountID=customer_has_account.accountID WHERE account.accountID = ?";

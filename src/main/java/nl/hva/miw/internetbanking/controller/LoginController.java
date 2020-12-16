@@ -1,6 +1,8 @@
 package nl.hva.miw.internetbanking.controller;
 
+import nl.hva.miw.internetbanking.data.dto.AccountHasCustomersDTO;
 import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
+import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -45,7 +49,17 @@ public class LoginController {
           model.addAttribute("customer", customerFound);
           CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(customerFound);
           customerDto.setAccountList(accountService.getAccountsForCustomer(customerFound));
-          model.addAttribute("customerWithAccountOverview", customerDto);
+
+          // voor alle accounts de bijbehorende customers ophalen:
+            for (Account acc : customerDto.getAccountList()) {
+                acc.setAccountHolders(customerService.getCustomerByAccountId(acc.getAccountID()));
+            }
+
+            model.addAttribute("customerWithAccountOverview", customerDto);
+
+            // controle op accountholders van Account op plek 0:
+            System.out.println(customerDto.getAccountList().get(0).getAccountHolders());
+
             return "pages/account-overview";
         }
       }
