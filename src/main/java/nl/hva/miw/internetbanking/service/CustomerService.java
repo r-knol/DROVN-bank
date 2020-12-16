@@ -5,6 +5,7 @@ import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.CustomerType;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,27 +45,40 @@ public class CustomerService {
     }
   }
 
-  public Optional<Customer> getCustomerById(long id) {
-    Optional<Customer> optionalCustomer = customerDAO.read(id);
+  public Optional<Customer> getCustomerById(long customerID) {
+    return getCustomerDetails(customerDAO.read(customerID));
+  }
+
+  private Optional<Customer> getCustomerDetails(Optional<Customer> optionalCustomer) {
     if (optionalCustomer.isPresent()) {
       Customer customer = optionalCustomer.get();
-      switch (customer.getCustomerType()) {
-        case NATURAL:
-          Optional<NaturalPerson> naturalPersonOptional = naturalPersonDAO.read(id);
-          if (naturalPersonOptional.isPresent()) {
-            customer = naturalPersonOptional.get();
-          }
-          break;
-        case LEGAL:
-          Optional<LegalPerson> legalPersonOptional = legalPersonDAO.read(id);
-          if (legalPersonOptional.isPresent()) {
-            customer = legalPersonOptional.get();
-          }
-          break;
+      if (customer.getCustomerType().equals(CustomerType.NATURAL)) {
+        Optional<NaturalPerson> naturalPersonOptional =
+                naturalPersonDAO.read(customer.getCustomerID());
+        if (naturalPersonOptional.isPresent()) {
+          NaturalPerson naturalPerson = naturalPersonOptional.get();
+          naturalPerson.setUserName(customer.getUserName());
+          naturalPerson.setPassword(customer.getPassword());
+          customer = naturalPerson;
+        }
+      } else {
+        Optional<LegalPerson> legalPersonOptional =
+                legalPersonDAO.read(customer.getCustomerID());
+        if (legalPersonOptional.isPresent()) {
+          LegalPerson legalPerson = legalPersonOptional.get();
+          ;
+          legalPerson.setUserName(customer.getUserName());
+          legalPerson.setPassword(customer.getPassword());
+          customer = legalPerson;
+        }
       }
       return Optional.of(customer);
     }
-    return Optional.empty();
+    return optionalCustomer;
+  }
+
+  public Optional<Customer> getCustomerByUsername(String username) {
+    return getCustomerDetails(customerDAO.read(username));
   }
 
   // onderstaande methode toegevoegd door Nina 09-12-2020
