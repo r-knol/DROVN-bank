@@ -36,6 +36,7 @@ public class Customer implements Serializable {
         this.userName = userName;
         this.password = password;
         this.customerType = customerType;
+        this.accounts = new ArrayList<>();
     }
 
     public Customer(long id) {

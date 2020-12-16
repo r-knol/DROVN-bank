@@ -5,17 +5,17 @@ import nl.hva.miw.internetbanking.model.Customer;
 
 import java.util.List;
 
-public class CustomerAccountDTO {
+public class CustomerHasAccountsDTO {
 
     private Customer customer;
     private List<Account> accountList;
 
-    public CustomerAccountDTO(Customer customer) {
+    public CustomerHasAccountsDTO(Customer customer) {
       super();
       this.customer = customer;
     }
 
-    public CustomerAccountDTO() {}
+    public CustomerHasAccountsDTO() {}
 
 
     public Customer getCustomer() {
