@@ -1,18 +1,28 @@
 package nl.hva.miw.internetbanking.data.dao;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
+
 
 @Repository
 public class AccountDAO implements DAO<Account, Long> {
 
     private final JdbcTemplate jdbcTemplate;
+    Logger logger = LoggerFactory.getLogger(AccountDAO.class);
 
     public AccountDAO(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -20,12 +30,27 @@ public class AccountDAO implements DAO<Account, Long> {
 
     @Override
     public void create(Account account) {
-
+        String sql = "INSERT INTO Account(iban, balance) VALUES (?,?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, new String[]{"accountID"});
+            ps.setString(1, account.getIban());
+            ps.setDouble(2,account.getBalance());
+            return ps;
+        }, keyHolder);
+        long id = Objects.requireNonNull(keyHolder.getKey().longValue());
+        account.setAccountID(id);
     }
 
     @Override
     public Optional<Account> read(Long accountID) {
-        return Optional.empty();
+        try {
+            String sql = "SELECT * FROM Account WHERE accountID = ?";
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new AccountRowMapper(), accountID));
+        } catch (EmptyResultDataAccessException e) {
+            logger.info("No record found for account " + accountID, e);
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -65,10 +90,4 @@ public class AccountDAO implements DAO<Account, Long> {
                 "account.accountID=customer_has_account.accountID WHERE customer.customerID = ?";
         return jdbcTemplate.query(sql, new AccountRowMapper(), customerID);
     }
-
-    public Account getAccountByIban (String iban) {
-        final String sql = "SELECT * FROM account WHERE iban = ?";
-        return jdbcTemplate.queryForObject(sql, new AccountRowMapper(), iban);
-    }
-
 }

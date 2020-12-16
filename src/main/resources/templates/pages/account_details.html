@@ -8,30 +8,8 @@
     <title>Transactieoverzicht</title>
 </head>
 <body>
-<h1>Transactieoverzicht van:</h1>
-<h2 th:text="${account.getIban()}">iban</h2>
-<p th:if="${customerWithAccountOverview.getAccountList().isEmpty()}">Er zijn geen transacties om weer te geven</p>
+<h2>Transactieoverzicht van:</h2>
+<!--<h2 th:text="${a.iban}">IBAN</h2>&ndash;&gt;-->
 
-<table class="table table-bordered"
-       th:unless="${customerWithAccountOverview.getAccountList().isEmpty()}"
-       th:object="${customerWithAccountOverview}">
-    <thead class="thead-light">
-    <tr>
-        <th scope="col">Datum</th>
-        <th scope="col">Omschrijving</th>
-        <th scope="col">Bijschrijving</th>
-        <th scope="col">Afschrijving</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="a : ${accountWithTransactionsOverview.getTransactionList()}">
-        <td th:text="${t.getDate}"></td>
-        <td> <ul> <li th:each="customerName : ${a.getAccountHolders()}" th:text="${customerName}"></li></ul></td>
-        <td th:text="${a.balance}"></td>
-    </tr>
-    </tbody>
-</table>
-
-<p>Nog geen rekening? <a href="/rekeningOpenen">Open deze hier!</a></p>
 </body>
 </html>
