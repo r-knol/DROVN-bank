@@ -59,7 +59,6 @@ public class LoginController {
 
             // controle op accountholders van Account op plek 0:
             System.out.println(customerDto.getAccountList().get(0).getAccountHolders());
-
             return "pages/account-overview";
         }
       }

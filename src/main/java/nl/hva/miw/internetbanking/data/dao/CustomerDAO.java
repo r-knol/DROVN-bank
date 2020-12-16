@@ -6,6 +6,7 @@ import nl.hva.miw.internetbanking.data.mapper.NaturalPersonRowMapper;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -48,9 +49,13 @@ public class CustomerDAO implements DAO<Customer, Long> {
     }
 
     public Optional<Customer> read(String userName) {
-        String sql = "SELECT * FROM Customer WHERE userName = ?";
-        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(),
-                userName));
+        try {
+            String sql = "SELECT * FROM Customer WHERE userName = ?";
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(),
+                    userName));
+        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -98,10 +103,6 @@ public class CustomerDAO implements DAO<Customer, Long> {
                 ".customerID=customer.customerID JOIN account ON\n" +
                 "account.accountID=customer_has_account.accountID WHERE account.accountID = ?";
         return jdbcTemplate.query(sql, new CustomerRowMapper(), accountId);
-    }
-
-    public Customer getCutomerByName(String userName) {
-        return null;
     }
 
 }
