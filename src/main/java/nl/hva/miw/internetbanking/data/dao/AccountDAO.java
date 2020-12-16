@@ -54,7 +54,7 @@ public class AccountDAO implements DAO<Account, Long> {
             acc.addAccountHolder(customer);
             customer.addAccount(acc);
         }
-        return null;
+        return accounts;
     }
 
     public List<Account> getAccountsByCustomerId(long customerID) {

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class Customer {
+public class Customer implements Serializable {
 
     public static final String EMPTY_STRING = "";
     public static final long ZERO = 0;
@@ -35,6 +36,7 @@ public class Customer {
         this.userName = userName;
         this.password = password;
         this.customerType = customerType;
+        this.accounts = new ArrayList<>();
     }
 
     public Customer(long id) {

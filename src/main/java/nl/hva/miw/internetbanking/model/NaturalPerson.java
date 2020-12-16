@@ -3,9 +3,11 @@ package nl.hva.miw.internetbanking.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class NaturalPerson extends Customer {
+public class NaturalPerson extends Customer implements Serializable {
 
     private String initials;
     private String firstName;
