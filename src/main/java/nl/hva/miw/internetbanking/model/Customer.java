@@ -41,58 +41,6 @@ public class Customer {
         this.customerID = id;
     }
 
-    public long getCustomerID() {
-        return customerID;
-    }
-
-    public void setCustomerID(long customerID) {
-        this.customerID = customerID;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-  public String getUserName() {
-    return userName;
-  }
-
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
-
-  public List<Account> getAccounts() {
-    return accounts;
-  }
-
-  public void setAccounts(List<Account> accounts) {
-    this.accounts = accounts;
-  }
-
-  public void addAccount(Account account) {
-      this.accounts.add(account);
-  }
-
-  @Override
-  public String toString() {
-    return "Customer{" +
-        "customerID=" + customerID +
-        ", userName='" + userName + '\'' +
-        ", password='" + password + '\'' +
-        '}';
-  }
-    public CustomerType getCustomerType() {
-        return customerType;
-    }
-
-    public void setCustomerType(CustomerType customerType) {
-        this.customerType = customerType;
-    }
-
     public void addAccount(Account acc) {
         accounts.add(acc);
     }
