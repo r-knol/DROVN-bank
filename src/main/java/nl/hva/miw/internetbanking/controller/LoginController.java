@@ -1,6 +1,5 @@
 package nl.hva.miw.internetbanking.controller;
 
-import nl.hva.miw.internetbanking.data.dto.AccountHasCustomersDTO;
 import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -54,7 +51,6 @@ public class LoginController {
             for (Account acc : customerDto.getAccountList()) {
                 acc.setAccountHolders(customerService.getCustomerByAccountId(acc.getAccountID()));
             }
-
             model.addAttribute("customerWithAccountOverview", customerDto);
 
             // controle op accountholders van Account op plek 0:
