@@ -1,14 +1,21 @@
 package nl.hva.miw.internetbanking.model;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
+@Getter
+@Setter
 @ToString
 public class Customer {
+
+    public static final String EMPTY_STRING = "";
+    public static final long ZERO = 0;
 
     private long customerID;
     private String userName;
@@ -84,6 +91,10 @@ public class Customer {
 
     public void setCustomerType(CustomerType customerType) {
         this.customerType = customerType;
+    }
+
+    public void addAccount(Account acc) {
+        accounts.add(acc);
     }
 
 }

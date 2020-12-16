@@ -4,8 +4,6 @@ import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
-import nl.hva.miw.internetbanking.data.dto.CustomerAccountDTO;
-import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
@@ -18,28 +16,27 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-  private NaturalPersonDAO naturalPersonDAO;
-  private LegalPersonDAO legalPersonDAO;
-  private CustomerDAO customerDAO;
-  private AccountDAO accountDAO;
+  private final NaturalPersonDAO naturalPersonDAO;
+  private final LegalPersonDAO legalPersonDAO;
+  private final AccountDAO accountDAO;
+  private final CustomerDAO customerDAO;
 
   @Autowired
   public CustomerService(
-      CustomerDAO customerDAO,
-      NaturalPersonDAO naturalPersonDAO,
-      LegalPersonDAO legalPersonDAO,
-      AccountDAO accountDAO) {
+          NaturalPersonDAO naturalPersonDAO,
+          LegalPersonDAO legalPersonDAO,
+          AccountDAO accountDAO,
+          CustomerDAO customerDAO) {
     this.naturalPersonDAO = naturalPersonDAO;
     this.legalPersonDAO = legalPersonDAO;
-    this.customerDAO = customerDAO;
     this.accountDAO = accountDAO;
+    this.customerDAO = customerDAO;
   }
 
   // DataIntegrityViolationException - bij onjuist datum format
   // SQLIntegrityConstraintViolationException - bij null waarden voor non-null
   public <T extends Customer> void saveCustomer(T entity) {
-    //TODO CustomerDAO, CustomrDAO, JDBCCustomerDAO... FIX IT!
-    //customerDAO.create(entity);
+    customerDAO.create(entity);
     if (entity instanceof NaturalPerson) {
       naturalPersonDAO.create((NaturalPerson) entity);
     } else if (entity instanceof LegalPerson) {
@@ -70,10 +67,6 @@ public class CustomerService {
     return Optional.empty();
   }
 
-  public CustomerAccountDTO getCustomerByUsernameAndPassword(String userName, String password) {
-    return customerDAO.getCustomerByUsernameAndPassword(userName, password);
-  }
-
   // onderstaande methode toegevoegd door Nina 09-12-2020
   public NaturalPerson getNpByCustomerId(long customerId) {
     return customerDAO.getNpByCustomerId(customerId);
@@ -84,22 +77,26 @@ public class CustomerService {
     return customerDAO.getLpByCustomerId(customerId);
   }
 
-  public Customer createCustomer(long customerId) {
-    Customer customer = customerDAO.getCustomerById(customerId);
-    List<Account> customerAccounts = accountDAO.getAccountsForCustomer(customer);
-    customer.setAccounts(customerAccounts);
-    return customer;
-  }
+  //  public Customer createCustomer(long customerId) {
+  //    Optional<Customer> optionalCustomer = getCustomerById(customerId);
+  //    if(optionalCustomer.isPresent()) {
+  //      Customer customer = optionalCustomer.get();
+  //      List<Account> customerAccounts = accountDAO.getAccountsForCustomer(customer);
+  //      customer.setAccounts(customerAccounts);
+  //      return customer;
+  //    }
+  //    return null;
+  //  }
 
   // // onderstaande methode toegevoegd door Nina 11-12-2020
   public String printNameCustomer(long customerId) {
     // eerst checken welk type klant het is:
-//        try {
-//            Customer customer = findById(customerId);
+    //        try {
+    //            Customer customer = findById(customerId);
 
-//        // in case of NaturalPerson:
-//        if (customer instanceof NaturalPerson) {
-//        NaturalPerson np = ((NaturalPerson) customer);
+    //        // in case of NaturalPerson:
+    //        if (customer instanceof NaturalPerson) {
+    //        NaturalPerson np = ((NaturalPerson) customer);
     NaturalPerson np = getNpByCustomerId(customerId);
     String nameNp;
 
@@ -116,20 +113,21 @@ public class CustomerService {
 //        }
     }
 
-    // Methode met optional gebruiken
-//    public Customer getCustomerById(long id) {
-//        return customerDAO.getCustomerById(id);
-//    }
+  // Methode met optional gebruiken
+  //    public Customer getCustomerById(long id) {
+  //        return customerDAO.getCustomerById(id);
+  //    }
 
-    public List<Customer> getCustomerByAccountId(long accountId) {
-        return customerDAO.getCustomerByAccountId(accountId);
-    }
+  public List<Customer> getCustomerByAccountId(long accountId) {
+    return customerDAO.getCustomerByAccountId(accountId);
+  }
 
-    public CustomerAccountDTO getCustomersByAccount(long accountId) {
-        return customerDAO.getCustomersByAccountId(accountId);
-    }
+  //    public CustomerAccountDTO getCustomersByAccount(long accountId) {
+  //        return customerDAO.getCustomersByAccountId(accountId);
+  //    }
 
   public Customer getCustomerByName(String userName) {
-      return customerDAO.getCutomerByName(userName);
+    return customerDAO.getCutomerByName(userName);
   }
+
 }

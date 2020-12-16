@@ -15,6 +15,6 @@ public interface DAO<T, ID> {
 
     void deleteById(ID id);
 
-    Optional<List<T>> list(); // TODO: return Iterable
+    Optional<List<T>> list();
 
 }

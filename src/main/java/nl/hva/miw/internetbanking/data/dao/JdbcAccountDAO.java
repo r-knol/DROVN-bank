@@ -41,7 +41,7 @@ public class JdbcAccountDAO implements AccountDAO {
 
   @Override
   public List<Account> getAccountsForCustomer(Customer customer) {
-      List<Account> accounts = getAccountsByCustomerId(customer.getId());
+      List<Account> accounts = getAccountsByCustomerId(customer.getCustomerID());
       for (Account acc : accounts) {
         acc.addAccountHolder(customer);
         customer.addAccount(acc);
