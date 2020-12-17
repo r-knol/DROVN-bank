@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -44,18 +45,20 @@ public class LoginController {
           Customer customerFound = customer.get();
         if (loginService.validCustomer(customerFound, password)) {
           model.addAttribute("customer", customerFound);
+          model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customerFound.getCustomerID()));
           CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(customerFound);
           customerDto.setAccountList(accountService.getAccountsForCustomer(customerFound));
 
           // voor alle accounts de bijbehorende customers ophalen:
             for (Account acc : customerDto.getAccountList()) {
                 acc.setAccountHolders(customerService.getCustomerByAccountId(acc.getAccountID()));
-                // acc.addAccountHolderName(customerService.printNameCustomer(customerFound.getCustomerID()));
+                // voor iedere accountHolder de juiste naam ophalen:
+                for (Customer c : acc.getAccountHolders()) {
+                    acc.addAccountHolderName(customerService.printNameCustomer(c.getCustomerID()));
+                }
             }
-            model.addAttribute("customerWithAccountOverview", customerDto);
 
-            // controle op accountholders van Account op plek 0:
-            System.out.println(customerDto.getAccountList().get(0).getAccountHolders());
+            model.addAttribute("customerWithAccountOverview", customerDto);
             return "pages/account-overview";
         }
       }
