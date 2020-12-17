@@ -25,7 +25,9 @@
         <tbody>
         <tr th:each="a : ${customerWithAccountOverview.getAccountList()}">
             <td>
-                <a href="${a.iban}" th:href="@{/account_details}" th:text="${a.iban}"></a>
+                <a th:href="@{/account_details/{id}(id= ${a.getAccountID})}" >
+                    <span th:text="${a.iban}"></span>
+                </a>
             </td>
             <td> <ul> <li th:each="customerName : ${a.getAccountHolders()}" th:text="${customerName}"></li></ul></td>
             <td th:text="${a.balance}"></td>

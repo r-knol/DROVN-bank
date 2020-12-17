@@ -23,18 +23,20 @@ public class AccountDetailsController {
         this.accountService = accountService;
     }
 
-    @GetMapping("/acount_details/{a.iban}")
-    public String AccountDetailsHandler (@ModelAttribute String iban, Model model) {
-        Optional<Account> a = accountService.getAccountByIban(iban);
+    @GetMapping("/account_details/{id}")
+    public String AccountDetailsHandler (@PathVariable ("id") long accountID, Model model) {
+        Optional<Account> a = accountService.getAccountById(accountID);
+        System.out.println(a);
         if (a.isPresent()) {
             Account accountFound = a.get();
-            model.addAttribute(accountFound);
-            model.addAttribute("a.iban", accountFound.getIban());
+            model.addAttribute("account",accountFound);
+            model.addAttribute("iban", accountFound.getIban());
+            model.addAttribute("balance", accountFound.getBalance());
             AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO();
             accountService.setAccountTransactionDTO(accountTransactionDTO);
             model.addAttribute("accountWithTransactions", accountTransactionDTO);
             log.info("Model has account:\n{}", model.getAttribute("account"));
-            return "pages/account_details/{a.iban}";
+            return "pages/account_details";
         }
         return "pages/foutpagina";
     }

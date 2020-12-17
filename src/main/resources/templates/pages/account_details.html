@@ -9,7 +9,33 @@
 </head>
 <body>
 <h2>Transactieoverzicht van:</h2>
-<!--<h2 th:text="${a.iban}">IBAN</h2>&ndash;&gt;-->
+<h3 th:text="${account.getIban()}">IBAN</h3>
+<h3 th:text="${account.getBalance()}">Saldo</h3>
+<p th:if="${account.getTransactions().isEmpty()}">Er zijn geen transacties om weer te geven</p>
+<table class="table table-bordered" style="width: 100%"
+       th:unless="${account.getTransactions().isEmpty()}"
+       th:object="${account}">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Datum</th>
+        <th scope="col">Omschrijving</th>
+        <th scope="col">Bij</th>
+        <th scope="col">Af</th>
+    </tr>
+    </thead>
+    <tbody>
+<!--    <tr th:each="a : ${customerWithAccountOverview.getAccountList()}">-->
+<!--        <td>-->
+<!--            <a th:href="@{/account_details/{id}(id= ${a.getAccountID})}" >-->
+<!--                <span th:text="${a.iban}"></span>-->
+<!--            </a>-->
+<!--        </td>-->
+<!--        <td> <ul> <li th:each="customerName : ${a.getAccountHolders()}" th:text="${customerName}"></li></ul></td>-->
+<!--        <td th:text="${a.balance}"></td>-->
+<!--    </tr>-->
+    </tbody>
+</table>
 
+<p>Nog geen rekening? <a href="/rekeningOpenen">Open deze hier!</a></p>
 </body>
 </html>

@@ -9,10 +9,7 @@ import nl.hva.miw.internetbanking.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -56,6 +53,7 @@ public class LoginController {
 
             // controle op accountholders van Account op plek 0:
             System.out.println(customerDto.getAccountList().get(0).getAccountHolders());
+            System.out.println(customerDto.getAccountList());
             return "pages/account-overview";
         }
       }

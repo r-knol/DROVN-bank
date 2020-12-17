@@ -32,10 +32,11 @@ public class AccountOverviewController {
     }
 
     // Onderstaand als een customerId beschikbaar is:
-    @GetMapping("/account-overview/{a.iban}") // http://localhost:8080/rekeningoverzicht
-    public String accountOverviewHandler(@ModelAttribute String iban, Model model) {
-        System.out.println(iban);
-        Optional <Account> acc = accountService.getAccountByIban(iban);
+    @GetMapping("/account-overview/{id}") // http://localhost:8080/rekeningoverzicht
+    public String accountOverviewHandler(@ModelAttribute Account account,
+                                         @PathVariable ("id") long accountID, Model model) {
+        System.out.println(account.getAccountID());
+        Optional <Account> acc = accountService.getAccountById(accountID);
         model.addAttribute(acc);
         System.out.println(acc);
 
@@ -50,7 +51,7 @@ public class AccountOverviewController {
 
 //        logger.info("De rekeningen van klantID " + customerId + " worden getoond.");
 
-        return "account-overview";
+        return "/account-overview";
     }
 
 //    @RequestMapping(value = "/account-overview/{a.iban}", method = RequestMethod.GET)
@@ -60,9 +61,9 @@ public class AccountOverviewController {
 //        return accountService.getAccountByIban(iban);
 //    }
 
-    @PostMapping("/account-overview/{a.iban}")
-    public String PostHandlerAccountDetails (@ModelAttribute String iban, Model model) {
-        Optional <Account> acc = accountService.getAccountByIban(iban);
+    @PostMapping("/account-overview/{id}")
+    public String PostHandlerAccountDetails (@PathVariable ("id") long accountID, Model model) {
+        Optional <Account> acc = accountService.getAccountById(accountID);
         if (acc.isPresent()) {
             Account accountFound = acc.get();
             model.addAttribute("account", accountFound);
