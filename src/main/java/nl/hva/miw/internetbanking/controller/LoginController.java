@@ -50,6 +50,7 @@ public class LoginController {
           // voor alle accounts de bijbehorende customers ophalen:
             for (Account acc : customerDto.getAccountList()) {
                 acc.setAccountHolders(customerService.getCustomerByAccountId(acc.getAccountID()));
+                // acc.addAccountHolderName(customerService.printNameCustomer(customerFound.getCustomerID()));
             }
             model.addAttribute("customerWithAccountOverview", customerDto);
 

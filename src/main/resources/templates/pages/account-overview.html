@@ -25,7 +25,7 @@
         <tbody>
         <tr th:each="a : ${customerWithAccountOverview.getAccountList()}">
             <td th:text="${a.iban}"></td>
-            <td> <ul> <li th:each="customerName : ${customerWithAccountOverview.getAccountList().get(0).getAccountHolders()}" th:text="${customerName}"></li></ul></td>
+            <td> <ul> <li th:each="customerName : ${a.getAccountHolders()}" th:text="${customerName}"></li></ul></td>
             <td th:text="${a.balance}"></td>
         </tr>
         </tbody>
