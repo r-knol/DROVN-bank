@@ -38,7 +38,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String handleLogin(@RequestParam String userName, @RequestParam String password, Model model) {
+    public String handleLogin(@RequestParam(name = "userName") String userName, @RequestParam(name = "password") String password, Model model) {
       Optional<Customer> customer = customerService.getCustomerByUsername(userName);
 
       if (customer.isPresent()) {
@@ -64,4 +64,5 @@ public class LoginController {
       }
       return "pages/foutpagina";
     }
+
 }
