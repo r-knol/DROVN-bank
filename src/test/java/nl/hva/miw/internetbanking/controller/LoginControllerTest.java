@@ -25,6 +25,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(LoginController.class)
 class LoginControllerTest {
+    Customer nina = new Customer(1, "nvanloo", "myPassword", NATURAL);
+    List<Account> accountsNina = List.of(
+            new Account(1, 99.95, "84NL0563171251"),
+            new Account(2, 1234.56, "56NL0563172222")
+    );
+    Customer richard = new Customer(1, "rknol", "knolPassword", NATURAL);
+    List<Customer> customerList = List.of(nina, richard);
 
     @Autowired
     private MockMvc mockMvc;
@@ -44,14 +51,6 @@ class LoginControllerTest {
 
     @Test
     void handleLoginTest() {
-        Customer nina = new Customer(1, "nvanloo", "myPassword", NATURAL);
-        List<Account> accountsNina = List.of(
-                new Account(1, 99.95, "84NL0563171251"),
-                new Account(2, 1234.56, "56NL0563172222")
-                );
-        Customer richard = new Customer(1, "rknol", "knolPassword", NATURAL);
-        List<Customer> customerList = List.of(nina, richard);
-
         Mockito.when(customerService.getCustomerByUsername("nvanloo")).thenReturn(Optional.of(nina));
         Mockito.when(loginService.validCustomer(nina, "myPassword")).thenReturn(true);
         Mockito.when(customerService.printNameCustomer(1)).thenReturn("Nina van Loo");
