@@ -66,4 +66,14 @@ public class LoginController {
         }
         return "pages/foutpagina";
     }
+
+    @GetMapping("/loginemployee")
+    public String showLoginEmployee() {
+        return "pages/login-employee";
+    }
+
+    @PostMapping("/loginmedewerker")
+    public String handleLoginEmployee() {
+        return "";
+    }
 }
