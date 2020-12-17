@@ -56,8 +56,14 @@ public class LoginController {
 
             // controle op accountholders van Account op plek 0:
             System.out.println(customerDto.getAccountList().get(0).getAccountHolders());
-            return "pages/account-overview";
+
+
+            // TODO:
+            // Nog een if statement voor het geval dat het een employee is, andere modelAttribute meegeven
+            // model.addAttribute(employeeDashboard, ...)
+            // return "pages/employee-dashboard"
         }
+          return "pages/account-overview";
       }
       return "pages/foutpagina";
     }
