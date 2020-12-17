@@ -1,5 +1,6 @@
 package nl.hva.miw.internetbanking.service;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class CustomerService {
 
@@ -81,16 +83,6 @@ public class CustomerService {
         return getCustomerDetails(customerDAO.read(username));
     }
 
-    // onderstaande methode toegevoegd door Nina 09-12-2020
-    public NaturalPerson getNpByCustomerId(long customerId) {
-        return customerDAO.getNpByCustomerId(customerId);
-    }
-
-    // onderstaande methode toegevoegd door Nina 11-12-2020
-    public LegalPerson getLpbyCustomerId(long customerId) {
-        return customerDAO.getLpByCustomerId(customerId);
-    }
-
     //  public Customer createCustomer(long customerId) {
     //    Optional<Customer> optionalCustomer = getCustomerById(customerId);
     //    if(optionalCustomer.isPresent()) {
@@ -106,37 +98,27 @@ public class CustomerService {
         return customerDAO.getCustomerByAccountId(accountId);
     }
 
-    // // onderstaande methode toegevoegd door Nina 11-12-2020
     public String printNameCustomer(long customerId) {
         // eerst checken welk type klant het is:
-        //        try {
-        //            Customer customer = findById(customerId);
-
-        //        // in case of NaturalPerson:
-        //        if (customer instanceof NaturalPerson) {
-        //        NaturalPerson np = ((NaturalPerson) customer);
-        NaturalPerson np = getNpByCustomerId(customerId);
-        String nameNp;
-
-//        if (!np.equals(null)) { // als NaturalPerson, dan:
-        // afhandeling voorvoegsel:
-        if (np.getPreposition() != null) {
-            nameNp = String.format("%s %s %s", np.getFirstName(), np.getPreposition(), np.getSurName());
-            return nameNp;
-        }
-        // bij geen voorvoegsel:
-        nameNp = String.format("%s %s", np.getFirstName(), np.getSurName());
-        return nameNp;
-        // als het geen NaturalPerson is, dan kijken in tabel LegalPerson:
-//        }
+                try {
+                    Optional<Customer> optionalCustomer = getCustomerById(customerId);
+                    // in case of NaturalPerson:
+                    if (optionalCustomer.get() instanceof NaturalPerson) {
+                        NaturalPerson np = (NaturalPerson) optionalCustomer.get();
+                        // afhandeling voorvoegsel:
+                        if (np.getPreposition() != null) {
+                            return String.format("%s %s %s", np.getFirstName(), np.getPreposition(), np.getSurName());
+                        }
+                        // bij geen voorvoegsel:
+                        return String.format("%s %s", np.getFirstName(), np.getSurName());
+                        // in case of LegalPerson:
+                    } else {
+                        LegalPerson lp = (LegalPerson) optionalCustomer.get();
+                        return String.format("%s", lp.getCompanyName());
+                    }
+                } catch (Exception e) {
+                log.error("Er ging iets mis bij printNameCustomer(" + customerId + ").");
+                }
+                return null;
     }
-
-    // Methode met optional gebruiken
-    //    public Customer getCustomerById(long id) {
-    //        return customerDAO.getCustomerById(id);
-    //    }
-
-    //    public CustomerAccountDTO getCustomersByAccount(long accountId) {
-    //        return customerDAO.getCustomersByAccountId(accountId);
-    //    }
 }
