@@ -11,26 +11,24 @@ import java.io.Serializable;
 @Getter
 @Setter
 @ToString
-public class Employee extends Customer implements Serializable {
+public class Employee implements Serializable {
 
+    private long employeeID;
+    private String userName;
+    private String password;
+    private String firstName;
+    private String preposition;
+    private String lastName;
     private EmployeeRole employeeRole;
 
-    public Employee(EmployeeRole employeeRole) {
-        this.employeeRole = employeeRole;
-    }
-
-    public Employee(String userName, String password, CustomerType customerType, EmployeeRole employeeRole) {
-        super(userName, password, customerType);
-        this.employeeRole = employeeRole;
-    }
-
-    public Employee(long customerID, String userName, String password, CustomerType customerType, EmployeeRole employeeRole) {
-        super(customerID, userName, password, customerType);
-        this.employeeRole = employeeRole;
-    }
-
-    public Employee(long id, EmployeeRole employeeRole) {
-        super(id);
+    public Employee(long employeeID, String userName, String password, String firstName,
+                    String preposition, String lastName, EmployeeRole employeeRole) {
+        this.employeeID = employeeID;
+        this.userName = userName;
+        this.password = password;
+        this.firstName = firstName;
+        this.preposition = preposition;
+        this.lastName = lastName;
         this.employeeRole = employeeRole;
     }
 }

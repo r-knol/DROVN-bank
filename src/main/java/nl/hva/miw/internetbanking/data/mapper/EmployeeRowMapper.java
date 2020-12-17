@@ -13,7 +13,12 @@ public class EmployeeRowMapper implements RowMapper<Employee> {
     public Employee mapRow(ResultSet resultSet, int i) throws SQLException {
         return new Employee(
                 resultSet.getLong("employeeID"),
-                EmployeeRole.valueOf(resultSet.getString("role"))
-        );
+                resultSet.getString("userName"),
+                resultSet.getString("password"),
+                resultSet.getString("firstname"),
+                resultSet.getString("preposition"),
+                resultSet.getString("lastname"),
+                EmployeeRole.valueOf(resultSet.getString("role")
+        ));
     }
 }
