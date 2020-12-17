@@ -49,6 +49,10 @@ public class AccountService {
         return getAccountDetails(accountDao.read(accountID));
     }
 
+    public Optional<Account> getAccountByIban (String iban) {
+        return getAccountByIban(String.valueOf(accountDao.read(iban)));
+    }
+
     //@Author Veroniek
     public void saveNewAccount(Account account) {
         accountDao.create(account);

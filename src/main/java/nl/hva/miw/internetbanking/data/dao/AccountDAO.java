@@ -1,6 +1,5 @@
 package nl.hva.miw.internetbanking.data.dao;
 
-import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
@@ -49,6 +48,16 @@ public class AccountDAO implements DAO<Account, Long> {
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new AccountRowMapper(), accountID));
         } catch (EmptyResultDataAccessException e) {
             logger.info("No record found for account " + accountID, e);
+            return Optional.empty();
+        }
+    }
+
+    public Optional <Account> read(String iban) {
+        try {
+            String sql = "SELECT * FROM Account WHERE iban = ?";
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new AccountRowMapper(), iban));
+        } catch (EmptyResultDataAccessException e) {
+            logger.info("No record found for account " + iban, e);
             return Optional.empty();
         }
     }

@@ -7,10 +7,7 @@ import nl.hva.miw.internetbanking.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -26,9 +23,9 @@ public class AccountDetailsController {
         this.accountService = accountService;
     }
 
-    @GetMapping(value = "/account_details")
-    public String AccountDetailsHandler (@ModelAttribute Account account, Model model) {
-        Optional<Account> a = accountService.getAccountById(account.getAccountID());
+    @GetMapping("/acount_details/{a.iban}")
+    public String AccountDetailsHandler (@ModelAttribute String iban, Model model) {
+        Optional<Account> a = accountService.getAccountByIban(iban);
         if (a.isPresent()) {
             Account accountFound = a.get();
             model.addAttribute(accountFound);
@@ -37,9 +34,11 @@ public class AccountDetailsController {
             accountService.setAccountTransactionDTO(accountTransactionDTO);
             model.addAttribute("accountWithTransactions", accountTransactionDTO);
             log.info("Model has account:\n{}", model.getAttribute("account"));
-            return "pages/account_details";
+            return "pages/account_details/{a.iban}";
         }
         return "pages/foutpagina";
     }
+
+
 
 }

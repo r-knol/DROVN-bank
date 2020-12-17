@@ -37,23 +37,26 @@ public class LoginController {
     @PostMapping("/login")
     public String handleLogin(@RequestParam String userName,
                               @RequestParam String password,
-                              @ModelAttribute Account account, Model model) {
+                              @ModelAttribute Account account,
+                              Model model) {
       Optional<Customer> customer = customerService.getCustomerByUsername(userName);
 
       if (customer.isPresent()) {
           Customer customerFound = customer.get();
         if (loginService.validCustomer(customerFound, password)) {
           model.addAttribute("customer", customerFound);
+          model.addAllAttributes(customerFound.getAccounts());
           CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(customerFound);
           customerDto.setAccountList(accountService.getAccountsForCustomer(customerFound));
 
           // voor alle accounts de bijbehorende customers ophalen:
             for (Account acc : customerDto.getAccountList()) {
                 acc.setAccountHolders(customerService.getCustomerByAccountId(acc.getAccountID()));
+                model.addAttribute("account",acc);
+                model.addAttribute("iban", acc.getIban());
+                System.out.println(acc);
             }
             model.addAttribute("customerWithAccountOverview", customerDto);
-
-            // controle op accountholders van Account op plek 0:
             System.out.println(customerDto.getAccountList().get(0).getAccountHolders());
             return "pages/account-overview";
         }
