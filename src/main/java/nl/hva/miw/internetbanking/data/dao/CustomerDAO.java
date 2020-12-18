@@ -11,13 +11,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Component
+@Repository
 public class CustomerDAO implements DAO<Customer, Long> {
 
     private final JdbcTemplate jdbcTemplate;
@@ -85,9 +86,7 @@ public class CustomerDAO implements DAO<Customer, Long> {
         final String sql = "SELECT * FROM NaturalPerson WHERE ID = ?";
         NaturalPerson np = jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
                 customerId);
-        //        if (!np.equals(null)) {
         return np;
-        //
     }
 
     public LegalPerson getLpByCustomerId(long customerId) {

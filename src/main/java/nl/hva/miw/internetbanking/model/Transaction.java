@@ -1,24 +1,35 @@
 package nl.hva.miw.internetbanking.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.Date;
 
 public class Transaction {
 
     private long transactionID;
-    private String debetAccountNo;
-    private String creditAccountNo;
+    private String debetAccount;
+    private String creditAccount;
     private double amount;
     private String description;
-    private LocalDateTime dateTime;
+    private Date date;
 
-    public Transaction(long transactionID, String debetAccountNo,
-                       String creditAccountNo, double amount, String description, LocalDateTime dateTime) {
-        this.transactionID = transactionID;
-        this.debetAccountNo = debetAccountNo;
-        this.creditAccountNo = creditAccountNo;
+    public Transaction(String debetAccount, String creditAccount, double amount, String description, Date date) {
+        this.debetAccount = debetAccount;
+        this.creditAccount = creditAccount;
         this.amount = amount;
         this.description = description;
-        this.dateTime = dateTime;
+        this.date = date;
+    }
+
+    public Transaction(long transactionID, String debetAccount, String creditAccount, double amount, String description, Date date) {
+        this.transactionID = transactionID;
+        this.debetAccount = debetAccount;
+        this.creditAccount = creditAccount;
+        this.amount = amount;
+        this.description = description;
+        this.date = date;
+    }
+    public Transaction(long transactionID){
+        this.transactionID = transactionID;
     }
 
     public Transaction() {
@@ -32,20 +43,20 @@ public class Transaction {
         this.transactionID = transactionID;
     }
 
-    public String getDebetAccountNo() {
-        return debetAccountNo;
+    public String getDebetAccount() {
+        return debetAccount;
     }
 
-    public void setDebetAccountNo(String debetAccountNo) {
-        this.debetAccountNo = debetAccountNo;
+    public void setDebetAccount(String debetAccountNo) {
+        this.debetAccount = debetAccountNo;
     }
 
-    public String getCreditAccountNo() {
-        return creditAccountNo;
+    public String getCreditAccount() {
+        return creditAccount;
     }
 
     public void setCreditAccountNo(String creditAccountNo) {
-        this.creditAccountNo = creditAccountNo;
+        this.creditAccount = creditAccountNo;
     }
 
     public double getAmount() {
@@ -64,23 +75,23 @@ public class Transaction {
         this.description = description;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override
     public String toString() {
         return "Transaction{" +
                 "transactionID=" + transactionID +
-                ", debetAccountNo='" + debetAccountNo + '\'' +
-                ", creditAccountNo='" + creditAccountNo + '\'' +
+                ", debetAccountNo='" + debetAccount + '\'' +
+                ", creditAccountNo='" + creditAccount + '\'' +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
-                ", dateTime=" + dateTime +
+                ", date=" + date +
                 '}';
     }
 }

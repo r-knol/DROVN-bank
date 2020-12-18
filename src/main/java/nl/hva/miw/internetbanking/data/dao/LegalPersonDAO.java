@@ -1,5 +1,6 @@
 package nl.hva.miw.internetbanking.data.dao;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -9,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 public class LegalPersonDAO implements DAO<LegalPerson, Long> {
 
@@ -41,9 +43,14 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
 
     @Override
     public Optional<LegalPerson> read(Long id) {
-        String sql = "SELECT * FROM LegalPerson WHERE companyID = ?";
-        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new LegalPersonRowMapper(),
-                id));
+        try {
+            String sql = "SELECT * FROM LegalPerson WHERE companyID = ?";
+            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new LegalPersonRowMapper(),
+                    id));
+        } catch (Exception e) {
+            log.error("LegalPerson not found in database.");
+        }
+        return null;
     }
 
     @Override
