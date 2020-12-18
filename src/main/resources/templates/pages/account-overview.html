@@ -29,7 +29,7 @@
                     <span th:text="${a.iban}"></span>
                 </a>
             </td>
-            <td> <ul> <li th:each="customerName : ${a.getAccountHolders()}" th:text="${customerName}"></li></ul></td>
+            <td> <ul> <li th:each="customerName : ${a.getAccountHolderNames()}" th:text="${customerName}"></li></ul></td>
             <td th:text="${a.balance}"></td>
         </tr>
         </tbody>
