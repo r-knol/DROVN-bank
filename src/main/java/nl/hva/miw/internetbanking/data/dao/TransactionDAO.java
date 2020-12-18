@@ -12,6 +12,8 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -36,7 +38,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
             ps.setString(2, transaction.getCreditAccount());
             ps.setDouble(3, transaction.getAmount());
             ps.setString(4, transaction.getDescription());
-            ps.setDate(5, Date.valueOf(transaction.getDate()));
+            ps.setDate(5, Date.valueOf(String.valueOf(transaction.getDate())));
             return ps;
         }, keyHolder);
         long id = Objects.requireNonNull(keyHolder.getKey().longValue());

@@ -1,6 +1,6 @@
 package nl.hva.miw.internetbanking.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Transaction {
@@ -10,9 +10,9 @@ public class Transaction {
     private String creditAccount;
     private double amount;
     private String description;
-    private Date date;
+    private LocalDateTime date;
 
-    public Transaction(String debetAccount, String creditAccount, double amount, String description, Date date) {
+    public Transaction(String debetAccount, String creditAccount, double amount, String description, LocalDateTime date) {
         this.debetAccount = debetAccount;
         this.creditAccount = creditAccount;
         this.amount = amount;
@@ -20,7 +20,7 @@ public class Transaction {
         this.date = date;
     }
 
-    public Transaction(long transactionID, String debetAccount, String creditAccount, double amount, String description, Date date) {
+    public Transaction(long transactionID, String debetAccount, String creditAccount, double amount, String description, LocalDateTime date) {
         this.transactionID = transactionID;
         this.debetAccount = debetAccount;
         this.creditAccount = creditAccount;
@@ -75,11 +75,11 @@ public class Transaction {
         this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
