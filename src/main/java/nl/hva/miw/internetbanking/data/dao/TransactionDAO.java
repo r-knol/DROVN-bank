@@ -5,12 +5,14 @@ import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.TransactionRowMapper;
 import nl.hva.miw.internetbanking.model.Transaction;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class TransactionDAO implements DAO<Transaction, Long> {
 
     private final JdbcTemplate jdbcTemplate;
