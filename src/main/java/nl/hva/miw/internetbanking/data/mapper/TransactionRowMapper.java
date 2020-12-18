@@ -7,6 +7,8 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.time.ZoneId;
 
 public class TransactionRowMapper implements RowMapper<Transaction> {
     @Override
@@ -17,7 +19,7 @@ public class TransactionRowMapper implements RowMapper<Transaction> {
                 rs.getString("creditAccount"),
                 rs.getDouble("amount"),
                 rs.getString("description"),
-                rs.getDate("date")
+                Instant.ofEpochMilli(rs.getDate("date").getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime()
                 );
     }
 }
