@@ -78,7 +78,8 @@ public class CustomerService {
             }
             return optionalCustomer;
         } catch (Exception e) {
-            log.error("Something went wrong in getCustomerDetails(optionalCustomer). The Optional.of(optionalCustomer) is: " + Optional.of(optionalCustomer));
+            log.error("Something went wrong in getCustomerDetails(optionalCustomer)." +
+                    " The Optional.of(optionalCustomer) is: " + Optional.of(optionalCustomer));
         }
         return null;
     }

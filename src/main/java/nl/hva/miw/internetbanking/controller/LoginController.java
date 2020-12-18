@@ -65,8 +65,9 @@ public class LoginController {
                 }
 
                 model.addAttribute("customerWithAccountOverview", customerDto);
-                return "pages/account-overview";
+
             }
+            return "pages/account-overview";
         }
         return "pages/errorpage";
     }
