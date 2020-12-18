@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`LegalPerson` (
   `homeNumber` VARCHAR(10) NOT NULL,
   `street` VARCHAR(45) NOT NULL,
   `residence` VARCHAR(45) NOT NULL,
-  `employeeID` BIGINT(10) NOT NULL,
+  `employeeID` BIGINT(10),
   PRIMARY KEY (`companyID`),
   INDEX `fk_LegalPerson_Employee1_idx` (`employeeID` ASC) VISIBLE,
   CONSTRAINT `fk_Rechtspersoon_Klant1`
@@ -216,8 +216,8 @@ INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`, `userName`, `pa
 INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`, `userName`, `password`, `customerType`) VALUES ('2', 'rknol', 'rknol', 'natural');
 INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`, `userName`, `password`, `customerType`) VALUES ('3', 'hva', 'hva', 'legal');
 
-INSERT INTO `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`ID`, `initials`, `firstName`, `preposition`, `surName`, `dateOfBirth`, `socialSecurityNumber`, `email`, `phone`, `postalCode`, `homeNumber`, `street`, `residence`) VALUES ('1', 'N.', 'Nina', 'van', 'Loo', '1987-02-07', '159398289', 'ninavanloo@gmail.com', '0610087058', '1056AC', '2-H', 'James Rosskade', 'Amsterdam');
-INSERT INTO `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`ID`, `initials`, `firstName`, `surName`, `dateOfBirth`, `socialSecurityNumber`, `email`, `phone`, `postalCode`, `homeNumber`, `street`, `residence`) VALUES ('2', 'R.W.', 'Richard', 'Knol', '1990-05-11', '243535345', 'rknol@gmail.com', '0612345678', '1234AQ', '345', 'Oudenoord', 'Utrecht');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`customerID`, `initials`, `firstName`, `preposition`, `surName`, `dateOfBirth`, `socialSecurityNumber`, `email`, `phone`, `postalCode`, `homeNumber`, `street`, `residence`) VALUES ('1', 'N.', 'Nina', 'van', 'Loo', '1987-02-07', '159398289', 'ninavanloo@gmail.com', '0610087058', '1056AC', '2-H', 'James Rosskade', 'Amsterdam');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`customerID`, `initials`, `firstName`, `surName`, `dateOfBirth`, `socialSecurityNumber`, `email`, `phone`, `postalCode`, `homeNumber`, `street`, `residence`) VALUES ('2', 'R.W.', 'Richard', 'Knol', '1990-05-11', '243535345', 'rknol@gmail.com', '0612345678', '1234AQ', '345', 'Oudenoord', 'Utrecht');
 INSERT INTO `WebApplicatie_DROVN_Bank`.`LegalPerson` (`companyID`, `companyName`, `kvkNumber`, `sector`, `vatNumber`, `postalCode`, `homeNumber`, `street`, `residence`) VALUES ('3', 'Hogeschool van Amsterdam', '12345676', 'onderwijs', '1234567', '1000AB', '1', 'Wibautstraat', 'Amsterdam');
 
 INSERT INTO `WebApplicatie_DROVN_Bank`.`Account` (`accountID`, `iban`, `balance`) VALUES ('1', '84DROVN1234567', '10.00');
