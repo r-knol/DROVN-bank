@@ -11,7 +11,7 @@ public class Account implements Serializable {
     private String iban;
     private List<Transaction> transactions;
     private List<Customer> accountHolders;
-//    private List<String> accountHolderNames;
+    private List<String> accountHolderNames;
 
   public List<Customer> getAccountHolders() {
     return accountHolders;
@@ -31,7 +31,7 @@ public class Account implements Serializable {
         this.iban = iban;
         this.transactions = new ArrayList<>();
         this.accountHolders = new ArrayList<>();
-    //    this.accountHolderNames = new ArrayList<>();
+        this.accountHolderNames = new ArrayList<>();
     }
 
     public Account() {
@@ -72,18 +72,18 @@ public class Account implements Serializable {
     public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
-//
-//    public List<String> getAccountHolderNames() {
-//        return accountHolderNames;
-//    }
-//
-//    public void setAccountHolderNames(List<String> accountHolderNames) {
-//        this.accountHolderNames = accountHolderNames;
-//    }
-//
-//    public void addAccountHolderName(String name) {
-//        accountHolderNames.add(name);
-//    }
+
+    public List<String> getAccountHolderNames() {
+        return accountHolderNames;
+    }
+
+    public void setAccountHolderNames(List<String> accountHolderNames) {
+        this.accountHolderNames = accountHolderNames;
+    }
+
+    public void addAccountHolderName(String name) {
+        accountHolderNames.add(name);
+    }
 
     @Override
     public String toString() {
