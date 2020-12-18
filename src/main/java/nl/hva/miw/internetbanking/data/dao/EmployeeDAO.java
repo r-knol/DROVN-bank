@@ -21,7 +21,7 @@ public class EmployeeDAO implements DAO<Employee, Long> {
 
     @Override
     public void create(Employee employee) {
-        String sql = "INSERT INTO Employee(employeeID, userName, password, firstName, preposition, lastName, role) " +
+        String sql = "INSERT INTO Employee(employeeID, userName, password, firstName, preposition, surName, role) " +
                 "VALUES(?,?,?,?,?,?,?)";
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql);
@@ -30,7 +30,7 @@ public class EmployeeDAO implements DAO<Employee, Long> {
             ps.setString(2, employee.getPassword());
             ps.setString(3, employee.getFirstName());
             ps.setString(4, employee.getPreposition());
-            ps.setString(5, employee.getLastName());
+            ps.setString(5, employee.getSurName());
             ps.setString(2, employee.getEmployeeRole().getLabel());
             return ps;
         });

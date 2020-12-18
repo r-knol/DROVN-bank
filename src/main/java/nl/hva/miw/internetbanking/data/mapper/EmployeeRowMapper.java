@@ -15,9 +15,9 @@ public class EmployeeRowMapper implements RowMapper<Employee> {
                 resultSet.getLong("employeeID"),
                 resultSet.getString("userName"),
                 resultSet.getString("password"),
-                resultSet.getString("firstname"),
+                resultSet.getString("firstName"),
                 resultSet.getString("preposition"),
-                resultSet.getString("lastname"),
+                resultSet.getString("surName"),
                 EmployeeRole.valueOf(resultSet.getString("role")
         ));
     }

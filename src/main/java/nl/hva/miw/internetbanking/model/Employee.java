@@ -18,17 +18,17 @@ public class Employee implements Serializable {
     private String password;
     private String firstName;
     private String preposition;
-    private String lastName;
+    private String surName;
     private EmployeeRole employeeRole;
 
     public Employee(long employeeID, String userName, String password, String firstName,
-                    String preposition, String lastName, EmployeeRole employeeRole) {
+                    String preposition, String surName, EmployeeRole employeeRole) {
         this.employeeID = employeeID;
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;
         this.preposition = preposition;
-        this.lastName = lastName;
+        this.surName = surName;
         this.employeeRole = employeeRole;
     }
 }
