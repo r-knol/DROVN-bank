@@ -52,31 +52,35 @@ public class CustomerService {
     }
 
     private Optional<Customer> getCustomerDetails(Optional<Customer> optionalCustomer) {
-        if (optionalCustomer.isPresent()) {
-            Customer customer = optionalCustomer.get();
-            if (customer.getCustomerType().equals(CustomerType.NATURAL)) {
-                Optional<NaturalPerson> naturalPersonOptional =
-                        naturalPersonDAO.read(customer.getCustomerID());
-                if (naturalPersonOptional.isPresent()) {
-                    NaturalPerson naturalPerson = naturalPersonOptional.get();
-                    naturalPerson.setUserName(customer.getUserName());
-                    naturalPerson.setPassword(customer.getPassword());
-                    customer = naturalPerson;
+        try {
+            if (optionalCustomer.isPresent()) {
+                Customer customer = optionalCustomer.get();
+                if (customer.getCustomerType().equals(CustomerType.NATURAL)) {
+                    Optional<NaturalPerson> naturalPersonOptional =
+                            naturalPersonDAO.read(customer.getCustomerID());
+                    if (naturalPersonOptional.isPresent()) {
+                        NaturalPerson naturalPerson = naturalPersonOptional.get();
+                        naturalPerson.setUserName(customer.getUserName());
+                        naturalPerson.setPassword(customer.getPassword());
+                        customer = naturalPerson;
+                    }
+                } else {
+                    Optional<LegalPerson> legalPersonOptional =
+                            legalPersonDAO.read(customer.getCustomerID());
+                    if (legalPersonOptional.isPresent()) {
+                        LegalPerson legalPerson = legalPersonOptional.get();
+                        legalPerson.setUserName(customer.getUserName());
+                        legalPerson.setPassword(customer.getPassword());
+                        customer = legalPerson;
+                    }
                 }
-            } else {
-                Optional<LegalPerson> legalPersonOptional =
-                        legalPersonDAO.read(customer.getCustomerID());
-                if (legalPersonOptional.isPresent()) {
-                    LegalPerson legalPerson = legalPersonOptional.get();
-                    ;
-                    legalPerson.setUserName(customer.getUserName());
-                    legalPerson.setPassword(customer.getPassword());
-                    customer = legalPerson;
-                }
+                return Optional.of(customer);
             }
-            return Optional.of(customer);
+            return optionalCustomer;
+        } catch (Exception e) {
+            log.error("Something went wrong in getCustomerDetails(optionalCustomer). The Optional.of(optionalCustomer) is: " + Optional.of(optionalCustomer));
         }
-        return optionalCustomer;
+        return null;
     }
 
     public Optional<Customer> getCustomerByUsername(String username) {
