@@ -79,9 +79,9 @@ public class CustomerService {
             return optionalCustomer;
         } catch (Exception e) {
             log.error("Something went wrong in getCustomerDetails(optionalCustomer)." +
-                    " The Optional.of(optionalCustomer) is: " + Optional.of(optionalCustomer));
+                    " The Optional.of(optionalCustomer) is: " + Optional.of(optionalCustomer) + e);
         }
-        return null;
+        return Optional.empty();
     }
 
     public Optional<Customer> getCustomerByUsername(String username) {
@@ -108,6 +108,7 @@ public class CustomerService {
                 try {
                     Optional<Customer> optionalCustomer = getCustomerById(customerId);
                     // in case of NaturalPerson:
+                    if (optionalCustomer.isPresent())
                     if (optionalCustomer.get() instanceof NaturalPerson) {
                         NaturalPerson np = (NaturalPerson) optionalCustomer.get();
                         // afhandeling voorvoegsel:

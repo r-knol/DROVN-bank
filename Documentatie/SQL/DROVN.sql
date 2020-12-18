@@ -229,5 +229,9 @@ INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer_has_Account` (`customerID`, `ac
 INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer_has_Account` (`customerID`, `accountID`) VALUES ('2', '2');
 INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer_has_Account` (`customerID`, `accountID`) VALUES ('3', '3');
 
+INSERT INTO `WebApplicatie_DROVN_Bank`.`Employee` (`employeeID`, `userName`, `password`, `firstName`, `preposition`, `surName`, `role`) VALUES (1,'zack','zack','zack','van','zack','ACCOUNTMANAGER'),
+                                                                                                                                               (2,'jan','jan','jan','de','jan','HEAD_LEGAL'),
+                                                                                                                                               (3,'piet','piet','piet','','piet','HEAD_PRIVATE');
+
 
 

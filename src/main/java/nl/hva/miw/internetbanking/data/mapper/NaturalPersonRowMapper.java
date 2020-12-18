@@ -11,7 +11,7 @@ public class NaturalPersonRowMapper implements RowMapper<NaturalPerson> {
     @Override
     public NaturalPerson mapRow(ResultSet resultSet, int i) throws SQLException {
         return new NaturalPerson(
-                resultSet.getLong("ID"),
+                resultSet.getLong("customerID"),
                 resultSet.getString("initials"),
                 resultSet.getString("firstName"),
                 resultSet.getString("preposition"),

@@ -46,7 +46,7 @@ public class LoginController {
             String password, Model model) {
 
         Optional<Customer> customer = customerService.getCustomerByUsername(userName);
-
+        System.out.println(customer);
         if (customer.isPresent()) {
             Customer customerFound = customer.get();
             if (loginService.validCustomer(customerFound, password)) {
@@ -63,11 +63,9 @@ public class LoginController {
                         acc.addAccountHolderName(customerService.printNameCustomer(c.getCustomerID()));
                     }
                 }
-
                 model.addAttribute("customerWithAccountOverview", customerDto);
-
+                return "pages/account-overview";
             }
-            return "pages/account-overview";
         }
         return "pages/errorpage";
     }
@@ -87,11 +85,9 @@ public class LoginController {
             Employee employeeFound = employee.get();
             if (loginService.validEmployee(employeeFound, password)) {
                 model.addAttribute("employee", employeeFound);
+                return "pages/employee-dashboard";
             }
-            return "pages/employee-dashboard";
         }
-        else {
-            return "pages/errorpage-employee";
-        }
+        return "pages/errorpage-employee";
     }
 }

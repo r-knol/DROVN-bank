@@ -21,7 +21,7 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
 
     @Override
     public void create(NaturalPerson naturalPerson) {
-        String sql = "INSERT INTO NaturalPerson(ID, initials, firstName, preposition, " +
+        String sql = "INSERT INTO NaturalPerson(customerID, initials, firstName, preposition, " +
                 "surName, dateOfBirth, socialSecurityNumber, email, phone, postalCode, " +
                 "homeNumber, street, residence) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         jdbcTemplate.update(connection -> {
@@ -45,7 +45,7 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
 
     @Override
     public Optional<NaturalPerson> read(Long id) {
-        String sql = "SELECT * FROM NaturalPerson WHERE ID = ?";
+        String sql = "SELECT * FROM NaturalPerson WHERE customerID = ?";
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
                 id));
     }
@@ -55,7 +55,7 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
         String sql = "UPDATE NaturalPerson SET initials = ?, firstName = ?, preposition = ?" +
                 ", surName = ?, dateOfBirth = ?, socialSecurityNumber = ?, email = ?" +
                 ", phone = ?, postalCode = ?, homeNumber = ?, street = ?, residence = ? " +
-                "WHERE ID = ?";
+                "WHERE customerID = ?";
         jdbcTemplate.update(sql, naturalPerson.getInitials(), naturalPerson.getFirstName(),
                 naturalPerson.getPreposition(), naturalPerson.getSurName(),
                 naturalPerson.getDateOfBirth(),
@@ -68,13 +68,13 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
 
     @Override
     public void delete(NaturalPerson naturalPerson) {
-        jdbcTemplate.update("DELETE FROM NaturalPerson WHERE ID = ?",
+        jdbcTemplate.update("DELETE FROM NaturalPerson WHERE customerID = ?",
                 naturalPerson.getCustomerID());
     }
 
     @Override
     public void deleteById(Long id) {
-        jdbcTemplate.update("DELETE FROM NaturalPerson WHERE ID = ?", id);
+        jdbcTemplate.update("DELETE FROM NaturalPerson WHERE customerID = ?", id);
     }
 
     @Override
