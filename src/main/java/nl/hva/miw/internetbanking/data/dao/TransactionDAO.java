@@ -5,14 +5,15 @@ import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.TransactionRowMapper;
 import nl.hva.miw.internetbanking.model.Transaction;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
-@Repository
 public class TransactionDAO implements DAO<Transaction, Long> {
 
     private final JdbcTemplate jdbcTemplate;
@@ -23,18 +24,20 @@ public class TransactionDAO implements DAO<Transaction, Long> {
 
     @Override
     public void create(Transaction transaction) {
-        String sql = "INSERT INTO TRANSACTION (transactionID, debetAccount, creditAccount, amount, description, dateTime) " +
-                "VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO TRANSACTION (debetAccount, creditAccount, amount, description, dateTime) " +
+                "VALUES(?,?,?,?,?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setLong(1, transaction.getTransactionID());
+            PreparedStatement ps = connection.prepareStatement(sql, new String[]{"transactionID"});
             ps.setString(1, transaction.getDebetAccount());
             ps.setString(2, transaction.getCreditAccount());
             ps.setDouble(3, transaction.getAmount());
             ps.setString(4, transaction.getDescription());
             ps.setDate(5, Date.valueOf(transaction.getDate()));
             return ps;
-        });
+        }, keyHolder);
+        long id = Objects.requireNonNull(keyHolder.getKey().longValue());
+        transaction.setTransactionID(id);
     }
 
     @Override
