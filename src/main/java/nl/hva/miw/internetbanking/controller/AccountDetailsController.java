@@ -38,7 +38,7 @@ public class AccountDetailsController {
             log.info("Model has account:\n{}", model.getAttribute("account"));
             return "pages/account_details";
         }
-        return "pages/foutpagina";
+        return "errorpage";
     }
 
 

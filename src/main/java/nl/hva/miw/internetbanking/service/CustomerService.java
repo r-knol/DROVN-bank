@@ -68,7 +68,6 @@ public class CustomerService {
                         legalPersonDAO.read(customer.getCustomerID());
                 if (legalPersonOptional.isPresent()) {
                     LegalPerson legalPerson = legalPersonOptional.get();
-                    ;
                     legalPerson.setUserName(customer.getUserName());
                     legalPerson.setPassword(customer.getPassword());
                     customer = legalPerson;
