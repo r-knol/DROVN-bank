@@ -1,16 +1,19 @@
 package nl.hva.miw.internetbanking.data.dao;
 
+import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.EmployeeRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.TransactionRowMapper;
 import nl.hva.miw.internetbanking.model.Transaction;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class TransactionDAO implements DAO<Transaction, Long> {
 
     private final JdbcTemplate jdbcTemplate;
@@ -67,5 +70,15 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     public Optional<List<Transaction>> list() {
         String sql = "SELECT * FROM transaction";
         return Optional.of(jdbcTemplate.query(sql, new TransactionRowMapper()));
+    }
+
+    public List<Transaction> getTransactionsByAccountId (long accountID) {
+        String sql = "SELECT account.accountid, account.iban, account.balance, transaction.transactionid, " +
+                "transaction.amount, transaction.description, transaction.dateTime, transaction.creditAccount, " +
+                "transaction.debitAccount\n" +
+                "FROM transaction_has_account JOIN account ON Transaction_has_account" +
+                ".transactionID=transaction.transactionID JOIN account ON\n" +
+                "account.accountID=transaction_has_account.accountID WHERE account.accountID = ?";
+        return jdbcTemplate.query(sql, new TransactionRowMapper(), accountID);
     }
 }
