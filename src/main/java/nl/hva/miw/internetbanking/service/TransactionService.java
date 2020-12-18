@@ -43,6 +43,8 @@ public class TransactionService {
         return getTransactionDetails(transactionDAO.read(transactionID));
     }
 
-
-
+    public void doTransaction(Account fromAccount, Account toAccount) {
+//        Transaction transaction = new Transaction();
+//        transactionDAO.create(transaction);
+    }
 }
