@@ -25,6 +25,9 @@ public class Transaction {
     public Transaction(long transactionID, String debetAccount, String creditAccount, double amount, String description, Date date) {
     }
 
+    public Transaction() {
+    }
+
     public long getTransactionID() {
         return transactionID;
     }

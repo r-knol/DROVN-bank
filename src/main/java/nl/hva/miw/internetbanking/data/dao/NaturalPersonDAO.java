@@ -4,12 +4,13 @@ import nl.hva.miw.internetbanking.data.mapper.NaturalPersonRowMapper;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Repository
 public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
 
     private final JdbcTemplate jdbcTemplate;
