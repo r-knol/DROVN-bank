@@ -85,9 +85,7 @@ public class CustomerDAO implements DAO<Customer, Long> {
         final String sql = "SELECT * FROM NaturalPerson WHERE ID = ?";
         NaturalPerson np = jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
                 customerId);
-        //        if (!np.equals(null)) {
         return np;
-        //
     }
 
     public LegalPerson getLpByCustomerId(long customerId) {
