@@ -75,9 +75,20 @@ public class LoginController {
         return "pages/login-employee";
     }
 
-    @PostMapping("/loginmedewerker")
-    public String handleLoginEmployee() {
-        return "";
+    @PostMapping("/loginemployee")
+    public String handleLoginEmployee(@RequestParam(name = "userName") String userName, @RequestParam(name = "password") String password, Model model) {
+        Optional<Employee> employee = employeeService.getEmployeeByUsername(userName);
+
+        if (employee.isPresent()) {
+            Employee employeeFound = employee.get();
+            if (loginService.validEmployee(employeeFound, password))
+                model.addAttribute("employee", employeeFound);
+            return "pages/employee-dashboard";
+        }
+        else {
+            return "pages/foutpagina";
+        }
+
     }
 
 }

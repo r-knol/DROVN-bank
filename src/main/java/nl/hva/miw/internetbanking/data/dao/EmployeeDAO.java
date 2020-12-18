@@ -44,7 +44,7 @@ public class EmployeeDAO implements DAO<Employee, Long> {
 
     public Optional<Employee> read(String userName) {
         try {
-            String sql = "SELECT * FROM Customer WHERE userName = ?";
+            String sql = "SELECT * FROM Employee WHERE userName = ?";
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new EmployeeRowMapper(), userName));
         } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
             return Optional.empty();
