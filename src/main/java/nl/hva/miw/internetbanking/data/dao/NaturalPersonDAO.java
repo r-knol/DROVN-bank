@@ -47,7 +47,6 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
         String sql = "SELECT * FROM NaturalPerson WHERE ID = ?";
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
                 id));
-
     }
 
     @Override

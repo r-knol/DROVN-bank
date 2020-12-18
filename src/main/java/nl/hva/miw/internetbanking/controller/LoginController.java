@@ -3,8 +3,10 @@ package nl.hva.miw.internetbanking.controller;
 import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.Employee;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
+import nl.hva.miw.internetbanking.service.EmployeeService;
 import nl.hva.miw.internetbanking.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,12 +26,15 @@ public class LoginController {
     private CustomerService customerService;
     private LoginService loginService;
     private AccountService accountService;
+    private EmployeeService employeeService;
 
     @Autowired
-    public LoginController(CustomerService customerService, LoginService loginService, AccountService accountService) {
-      this.customerService = customerService;
-      this.loginService = loginService;
-      this.accountService = accountService;
+    public LoginController(CustomerService customerService, LoginService loginService, AccountService accountService,
+                           EmployeeService employeeService) {
+        this.customerService = customerService;
+        this.loginService = loginService;
+        this.accountService = accountService;
+        this.employeeService = employeeService;
     }
 
     @GetMapping("/login")
@@ -38,7 +43,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String handleLogin(@RequestParam String userName, @RequestParam String password, Model model) {
+    public String handleLogin(@RequestParam(name = "userName") String userName, @RequestParam(name = "password") String password, Model model) {
       Optional<Customer> customer = customerService.getCustomerByUsername(userName);
 
       if (customer.isPresent()) {
@@ -64,4 +69,15 @@ public class LoginController {
       }
       return "pages/foutpagina";
     }
+
+    @GetMapping("/loginemployee")
+    public String showLoginEmployee() {
+        return "pages/login-employee";
+    }
+
+    @PostMapping("/loginmedewerker")
+    public String handleLoginEmployee() {
+        return "";
+    }
+
 }
