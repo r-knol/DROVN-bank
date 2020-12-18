@@ -10,7 +10,8 @@ public class AccountRowMapper implements RowMapper<Account> {
 
     @Override
     public Account mapRow(ResultSet resultSet, int i) throws SQLException {
-        return new Account(resultSet.getLong("accountID"),
+        return new Account(
+                resultSet.getLong("accountID"),
                 resultSet.getDouble("balance"),
                 resultSet.getString("iban"));
     }
