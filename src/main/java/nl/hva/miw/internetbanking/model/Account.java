@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Account implements Serializable {
 
+    private static final long serialVersionUID = 8922473667746953263L;
+
     private long accountID;
     private double balance;
     private String iban;
