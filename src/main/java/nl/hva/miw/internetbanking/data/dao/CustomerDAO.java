@@ -83,7 +83,7 @@ public class CustomerDAO implements DAO<Customer, Long> {
     }
 
     public NaturalPerson getNpByCustomerId(long customerId) {
-        final String sql = "SELECT * FROM NaturalPerson WHERE ID = ?";
+        final String sql = "SELECT * FROM NaturalPerson WHERE customerID = ?";
         NaturalPerson np = jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
                 customerId);
         return np;

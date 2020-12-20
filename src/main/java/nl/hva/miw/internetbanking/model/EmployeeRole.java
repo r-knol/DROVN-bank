@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public enum EmployeeRole {
 
-    HEAD_PRIVATES("Hoofd Particulier"),
+    HEAD_PRIVATE("Hoofd Particulier"),
     HEAD_LEGAL("Hoofd MKB"),
     ACCOUNTMANAGER("Accountmanager");
 

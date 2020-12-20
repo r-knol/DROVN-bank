@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -43,31 +42,32 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String handleLogin(@RequestParam(name = "userName") String userName, @RequestParam(name = "password") String password, Model model) {
-      Optional<Customer> customer = customerService.getCustomerByUsername(userName);
+    public String handleLogin(@RequestParam(name = "userName") String userName, @RequestParam(name = "password")
+            String password, Model model) {
 
-      if (customer.isPresent()) {
-          Customer customerFound = customer.get();
-        if (loginService.validCustomer(customerFound, password)) {
-          model.addAttribute("customer", customerFound);
-          model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customerFound.getCustomerID()));
-          CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(customerFound);
-          customerDto.setAccountList(accountService.getAccountsForCustomer(customerFound));
+        Optional<Customer> customer = customerService.getCustomerByUsername(userName);
+        System.out.println(customer);
+        if (customer.isPresent()) {
+            Customer customerFound = customer.get();
+            if (loginService.validCustomer(customerFound, password)) {
+                model.addAttribute("customer", customerFound);
+                model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customerFound.getCustomerID()));
+                CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(customerFound);
+                customerDto.setAccountList(accountService.getAccountsForCustomer(customerFound));
 
-          // voor alle accounts de bijbehorende customers ophalen:
-            for (Account acc : customerDto.getAccountList()) {
-                acc.setAccountHolders(customerService.getCustomerByAccountId(acc.getAccountID()));
-                // voor iedere accountHolder de juiste naam ophalen:
-                for (Customer c : acc.getAccountHolders()) {
-                    acc.addAccountHolderName(customerService.printNameCustomer(c.getCustomerID()));
+                // voor alle accounts de bijbehorende customers ophalen:
+                for (Account acc : customerDto.getAccountList()) {
+                    acc.setAccountHolders(customerService.getCustomerByAccountId(acc.getAccountID()));
+                    // voor iedere accountHolder de juiste naam ophalen:
+                    for (Customer c : acc.getAccountHolders()) {
+                        acc.addAccountHolderName(customerService.printNameCustomer(c.getCustomerID()));
+                    }
                 }
+                model.addAttribute("customerWithAccountOverview", customerDto);
+                return "pages/account-overview";
             }
-
-            model.addAttribute("customerWithAccountOverview", customerDto);
-            return "pages/account-overview";
         }
-      }
-      return "pages/foutpagina";
+        return "pages/errorpage";
     }
 
     @GetMapping("/loginemployee")
@@ -75,9 +75,19 @@ public class LoginController {
         return "pages/login-employee";
     }
 
-    @PostMapping("/loginmedewerker")
-    public String handleLoginEmployee() {
-        return "";
-    }
+    @PostMapping("/loginemployee")
+    public String handleLoginEmployee(@RequestParam(name = "userName") String userName, @RequestParam(name = "password")
+            String password, Model model) {
 
+        Optional<Employee> employee = employeeService.getEmployeeByUsername(userName);
+
+        if (employee.isPresent()) {
+            Employee employeeFound = employee.get();
+            if (loginService.validEmployee(employeeFound, password)) {
+                model.addAttribute("employee", employeeFound);
+                return "pages/employee-dashboard";
+            }
+        }
+        return "pages/errorpage-employee";
+    }
 }
