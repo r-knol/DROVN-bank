@@ -1,10 +1,11 @@
 package nl.hva.miw.internetbanking.controller;
 
-import nl.hva.miw.internetbanking.data.dto.AccountTransactionDTO;
+import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
 import nl.hva.miw.internetbanking.model.Account;
-import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.Transaction;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
+import nl.hva.miw.internetbanking.service.TransactionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 // aangemaakt door Nina 09-12-2020
@@ -22,6 +22,7 @@ public class AccountOverviewController {
 
     private AccountService accountService;
     private CustomerService customerService;
+    private TransactionService transactionService;
     private Logger logger = LoggerFactory.getLogger(AccountOverviewController.class);
 
     @Autowired
@@ -67,9 +68,16 @@ public class AccountOverviewController {
         if (acc.isPresent()) {
             Account accountFound = acc.get();
             model.addAttribute("account", accountFound);
-            AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO(accountFound);
-//            ccountTransactionDTO.setTransactionList();
-            model.addAttribute("accountWithTransactions", accountTransactionDTO);
+            AccountHasTransactionDTO accountHasTransactionDTO = new AccountHasTransactionDTO(accountFound);
+            accountHasTransactionDTO.setTransactionList(accountFound.getTransactions());
+            for (Transaction transactions : accountHasTransactionDTO.getTransactionList()) {
+                if (accountFound.getIban().equals(transactions.getCreditAccount())
+                        || accountFound.getIban().equals(transactions.getDebetAccount())) {
+                    transactions.addTransactionToAccount(accountFound);
+                }
+            }
+            System.out.println(accountHasTransactionDTO);
+            model.addAttribute("accountWithTransactions", accountHasTransactionDTO);
             return "pages/account_details";
         }
         return "pages/open-account";

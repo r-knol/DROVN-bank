@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.dao.AccountDAO;
-import nl.hva.miw.internetbanking.data.dto.AccountTransactionDTO;
+import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class AccountService {
     private AccountDAO accountDao;
     @Getter
     @Setter
-    private AccountTransactionDTO accountTransactionDTO;
+    private AccountHasTransactionDTO accountHasTransactionDTO;
 
     @Autowired
     public AccountService(AccountDAO accountDAO) {

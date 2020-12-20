@@ -1,9 +1,11 @@
 package nl.hva.miw.internetbanking.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.hva.miw.internetbanking.data.dto.AccountTransactionDTO;
+import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
 import nl.hva.miw.internetbanking.model.Account;
+import nl.hva.miw.internetbanking.model.Transaction;
 import nl.hva.miw.internetbanking.service.AccountService;
+import nl.hva.miw.internetbanking.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +18,7 @@ import java.util.Optional;
 public class AccountDetailsController {
 
     private AccountService accountService;
-
+    private TransactionService transactionService;
 
     @Autowired
     public AccountDetailsController (AccountService accountService) {
@@ -25,22 +27,15 @@ public class AccountDetailsController {
 
     @GetMapping("/account_details/{id}")
     public String AccountDetailsHandler (@PathVariable ("id") long accountID, Model model) {
-        Optional<Account> a = accountService.getAccountById(accountID);
-        System.out.println(a);
-        if (a.isPresent()) {
-            Account accountFound = a.get();
-            model.addAttribute("account",accountFound);
-            model.addAttribute("iban", accountFound.getIban());
-            model.addAttribute("balance", accountFound.getBalance());
-            AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO();
-            accountService.setAccountTransactionDTO(accountTransactionDTO);
-            model.addAttribute("accountWithTransactions", accountTransactionDTO);
-            log.info("Model has account:\n{}", model.getAttribute("account"));
-            return "pages/account_details";
+        Optional<Account> account = accountService.getAccountById(accountID);
+        Account accountFound = account.get();
+        System.out.println(account);
+        AccountHasTransactionDTO accountHasTransactionDTO = new AccountHasTransactionDTO(accountFound);
+        accountHasTransactionDTO.setTransactionList(transactionService.getTransactionsForAccount(accountFound));
+        for (Transaction transaction : accountHasTransactionDTO.getTransactionList()) {
+           transaction.addTransactionToAccount(accountFound);
         }
-        return "pages/foutpagina";
+        model.addAttribute("accountWithTransactionOverview", accountHasTransactionDTO);
+        return "pages/account_details";
     }
-
-
-
 }

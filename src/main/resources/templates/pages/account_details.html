@@ -12,9 +12,9 @@
 <h3 th:text="${account.getIban()}">IBAN</h3>
 <h3 th:text="${account.getBalance()}">Saldo</h3>
 <p th:if="${account.getTransactions().isEmpty()}">Er zijn geen transacties om weer te geven</p>
-<table class="table table-bordered" style="width: 100%"
-       th:unless="${account.getTransactions().isEmpty()}"
-       th:object="${account}">
+<table class="table table-bordered" style="width: 100%">
+<!--       th:unless="${account.getTransactions().isEmpty()}"-->
+<!--       th:object="${account}">-->
     <thead class="thead-dark">
     <tr>
         <th scope="col">Datum</th>
@@ -23,17 +23,14 @@
         <th scope="col">Af</th>
     </tr>
     </thead>
-    <tbody>
-<!--    <tr th:each="a : ${customerWithAccountOverview.getAccountList()}">-->
-<!--        <td>-->
-<!--            <a th:href="@{/account_details/{id}(id= ${a.getAccountID})}" >-->
-<!--                <span th:text="${a.iban}"></span>-->
-<!--            </a>-->
-<!--        </td>-->
-<!--        <td> <ul> <li th:each="customerName : ${a.getAccountHolders()}" th:text="${customerName}"></li></ul></td>-->
-<!--        <td th:text="${a.balance}"></td>-->
+<!--    <tbody>-->
+<!--    <tr th:each="t : ${accountWithTransactions.getTransactionList}">-->
+<!--        <td th:text="${t.date}"></td>-->
+<!--        <td th:text="${t.description}"></td>-->
+<!--        <td th:text="${accountWithTransactions.TransactionAmount(t.amount)}"></td>-->
+<!--        <td th:text="${accountWithTransactions.TransactionAmount(t.amount)}"></td>-->
 <!--    </tr>-->
-    </tbody>
+<!--    </tbody>-->
 </table>
 
 <p>Nog geen rekening? <a href="/rekeningOpenen">Open deze hier!</a></p>

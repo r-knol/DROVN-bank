@@ -9,6 +9,8 @@ import java.io.Serializable;
 @Setter
 public class LegalPerson extends Customer implements Serializable {
 
+    private static final long serialVersionUID = 8922473667746953263L;
+
     private String companyName;
     private long kvkNumber;
     private String sector;

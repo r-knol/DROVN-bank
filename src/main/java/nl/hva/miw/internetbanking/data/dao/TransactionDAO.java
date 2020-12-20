@@ -1,10 +1,13 @@
 package nl.hva.miw.internetbanking.data.dao;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.EmployeeRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.TransactionRowMapper;
+import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Transaction;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -18,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 public class TransactionDAO implements DAO<Transaction, Long> {
 
@@ -79,13 +83,20 @@ public class TransactionDAO implements DAO<Transaction, Long> {
         return Optional.of(jdbcTemplate.query(sql, new TransactionRowMapper()));
     }
 
+    public List<Transaction> getTransactionsForAccount (Account account) {
+        List<Transaction> transactions = getTransactionsByAccountId(account.getAccountID());
+        for (Transaction t : transactions) {
+            t.addTransactionToAccount(account);
+            account.addTransaction(t);
+        }
+        return transactions;
+    }
+
     public List<Transaction> getTransactionsByAccountId (long accountID) {
-        String sql = "SELECT account.accountid, account.iban, account.balance, transaction.transactionid, " +
-                "transaction.amount, transaction.description, transaction.dateTime, transaction.creditAccount, " +
-                "transaction.debitAccount\n" +
-                "FROM transaction_has_account JOIN account ON Transaction_has_account" +
-                ".transactionID=transaction.transactionID JOIN account ON\n" +
-                "account.accountID=transaction_has_account.accountID WHERE account.accountID = ?";
+        final String sql = "SELECT account.accountid, account.iban, account.balance, transaction.transactionID, transaction.amount, transaction.description, \n" +
+                    "transaction.dateTime, transaction.creditAccount, transaction.debitAccount FROM transaction_has_account JOIN Transaction ON \n" +
+                    "Transaction_has_account.transactionID=transaction.transactionID JOIN account ON account.accountID=transaction_has_account.accountID \n" +
+                    "WHERE account.accountID = 4";
         return jdbcTemplate.query(sql, new TransactionRowMapper(), accountID);
     }
 }

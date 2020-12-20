@@ -3,19 +3,21 @@ package nl.hva.miw.internetbanking.data.dto;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class AccountTransactionDTO {
+public class AccountHasTransactionDTO {
 
     private Account account;
     private List<Transaction> transactionList;
 
-    public AccountTransactionDTO (Account account) {
+    public AccountHasTransactionDTO(Account account) {
         super();
         this.account = account;
     }
 
-    public AccountTransactionDTO () {}
+    public AccountHasTransactionDTO() {}
 
     public Account getAccount() {
         return account;

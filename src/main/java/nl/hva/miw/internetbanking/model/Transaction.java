@@ -1,9 +1,12 @@
 package nl.hva.miw.internetbanking.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Transaction {
+public class Transaction implements Serializable {
+
+    private static final long serialVersionUID = 8922473667746953263L;
 
     private long transactionID;
     private String debetAccount;
@@ -11,13 +14,15 @@ public class Transaction {
     private double amount;
     private String description;
     private LocalDateTime date;
+    private Account account;
 
-    public Transaction(String debetAccount, String creditAccount, double amount, String description, LocalDateTime date) {
+    public Transaction(String debetAccount, String creditAccount, double amount, String description, LocalDateTime date, Account account) {
         this.debetAccount = debetAccount;
         this.creditAccount = creditAccount;
         this.amount = amount;
         this.description = description;
         this.date = date;
+        this.account = account;
     }
 
     public Transaction(long transactionID, String debetAccount, String creditAccount, double amount, String description, LocalDateTime date) {
@@ -28,6 +33,11 @@ public class Transaction {
         this.description = description;
         this.date = date;
     }
+
+    public void addTransactionToAccount (Account account) {
+        this.account = account;
+    }
+
     public Transaction(long transactionID){
         this.transactionID = transactionID;
     }

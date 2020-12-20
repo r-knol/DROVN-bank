@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 
 public class TransactionRowMapper implements RowMapper<Transaction> {
+
     @Override
     public Transaction mapRow(ResultSet rs, int i) throws SQLException {
         return new Transaction(

@@ -15,6 +15,8 @@ import java.util.List;
 @ToString
 public class Customer implements Serializable {
 
+    private static final long serialVersionUID = 8922473667746953263L;
+
     public static final String EMPTY_STRING = "";
     public static final long ZERO = 0;
 

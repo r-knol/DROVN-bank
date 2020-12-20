@@ -6,10 +6,13 @@ import java.util.List;
 
 public class Account implements Serializable {
 
+    private static final long serialVersionUID = 8922473667746953263L;
+
     private long accountID;
     private double balance;
     private String iban;
     private List<Transaction> transactions;
+    private Transaction transaction;
     private List<Customer> accountHolders;
     private List<String> accountHolderNames;
 
@@ -83,6 +86,10 @@ public class Account implements Serializable {
 
     public void addAccountHolderName(String name) {
         accountHolderNames.add(name);
+    }
+
+    public void addTransaction (Transaction transaction) {
+      transactions.add(transaction);
     }
 
     @Override
