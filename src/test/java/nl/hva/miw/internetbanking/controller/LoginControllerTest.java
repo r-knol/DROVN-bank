@@ -2,8 +2,11 @@ package nl.hva.miw.internetbanking.controller;
 
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.Employee;
+import nl.hva.miw.internetbanking.model.EmployeeRole;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
+import nl.hva.miw.internetbanking.service.EmployeeService;
 import nl.hva.miw.internetbanking.service.LoginService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -33,6 +36,9 @@ class LoginControllerTest {
     Customer richard = new Customer(1, "rknol", "knolPassword", NATURAL);
     List<Customer> customerList = List.of(nina, richard);
 
+    Employee pieter = new Employee(1, "pdeboer", "test",
+            "Pieter", "de", "Boer", EmployeeRole.ACCOUNTMANAGER);
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -44,6 +50,9 @@ class LoginControllerTest {
 
     @MockBean
     private AccountService accountService;
+
+    @MockBean
+    private EmployeeService employeeService;
 
     public LoginControllerTest() {
         super();
@@ -63,6 +72,24 @@ class LoginControllerTest {
                     .param("userName", "nvanloo")
                     .param("password", "myPassword");
             ResultActions response = mockMvc.perform(postRequest);
+            response
+                    .andDo(print())
+                    .andExpect(status().isOk());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    void handleLoginEmployee() {
+        Mockito.when(employeeService.getEmployeeByUsername("pdeboer")).thenReturn(Optional.of(pieter));
+        Mockito.when(loginService.validEmployee(pieter, "test")).thenReturn(true);
+
+        try {
+            MockHttpServletRequestBuilder post = MockMvcRequestBuilders.post("/loginemployee")
+                    .param("userName", "pdeboer")
+                    .param("password", "test");
+            ResultActions response = mockMvc.perform(post);
             response
                     .andDo(print())
                     .andExpect(status().isOk());
