@@ -1,8 +1,12 @@
 package nl.hva.miw.internetbanking.model;
 
+import org.iban4j.CountryCode;
+import org.iban4j.Iban;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Account implements Serializable {
 
@@ -13,9 +17,9 @@ public class Account implements Serializable {
     private List<Customer> accountHolders;
     private List<String> accountHolderNames;
 
-  public List<Customer> getAccountHolders() {
-    return accountHolders;
-  }
+    public List<Customer> getAccountHolders() {
+        return accountHolders;
+    }
 
   public void setAccountHolders(List<Customer> accountHolders) {
     this.accountHolders = accountHolders;
@@ -39,6 +43,19 @@ public class Account implements Serializable {
 
     public Account(long accountID) {
         this.accountID = accountID;
+    }
+
+    public String generateNewAccount() {
+        Random rand = new Random();
+        String iban = "DROVN";
+        for (int i = 0; i < 14; i++) {
+            int n = rand.nextInt(10) + 0;
+            iban += Integer.toString(n);
+        }
+        for (int i = 0; i < 16; i++) {
+            iban.charAt(i);
+        }
+        return iban;
     }
 
     public long getAccountID() {

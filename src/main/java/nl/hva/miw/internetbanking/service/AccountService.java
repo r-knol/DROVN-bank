@@ -49,7 +49,7 @@ public class AccountService {
         return getAccountDetails(accountDao.read(accountID));
     }
 
-    //@Author Veroniek
+
     public void saveNewAccount(Account account) {
         accountDao.create(account);
     }
