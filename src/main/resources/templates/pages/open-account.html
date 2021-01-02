@@ -11,19 +11,18 @@
     <h1> Bankrekening openen</h1>
     <hr>
     <h2> Fijn dat u een rekening bij ons wilt openen.</h2>
-    <h3>  Bevestig uw gegevens en vraag direct aan.</h3>
-    <form action="/openaccount" th:object="${customer}" method="post">
+    <h3> Bevestig uw gegevens en vraag direct aan.</h3>
+    <form action="#" th:action="@{/saveaccount}" th:object="${account}" method="post">
+        <label for="iban">Balance</label>
+        <input type="text" th:field="*{iban}" id="iban" name="iban" class="form-control"/>
 
-        <!-- Add hidden form field to handle update-->
-        <input type="text" th:field="*{customerID}"class="form-control mb-4 col-4">
-        <label>Naam</label>
-        <input type="text" th:field="*{userName}"  class="form-control mb-4 col-4">
-        <label>Uw nieuwe rekeningnummer (IBAN)</label>
-        <input type="text" class="form-control mb-4 col-4">
-        <div class="checkbox">
-            <label><input type="checkbox" value=""> Ik ga akkoord met de voorwaarden</label>
-        </div>
-        <a href="#" class="btn btn-primary btn-lg active" role="button">Bevestig</a>
+        <label for="balance">Balance</label>
+        <input type="text" class="form-control" id="balance" name="balance"
+               th:field="*{balance}"/>
+
+            <input type="checkbox" value="submit"> Ik ga akkoord met de voorwaarden/>
+
+        <button type="submit" value="Bevestig"></button>
     </form>
 </div>
 </body>
