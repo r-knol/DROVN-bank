@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Rekening openen</title>
@@ -12,17 +12,19 @@
     <hr>
     <h2> Fijn dat u een rekening bij ons wilt openen.</h2>
     <h3> Bevestig uw gegevens en vraag direct aan.</h3>
-    <form action="#" th:action="@{/saveaccount}" th:object="${account}" method="post">
-        <label for="iban">Balance</label>
-        <input type="text" th:field="*{iban}" id="iban" name="iban" class="form-control"/>
+    <form action="/saveaccount" method="post">
+        <table>
+            <input type="hidden" th:field="*{id}"/>
 
-        <label for="balance">Balance</label>
-        <input type="text" class="form-control" id="balance" name="balance"
-               th:field="*{balance}"/>
+            <input type="text" th:field="*{account.iban}" name="iban" placeholder="Iban" class="form-control"/>
+
+            <input type="text" th:field="*{account.balance}" class="form-control" placeholder="balance" name="balance"/>
 
             <input type="checkbox" value="submit"> Ik ga akkoord met de voorwaarden/>
 
-        <button type="submit" value="Bevestig"></button>
+            <button type="submit" value="Bevestig"></button>
+
+        </table>
     </form>
 </div>
 </body>

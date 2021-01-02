@@ -30,15 +30,21 @@ public class OpenAccountController {
         logger.warn("New OpenAccountController.");
     }
 
-   @GetMapping("/openaccount")
-    public String showNewAccount(){
-       return "pages/open-account";
+   @GetMapping("/openaccount/{id}")
+    public ModelAndView showNewAccount(@PathVariable(value = "id") long id, ModelAndView model){
+        Optional<Customer> customer = customerService.getCustomerById(id);
+        Account newAccount = new Account();
+        model.addObject("customer", customer);
+        model.addObject("account", newAccount);
+        model.setViewName("pages/open-account");
+       return model;
     }
 
     @PostMapping("/saveaccount")
-    public String newAccountHandler (@ModelAttribute("account")Account account){
+    public ModelAndView saveAccount (@ModelAttribute Account account){
         accountService.saveNewAccount(account);
-        return "redirect:/";
+
+        return new ModelAndView("pages/open-account");
     }
 
 }
