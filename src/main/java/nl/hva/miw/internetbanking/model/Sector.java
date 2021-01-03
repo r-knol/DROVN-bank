@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum Sector {
 
+    NOT_SPECIFIED("Niet gespecificeerd"),
     RETAIL("Detailhandel, groothandel en autohandel"),
     HOSPITALITY("Horeca"),
     EDUCATION("Onderwijs"),

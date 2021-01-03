@@ -199,7 +199,7 @@
                                     <div class="col-md-12 mt-2 mb-3">
                                         <h4 class="border border-dark border-w-2 rounded p-3">Bedrijfsgegevens</h4>
                                     </div>
-                                    <div class="col-md-2 form-group">
+                                    <div class="col-md-4 form-group">
                                         <label for="companyName">Bedrijfsnaam</label>
                                         <input class="form-control" id="companyName" name="companyName" required
                                                th:field="*{companyName}" type="text"/>
@@ -208,6 +208,18 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4 form-group">
+                                        <label for="sector">Sector</label>
+                                        <select class="form-control" id="sector" name="sector" required
+                                                th:field="*{sector}">
+                                            <option th:each="sector : ${T(nl.hva.miw.internetbanking.model.Sector).values()}"
+                                                    th:selected="${sector==T(nl.hva.miw.internetbanking.model.Sector).NOT_SPECIFIED}"
+                                                    th:text="${sector.getLabelSector()}" th:value="${sector}">
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Hier custom error-message
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 form-group">
                                         <label for="kvkNumber">KvK-nummer</label>
                                         <input class="form-control" id="kvkNumber" name="kvkNumber" required
                                                th:field="*{kvkNumber}" type="text"/>
