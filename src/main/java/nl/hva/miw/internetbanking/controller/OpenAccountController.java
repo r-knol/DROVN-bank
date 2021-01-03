@@ -41,10 +41,8 @@ public class OpenAccountController {
     }
 
     @PostMapping("/saveaccount")
-    public ModelAndView saveAccount (@ModelAttribute Account account){
+    public ModelAndView saveAccount (@ModelAttribute ("account") Account account){
         accountService.saveNewAccount(account);
-
         return new ModelAndView("pages/open-account");
     }
-
 }
