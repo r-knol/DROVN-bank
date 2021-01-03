@@ -31,9 +31,9 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
             ps.setString(4, naturalPerson.getPreposition());
             ps.setString(5, naturalPerson.getSurName());
             ps.setString(6, naturalPerson.getDateOfBirth());
-            ps.setLong(7, naturalPerson.getSocialSecurityNumber());
+            ps.setString(7, naturalPerson.getSocialSecurityNumber());
             ps.setString(8, naturalPerson.getEmail());
-            ps.setLong(9, naturalPerson.getPhone());
+            ps.setString(9, naturalPerson.getPhone());
             ps.setString(10, naturalPerson.getPostalCode());
             ps.setString(11, naturalPerson.getHomeNumber());
             ps.setString(12, naturalPerson.getStreet());
@@ -80,6 +80,12 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
     public Optional<List<NaturalPerson>> list() {
         String sql = "SELECT * FROM NaturalPerson";
         return Optional.of(jdbcTemplate.query(sql, new NaturalPersonRowMapper()));
+    }
+
+    public boolean existsBySocialSecurityNumber(String socialSecurityNumber) {
+        final String sql = "SELECT * FROM NaturalPerson WHERE socialSecurityNumber = ?";
+        return jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
+                                           socialSecurityNumber) != null;
     }
 
 }

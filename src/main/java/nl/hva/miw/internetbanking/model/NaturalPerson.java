@@ -9,14 +9,15 @@ import java.io.Serializable;
 @Setter
 public class NaturalPerson extends Customer implements Serializable {
 
+    private static final long serialVersionUID = 2314734678022380045L;
     private String initials;
     private String firstName;
     private String preposition;
     private String surName;
     private String dateOfBirth;
-    private long socialSecurityNumber;
+    private String socialSecurityNumber;
     private String email;
-    private long phone;
+    private String phone;
     private String postalCode;
     private String homeNumber;
     private String street;
@@ -24,8 +25,8 @@ public class NaturalPerson extends Customer implements Serializable {
 
     public NaturalPerson(long id, String username, String password, CustomerType customerType,
                          String initials, String firstName, String preposition,
-                         String surName, String dateOfBirth, long socialSecurityNumber,
-                         String email, long phone, String postalCode, String homeNumber,
+                         String surName, String dateOfBirth, String socialSecurityNumber,
+                         String email, String phone, String postalCode, String homeNumber,
                          String street, String residence) {
         super(id, username, password, customerType);
         this.initials = initials;
@@ -44,8 +45,8 @@ public class NaturalPerson extends Customer implements Serializable {
 
     public NaturalPerson(String username, String password, CustomerType customerType,
                          String initials, String firstName, String preposition,
-                         String surName, String dateOfBirth, long socialSecurityNumber,
-                         String email, long phone, String postalCode, String homeNumber,
+                         String surName, String dateOfBirth, String socialSecurityNumber,
+                         String email, String phone, String postalCode, String homeNumber,
                          String street, String residence) {
         super(ZERO, username, password, customerType);
         this.initials = initials;
@@ -63,8 +64,8 @@ public class NaturalPerson extends Customer implements Serializable {
     }
 
     public NaturalPerson(long id, String initials, String firstName, String preposition,
-                         String surName, String dateOfBirth, long socialSecurityNumber,
-                         String email, long phone, String postalCode, String homeNumber,
+                         String surName, String dateOfBirth, String socialSecurityNumber,
+                         String email, String phone, String postalCode, String homeNumber,
                          String street, String residence) {
         super(id, EMPTY_STRING, EMPTY_STRING, CustomerType.NATURAL);
         this.initials = initials;
@@ -82,7 +83,7 @@ public class NaturalPerson extends Customer implements Serializable {
     }
 
     public NaturalPerson() {
-        super(ZERO, EMPTY_STRING, EMPTY_STRING, CustomerType.NATURAL);
+        super(Customer.ZERO, Customer.EMPTY_STRING, Customer.EMPTY_STRING, CustomerType.NATURAL);
     }
 
     @Override

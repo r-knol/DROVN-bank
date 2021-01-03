@@ -25,8 +25,8 @@ GRANT ALL ON WebApplicatie_DROVN_Bank.* TO 'userWebApplicatie_DROVN_Bank'@'local
 CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`Customer`
 (
     `customerID`   BIGINT(10)  NOT NULL AUTO_INCREMENT,
-    `userName`     VARCHAR(45) NOT NULL,
-    `password`     VARCHAR(45) NOT NULL,
+    `userName`     VARCHAR(16) NOT NULL,
+    `password`     VARCHAR(16) NOT NULL,
     `customerType` VARCHAR(10) NOT NULL,
     PRIMARY KEY (`customerID`)
 )
@@ -44,10 +44,10 @@ CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`NaturalPerson`
     `preposition`          VARCHAR(15) NULL,
     `surName`              VARCHAR(45) NOT NULL,
     `dateOfBirth`          DATE        NOT NULL,
-    `socialSecurityNumber` BIGINT(10)  NOT NULL,
+    `socialSecurityNumber` VARCHAR(9)  NOT NULL,
     `email`                VARCHAR(45) NOT NULL,
-    `phone`                BIGINT(14)  NOT NULL,
-    `postalCode`           VARCHAR(6)  NOT NULL,
+    `phone`                VARCHAR(14) NOT NULL,
+    `postalCode`           VARCHAR(7)  NOT NULL,
     `homeNumber`           VARCHAR(10) NOT NULL,
     `street`               VARCHAR(45) NOT NULL,
     `residence`            VARCHAR(45) NOT NULL,
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`LegalPerson`
     `kvkNumber`        BIGINT(8)   NOT NULL,
     `sector`           VARCHAR(45) NULL,
     `vatNumber`        VARCHAR(20) NOT NULL,
-    `postalCode`       VARCHAR(6)  NOT NULL,
+    `postalCode`       VARCHAR(7)  NOT NULL,
     `homeNumber`       VARCHAR(10) NOT NULL,
     `street`           VARCHAR(45) NOT NULL,
     `residence`        VARCHAR(45) NOT NULL,
@@ -155,37 +155,55 @@ CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`Customer_has_Account` (
   INDEX `fk_Customer_has_Account_Customer1_idx` (`customerID` ASC) VISIBLE,
   CONSTRAINT `fk_Customer_has_Account_Customer1`
     FOREIGN KEY (`customerID`)
-    REFERENCES `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+        REFERENCES `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`)
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION,
   CONSTRAINT `fk_Customer_has_Account_Account1`
-    FOREIGN KEY (`accountID`)
-    REFERENCES `WebApplicatie_DROVN_Bank`.`Account` (`accountID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+      FOREIGN KEY (`accountID`)
+          REFERENCES `WebApplicatie_DROVN_Bank`.`Account` (`accountID`)
+          ON DELETE NO ACTION
+          ON UPDATE NO ACTION
+)
+    ENGINE = InnoDB;
 
+INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`, `userName`, `password`, `customerType`)
+VALUES ('1', 'loo', 'loo', 'NATURAL');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`, `userName`, `password`, `customerType`)
+VALUES ('2', 'rknol', 'rknol', 'NATURAL');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`, `userName`, `password`, `customerType`)
+VALUES ('3', 'hva', 'hva', 'LEGAL');
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+INSERT INTO `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`ID`, `initials`, `firstName`, `preposition`, `surName`,
+                                                        `dateOfBirth`, `socialSecurityNumber`, `email`, `phone`,
+                                                        `postalCode`, `homeNumber`, `street`, `residence`)
+VALUES ('1', 'N.', 'Nina', 'van', 'Loo', '1987-02-07', '159398289', 'ninavanloo@gmail.com', '0610087058', '1056 AC',
+        '2-H', 'James Rosskade', 'Amsterdam');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`ID`, `initials`, `firstName`, `surName`, `dateOfBirth`,
+                                                        `socialSecurityNumber`, `email`, `phone`, `postalCode`,
+                                                        `homeNumber`, `street`, `residence`)
+VALUES ('2', 'R.W.', 'Richard', 'Knol', '1990-05-11', '243535345', 'rknol@gmail.com', '0612345678', '1234 AQ', '345',
+        'Oudenoord', 'Utrecht');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`LegalPerson` (`companyID`, `companyName`, `kvkNumber`, `sector`, `vatNumber`,
+                                                      `postalCode`, `homeNumber`, `street`, `residence`)
+VALUES ('3', 'Hogeschool van Amsterdam', '12345676', 'EDUCATION', '1234567', '1000 AB', '1', 'Wibautstraat',
+        'Amsterdam');
 
-INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`, `userName`, `password`, `customerType`) VALUES ('1', 'loo', 'loo', 'natural');
-INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`, `userName`, `password`, `customerType`) VALUES ('2', 'rknol', 'rknol', 'natural');
-INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`, `userName`, `password`, `customerType`) VALUES ('3', 'hva', 'hva', 'legal');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`Account` (`accountID`, `iban`, `balance`)
+VALUES ('1', '84DROVN1234567', '10.00');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`Account` (`accountID`, `iban`, `balance`)
+VALUES ('2', '65DROVN6543217', '1234.99');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`Account` (`accountID`, `iban`, `balance`)
+VALUES ('3', '54DROVN5432576', '10987.87');
 
-INSERT INTO `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`ID`, `initials`, `firstName`, `preposition`, `surName`, `dateOfBirth`, `socialSecurityNumber`, `email`, `phone`, `postalCode`, `homeNumber`, `street`, `residence`) VALUES ('1', 'N.', 'Nina', 'van', 'Loo', '1987-02-07', '159398289', 'ninavanloo@gmail.com', '0610087058', '1056AC', '2-H', 'James Rosskade', 'Amsterdam');
-INSERT INTO `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`ID`, `initials`, `firstName`, `surName`, `dateOfBirth`, `socialSecurityNumber`, `email`, `phone`, `postalCode`, `homeNumber`, `street`, `residence`) VALUES ('2', 'R.W.', 'Richard', 'Knol', '1990-05-11', '243535345', 'rknol@gmail.com', '0612345678', '1234AQ', '345', 'Oudenoord', 'Utrecht');
-INSERT INTO `WebApplicatie_DROVN_Bank`.`LegalPerson` (`companyID`, `companyName`, `kvkNumber`, `sector`, `vatNumber`, `postalCode`, `homeNumber`, `street`, `residence`) VALUES ('3', 'Hogeschool van Amsterdam', '12345676', 'onderwijs', '1234567', '1000AB', '1', 'Wibautstraat', 'Amsterdam');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer_has_Account` (`customerID`, `accountID`)
+VALUES ('1', '1');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer_has_Account` (`customerID`, `accountID`)
+VALUES ('2', '1');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer_has_Account` (`customerID`, `accountID`)
+VALUES ('2', '2');
+INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer_has_Account` (`customerID`, `accountID`)
+VALUES ('3', '3');
 
-INSERT INTO `WebApplicatie_DROVN_Bank`.`Account` (`accountID`, `iban`, `balance`) VALUES ('1', '84DROVN1234567', '10.00');
-INSERT INTO `WebApplicatie_DROVN_Bank`.`Account` (`accountID`, `iban`, `balance`) VALUES ('2', '65DROVN6543217', '1234.99');
-INSERT INTO `WebApplicatie_DROVN_Bank`.`Account` (`accountID`, `iban`, `balance`) VALUES ('3', '54DROVN5432576', '10987.87');
-
-INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer_has_Account` (`customerID`, `accountID`) VALUES ('1', '1');
-INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer_has_Account` (`customerID`, `accountID`) VALUES ('2', '1');
-INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer_has_Account` (`customerID`, `accountID`) VALUES ('2', '2');
-INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer_has_Account` (`customerID`, `accountID`) VALUES ('3', '3');
-
-
-
+SET SQL_MODE = @OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;

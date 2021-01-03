@@ -7,7 +7,7 @@ public enum Sector {
 
     RETAIL("Detailhandel, groothandel en autohandel"),
     HOSPITALITY("Horeca"),
-    CHILDCARE("Onderwijs"),
+    EDUCATION("Onderwijs"),
     CARE("Gezondheidszorg"),
     REALESTATE("Onroerend goed"),
     CONSTRUCTION("Bouw, installatie en infrastructuur"),

@@ -28,7 +28,7 @@ public class CustomerDAO implements DAO<Customer, Long> {
 
     @Override
     public void create(Customer customer) {
-        String sql = "INSERT INTO Customer(userName, password, customerType) VALUES(?,?,?)";
+        final String sql = "INSERT INTO Customer(userName, password, customerType) VALUES(?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"customerId"});
@@ -43,7 +43,7 @@ public class CustomerDAO implements DAO<Customer, Long> {
 
     @Override
     public Optional<Customer> read(Long customerID) {
-        String sql = "SELECT * FROM Customer WHERE customerID = ?";
+        final String sql = "SELECT * FROM Customer WHERE customerID = ?";
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(),
                 customerID));
     }
@@ -60,9 +60,15 @@ public class CustomerDAO implements DAO<Customer, Long> {
 
     @Override
     public void update(Customer customer) {
-        String sql = "UPDATE Customer SET userName = ?, password = ? WHERE customerID = ?";
+        final String sql = "UPDATE Customer SET userName = ?, password = ? WHERE customerID = ?";
         jdbcTemplate.update(sql, customer.getUserName(), customer.getPassword(),
-                customer.getCustomerID());
+                            customer.getCustomerID());
+    }
+
+    @Override
+    public Optional<List<Customer>> list() {
+        final String sql = "SELECT * FROM Customer";
+        return Optional.of(jdbcTemplate.query(sql, new CustomerRowMapper()));
     }
 
     @Override
@@ -75,16 +81,15 @@ public class CustomerDAO implements DAO<Customer, Long> {
         jdbcTemplate.update("DELETE FROM Customer WHERE customerID = ?", id);
     }
 
-    @Override
-    public Optional<List<Customer>> list() {
-        String sql = "SELECT * FROM Customer";
-        return Optional.of(jdbcTemplate.query(sql, new CustomerRowMapper()));
+    public boolean existsByUsername(String username) {
+        final String sql = "SELECT * FROM Customer WHERE userName = ?";
+        return jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), username) != null;
     }
 
     public NaturalPerson getNpByCustomerId(long customerId) {
         final String sql = "SELECT * FROM NaturalPerson WHERE ID = ?";
         NaturalPerson np = jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
-                customerId);
+                                                       customerId);
         //        if (!np.equals(null)) {
         return np;
         //

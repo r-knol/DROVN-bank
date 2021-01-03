@@ -9,9 +9,10 @@ import java.io.Serializable;
 @Setter
 public class LegalPerson extends Customer implements Serializable {
 
+    private static final long serialVersionUID = -4561050351049225947L;
     private String companyName;
     private long kvkNumber;
-    private String sector;
+    private Sector sector;
     private String vatNumber;
     private String postalCode;
     private String homeNumber;
@@ -20,7 +21,7 @@ public class LegalPerson extends Customer implements Serializable {
     private long accountmanagerID;
 
     public LegalPerson(long id, String username, String password, CustomerType customerType,
-                       String companyName, long kvkNumber, String sector, String vatNumber,
+                       String companyName, long kvkNumber, Sector sector, String vatNumber,
                        String postalCode, String homeNumber, String street, String residence,
                        long accountmanagerID) {
         super(id, username, password, customerType);
@@ -35,7 +36,7 @@ public class LegalPerson extends Customer implements Serializable {
         this.accountmanagerID = accountmanagerID;
     }
 
-    public LegalPerson(long id, String companyName, long kvkNumber, String sector,
+    public LegalPerson(long id, String companyName, long kvkNumber, Sector sector,
                        String vatNumber, String postalCode, String homeNumber, String street,
                        String residence, long accountmanagerID) {
         super(id, EMPTY_STRING, EMPTY_STRING, CustomerType.LEGAL);
@@ -52,6 +53,7 @@ public class LegalPerson extends Customer implements Serializable {
 
     public LegalPerson() {
         super(ZERO, EMPTY_STRING, EMPTY_STRING, CustomerType.LEGAL);
+        sector = Sector.NOT_SPECIFIED;
     }
 
     @Override

@@ -5,18 +5,21 @@ import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
+import nl.hva.miw.internetbanking.data.dto.DTO;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.CustomerType;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
+import nl.hva.miw.internetbanking.util.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Service
+@Slf4j(topic = "CustomerService")
 public class CustomerService {
 
     private final NaturalPersonDAO naturalPersonDAO;
@@ -25,19 +28,22 @@ public class CustomerService {
     private final CustomerDAO customerDAO;
 
     @Autowired
-    public CustomerService(
-            NaturalPersonDAO naturalPersonDAO,
-            LegalPersonDAO legalPersonDAO,
-            AccountDAO accountDAO,
-            CustomerDAO customerDAO) {
+    public CustomerService(NaturalPersonDAO naturalPersonDAO, LegalPersonDAO legalPersonDAO,
+                           AccountDAO accountDAO, CustomerDAO customerDAO) {
         this.naturalPersonDAO = naturalPersonDAO;
         this.legalPersonDAO = legalPersonDAO;
         this.accountDAO = accountDAO;
         this.customerDAO = customerDAO;
     }
 
+    public <T extends Customer> void registerCustomer(DTO<T> dto, Class<T> customerClass) {
+        T customer = DtoMapperUtil.mapDtoToEntity(dto, customerClass);
+        saveCustomer(customer);
+    }
+
     // DataIntegrityViolationException - bij onjuist datum format
     // SQLIntegrityConstraintViolationException - bij null waarden voor non-null
+    @Transactional
     public <T extends Customer> void saveCustomer(T entity) {
         customerDAO.create(entity);
         if (entity instanceof NaturalPerson) {
@@ -47,8 +53,8 @@ public class CustomerService {
         }
     }
 
-    public Optional<Customer> getCustomerById(long customerID) {
-        return getCustomerDetails(customerDAO.read(customerID));
+    public Optional<Customer> getCustomerByUsername(String username) {
+        return getCustomerDetails(customerDAO.read(username));
     }
 
     private Optional<Customer> getCustomerDetails(Optional<Customer> optionalCustomer) {
@@ -79,8 +85,8 @@ public class CustomerService {
         return optionalCustomer;
     }
 
-    public Optional<Customer> getCustomerByUsername(String username) {
-        return getCustomerDetails(customerDAO.read(username));
+    public List<Customer> getCustomerByAccountId(long accountId) {
+        return customerDAO.getCustomerByAccountId(accountId);
     }
 
     //  public Customer createCustomer(long customerId) {
@@ -94,31 +100,33 @@ public class CustomerService {
     //    return null;
     //  }
 
-    public List<Customer> getCustomerByAccountId(long accountId) {
-        return customerDAO.getCustomerByAccountId(accountId);
-    }
-
     public String printNameCustomer(long customerId) {
         // eerst checken welk type klant het is:
-                try {
-                    Optional<Customer> optionalCustomer = getCustomerById(customerId);
-                    // in case of NaturalPerson:
-                    if (optionalCustomer.get() instanceof NaturalPerson) {
-                        NaturalPerson np = (NaturalPerson) optionalCustomer.get();
-                        // afhandeling voorvoegsel:
-                        if (np.getPreposition() != null) {
-                            return String.format("%s %s %s", np.getFirstName(), np.getPreposition(), np.getSurName());
-                        }
-                        // bij geen voorvoegsel:
-                        return String.format("%s %s", np.getFirstName(), np.getSurName());
-                        // in case of LegalPerson:
-                    } else {
-                        LegalPerson lp = (LegalPerson) optionalCustomer.get();
-                        return String.format("%s", lp.getCompanyName());
-                    }
-                } catch (Exception e) {
-                log.error("Er ging iets mis bij printNameCustomer(" + customerId + ").");
+        try {
+            Optional<Customer> optionalCustomer = getCustomerById(customerId);
+            // in case of NaturalPerson:
+            if (optionalCustomer.get() instanceof NaturalPerson) {
+                NaturalPerson np = (NaturalPerson) optionalCustomer.get();
+                // afhandeling voorvoegsel:
+                if (np.getPreposition() != null) {
+                    return String.format("%s %s %s", np.getFirstName(), np.getPreposition(),
+                                         np.getSurName());
                 }
-                return null;
+                // bij geen voorvoegsel:
+                return String.format("%s %s", np.getFirstName(), np.getSurName());
+                // in case of LegalPerson:
+            } else {
+                LegalPerson lp = (LegalPerson) optionalCustomer.get();
+                return String.format("%s", lp.getCompanyName());
+            }
+        } catch (Exception e) {
+            log.error("Er ging iets mis bij printNameCustomer(" + customerId + ").");
+        }
+        return null;
     }
+
+    public Optional<Customer> getCustomerById(long customerID) {
+        return getCustomerDetails(customerDAO.read(customerID));
+    }
+
 }

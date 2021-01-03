@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 table-responsive-md">
-                        <table class="table table-striped mb-5" th:object="${registrationDto}">
+                        <table class="table table-striped mb-5" th:object="${privateRegistrationDto}">
                             <thead class="thead-dark">
                             <tr>
                                 <th colspan="2" scope="col">Persoonlijke gegevens</th>
@@ -34,41 +34,41 @@
                             <tbody>
                             <tr>
                                 <th scope="row" width="50%">Voorletters</th>
-                                <td th:text="*{naturalPerson.initials}"></td>
+                                <td th:text="*{initials}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Voornaam</th>
-                                <td th:text="*{naturalPerson.firstName}"></td>
+                                <td th:text="*{firstName}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Tussenvoegsel</th>
-                                <td th:text="*{naturalPerson.preposition}"></td>
+                                <td th:text="*{preposition}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Achternaam</th>
-                                <td th:text="*{naturalPerson.surName}"></td>
+                                <td th:text="*{surName}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Geboortedatum</th>
-                                <td th:text="*{naturalPerson.dateOfBirth}"></td>
+                                <td th:text="*{dateOfBirth}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Burgerservicenummer (BSN)</th>
-                                <td th:text="*{naturalPerson.socialSecurityNumber}"></td>
+                                <td th:text="*{socialSecurityNumber}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Emailadres</th>
-                                <td th:text="*{naturalPerson.email}"></td>
+                                <td th:text="*{email}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Telefoon (mobiel)</th>
-                                <td th:text="*{naturalPerson.phone}"></td>
+                                <td th:text="*{phone}"></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="col-md-6 table-responsive-md">
-                        <table class="table table-striped mb-5" th:object="${registrationDto}">
+                        <table class="table table-striped mb-5" th:object="${privateRegistrationDto}">
                             <thead class="thead-dark">
                             <tr>
                                 <th colspan="2" scope="col">Adresgegevens</th>
@@ -77,23 +77,23 @@
                             <tbody>
                             <tr>
                                 <th scope="row" width="50%">Postcode</th>
-                                <td th:text="*{naturalPerson.postalCode}"></td>
+                                <td th:text="*{postalCode}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Huisnummer + toevoeging</th>
-                                <td th:text="*{naturalPerson.homeNumber}"></td>
+                                <td th:text="*{homeNumber}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Straat</th>
-                                <td th:text="*{naturalPerson.street}"></td>
+                                <td th:text="*{street}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Woonplaats</th>
-                                <td th:text="*{naturalPerson.residence}"></td>
+                                <td th:text="*{residence}"></td>
                             </tr>
                             </tbody>
                         </table>
-                        <table class="table table-striped mb-5" th:object="${registrationDto}">
+                        <table class="table table-striped mb-5" th:object="${privateRegistrationDto}">
                             <thead class="thead-dark">
                             <tr>
                                 <th colspan="2" scope="col">Accountgegevens</th>
@@ -102,13 +102,27 @@
                             <tbody>
                             <tr>
                                 <th scope="row" width="50%">Gebruikersnaam</th>
-                                <td th:text="*{customer.userName}"></td>
+                                <td th:text="*{userName}"></td>
                             </tr>
                             </tbody>
                         </table>
-                        <form action="#" class="row" method="post"
-                              th:action="@{/bevestiging-particulier}"
-                              th:object="${registrationDto}">
+                        <form action="#" class="row" method="post" th:action="@{/bevestiging-particulier}"
+                              th:object="${privateRegistrationDto}">
+                            <input th:field="*{initials}" type="hidden">
+                            <input th:field="*{firstName}" type="hidden">
+                            <input th:field="*{preposition}" type="hidden">
+                            <input th:field="*{surName}" type="hidden">
+                            <input th:field="*{dateOfBirth}" type="hidden">
+                            <input th:field="*{socialSecurityNumber}" type="hidden">
+                            <input th:field="*{email}" type="hidden">
+                            <input th:field="*{phone}" type="hidden">
+                            <input th:field="*{postalCode}" type="hidden">
+                            <input th:field="*{homeNumber}" type="hidden">
+                            <input th:field="*{street}" type="hidden">
+                            <input th:field="*{residence}" type="hidden">
+                            <input th:field="*{userName}" type="hidden">
+                            <input th:field="*{password}" type="hidden">
+                            <input th:field="*{passwordConfirmation}" type="hidden">
                             <input class="btn btn-primary btn-lg btn-block mt-0 ml-3 mb-4 mr-2 pt-3 pb-3 " type="submit"
                                    value="Registratie voltooien"/>
                         </form>
@@ -117,15 +131,15 @@
                 <div class="pt-5 pb-5" id="accordion">
                     <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
                          id="collapseOne">
-                        <form action="#" class="row needs-validation" method="post" novalidate
-                              th:action="@{/registratie-particulier}" th:object="${registrationDto}">
+                        <form action="#" class="row needs-validation" id="confirmation-private" method="post" novalidate
+                              th:action="@{/registratie-particulier}" th:object="${privateRegistrationDto}">
                             <div class="col-md-12 mt-2 mb-3">
                                 <h4 class="border border-dark border-w-2 rounded p-3">Persoonlijke gegevens</h4>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="initials">Voorletters</label>
                                 <input class="form-control" id="initials" name="initials" required
-                                       th:field="*{naturalPerson.initials}" type="text"/>
+                                       th:field="*{initials}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -133,7 +147,7 @@
                             <div class="col-md-4 form-group">
                                 <label for="firstname">Voornaam</label>
                                 <input class="form-control" id="firstname" name="firstName" required
-                                       th:field="*{naturalPerson.firstName}" type="text"/>
+                                       th:field="*{firstName}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -141,7 +155,7 @@
                             <div class="col-md-2 form-group">
                                 <label for="preposition">Tussenvoegsel</label>
                                 <input class="form-control" id="preposition" name="preposition"
-                                       th:field="*{naturalPerson.preposition}" type="text"/>
+                                       th:field="*{preposition}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -149,7 +163,7 @@
                             <div class="col-md-4 form-group">
                                 <label for="lastname">Achternaam</label>
                                 <input class="form-control" id="lastname" name="surName" required
-                                       th:field="*{naturalPerson.surName}" type="text"/>
+                                       th:field="*{surName}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -157,17 +171,18 @@
                             <div class="col-md-2 form-group">
                                 <label for="dateOfBirth">Geboortedatum</label>
                                 <input class="form-control" id="dateOfBirth" name="dateOfBirth" required
-                                       th:field="*{naturalPerson.dateOfBirth}" type="date"/>
+                                       aria-describedby="dateOfBirthHelp" th:field="*{dateOfBirth}" type="date"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
+                                <small class="form-text text-muted" id="dateOfBirthHelp">Format: jjjj-mm-dd</small>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="socialSecurityNumber">Burgerservicenummer (BSN)</label>
                                 <input aria-describedby="socialSecurityNumberHelp" class="form-control"
                                        id="socialSecurityNumber"
                                        name="socialSecurityNumber" required
-                                       th:field="*{naturalPerson.socialSecurityNumber}" type="number"/>
+                                       th:field="*{socialSecurityNumber}" type="number"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -177,7 +192,7 @@
                             <div class="col-md-4 form-group">
                                 <label for="email">Emailadres</label>
                                 <input class="form-control" id="email" name="email" required
-                                       th:field="*{naturalPerson.email}" type="email"/>
+                                       th:field="*{email}" type="email"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -185,7 +200,7 @@
                             <div class="col-md-2 form-group">
                                 <label for="mobile">Telefoon (mobiel)</label>
                                 <input aria-describedby="mobileHelp" class="form-control" id="mobile" name="mobile"
-                                       pattern="[0-9]{10}" required th:field="*{naturalPerson.phone}" type="tel"/>
+                                       pattern="[0-9]{10}" required th:field="*{phone}" type="tel"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -197,7 +212,7 @@
                             <div class="col-md-2 form-group">
                                 <label for="postalCode">Postcode</label>
                                 <input aria-describedby="postalCodeHelp" class="form-control" id="postalCode"
-                                       name="postalCode" required th:field="*{naturalPerson.postalCode}" type="text"/>
+                                       name="postalCode" required th:field="*{postalCode}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -206,7 +221,7 @@
                             <div class="col-md-2 form-group">
                                 <label for="homeNumber">Huisnr.</label>
                                 <input aria-describedby="homeNumberHelp" class="form-control" id="homeNumber"
-                                       name="homeNumber" required th:field="*{naturalPerson.homeNumber}" type="text"/>
+                                       name="homeNumber" required th:field="*{homeNumber}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -216,12 +231,12 @@
                             <div class="col-md-4 form-group">
                                 <label for="street">Straat</label>
                                 <input class="form-control" id="street" name="street" required
-                                       th:field="*{naturalPerson.street}" type="text"/>
+                                       th:field="*{street}" type="text"/>
                             </div>
                             <div class="col-md-4 form-group">
                                 <label for="residence">Woonplaats</label>
                                 <input class="form-control" id="residence" name="residence" required
-                                       th:field="*{naturalPerson.residence}" type="text"/>
+                                       th:field="*{residence}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -232,24 +247,24 @@
                             <div class="col-md-2 form-group">
                                 <label for="username_private">Gebruikersnaam</label>
                                 <input class="form-control" id="username_private" name="username_private" required
-                                       th:field="*{customer.userName}" type="text"/>
+                                       th:field="*{userName}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="password_private">Wachtwoord</label>
-                                <input class="form-control" id="password_private" name="password_private" required
-                                       th:field="*{customer.password}" type="password"/>
+                                <input class="form-control" id="password_private" name="password" required
+                                       th:value="${privateRegistrationDto.password}" type="password"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
                             </div>
                             <div class="col-md-2 form-group">
-                                <label for="password_private_confirmation">Wachtwoord</label>
+                                <label for="password_private_confirmation">Bevestig wachtwoord</label>
                                 <input class="form-control" id="password_private_confirmation"
-                                       name="password_private_confirmation" required th:field="*{passwordConfirmation}"
-                                       type="password"/>
+                                       name="passwordConfirmation" required
+                                       th:value="${privateRegistrationDto.passwordConfirmation}" type="password"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>

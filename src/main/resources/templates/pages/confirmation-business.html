@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="col-md-6 table-responsive-md">
-                        <table class="table table-striped mb-5" th:object="${registrationDto}">
+                        <table class="table table-striped mb-5" th:object="${businessRegistrationDto}">
                             <thead class="thead-dark">
                             <tr>
                                 <th colspan="2" scope="col">Bedrijfsgegevens</th>
@@ -34,19 +34,23 @@
                             <tbody>
                             <tr>
                                 <th scope="row" width="50%">Bedrijfsnaam</th>
-                                <td th:text="*{legalPerson.companyName}"></td>
+                                <td th:text="*{companyName}"></td>
+                            </tr>
+                            <tr>
+                                <th scope="row" width="50%">Sector</th>
+                                <td th:text="*{sector.getLabelSector()}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">KvK-nummer</th>
-                                <td th:text="*{legalPerson.kvkNumber}"></td>
+                                <td th:text="*{kvkNumber}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Btw-nummer</th>
-                                <td th:text="*{legalPerson.vatNumber}"></td>
+                                <td th:text="*{vatNumber}"></td>
                             </tr>
                             </tbody>
                         </table>
-                        <table class="table table-striped mb-5" th:object="${registrationDto}">
+                        <table class="table table-striped mb-5" th:object="${businessRegistrationDto}">
                             <thead class="thead-dark">
                             <tr>
                                 <th colspan="2" scope="col">Accountgegevens</th>
@@ -55,13 +59,13 @@
                             <tbody>
                             <tr>
                                 <th scope="row" width="50%">Gebruikersnaam</th>
-                                <td th:text="*{customer.userName}"></td>
+                                <td th:text="*{userName}"></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="col-md-6 table-responsive-md">
-                        <table class="table table-striped mb-5" th:object="${registrationDto}">
+                        <table class="table table-striped mb-5" th:object="${businessRegistrationDto}">
                             <thead class="thead-dark">
                             <tr>
                                 <th colspan="2" scope="col">Adresgegevens</th>
@@ -70,24 +74,35 @@
                             <tbody>
                             <tr>
                                 <th scope="row" width="50%">Postcode</th>
-                                <td th:text="*{legalPerson.postalCode}"></td>
+                                <td th:text="*{postalCode}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Huisnummer + toevoeging</th>
-                                <td th:text="*{legalPerson.homeNumber}"></td>
+                                <td th:text="*{homeNumber}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Straat</th>
-                                <td th:text="*{legalPerson.street}"></td>
+                                <td th:text="*{street}"></td>
                             </tr>
                             <tr>
                                 <th scope="row" width="50%">Plaats</th>
-                                <td th:text="*{legalPerson.residence}"></td>
+                                <td th:text="*{residence}"></td>
                             </tr>
                             </tbody>
                         </table>
                         <form action="#" class="row" method="post" th:action="@{/bevestiging-zakelijk}"
-                              th:object="${registrationDto}">
+                              th:object="${businessRegistrationDto}">
+                            <input th:field="*{companyName}" type="hidden">
+                            <input th:field="*{kvkNumber}" type="hidden">
+                            <input th:field="*{sector}" type="hidden">
+                            <input th:field="*{vatNumber}" type="hidden">
+                            <input th:field="*{postalCode}" type="hidden">
+                            <input th:field="*{homeNumber}" type="hidden">
+                            <input th:field="*{street}" type="hidden">
+                            <input th:field="*{residence}" type="hidden">
+                            <input th:field="*{userName}" type="hidden">
+                            <input th:field="*{password}" type="hidden">
+                            <input th:field="*{passwordConfirmation}" type="hidden">
                             <input class="btn btn-primary btn-lg btn-block mt-0 ml-3 mb-4 mr-2 pt-3 pb-3 " type="submit"
                                    value="Registratie voltooien"/>
                         </form>
@@ -97,14 +112,25 @@
                     <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
                          id="collapseOne">
                         <form action="#" class="row needs-validation" method="post" novalidate
-                              th:action="@{/registratie-zakelijk}" th:object="${registrationDto}">
+                              th:action="@{/registratie-zakelijk}" th:object="${businessRegistrationDto}">
                             <div class="col-md-12 mt-2 mb-3">
                                 <h4 class="border border-dark border-w-2 rounded p-3">Bedrijfsgegevens</h4>
                             </div>
                             <div class="col-md-2 form-group">
                                 <label for="companyName">Bedrijfsnaam</label>
                                 <input class="form-control" id="companyName" name="companyName" required
-                                       th:field="*{legalPerson.companyName}" type="text"/>
+                                       th:field="*{companyName}" type="text"/>
+                                <div class="invalid-feedback">
+                                    Hier custom error-message
+                                </div>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="sector">Sector</label>
+                                <select class="form-control" id="sector" name="sector" required th:field="*{sector}">
+                                    <option th:each="sector : ${T(nl.hva.miw.internetbanking.model.Sector).values()}"
+                                            th:selected="${sector==T(nl.hva.miw.internetbanking.model.Sector).NOT_SPECIFIED}"
+                                            th:text="${sector.getLabelSector()}" th:value="${sector}">
+                                </select>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -112,7 +138,7 @@
                             <div class="col-md-4 form-group">
                                 <label for="kvkNumber">KvK-nummer</label>
                                 <input class="form-control" id="kvkNumber" name="kvkNumber" required
-                                       th:field="*{legalPerson.kvkNumber}" type="text"/>
+                                       th:field="*{kvkNumber}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -120,7 +146,7 @@
                             <div class="col-md-2 form-group">
                                 <label for="vatNumber">Btw-nummer</label>
                                 <input class="form-control" id="vatNumber" name="vatNumber" required
-                                       th:field="*{legalPerson.vatNumber}" type="text"/>
+                                       th:field="*{vatNumber}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -132,7 +158,7 @@
                                 <label for="postalCode_legal">Postcode</label>
                                 <input aria-describedby="postalCode_legalHelp" class="form-control"
                                        id="postalCode_legal" name="postalCode_legal" required
-                                       th:field="*{legalPerson.postalCode}" type="text"/>
+                                       th:field="*{postalCode}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -143,7 +169,7 @@
                                 <label for="homeNumber_legal">Huisnr.</label>
                                 <input aria-describedby="homeNumber_legalHelp" class="form-control"
                                        id="homeNumber_legal" name="homeNumber_legal" required
-                                       th:field="*{legalPerson.homeNumber}" type="text"/>
+                                       th:field="*{homeNumber}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -153,7 +179,7 @@
                             <div class="col-md-4 form-group">
                                 <label for="street_legal">Straat</label>
                                 <input class="form-control" id="street_legal" name="street_legal" required
-                                       th:field="*{legalPerson.street}" type="text"/>
+                                       th:field="*{street}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -161,7 +187,7 @@
                             <div class="col-md-4 form-group">
                                 <label for="residence_legal">Plaats</label>
                                 <input class="form-control" id="residence_legal" name="residence_legal" required
-                                       th:field="*{legalPerson.residence}" type="text"/>
+                                       th:field="*{residence}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
@@ -172,24 +198,24 @@
                             <div class="col-md-2 form-group">
                                 <label for="username_legal">Gebruikersnaam</label>
                                 <input class="form-control" id="username_legal" name="username_legal" required
-                                       th:field="*{customer.userName}" type="text"/>
+                                       th:field="*{userName}" type="text"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
                             </div>
                             <div class="col-md-2 form-group">
-                                <label for="password_legal">Wachtwoord</label>
-                                <input class="form-control" id="password_legal" name="password_legal" required
-                                       th:field="*{customer.password}" type="password"/>
+                                <label for="password_business">Wachtwoord</label>
+                                <input class="form-control" id="password_business" name="password" required
+                                       th:value="${businessRegistrationDto.password}" type="password"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
                             </div>
                             <div class="col-md-2 form-group">
-                                <label for="password_legal_confirmation">Wachtwoord</label>
-                                <input class="form-control" id="password_legal_confirmation"
-                                       name="password_legal_confirmation" required th:field="*{passwordConfirmation}"
-                                       type="password"/>
+                                <label for="password_business_confirmation">Bevestig wachtwoord</label>
+                                <input class="form-control" id="password_business_confirmation"
+                                       name="passwordConfirmation" required
+                                       th:value="${businessRegistrationDto.passwordConfirmation}" type="password"/>
                                 <div class="invalid-feedback">
                                     Hier custom error-message
                                 </div>
