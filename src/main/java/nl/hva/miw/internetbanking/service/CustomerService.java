@@ -5,10 +5,7 @@ import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
-import nl.hva.miw.internetbanking.model.Customer;
-import nl.hva.miw.internetbanking.model.CustomerType;
-import nl.hva.miw.internetbanking.model.LegalPerson;
-import nl.hva.miw.internetbanking.model.NaturalPerson;
+import nl.hva.miw.internetbanking.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -101,6 +98,10 @@ public class CustomerService {
 
     public List<Customer> getCustomerByAccountId(long accountId) {
         return customerDAO.getCustomerByAccountId(accountId);
+    }
+
+    public Optional <Customer> getCustomerByAccountId2(long accountId) {
+        return customerDAO.read(accountId);
     }
 
     public String printNameCustomer(long customerId) {
