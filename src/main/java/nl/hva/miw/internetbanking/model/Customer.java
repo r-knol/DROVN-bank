@@ -4,11 +4,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuperBuilder
 @NoArgsConstructor
 @Getter
 @Setter
@@ -16,7 +18,8 @@ import java.util.List;
 public class Customer implements Serializable {
 
     public static final String EMPTY_STRING = "";
-    public static final long ZERO = 0;
+    public static final long ZERO = 0L;
+    private static final long serialVersionUID = 6793528094836886930L;
 
     private long customerID;
     private String userName;
