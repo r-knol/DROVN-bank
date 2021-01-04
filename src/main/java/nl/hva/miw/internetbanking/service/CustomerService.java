@@ -109,6 +109,10 @@ public class CustomerService {
         return customerDAO.getCustomerByAccountId(accountId);
     }
 
+    public Optional <Customer> getCustomerByAccountId2(long accountId) {
+        return customerDAO.read(accountId);
+    }
+
     public String printNameCustomer(long customerId) {
         // eerst checken welk type klant het is:
                 try {

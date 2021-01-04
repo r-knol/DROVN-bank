@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static nl.hva.miw.internetbanking.model.CustomerType.NATURAL;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CustomerServiceTest {
     Customer nina = new Customer(1, "nvanloo", "myPassword", NATURAL);
@@ -27,9 +27,9 @@ class CustomerServiceTest {
                                              "James Rosskade", "Amsterdam");
     //
     List<Account> accountsNina = List.of(
-            new Account(1, 99.95, "84NL0563171251"),
-            new Account(2, 1234.56, "56NL0563172222")
-                                        );
+            new Account(1, "84NL0563171251",99.95),
+            new Account(2, "56NL0563172222",1234.56)
+    );
     Customer richard = new Customer(1, "rknol", "knolPassword", NATURAL);
     List<Customer> customerList = List.of(nina, richard);
 
