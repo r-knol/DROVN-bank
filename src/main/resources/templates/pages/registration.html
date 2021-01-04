@@ -17,6 +17,9 @@
             <div class="container pt-5">
                 <div class="row">
                     <div class="col-md-12">
+                        <div id="values"></div>
+                    </div>
+                    <div class="col-md-12">
                         <button aria-controls="collapseOne" aria-expanded="true"
                                 class="btn btn-outline-primary rounded-3 pt-3 pb-3 pl-5 pr-5 active"
                                 data-target="#collapseOne" data-toggle="collapse"
@@ -30,7 +33,6 @@
                             Zakelijke Klant
                         </button>
                         <div class="pt-5 pb-5" id="accordion">
-
                             <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
                                  id="collapseOne">
                                 <form action="#" class="row needs-validation" method="post" novalidate
@@ -41,27 +43,27 @@
                                     <div class="col-md-2 form-group">
                                         <label for="initials">Voorletters</label>
                                         <input class="form-control" id="initials" maxlength="10"
-                                               name="initials" pattern="^.*[a-zA-Z. ]{0,}$" required
+                                               name="initials" pattern="^.*[a-zA-Z. ]{0,10}$" required
                                                th:field="*{initials}" type="text"/>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label for="firstname">Voornaam</label>
                                         <input class="form-control" id="firstname" maxlength="15" name="firstName"
-                                               pattern="^.*[a-zA-Z-. ]{0,}$" required th:field="*{firstName}"
+                                               pattern="^.*[a-zA-Z-. ]{0,15}$" required th:field="*{firstName}"
                                                type="text"/>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label for="preposition">Tussenvoegsel</label>
                                         <input class="form-control" id="preposition" maxlength="15" name="preposition"
-                                               pattern="^.*[a-zA-Z-. ]{0,}$" th:field="*{preposition}" type="text"/>
+                                               pattern="^.*[a-zA-Z-. ]{0,15}$" th:field="*{preposition}" type="text"/>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label for="lastname">Achternaam</label>
                                         <input class="form-control" id="lastname" maxlength="45" name="surName"
-                                               pattern="^.*[a-zA-Z-. ]{0,}$" required th:field="*{surName}"
+                                               pattern="^.*[a-zA-Z-. ]{0,45}$" required th:field="*{surName}"
                                                type="text"/>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -114,7 +116,7 @@
                                     <div class="col-md-2 form-group">
                                         <label for="homeNumber">Huisnr.</label>
                                         <input aria-describedby="homeNumberHelp" class="form-control" id="homeNumber"
-                                               maxlength="10" name="homeNumber" pattern="^.*[0-9a-zA-z-. ]{0,}$"
+                                               maxlength="10" name="homeNumber" pattern="^.*[0-9a-zA-z-. ]{0,10}$"
                                                required th:field="*{homeNumber}" type="text"/>
                                         <div class="invalid-feedback"></div>
                                         <small class="form-text text-muted" id="homeNumberHelp">Format: 123, 12b,
@@ -123,14 +125,14 @@
                                     <div class="col-md-4 form-group">
                                         <label for="street">Straat</label>
                                         <input class="form-control" id="street" maxlength="45" name="street"
-                                               pattern="^.*[0-9a-zA-z-. ]{0,}$" required th:field="*{street}"
+                                               pattern="^.*[0-9a-zA-z-. ]{0,45}$" required th:field="*{street}"
                                                type="text"/>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label for="residence">Woonplaats</label>
                                         <input class="form-control" id="residence" maxlength="45" name="residence"
-                                               pattern="^.*[0-9a-zA-z-. ]{0,}$" required th:field="*{residence}"
+                                               pattern="^.*[0-9a-zA-z-. ]{0,45}$" required th:field="*{residence}"
                                                type="text"/>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -139,9 +141,8 @@
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label for="username_private">Gebruikersnaam</label>
-                                        <input class="form-control" id="username_private" maxlength="16"
-                                               minlength="4" name="username_private" pattern="^(?=[a-zA-Z0-9_]{4,}$)"
-                                               required
+                                        <input class="form-control" id="username_private" maxlength="16" minlength="4"
+                                               name="username_private" pattern="^[A-Za-z0-9_]{4,16}$" required
                                                th:field="*{userName}" type="text"/>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -251,7 +252,7 @@
                                     <div class="col-md-2 form-group">
                                         <label for="username_legal">Gebruikersnaam</label>
                                         <input class="form-control" id="username_legal" maxlength="16" minlength="4"
-                                               name="username_legal" pattern="^(?=[a-zA-Z0-9_]{4,}$)"
+                                               name="username_legal" pattern="^[A-Za-z0-9_]{4,16}$"
                                                required th:field="*{userName}" type="text"/>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -301,31 +302,54 @@
         $(this).toggleClass('active');
         $buttonPrivate.toggleClass('active');
     });
+
     $buttonPrivate.on('click', function (event) {
         event.preventDefault();
         $(this).toggleClass('active');
         $buttonLegal.toggleClass('active');
     });
 </script>
+
 <script>
-    // Script for custom form-validation
+    // Disable form submission if there are fields with invalid input
     (function () {
+
         'use strict';
-        window.addEventListener('load', function () {
-            // Fetch all forms for custom validation
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over the forms and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
+        var forms = document.querySelectorAll('.needs-validation');
+
+        Array.prototype.slice.call(forms).forEach(function (form) {
+
+            let inputs = form.elements;
+            //console.log(inputs);
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    validateInput(inputs);
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+
+        function validateInput(input) {
+            // TODO: Implement this.
+        }
+
     })();
 </script>
+
+<!--
+<script>
+    const inputs = document.querySelectorAll('input');
+    // inputs.forEach(input => console.log(input.id));
+    const log = document.querySelector('#values');
+
+    inputs.forEach(input => addEventListener('input', updateValue));
+
+    function updateValue(event) {
+        log.textContent = event.target.value;
+    }
+</script>
+-->
 </body>
 </html>

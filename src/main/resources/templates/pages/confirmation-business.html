@@ -188,7 +188,7 @@
                             <div class="col-md-2 form-group">
                                 <label for="username_legal">Gebruikersnaam</label>
                                 <input class="form-control" id="username_legal" maxlength="16" minlength="4"
-                                       name="username_legal" pattern="^(?=[a-zA-Z0-9_]{4,}$)"
+                                       name="username_legal" pattern="^[A-Za-z0-9_]{4,16}$"
                                        required th:field="*{userName}" type="text"/>
                                 <div class="invalid-feedback"></div>
                             </div>

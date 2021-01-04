@@ -17,14 +17,14 @@ public class PrivateRegistrationDTO implements DTO<NaturalPerson> {
 
     @NotBlank(message = "Dit is een verplicht veld.")
     @Size(min = 4, max = 16, message = "Minimaal 6 karakters, maximaal 16.")
-    @Pattern(regexp = "^(?=[a-zA-Z0-9_]{4,}$)", message = "Hoofdletters, kleine letters, cijfers " +
-                                                          "of underscore '_'.")
+    @Pattern(regexp = "^[A-Za-z0-9_]{4,16}$",
+             message = "Hoofdletters, kleine letters, cijfers  of underscore '_'.")
     // Min. 4 characters, lower- or uppercase characters, numbers or underscore
     private String userName;
 
     @NotBlank(message = "Dit is een verplicht veld.")
     @Size(min = 6, max = 16, message = "Minimaal 6 karakters, maximaal 16.")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$",
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,16}$",
              message = "Tenminste één hoofdletter, één kleine letter, een cijfer en een speciaal " +
                        "teken.")
     // Min. 6 characters, min 1 number, 1 lower- and uppercase letter, 1 special character
@@ -32,27 +32,27 @@ public class PrivateRegistrationDTO implements DTO<NaturalPerson> {
 
     @NotBlank(message = "Dit is een verplicht veld.")
     @Size(min = 6, max = 16, message = "Minimaal 6 karakters, maximaal 16.")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$",
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,16}$",
              message = "Tenminste één hoofdletter, één kleine letter, één cijfer en één speciaal " +
                        "teken.")
     private String passwordConfirmation;
 
     @NotBlank(message = "Dit is een verplicht veld.")
-    @Pattern(regexp = "^.*[a-zA-Z. ]{0,}$", message = "Invoer bevat ongeldige tekens.")
+    @Pattern(regexp = "^.*[a-zA-Z. ]{0,10}$", message = "Invoer bevat ongeldige tekens.")
     @Size(max = 10, message = "Maximaal 10 karakters.")
     private String initials;
 
     @NotBlank(message = "Dit is een verplicht veld.")
-    @Pattern(regexp = "^.*[a-zA-Z-. ]{0,}$", message = "Invoer bevat ongeldige tekens.")
+    @Pattern(regexp = "^.*[a-zA-Z-. ]{0,15}$", message = "Invoer bevat ongeldige tekens.")
     @Size(max = 15, message = "Maximaal 15 karakters.")
     private String firstName;
 
-    @Pattern(regexp = "^.*[a-zA-Z-. ]{0,}$", message = "Invoer bevat ongeldige tekens.")
+    @Pattern(regexp = "^.*[a-zA-Z-. ]{0,15}$", message = "Invoer bevat ongeldige tekens.")
     @Size(max = 15, message = "Maximaal 15 karakters.")
     private String preposition;
 
     @NotBlank(message = "Dit is een verplicht veld.")
-    @Pattern(regexp = "^.*[a-zA-Z-. ]{0,}$", message = "Invoer bevat ongeldige tekens.")
+    @Pattern(regexp = "^.*[a-zA-Z-. ]{0,45}$", message = "Invoer bevat ongeldige tekens.")
     @Size(max = 45, message = "Maximaal 45 karakters.")
     private String surName;
 
@@ -83,17 +83,17 @@ public class PrivateRegistrationDTO implements DTO<NaturalPerson> {
     private String postalCode;
 
     @NotBlank(message = "Dit is een verplicht veld.")
-    @Pattern(regexp = "^.*[0-9a-zA-z-. ]{0,}$", message = "Invoer bevat ongeldige tekens.")
+    @Pattern(regexp = "^.*[0-9a-zA-z-. ]{0,10}$", message = "Invoer bevat ongeldige tekens.")
     @Size(max = 10, message = "Maximaal 10 karakters.")
     private String homeNumber;
 
     @NotBlank(message = "Dit is een verplicht veld.")
-    @Pattern(regexp = "^.*[0-9a-zA-z-. ]{0,}$", message = "Invoer bevat ongeldige tekens.")
+    @Pattern(regexp = "^.*[0-9a-zA-z-. ]{0,10}$", message = "Invoer bevat ongeldige tekens.")
     @Size(max = 45, message = "Maximaal 45 karakters.")
     private String street;
 
     @NotBlank(message = "Dit is een verplicht veld.")
-    @Pattern(regexp = "^.*[0-9a-zA-z-. ]{0,}$", message = "Invoer bevat ongeldige tekens.")
+    @Pattern(regexp = "^.*[0-9a-zA-z-. ]{0,10}$", message = "Invoer bevat ongeldige tekens.")
     @Size(max = 45, message = "Maximaal 45 karakters.")
     private String residence;
 
