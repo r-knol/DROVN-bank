@@ -29,5 +29,12 @@
     </tr>
     </thead>
 </table>
+<table class="table table-bordered m-15">
+    <thead class="thead-light">
+    <tr th:each="l : ${legalPersons}">
+        <td th:text="${l.sector}"></td>
+    </tr>
+    </thead>
+</table>
 </body>
 </html>
