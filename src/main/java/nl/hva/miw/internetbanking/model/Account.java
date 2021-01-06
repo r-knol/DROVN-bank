@@ -9,15 +9,15 @@ public class Account implements Serializable {
     private static final long serialVersionUID = 8922473667746953263L;
 
     private long accountID;
-    private double balance;
     private String iban;
+    private double balance;
     private List<Transaction> transactions;
     private List<Customer> accountHolders;
     private List<String> accountHolderNames;
 
-  public List<Customer> getAccountHolders() {
-    return accountHolders;
-  }
+    public List<Customer> getAccountHolders() {
+        return accountHolders;
+    }
 
   public void setAccountHolders(List<Customer> accountHolders) {
     this.accountHolders = accountHolders;
@@ -27,16 +27,20 @@ public class Account implements Serializable {
     this.accountHolders.add(customer);
   }
 
-  public Account(long accountID, double balance, String iban) {
+  public Account(long accountID,String iban, double balance ) {
         this.accountID = accountID;
-        this.balance = balance;
         this.iban = iban;
+        this.balance = balance;
         this.transactions = new ArrayList<>();
         this.accountHolders = new ArrayList<>();
         this.accountHolderNames = new ArrayList<>();
     }
 
     public Account() {
+    }
+
+    public Account(String iban, double balance) {
+        this(0,iban, balance);
     }
 
     public Account(long accountID) {
@@ -91,8 +95,8 @@ public class Account implements Serializable {
     public String toString() {
         return "Account{" +
                 "accountID=" + accountID +
-                ", balance=" + balance +
                 ", iban='" + iban + '\'' +
+                ", balance=" + balance +
                 ", transactions=" + transactions +
                 '}';
     }

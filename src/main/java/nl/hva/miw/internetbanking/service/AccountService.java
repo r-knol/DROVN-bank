@@ -3,8 +3,10 @@ package nl.hva.miw.internetbanking.service;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import nl.hva.miw.internetbanking.controller.OpenAccountController;
 import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dto.AccountTransactionDTO;
+import nl.hva.miw.internetbanking.data.dto.OpenAccountDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,13 @@ public class AccountService {
     @Getter
     @Setter
     private AccountTransactionDTO accountTransactionDTO;
+    private OpenAccountDTO openAccountDTO;
 
     @Autowired
     public AccountService(AccountDAO accountDAO) {
         this.accountDao = accountDAO;
+        openAccountDTO = new OpenAccountDTO();
+
         log.warn("New AccountService.");
     }
 
@@ -49,9 +54,27 @@ public class AccountService {
         return getAccountDetails(accountDao.read(accountID));
     }
 
-    //@Author Veroniek
+    public <T extends Account> Account createAccountObject(Account account) {
+        account.setAccountID(openAccountDTO.getAccount().getAccountID());
+        account.setIban(openAccountDTO.getAccount().getIban());
+        account.setBalance(openAccountDTO.getAccount().getBalance());
+        return account;
+    }
+
+  /*  public void createNewAccount() {
+        Account account = createAccountObject(openAccountDTO.getAccount());
+        accountDao.create(account);
+    }*/
+
     public void saveNewAccount(Account account) {
         accountDao.create(account);
     }
 
+    public OpenAccountDTO getOpenAccountDTO() {
+        return openAccountDTO;
+    }
+
+    public void setOpenAccountDTO(OpenAccountDTO openAccountDTO) {
+        this.openAccountDTO = openAccountDTO;
+    }
 }
