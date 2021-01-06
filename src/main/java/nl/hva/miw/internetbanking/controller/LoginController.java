@@ -98,7 +98,6 @@ public class LoginController {
                         for (Customer customer : account.getAccountHolders()) {
                             account.addAccountHolderName(customerService.printNameCustomer(customer.getCustomerID()));
                         }
-                        model.addAttribute("customerNames", account.getAccountHolderNames());
                     }
                     return "pages/employee-dashboard-private";
                 }
@@ -112,8 +111,6 @@ public class LoginController {
                         for (Customer customer : account.getAccountHolders()) {
                             account.addAccountHolderName(customerService.printNameCustomer(customer.getCustomerID()));
                         }
-                        model.addAttribute("customerNames", account.getAccountHolderNames());
-                        System.out.println(account.getAccountHolderNames());
                     }
                 }
                 return "pages/employee-dashboard-legal";
