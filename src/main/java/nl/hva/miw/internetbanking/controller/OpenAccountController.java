@@ -34,15 +34,17 @@ public class OpenAccountController {
     public ModelAndView showNewAccount(@PathVariable(value = "id") long id, ModelAndView model){
         Optional<Customer> customer = customerService.getCustomerById(id);
         Account newAccount = new Account();
+       model.addObject("account", newAccount);
         model.addObject("customer", customer);
-        model.addObject("account", newAccount);
         model.setViewName("pages/open-account");
+       logger.info(" " + model);
        return model;
     }
 
     @PostMapping("/saveaccount")
     public ModelAndView saveAccount (@ModelAttribute ("account") Account account){
         accountService.saveNewAccount(account);
+        logger.info(" " + account);
         return new ModelAndView("pages/open-account");
     }
 }
