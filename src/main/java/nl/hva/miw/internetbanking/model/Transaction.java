@@ -6,8 +6,6 @@ import java.util.Date;
 
 public class Transaction implements Serializable {
 
-    private static final long serialVersionUID = 8922473667746953263L;
-
     private long transactionID;
     private String debetAccount;
     private String creditAccount;

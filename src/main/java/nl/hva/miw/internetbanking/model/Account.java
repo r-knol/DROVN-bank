@@ -1,5 +1,7 @@
 package nl.hva.miw.internetbanking.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,7 @@ public class Account implements Serializable {
     this.accountHolders.add(customer);
   }
 
+  @Autowired
   public Account(long accountID, double balance, String iban) {
         this.accountID = accountID;
         this.balance = balance;
@@ -91,6 +94,8 @@ public class Account implements Serializable {
     public void addTransaction (Transaction transaction) {
       transactions.add(transaction);
     }
+
+
 
     @Override
     public String toString() {

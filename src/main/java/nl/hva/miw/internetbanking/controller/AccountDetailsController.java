@@ -25,17 +25,34 @@ public class AccountDetailsController {
         this.accountService = accountService;
     }
 
-    @GetMapping("/account_details/{id}")
+    @GetMapping ("/account_details{id}")
+    public String showAccounts (@PathVariable ("id") long accountID, Model model) {
+        Optional<Account> account = accountService.getAccountById(accountID);
+        model.addAttribute(account);
+        System.out.println(account);
+        return "pages/details_overview";
+    }
+
+    @PostMapping("/account_details/{id}")
     public String AccountDetailsHandler (@PathVariable ("id") long accountID, Model model) {
         Optional<Account> account = accountService.getAccountById(accountID);
-        Account accountFound = account.get();
         System.out.println(account);
-        AccountHasTransactionDTO accountHasTransactionDTO = new AccountHasTransactionDTO(accountFound);
-        accountHasTransactionDTO.setTransactionList(transactionService.getTransactionsForAccount(accountFound));
-        for (Transaction transaction : accountHasTransactionDTO.getTransactionList()) {
-           transaction.addTransactionToAccount(accountFound);
+        if (account.isPresent()) {
+            Account accountFound = account.get();
+            model.addAttribute("account", accountFound);
+            accountFound.setTransactions(transactionService.getTransactionsForAccount(accountFound));
+            System.out.println(accountFound);
+//        AccountHasTransactionDTO accountHasTransactionDTO = new AccountHasTransactionDTO(accountFound);
+//        accountHasTransactionDTO.setTransactionList(transactionService.getTransactionsForAccount(accountFound));
+//        accountFound.setTransactions(transactionService.getTransactionsForAccount(accountFound));
+            System.out.println(accountFound.getTransactions());
+            for (Transaction transaction : accountFound.getTransactions()) {
+                transaction.addTransactionToAccount(accountFound);
+            }
+            model.addAttribute("accountWithTransactionOverview", accountFound);
+            return "pages/account_details";
         }
-        model.addAttribute("accountWithTransactionOverview", accountHasTransactionDTO);
-        return "pages/account_details";
+        return "pages/errorpage";
     }
+
 }

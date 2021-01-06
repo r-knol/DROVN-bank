@@ -85,10 +85,12 @@ public class TransactionDAO implements DAO<Transaction, Long> {
 
     public List<Transaction> getTransactionsForAccount (Account account) {
         List<Transaction> transactions = getTransactionsByAccountId(account.getAccountID());
+        System.out.println(account.getAccountID());
         for (Transaction t : transactions) {
             t.addTransactionToAccount(account);
             account.addTransaction(t);
         }
+        System.out.println(transactions);
         return transactions;
     }
 
@@ -96,7 +98,17 @@ public class TransactionDAO implements DAO<Transaction, Long> {
         final String sql = "SELECT account.accountid, account.iban, account.balance, transaction.transactionID, transaction.amount, transaction.description, \n" +
                     "transaction.dateTime, transaction.creditAccount, transaction.debitAccount FROM transaction_has_account JOIN Transaction ON \n" +
                     "Transaction_has_account.transactionID=transaction.transactionID JOIN account ON account.accountID=transaction_has_account.accountID \n" +
-                    "WHERE account.accountID = 4";
+                    "WHERE account.accountID = ?";
         return jdbcTemplate.query(sql, new TransactionRowMapper(), accountID);
+    }
+
+    public Transaction getCreditTransaction (String iban) {
+        final String sql = "SELECT * FROM transaction WHERE creditAccount = ?";
+        return jdbcTemplate.queryForObject(sql, new TransactionRowMapper(), iban);
+    }
+
+    public Transaction getDebitTransaction (String iban) {
+        final String sql = "SELECT * FROM transaction WHERE debitAccount =?";
+        return  jdbcTemplate.queryForObject(sql, new TransactionRowMapper(), iban);
     }
 }

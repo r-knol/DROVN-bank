@@ -13,8 +13,6 @@ import java.io.Serializable;
 @ToString
 public class Employee implements Serializable {
 
-    private static final long serialVersionUID = 8922473667746953263L;
-
     private long employeeID;
     private String userName;
     private String password;

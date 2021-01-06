@@ -9,8 +9,6 @@ import java.io.Serializable;
 @Setter
 public class NaturalPerson extends Customer implements Serializable {
 
-    private static final long serialVersionUID = 8922473667746953263L;
-
     private String initials;
     private String firstName;
     private String preposition;

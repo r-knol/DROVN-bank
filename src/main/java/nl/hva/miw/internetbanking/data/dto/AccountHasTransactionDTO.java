@@ -3,9 +3,7 @@ package nl.hva.miw.internetbanking.data.dto;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Transaction;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class AccountHasTransactionDTO {
 

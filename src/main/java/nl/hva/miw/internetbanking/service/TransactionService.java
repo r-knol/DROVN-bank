@@ -46,6 +46,14 @@ public class TransactionService {
         return getTransactionDetails(transactionDAO.read(transactionID));
     }
 
+    public Transaction getCreditTransaction (String iban) {
+        return transactionDAO.getCreditTransaction(iban);
+    }
+
+    public Transaction getDebitTransaction (String iban) {
+        return transactionDAO.getDebitTransaction(iban);
+    }
+
     public void doTransaction(Account fromAccount, Account toAccount) {
 //        Transaction transaction = new Transaction();
 //        transactionDAO.create(transaction);
