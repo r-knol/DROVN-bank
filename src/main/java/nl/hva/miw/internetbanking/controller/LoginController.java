@@ -1,10 +1,10 @@
 package nl.hva.miw.internetbanking.controller;
 
-import nl.hva.miw.internetbanking.data.dto.AccountHasCustomersDTO;
 import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Employee;
+import nl.hva.miw.internetbanking.model.EmployeeRole;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
 import nl.hva.miw.internetbanking.service.EmployeeService;
@@ -88,17 +88,35 @@ public class LoginController {
             if (loginService.validEmployee(employeeFound, password)) {
                 model.addAttribute("employee", employeeFound);
 
-                List<Account> accountList = accountService.getAllNaturalAccounts();
-                model.addAttribute("accounts", accountList);
+                if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_PRIVATE) {
 
-                for (Account account : accountList) {
-                    account.setAccountHolders(customerService.getCustomerByAccountId(account.getAccountID()));
-                    for (Customer customer : account.getAccountHolders()) {
-                        account.addAccountHolderName(customerService.printNameCustomer(customer.getCustomerID()));
+                    List<Account> accountList = accountService.getAllNaturalAccounts();
+                    model.addAttribute("naturalAccounts", accountList);
+
+                    for (Account account : accountList) {
+                        account.setAccountHolders(customerService.getCustomerByAccountId(account.getAccountID()));
+                        for (Customer customer : account.getAccountHolders()) {
+                            account.addAccountHolderName(customerService.printNameCustomer(customer.getCustomerID()));
+                        }
+                        model.addAttribute("customerNames", account.getAccountHolderNames());
                     }
-                    model.addAttribute("customerNames", account.getAccountHolderNames());
+                    return "pages/employee-dashboard-private";
                 }
-                return "pages/employee-dashboard";
+
+                if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_LEGAL) {
+
+                    List<Account> accountList = accountService.getAllLegalAccounts();
+                    model.addAttribute("legalAccounts", accountList);
+                    for (Account account : accountList) {
+                        account.setAccountHolders(customerService.getCustomerByAccountId(account.getAccountID()));
+                        for (Customer customer : account.getAccountHolders()) {
+                            account.addAccountHolderName(customerService.printNameCustomer(customer.getCustomerID()));
+                        }
+                        model.addAttribute("customerNames", account.getAccountHolderNames());
+                        System.out.println(account.getAccountHolderNames());
+                    }
+                }
+                return "pages/employee-dashboard-legal";
             }
         }
         return "pages/errorpage-employee";

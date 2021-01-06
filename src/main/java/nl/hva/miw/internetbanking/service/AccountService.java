@@ -70,6 +70,10 @@ public class AccountService {
         return accountDao.getAllNaturalAccounts();
     }
 
+    public List<Account> getAllLegalAccounts() {
+        return accountDao.getAllLegalAccounts();
+    }
+
     public void saveNewAccount(Account account) {
         accountDao.create(account);
     }
