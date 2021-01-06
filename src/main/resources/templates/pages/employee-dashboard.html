@@ -24,7 +24,8 @@
         <thead class="thead-light">
         <tr th:each="account : ${accounts}">
             <td th:text="${account.iban}"></td>
-            <!--<td th:text="${account.balance}"></td>-->
+            <td th:text="${account.balance}"></td>
+            <td th:text="${account.getAccountHolderNames()}"></td>
         </tr>
         </thead>
     </table>

@@ -91,6 +91,13 @@ public class LoginController {
                 List<Account> accountList = accountService.getAllNaturalAccounts();
                 model.addAttribute("accounts", accountList);
 
+                for (Account account : accountList) {
+                    account.setAccountHolders(customerService.getCustomerByAccountId(account.getAccountID()));
+                    for (Customer customer : account.getAccountHolders()) {
+                        account.addAccountHolderName(customerService.printNameCustomer(customer.getCustomerID()));
+                    }
+                    model.addAttribute("customerNames", account.getAccountHolderNames());
+                }
                 return "pages/employee-dashboard";
             }
         }

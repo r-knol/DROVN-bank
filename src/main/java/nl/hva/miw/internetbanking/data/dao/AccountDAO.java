@@ -92,10 +92,11 @@ public class AccountDAO implements DAO<Account, Long> {
     }
 
     public List<Account> getAllNaturalAccounts() {
-        final String sql = "SELECT customer.customerID, customer.userName, customer.customerType, account.accountID, " +
-                "account.iban, account.balance\n" +
+        final String sql = "SELECT customer.customerID, naturalperson.firstName, naturalperson.preposition, naturalperson.surName,\n" +
+                "customer.customerType, account.accountID, account.iban, account.balance\n" +
                 "FROM customer_has_account JOIN customer ON customer_has_account.customerID = customer.customerID\n" +
-                "JOIN account ON customer_has_account.accountID = account.accountID\n" +
+                "JOIN account ON customer_has_account.accountID = account.accountID JOIN naturalperson ON \n" +
+                "naturalperson.customerID = customer_has_account.customerID\n" +
                 "WHERE customer.customerType = 'NATURAL'";
         return jdbcTemplate.query(sql, new AccountRowMapper());
     }
