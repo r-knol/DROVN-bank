@@ -91,6 +91,15 @@ public class AccountDAO implements DAO<Account, Long> {
         return accounts;
     }
 
+    public List<Account> getAllNaturalAccounts() {
+        final String sql = "SELECT customer.customerID, customer.userName, customer.customerType, account.accountID, " +
+                "account.iban, account.balance\n" +
+                "FROM customer_has_account JOIN customer ON customer_has_account.customerID = customer.customerID\n" +
+                "JOIN account ON customer_has_account.accountID = account.accountID\n" +
+                "WHERE customer.customerType = 'NATURAL'";
+        return jdbcTemplate.query(sql, new AccountRowMapper());
+    }
+
     public List<Account> getAccountsByCustomerId(long customerID) {
         final String sql = "SELECT customer.customerid, customer.username, account.accountid, " +
                 "account.iban, account.balance\n" +

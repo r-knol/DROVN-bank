@@ -66,6 +66,10 @@ public class AccountService {
         accountDao.create(account);
     }*/
 
+    public List<Account> getAllNaturalAccounts() {
+        return accountDao.getAllNaturalAccounts();
+    }
+
     public void saveNewAccount(Account account) {
         accountDao.create(account);
     }

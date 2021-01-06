@@ -20,5 +20,13 @@
         </tr>
         </thead>
     </table>
+    <table class="table table-bordered m-15">
+        <thead class="thead-light">
+        <tr th:each="account : ${accounts}">
+            <td th:text="${account.iban}"></td>
+            <!--<td th:text="${account.balance}"></td>-->
+        </tr>
+        </thead>
+    </table>
 </body>
 </html>
