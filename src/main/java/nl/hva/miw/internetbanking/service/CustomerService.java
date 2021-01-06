@@ -5,18 +5,21 @@ import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
+import nl.hva.miw.internetbanking.data.dto.DTO;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.CustomerType;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
+import nl.hva.miw.internetbanking.util.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Service
+@Slf4j(topic = "CustomerService")
 public class CustomerService {
 
     private final NaturalPersonDAO naturalPersonDAO;
@@ -25,19 +28,22 @@ public class CustomerService {
     private final CustomerDAO customerDAO;
 
     @Autowired
-    public CustomerService(
-            NaturalPersonDAO naturalPersonDAO,
-            LegalPersonDAO legalPersonDAO,
-            AccountDAO accountDAO,
-            CustomerDAO customerDAO) {
+    public CustomerService(NaturalPersonDAO naturalPersonDAO, LegalPersonDAO legalPersonDAO,
+                           AccountDAO accountDAO, CustomerDAO customerDAO) {
         this.naturalPersonDAO = naturalPersonDAO;
         this.legalPersonDAO = legalPersonDAO;
         this.accountDAO = accountDAO;
         this.customerDAO = customerDAO;
     }
 
+    public <T extends Customer> void registerCustomer(DTO<T> dto, Class<T> customerClass) {
+        T customer = DtoMapperUtil.mapDtoToEntity(dto, customerClass);
+        saveCustomer(customer);
+    }
+
     // DataIntegrityViolationException - bij onjuist datum format
     // SQLIntegrityConstraintViolationException - bij null waarden voor non-null
+    @Transactional
     public <T extends Customer> void saveCustomer(T entity) {
         customerDAO.create(entity);
         if (entity instanceof NaturalPerson) {
@@ -101,6 +107,10 @@ public class CustomerService {
 
     public List<Customer> getCustomerByAccountId(long accountId) {
         return customerDAO.getCustomerByAccountId(accountId);
+    }
+
+    public Optional <Customer> getCustomerByAccountId2(long accountId) {
+        return customerDAO.read(accountId);
     }
 
     public String printNameCustomer(long customerId) {

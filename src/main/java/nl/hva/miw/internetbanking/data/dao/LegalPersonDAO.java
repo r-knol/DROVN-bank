@@ -30,7 +30,7 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
             ps.setLong(1, legalPerson.getCustomerID());
             ps.setString(2, legalPerson.getCompanyName());
             ps.setLong(3, legalPerson.getKvkNumber());
-            ps.setString(4, legalPerson.getSector());
+            ps.setString(4, legalPerson.getSector().name());
             ps.setString(5, legalPerson.getVatNumber());
             ps.setString(6, legalPerson.getPostalCode());
             ps.setString(7, legalPerson.getHomeNumber());

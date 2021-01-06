@@ -64,7 +64,7 @@ public class AccountOverviewController {
 
     @PostMapping("/account-overview/{id}")
     public String PostHandlerAccountDetails (@PathVariable ("id") long accountID, Model model) {
-        Optional <Account> acc = accountService.getAccountById(accountID);
+        Optional<Account> acc = accountService.getAccountById(accountID);
         if (acc.isPresent()) {
             Account accountFound = acc.get();
             model.addAttribute("account", accountFound);
@@ -80,8 +80,15 @@ public class AccountOverviewController {
             model.addAttribute("accountWithTransactions", accountHasTransactionDTO);
             return "pages/account_details";
         }
+        Optional<Customer> customer = customerService.getCustomerByAccountId2(accountID);
+        System.out.println(customer);
+        if (customer.isPresent()) {
+            Customer customerFound = customer.get();
+            model.addAttribute("customer", customerFound);
+            model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customerFound.getCustomerID()));
+            return "pages/open-account";
+        }
         return "pages/open-account";
+
     }
-
-
 }
