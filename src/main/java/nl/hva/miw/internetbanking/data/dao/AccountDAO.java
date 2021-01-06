@@ -41,6 +41,14 @@ public class AccountDAO implements DAO<Account, Long> {
         account.setAccountID(id);
     }
 
+    public void saveAccountToCustomer(){
+        String sql = "INSERT INTO customer_has_account(customerID) where accountID=?";
+
+
+
+        }
+
+
     @Override
     public Optional<Account> read(Long accountID) {
         try {
