@@ -97,7 +97,7 @@ public class AccountDAO implements DAO<Account, Long> {
                 "FROM customer_has_account JOIN customer ON customer_has_account.customerID = customer.customerID\n" +
                 "JOIN account ON customer_has_account.accountID = account.accountID JOIN naturalperson ON \n" +
                 "naturalperson.customerID = customer_has_account.customerID\n" +
-                "WHERE customer.customerType = 'NATURAL'";
+                "WHERE customer.customerType = 'NATURAL' ORDER BY balance DESC LIMIT 10";
         return jdbcTemplate.query(sql, new AccountRowMapper());
     }
 
