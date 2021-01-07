@@ -11,6 +11,7 @@
     <h1>Rekeningoverzicht</h1>
     <h2>Welkom, <span th:text="${nameCurrentCus}"></span>.</h2>
     <p th:if="${customerWithAccountOverview.getAccountList().isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
+    <p style="text-align:right">Nieuwe rekening? <a th:href="@{openaccount/{id}(id=${customer.customerID})}" >Open deze hier! </a></p>
 
     <table class="table table-bordered"
             th:unless="${customerWithAccountOverview.getAccountList().isEmpty()}"
@@ -35,6 +36,14 @@
         </tbody>
     </table>
 
-    <p>Nog geen rekening? <a th:href="@{openaccount/{id}(id=${customer.customerID})}">Open deze hier!</a></p>
+    <form action="#" method="get" th:action="@{/do-transaction/}" th:object="${customerWithAccountOverview}">
+        <div class="col-md-4">
+            <input type="submit" class="btn btn-primary" value="Overboeken">
+        </div>
+        <div class="col-md-4">
+        <a th:href="@{/}" class="btn btn-outline-secondary">Log uit</a>
+        </div>
+        </form>
+
 </body>
 </html>
