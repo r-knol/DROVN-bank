@@ -21,8 +21,9 @@ public class AccountDetailsController {
     private TransactionService transactionService;
 
     @Autowired
-    public AccountDetailsController (AccountService accountService) {
+    public AccountDetailsController (AccountService accountService, TransactionService transactionService) {
         this.accountService = accountService;
+        this.transactionService = transactionService;
     }
 
     @GetMapping ("/account_details{id}")
@@ -33,7 +34,7 @@ public class AccountDetailsController {
         return "pages/details_overview";
     }
 
-    @PostMapping("/account_details/{id}")
+    @GetMapping("/account_details/{id}")
     public String AccountDetailsHandler (@PathVariable ("id") long accountID, Model model) {
         Optional<Account> account = accountService.getAccountById(accountID);
         System.out.println(account);

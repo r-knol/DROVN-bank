@@ -2,20 +2,19 @@ package nl.hva.miw.internetbanking.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Transaction implements Serializable {
 
     private long transactionID;
-    private String debetAccount;
+    private String debitAccount;
     private String creditAccount;
     private double amount;
     private String description;
     private LocalDateTime date;
     private Account account;
 
-    public Transaction(String debetAccount, String creditAccount, double amount, String description, LocalDateTime date, Account account) {
-        this.debetAccount = debetAccount;
+    public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime date, Account account) {
+        this.debitAccount = debitAccount;
         this.creditAccount = creditAccount;
         this.amount = amount;
         this.description = description;
@@ -23,9 +22,9 @@ public class Transaction implements Serializable {
         this.account = account;
     }
 
-    public Transaction(long transactionID, String debetAccount, String creditAccount, double amount, String description, LocalDateTime date) {
+    public Transaction(long transactionID, String debitAccount, String creditAccount, double amount, String description, LocalDateTime date) {
         this.transactionID = transactionID;
-        this.debetAccount = debetAccount;
+        this.debitAccount = debitAccount;
         this.creditAccount = creditAccount;
         this.amount = amount;
         this.description = description;
@@ -51,12 +50,12 @@ public class Transaction implements Serializable {
         this.transactionID = transactionID;
     }
 
-    public String getDebetAccount() {
-        return debetAccount;
+    public String getDebitAccount() {
+        return debitAccount;
     }
 
-    public void setDebetAccount(String debetAccountNo) {
-        this.debetAccount = debetAccountNo;
+    public void setDebitAccount(String debetAccountNo) {
+        this.debitAccount = debetAccountNo;
     }
 
     public String getCreditAccount() {
@@ -68,6 +67,12 @@ public class Transaction implements Serializable {
     }
 
     public double getAmount() {
+        if (account.getIban().equals(debitAccount)) {
+            amount = 0 - amount;
+        }
+        if(account.getIban().equals(creditAccount)) {
+
+        }
         return amount;
     }
 
@@ -91,11 +96,21 @@ public class Transaction implements Serializable {
         this.date = date;
     }
 
+//    public double getTransactionAmount (double amount) {
+//        if (account.getIban().equals(debitAccount)) {
+//             amount = 0 - amount;
+//        }
+//        if(account.getIban().equals(creditAccount)) {
+//
+//        }
+//        return amount;
+//    }
+
     @Override
     public String toString() {
         return "Transaction{" +
                 "transactionID=" + transactionID +
-                ", debetAccountNo='" + debetAccount + '\'' +
+                ", debetAccountNo='" + debitAccount + '\'' +
                 ", creditAccountNo='" + creditAccount + '\'' +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +

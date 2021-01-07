@@ -12,8 +12,8 @@ public class AccountRowMapper implements RowMapper<Account> {
     public Account mapRow(ResultSet resultSet, int i) throws SQLException {
         return new Account(
                 resultSet.getLong("accountID"),
-                resultSet.getString("iban"),
-                resultSet.getDouble("balance"));
+                resultSet.getDouble("balance"),
+                resultSet.getString("iban"));
     }
 
 }

@@ -40,11 +40,11 @@ public class Account implements Serializable {
         this.accountHolderNames = new ArrayList<>();
     }
 
-    public Account() {
+    public Account(double balance, String iban) {
+        this(0,balance, iban);
     }
 
-    public Account(String iban, double balance) {
-        this(0,iban, balance);
+    public Account() {
     }
 
     public Account(long accountID) {

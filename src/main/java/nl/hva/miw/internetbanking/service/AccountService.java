@@ -5,7 +5,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.controller.OpenAccountController;
 import nl.hva.miw.internetbanking.data.dao.AccountDAO;
-import nl.hva.miw.internetbanking.data.dto.AccountTransactionDTO;
+import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
 import nl.hva.miw.internetbanking.data.dto.OpenAccountDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
@@ -22,7 +22,7 @@ public class AccountService {
     private AccountDAO accountDao;
     @Getter
     @Setter
-    private AccountTransactionDTO accountTransactionDTO;
+    private AccountHasTransactionDTO accountTransactionDTO;
     private OpenAccountDTO openAccountDTO;
 
     @Autowired

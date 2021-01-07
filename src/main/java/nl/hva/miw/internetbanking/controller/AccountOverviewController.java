@@ -2,6 +2,7 @@ package nl.hva.miw.internetbanking.controller;
 
 import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
 import nl.hva.miw.internetbanking.model.Account;
+import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Transaction;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
@@ -72,7 +73,7 @@ public class AccountOverviewController {
             accountHasTransactionDTO.setTransactionList(accountFound.getTransactions());
             for (Transaction transactions : accountHasTransactionDTO.getTransactionList()) {
                 if (accountFound.getIban().equals(transactions.getCreditAccount())
-                        || accountFound.getIban().equals(transactions.getDebetAccount())) {
+                        || accountFound.getIban().equals(transactions.getDebitAccount())) {
                     transactions.addTransactionToAccount(accountFound);
                 }
             }

@@ -1,13 +1,9 @@
 package nl.hva.miw.internetbanking.data.dao;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
-import nl.hva.miw.internetbanking.data.mapper.EmployeeRowMapper;
-import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.TransactionRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Transaction;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -15,8 +11,6 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -38,7 +32,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"transactionID"});
-            ps.setString(1, transaction.getDebetAccount());
+            ps.setString(1, transaction.getDebitAccount());
             ps.setString(2, transaction.getCreditAccount());
             ps.setDouble(3, transaction.getAmount());
             ps.setString(4, transaction.getDescription());
@@ -59,7 +53,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     public void update(Transaction transaction) {
         String sql = "UPDATE transaction SET debetAccount = ?, creditAccount = ?, amount = ?" +
                 ", description = ?, date = ?" + "WHERE transactionID = ?";
-        jdbcTemplate.update(sql, transaction.getDebetAccount(),
+        jdbcTemplate.update(sql, transaction.getDebitAccount(),
                 transaction.getCreditAccount(),
                 transaction.getAmount(),
                 transaction.getDescription(),
