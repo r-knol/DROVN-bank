@@ -37,5 +37,14 @@
     </tr>
     </thead>
 </table>
+</table>
+<table class="table table-bordered m-15">
+    <thead class="thead-light">
+    <tr th:each="m : ${mostActiveClients}">
+        <td th:text="${m.companyName}"></td>
+        <td th:text="${m.numberOfTransactions}"></td>
+    </tr>
+    </thead>
+</table>
 </body>
 </html>

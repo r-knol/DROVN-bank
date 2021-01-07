@@ -6,6 +6,7 @@ import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
 import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
+import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
 import nl.hva.miw.internetbanking.data.dto.DTO;
 import nl.hva.miw.internetbanking.model.*;
 import nl.hva.miw.internetbanking.util.DtoMapperUtil;
@@ -53,6 +54,10 @@ public class CustomerService {
 
     public List<BalancePerSectorDTO> getAvgBalancePerSegment() {
         return legalPersonDAO.getAvgBalancePerSegment();
+    }
+
+    public List<CompanyTransactionDTO> getMostActiveClients() {
+        return legalPersonDAO.getMostActiveClients();
     }
 
     public Optional<Customer> getCustomerById(long customerID) {
