@@ -6,10 +6,7 @@ import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
 import nl.hva.miw.internetbanking.data.dto.DTO;
-import nl.hva.miw.internetbanking.model.Customer;
-import nl.hva.miw.internetbanking.model.CustomerType;
-import nl.hva.miw.internetbanking.model.LegalPerson;
-import nl.hva.miw.internetbanking.model.NaturalPerson;
+import nl.hva.miw.internetbanking.model.*;
 import nl.hva.miw.internetbanking.util.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,6 +48,10 @@ public class CustomerService {
         } else if (entity instanceof LegalPerson) {
             legalPersonDAO.create((LegalPerson) entity);
         }
+    }
+
+    public List<LegalPerson> getAvgBalancePerSegment() {
+        return legalPersonDAO.getAvgBalancePerSegment();
     }
 
     public Optional<Customer> getCustomerById(long customerID) {

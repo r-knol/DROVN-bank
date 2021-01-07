@@ -1,9 +1,7 @@
 package nl.hva.miw.internetbanking.controller;
 
 import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
-import nl.hva.miw.internetbanking.model.Account;
-import nl.hva.miw.internetbanking.model.Customer;
-import nl.hva.miw.internetbanking.model.Employee;
+import nl.hva.miw.internetbanking.model.*;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
 import nl.hva.miw.internetbanking.service.EmployeeService;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -85,7 +84,39 @@ public class LoginController {
             Employee employeeFound = employee.get();
             if (loginService.validEmployee(employeeFound, password)) {
                 model.addAttribute("employee", employeeFound);
-                return "pages/employee-dashboard";
+
+                if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_PRIVATE) {
+
+                    List<Account> accountList = accountService.getAllNaturalAccounts();
+                    model.addAttribute("naturalAccounts", accountList);
+
+                    for (Account account : accountList) {
+                        account.setAccountHolders(customerService.getCustomerByAccountId(account.getAccountID()));
+                        for (Customer customer : account.getAccountHolders()) {
+                            account.addAccountHolderName(customerService.printNameCustomer(customer.getCustomerID()));
+                        }
+                    }
+                    return "pages/employee-dashboard-private";
+                }
+
+                if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_LEGAL) {
+
+                    List<Account> accountList = accountService.getAllLegalAccounts();
+                    model.addAttribute("legalAccounts", accountList);
+                    for (Account account : accountList) {
+                        account.setAccountHolders(customerService.getCustomerByAccountId(account.getAccountID()));
+                        for (Customer customer : account.getAccountHolders()) {
+                            account.addAccountHolderName(customerService.printNameCustomer(customer.getCustomerID()));
+                        }
+                    }
+                    List<LegalPerson> legalPersons = customerService.getAvgBalancePerSegment();
+                    model.addAttribute("legalPersons", legalPersons);
+                    System.out.println(legalPersons);
+
+                    // todo: een balance oproepen behorende bij de sql query. Hoe combineer ik die?
+
+                }
+                return "pages/employee-dashboard-legal";
             }
         }
         return "pages/errorpage-employee";

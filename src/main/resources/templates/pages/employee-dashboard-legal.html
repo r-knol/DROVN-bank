@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<h1>Hoi, welkom op het Medewerker Dashboard!</h1>
+
+<h2>Hier komt de naam van de medewerker</h2>
+<h2>En de functie</h2>
+
+<table class="table table-bordered m-15">
+    <thead class="thead-light">
+    <tr>
+        <td th:text="${employee.firstName}"></td>
+        <td th:text="${employee.employeeRole}"></td>
+    </tr>
+    </thead>
+</table>
+<table class="table table-bordered m-15">
+    <thead class="thead-light">
+    <tr th:each="account : ${legalAccounts}">
+        <td th:text="${account.iban}"></td>
+        <td th:text="${account.balance}"></td>
+        <td th:text="${account.getAccountHolderNames()}"></td>
+    </tr>
+    </thead>
+</table>
+<table class="table table-bordered m-15">
+    <thead class="thead-light">
+    <tr th:each="l : ${legalPersons}">
+        <td th:text="${l.sector}"></td>
+    </tr>
+    </thead>
+</table>
+</body>
+</html>
