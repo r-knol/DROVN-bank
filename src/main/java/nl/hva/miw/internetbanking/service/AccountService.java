@@ -61,13 +61,10 @@ public class AccountService {
         return account;
     }
 
-  /*  public void createNewAccount() {
-        Account account = createAccountObject(openAccountDTO.getAccount());
-        accountDao.create(account);
-    }*/
 
-    public void saveNewAccount(Account account) {
+    public void saveNewAccount(Account account, Customer customer) {
         accountDao.create(account);
+        accountDao.saveAccountToCustomer(account, customer);
     }
 
     public OpenAccountDTO getOpenAccountDTO() {
