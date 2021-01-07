@@ -39,6 +39,18 @@ public class AccountDAO implements DAO<Account, Long> {
         }, keyHolder);
         long id = Objects.requireNonNull(keyHolder.getKey().longValue());
         account.setAccountID(id);
+
+    }
+
+    public void saveAccountToCustomer(Account account, Customer customer) {
+        String sql = "INSERT INTO customer_has_account(customerID, accountID) VALUES " +
+                "(?,?)";
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, customer.getCustomerID());
+            preparedStatement.setLong(2, account.getAccountID());
+            return preparedStatement;
+        });
     }
 
     @Override
