@@ -31,8 +31,9 @@
 </table>
 <table class="table table-bordered m-15">
     <thead class="thead-light">
-    <tr th:each="l : ${legalPersons}">
-        <td th:text="${l.sector}"></td>
+    <tr th:each="b : ${balancePerSector}">
+        <td th:text="${b.sector}"></td>
+        <td th:text="${b.balance}"></td>
     </tr>
     </thead>
 </table>

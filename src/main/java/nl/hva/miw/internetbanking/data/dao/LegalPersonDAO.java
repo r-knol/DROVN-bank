@@ -1,7 +1,9 @@
 package nl.hva.miw.internetbanking.data.dao;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
 import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.BalancePerSectorRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
@@ -84,12 +86,12 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
         return Optional.of(jdbcTemplate.query(sql, new LegalPersonRowMapper()));
     }
 
-    public List<LegalPerson> getAvgBalancePerSegment() {
-        final String sql = "SELECT legalperson.*, customer.customerID, customer.customerType, account.accountID, account.iban, SUM(account.balance) balance\n" +
+    public List<BalancePerSectorDTO> getAvgBalancePerSegment() {
+        final String sql = "SELECT legalperson.sector, AVG(account.balance) balance\n" +
                 "FROM legalperson JOIN customer ON customer.customerID=legalperson.companyID JOIN customer_has_account ON customer_has_account.\n" +
                 "customerID=legalperson.companyID JOIN account ON account.accountID=customer_has_account.accountID\n" +
                 "GROUP BY sector";
-        return jdbcTemplate.query(sql, new LegalPersonRowMapper());
+        return jdbcTemplate.query(sql, new BalancePerSectorRowMapper());
     }
 
 }

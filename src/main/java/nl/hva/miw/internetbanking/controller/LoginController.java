@@ -1,5 +1,6 @@
 package nl.hva.miw.internetbanking.controller;
 
+import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
 import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
 import nl.hva.miw.internetbanking.model.*;
 import nl.hva.miw.internetbanking.service.AccountService;
@@ -109,12 +110,9 @@ public class LoginController {
                             account.addAccountHolderName(customerService.printNameCustomer(customer.getCustomerID()));
                         }
                     }
-                    List<LegalPerson> legalPersons = customerService.getAvgBalancePerSegment();
-                    model.addAttribute("legalPersons", legalPersons);
-                    System.out.println(legalPersons);
-
-                    // todo: een balance oproepen behorende bij de sql query. Hoe combineer ik die?
-
+                    List<BalancePerSectorDTO> balancePerSector = customerService.getAvgBalancePerSegment();
+                    model.addAttribute("balancePerSector", balancePerSector);
+                    System.out.println(balancePerSector);
                 }
                 return "pages/employee-dashboard-legal";
             }
