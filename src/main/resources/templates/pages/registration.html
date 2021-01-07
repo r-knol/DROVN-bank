@@ -35,23 +35,27 @@
                         <div class="pt-5 pb-5" id="accordion">
                             <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
                                  id="collapseOne">
-                                <form action="#" class="row needs-validation" method="post" novalidate
+                                <form action="#" class="row needs-validation" id="form_private" method="post" novalidate
                                       th:action="@{/registratie-particulier}" th:object="${privateRegistrationDto}">
                                     <div class="col-md-12 mt-2 mb-3">
                                         <h4 class="border border-dark border-w-2 rounded p-3">Persoonlijke gegevens</h4>
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label for="initials">Voorletters</label>
-                                        <input class="form-control" id="initials" maxlength="10"
-                                               name="initials" pattern="^.*[a-zA-Z. ]{0,10}$" required
+                                        <input class="form-control" id="initials"
+                                               maxlength="10"
+                                               name="initials" pattern="^.*[a-zA-Z. ]{0,10}$"
+                                               patternMismatch="Ongeldige tekens. Gebruik alleen hoofdletters, punten of spaties."
+                                               required
                                                th:field="*{initials}" type="text"/>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="col-md-4 form-group">
                                         <label for="firstname">Voornaam</label>
                                         <input class="form-control" id="firstname" maxlength="15" name="firstName"
-                                               pattern="^.*[a-zA-Z-. ]{0,15}$" required th:field="*{firstName}"
-                                               type="text"/>
+                                               pattern="^[a-zA-Z\u00C0-\u00FF\s-]*$"
+                                               patternMismatch="Alleen hoofdletters, kleine letters, streepjes, spaties of punten."
+                                               required th:field="*{firstName}" type="text"/>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="col-md-2 form-group">
@@ -141,9 +145,14 @@
                                     </div>
                                     <div class="col-md-2 form-group">
                                         <label for="username_private">Gebruikersnaam</label>
-                                        <input class="form-control" id="username_private" maxlength="16" minlength="4"
-                                               name="username_private" pattern="^[A-Za-z0-9_]{4,16}$" required
-                                               th:field="*{userName}" type="text"/>
+                                        <input class="form-control" id="username_private"
+                                               maxlength="16" minlength="4" name="userName"
+                                               pattern="^[A-Za-z0-9_]+$"
+                                               patternMismatch="Alleen hoofdletters, kleine letters, cijfers  of underscore."
+                                               required
+                                               th:field="*{userName}"
+                                               tooLong="Maximaal 16 karakters."
+                                               tooShort="Minimaal 4 karakters." type="text"/>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="col-md-2 form-group">
@@ -174,7 +183,8 @@
 
                             <div aria-labelledby="headingTwo" class="collapse" data-parent="#accordion"
                                  id="collapseTwo">
-                                <form action="#" class="row needs-validation" method="post" novalidate
+                                <form action="#" class="row needs-validation" id="form_business" method="post"
+                                      novalidate
                                       th:action="@{/registratie-zakelijk}" th:object="${businessRegistrationDto}">
                                     <div class="col-md-12 mt-2 mb-3">
                                         <h4 class="border border-dark border-w-2 rounded p-3">Bedrijfsgegevens</h4>
@@ -252,7 +262,7 @@
                                     <div class="col-md-2 form-group">
                                         <label for="username_legal">Gebruikersnaam</label>
                                         <input class="form-control" id="username_legal" maxlength="16" minlength="4"
-                                               name="username_legal" pattern="^[A-Za-z0-9_]{4,16}$"
+                                               name="userName" pattern="^[A-Za-z0-9_]{4,16}$"
                                                required th:field="*{userName}" type="text"/>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -293,6 +303,7 @@
     </div>
 </div> <!-- /container - #page -->
 <div th:replace="fragments/scripts :: scripts-before-closing-tag"></div>
+
 <script>
     const $buttonPrivate = $("#private");
     const $buttonLegal = $("#legal");
@@ -311,30 +322,108 @@
 </script>
 
 <script>
-    // Disable form submission if there are fields with invalid input
+    // Custom form validation with use of Constraint Validation API
     (function () {
-
         'use strict';
-        var forms = document.querySelectorAll('.needs-validation');
+        let forms = document.querySelectorAll('.needs-validation');
 
         Array.prototype.slice.call(forms).forEach(function (form) {
 
-            let inputs = form.elements;
-            //console.log(inputs);
+            // Validate form inputs
+            form.querySelectorAll('input').forEach(field => {
+                field.addEventListener('input', function () {
+                    validateField(this);
+                }, false);
+            });
+
+            // Prevent form submission if invalid fields present
             form.addEventListener('submit', function (event) {
                 if (!form.checkValidity()) {
                     event.preventDefault();
                     event.stopPropagation();
-                    validateInput(inputs);
                 }
                 form.classList.add('was-validated');
             }, false);
         });
 
-        function validateInput(input) {
-            // TODO: Implement this.
-        }
+        function validateField(field) {
 
+            // Reset validity
+            field.setCustomValidity(''); // reset customError
+            const errorDisplayElement = field.nextElementSibling;
+            errorDisplayElement.innerHTML = ''; // clear error-message if any
+
+            // Set validation-messages
+            let validationMessages = {
+                //badInput: '',
+                //customError: '',
+                patternMismatch: '',
+                //rangeOverflow: '',
+                //rangeUnderflow: '',
+                //stepMismatch: '',
+                tooLong: '',
+                tooShort: '',
+                //typeMismatch: '',
+                //valid: '',
+                valueMissing: '',
+            }
+            // General
+            setGeneralValidationMessages();
+            // From HTML-attributes
+            Object.keys(validationMessages).forEach(function (key) {
+                if (validationMessages[key] === '') {
+                    validationMessages[key] = setValidationMessagesFromHTMLAttributes(key);
+                }
+            });
+
+            // Check if field constraints are fullfilled
+            const isValid = field.checkValidity();
+
+            if (isValid) {
+                // Update css
+                field.classList.add('is-valid');
+                field.classList.remove('is-invalid');
+            }
+
+            if (!isValid) {
+                // Update CSS
+                field.classList.add('is-invalid');
+                // Set the proper error-message
+                if (field.validity.tooShort) {
+                    field.setCustomValidity(validationMessages.tooShort);
+                }
+                if (field.validity.patternMismatch) {
+                    field.setCustomValidity(validationMessages.patternMismatch);
+                }
+                if (field.validity.tooLong) {
+                    field.setCustomValidity(validationMessages.tooLong);
+                }
+                // Display the error message
+                errorDisplayElement.innerHTML = field.validationMessage;
+            }
+
+            function setGeneralValidationMessages() {
+                if (field.hasAttribute('minlength')) {
+                    validationMessages.tooShort = `Minimaal ${field.getAttribute('minlength')} karakters.`;
+                }
+                if (field.hasAttribute('maxlength')) {
+                    validationMessages.tooLong = `Maximaal ${field.getAttribute('maxlength')} karakters.`
+                }
+                if (field.hasAttribute('pattern')) {
+                    validationMessages.patternMismatch = field.getAttribute('patternMismatch');
+                }
+            }
+
+            function setValidationMessagesFromHTMLAttributes(key) {
+                if (field.hasAttribute(key)) {
+                    return field.getAttribute(key);
+                }
+                return '';
+            }
+
+            console.log(field.validity);
+
+        }
     })();
 </script>
 
