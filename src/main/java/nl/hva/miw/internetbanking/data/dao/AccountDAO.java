@@ -39,6 +39,18 @@ public class AccountDAO implements DAO<Account, Long> {
         }, keyHolder);
         long id = Objects.requireNonNull(keyHolder.getKey().longValue());
         account.setAccountID(id);
+
+    }
+
+    public void saveAccountToCustomer(Account account, Customer customer) {
+        String sql = "INSERT INTO customer_has_account(customerID, accountID) VALUES " +
+                "(?,?)";
+        jdbcTemplate.update(connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setLong(1, customer.getCustomerID());
+            preparedStatement.setLong(2, account.getAccountID());
+            return preparedStatement;
+        });
     }
 
     @Override
@@ -91,6 +103,26 @@ public class AccountDAO implements DAO<Account, Long> {
         return accounts;
     }
 
+    public List<Account> getAllNaturalAccounts() {
+        final String sql = "SELECT customer.customerID, naturalperson.firstName, naturalperson.preposition, naturalperson.surName,\n" +
+                "customer.customerType, account.accountID, account.iban, account.balance\n" +
+                "FROM customer_has_account JOIN customer ON customer_has_account.customerID = customer.customerID\n" +
+                "JOIN account ON customer_has_account.accountID = account.accountID JOIN naturalperson ON \n" +
+                "naturalperson.customerID = customer_has_account.customerID\n" +
+                "WHERE customer.customerType = 'NATURAL' ORDER BY balance DESC LIMIT 10";
+        return jdbcTemplate.query(sql, new AccountRowMapper());
+    }
+
+    public List<Account> getAllLegalAccounts() {
+        final String sql = "SELECT customer.customerID, legalperson.companyID, legalperson.companyName,\n" +
+                "customer.customerType, account.accountID, account.iban, account.balance\n" +
+                "FROM customer_has_account JOIN customer ON customer_has_account.customerID = customer.customerID\n" +
+                "JOIN account ON customer_has_account.accountID = account.accountID JOIN legalperson ON \n" +
+                "legalperson.companyID = customer_has_account.customerID\n" +
+                "WHERE customer.customerType = 'LEGAL' ORDER BY balance DESC LIMIT 10;";
+        return jdbcTemplate.query(sql, new AccountRowMapper());
+    }
+
     public List<Account> getAccountsByCustomerId(long customerID) {
         final String sql = "SELECT customer.customerid, customer.username, account.accountid, " +
                 "account.iban, account.balance\n" +
@@ -99,4 +131,5 @@ public class AccountDAO implements DAO<Account, Long> {
                 "account.accountID=customer_has_account.accountID WHERE customer.customerID = ?";
         return jdbcTemplate.query(sql, new AccountRowMapper(), customerID);
     }
+
 }

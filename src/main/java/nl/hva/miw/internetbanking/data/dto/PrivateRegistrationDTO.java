@@ -17,7 +17,7 @@ public class PrivateRegistrationDTO implements DTO<NaturalPerson> {
 
     @NotBlank(message = "Dit is een verplicht veld.")
     @Size(min = 4, max = 16, message = "Minimaal 6 karakters, maximaal 16.")
-    @Pattern(regexp = "^[A-Za-z0-9_]{4,16}$",
+    @Pattern(regexp = "^[A-Za-z0-9_]$",
              message = "Hoofdletters, kleine letters, cijfers  of underscore '_'.")
     // Min. 4 characters, lower- or uppercase characters, numbers or underscore
     private String userName;

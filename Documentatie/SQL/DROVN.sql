@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`Customer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`NaturalPerson`
 (
-    `ID`                   BIGINT(10)  NOT NULL AUTO_INCREMENT,
+    `customerID`           BIGINT(10)  NOT NULL AUTO_INCREMENT,
     `initials`             VARCHAR(10) NOT NULL,
     `firstName`            VARCHAR(15) NOT NULL,
     `preposition`          VARCHAR(15) NULL,
@@ -51,11 +51,11 @@ CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`NaturalPerson`
     `homeNumber`           VARCHAR(10) NOT NULL,
     `street`               VARCHAR(45) NOT NULL,
     `residence`            VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`ID`),
-    INDEX `fk_NaturalPerson_Customer_idx` (`ID` ASC) VISIBLE,
+    PRIMARY KEY (`customerID`),
+    INDEX `fk_NaturalPerson_Customer_idx` (`customerID` ASC) VISIBLE,
     UNIQUE INDEX `socialSecurityNumber_UNIQUE` (`socialSecurityNumber` ASC) VISIBLE,
     CONSTRAINT `fk_NaturalPerson_Customer`
-        FOREIGN KEY (`ID`)
+        FOREIGN KEY (`customerID`)
             REFERENCES `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`)
             ON DELETE CASCADE
             ON UPDATE CASCADE
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`Employee`
     INDEX `fk_Employee_NaturalPerson_idx` (`employeeID` ASC) VISIBLE,
     CONSTRAINT `fk_Employee_NaturalPerson`
         FOREIGN KEY (`employeeID`)
-            REFERENCES `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`ID`)
+            REFERENCES `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`customerID`)
             ON DELETE CASCADE
             ON UPDATE CASCADE
 )
@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `WebApplicatie_DROVN_Bank`.`BusinessAccount` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_BusinessAccount_NaturalPerson1`
     FOREIGN KEY (`contactPerson`)
-        REFERENCES `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`ID`)
+        REFERENCES `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`customerID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -176,12 +176,12 @@ VALUES ('2', 'rknol', 'rknol', 'NATURAL');
 INSERT INTO `WebApplicatie_DROVN_Bank`.`Customer` (`customerID`, `userName`, `password`, `customerType`)
 VALUES ('3', 'hva', 'hva', 'LEGAL');
 
-INSERT INTO `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`ID`, `initials`, `firstName`, `preposition`, `surName`,
+INSERT INTO `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`customerID`, `initials`, `firstName`, `preposition`, `surName`,
                                                         `dateOfBirth`, `socialSecurityNumber`, `email`, `phone`,
                                                         `postalCode`, `homeNumber`, `street`, `residence`)
 VALUES ('1', 'N.', 'Nina', 'van', 'Loo', '1987-02-07', '159398289', 'ninavanloo@gmail.com', '0610087058', '1056 AC',
         '2-H', 'James Rosskade', 'Amsterdam');
-INSERT INTO `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`ID`, `initials`, `firstName`, `surName`, `dateOfBirth`,
+INSERT INTO `WebApplicatie_DROVN_Bank`.`NaturalPerson` (`customerID`, `initials`, `firstName`, `surName`, `dateOfBirth`,
                                                         `socialSecurityNumber`, `email`, `phone`, `postalCode`,
                                                         `homeNumber`, `street`, `residence`)
 VALUES ('2', 'R.W.', 'Richard', 'Knol', '1990-05-11', '243535345', 'rknol@gmail.com', '0612345678', '1234 AQ', '345',

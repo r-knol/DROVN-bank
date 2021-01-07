@@ -1,7 +1,11 @@
 package nl.hva.miw.internetbanking.data.dao;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
+import nl.hva.miw.internetbanking.data.dto.AccountTransactionDTO;
+import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
+import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
+import nl.hva.miw.internetbanking.data.mapper.*;
+import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -79,6 +83,24 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
     public Optional<List<LegalPerson>> list() {
         String sql = "SELECT * FROM LegalPerson";
         return Optional.of(jdbcTemplate.query(sql, new LegalPersonRowMapper()));
+    }
+
+    public List<BalancePerSectorDTO> getAvgBalancePerSegment() {
+        final String sql = "SELECT legalperson.sector, AVG(account.balance) balance\n" +
+                "FROM legalperson JOIN customer ON customer.customerID=legalperson.companyID JOIN customer_has_account ON customer_has_account.\n" +
+                "customerID=legalperson.companyID JOIN account ON account.accountID=customer_has_account.accountID\n" +
+                "GROUP BY sector";
+        return jdbcTemplate.query(sql, new BalancePerSectorRowMapper());
+    }
+
+    public List<CompanyTransactionDTO> getMostActiveClients() {
+        final String sql = "SELECT L.companyName, COUNT(T.transactionID) numberOfTransactions\n" +
+                "FROM transaction_has_account T JOIN account A ON T.accountID=A.accountID\n" +
+                "JOIN customer_has_account C ON C.accountID=T.accountID JOIN legalperson L\n" +
+                "ON L.companyID=C.customerID\n" +
+                "GROUP BY L.companyName\n" +
+                "ORDER BY numberOfTransactions DESC LIMIT 10";
+        return jdbcTemplate.query(sql, new CompanyTransactionRowmapper());
     }
 
 }

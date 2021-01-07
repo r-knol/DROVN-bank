@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Geld overmaken</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <h1>Geld overmaken naar een andere rekening</h1>
+    <form action="#" method="post" th:action="@{/do_transaction}" th:object="${transaction}">
+    <label>Selecteer rekening:</label>
+        <ul th:object="${customerWithAccountOverview}">
+            <li th:each="account : ${customerWithAccountOverview.getAccountList()}" th:text="${account.iban}"></li>
+        </ul>
+
+        <div class="col-md-6 form-group">
+        <i class="fa fa-user icon"></i>
+        <label>Bedrag</label>
+        <input type="text" class="form-control" name="amount" required>
+    </div>
+    <div class="col-md-6 form-group">
+        <i class="fa fa-key icon"></i>
+        <label>Naam ontvanger</label>
+        <input type="text" class="form-control" name="nameReceiver" required>
+    </div>
+        <div class="col-md-6 form-group">
+            <i class="fa fa-key icon"></i>
+            <label>IBAN</label>
+            <input type="text" class="form-control" name="creditAccount" required>
+        </div>
+        <div class="col-md-6 form-group">
+            <i class="fa fa-key icon"></i>
+            <label>Omschrijving</label>
+            <input type="text" class="form-control" name="description" required>
+        </div>
+        <div class="col-md-6 form-group">
+            <i class="fa fa-key icon"></i>
+            <label>Wanneer</label>
+            <input type="text" class="form-control" name="date" required>
+        </div>
+    <div class="col-md-4">
+        <input type="submit" class="btn btn-primary" value="Verder">
+    </div>
+    </form>
+    <form action="#" method="get" th:action="@{/customer-with-accounts}">
+        <div class="col-md-4">
+            <input type="submit" class="btn btn-primary" value="Terug">
+        </div>
+    </form>
+</body>
+</html>
