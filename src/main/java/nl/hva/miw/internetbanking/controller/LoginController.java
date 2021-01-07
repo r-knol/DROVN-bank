@@ -1,6 +1,7 @@
 package nl.hva.miw.internetbanking.controller;
 
 import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
+import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
 import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
 import nl.hva.miw.internetbanking.model.*;
 import nl.hva.miw.internetbanking.service.AccountService;
@@ -133,7 +134,9 @@ public class LoginController {
                     }
                     List<BalancePerSectorDTO> balancePerSector = customerService.getAvgBalancePerSegment();
                     model.addAttribute("balancePerSector", balancePerSector);
-                    System.out.println(balancePerSector);
+
+                    List<CompanyTransactionDTO> mostActiveClients = customerService.getMostActiveClients();
+                    model.addAttribute("mostActiveClients", mostActiveClients);
                 }
                 return "pages/employee-dashboard-legal";
             }
