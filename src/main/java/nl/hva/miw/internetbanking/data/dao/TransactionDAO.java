@@ -1,9 +1,8 @@
 package nl.hva.miw.internetbanking.data.dao;
 
-import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
-import nl.hva.miw.internetbanking.data.mapper.EmployeeRowMapper;
-import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
+import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.mapper.TransactionRowMapper;
+import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Transaction;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -12,12 +11,11 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 public class TransactionDAO implements DAO<Transaction, Long> {
 
@@ -34,7 +32,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"transactionID"});
-            ps.setString(1, transaction.getDebetAccount());
+            ps.setString(1, transaction.getDebitAccount());
             ps.setString(2, transaction.getCreditAccount());
             ps.setDouble(3, transaction.getAmount());
             ps.setString(4, transaction.getDescription());
@@ -55,7 +53,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     public void update(Transaction transaction) {
         String sql = "UPDATE transaction SET debetAccount = ?, creditAccount = ?, amount = ?" +
                 ", description = ?, date = ?" + "WHERE transactionID = ?";
-        jdbcTemplate.update(sql, transaction.getDebetAccount(),
+        jdbcTemplate.update(sql, transaction.getDebitAccount(),
                 transaction.getCreditAccount(),
                 transaction.getAmount(),
                 transaction.getDescription(),
@@ -79,13 +77,32 @@ public class TransactionDAO implements DAO<Transaction, Long> {
         return Optional.of(jdbcTemplate.query(sql, new TransactionRowMapper()));
     }
 
+    public List<Transaction> getTransactionsForAccount (Account account) {
+        List<Transaction> transactions = getTransactionsByAccountId(account.getAccountID());
+        System.out.println(account.getAccountID());
+        for (Transaction t : transactions) {
+            t.addTransactionToAccount(account);
+            account.addTransaction(t);
+        }
+        System.out.println(transactions);
+        return transactions;
+    }
+
     public List<Transaction> getTransactionsByAccountId (long accountID) {
-        String sql = "SELECT account.accountid, account.iban, account.balance, transaction.transactionid, " +
-                "transaction.amount, transaction.description, transaction.dateTime, transaction.creditAccount, " +
-                "transaction.debitAccount\n" +
-                "FROM transaction_has_account JOIN account ON Transaction_has_account" +
-                ".transactionID=transaction.transactionID JOIN account ON\n" +
-                "account.accountID=transaction_has_account.accountID WHERE account.accountID = ?";
+        final String sql = "SELECT account.accountid, account.iban, account.balance, transaction.transactionID, transaction.amount, transaction.description, \n" +
+                    "transaction.dateTime, transaction.creditAccount, transaction.debitAccount FROM transaction_has_account JOIN Transaction ON \n" +
+                    "Transaction_has_account.transactionID=transaction.transactionID JOIN account ON account.accountID=transaction_has_account.accountID \n" +
+                    "WHERE account.accountID = ?";
         return jdbcTemplate.query(sql, new TransactionRowMapper(), accountID);
+    }
+
+    public Transaction getCreditTransaction (String iban) {
+        final String sql = "SELECT * FROM transaction WHERE creditAccount = ?";
+        return jdbcTemplate.queryForObject(sql, new TransactionRowMapper(), iban);
+    }
+
+    public Transaction getDebitTransaction (String iban) {
+        final String sql = "SELECT * FROM transaction WHERE debitAccount =?";
+        return  jdbcTemplate.queryForObject(sql, new TransactionRowMapper(), iban);
     }
 }

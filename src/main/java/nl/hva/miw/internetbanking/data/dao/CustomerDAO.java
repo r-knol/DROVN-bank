@@ -107,5 +107,4 @@ public class CustomerDAO implements DAO<Customer, Long> {
                 "account.accountID=customer_has_account.accountID WHERE account.accountID = ?";
         return jdbcTemplate.query(sql, new CustomerRowMapper(), accountId);
     }
-
 }

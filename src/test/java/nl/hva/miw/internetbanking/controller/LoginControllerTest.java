@@ -30,8 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class LoginControllerTest {
     Customer nina = new Customer(1, "nvanloo", "myPassword", NATURAL);
     List<Account> accountsNina = List.of(
-            new Account(1, "84NL0563171251",99.95),
-            new Account(2, "56NL0563172222",1234.56)
+            new Account(1, 99.95, "84NL0563171251"),
+            new Account(2, 1234.56, "56NL0563172222")
     );
     Customer richard = new Customer(1, "rknol", "knolPassword", NATURAL);
     List<Customer> customerList = List.of(nina, richard);

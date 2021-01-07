@@ -1,9 +1,11 @@
 package nl.hva.miw.internetbanking.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.hva.miw.internetbanking.data.dto.AccountTransactionDTO;
+import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
 import nl.hva.miw.internetbanking.model.Account;
+import nl.hva.miw.internetbanking.model.Transaction;
 import nl.hva.miw.internetbanking.service.AccountService;
+import nl.hva.miw.internetbanking.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,31 +18,42 @@ import java.util.Optional;
 public class AccountDetailsController {
 
     private AccountService accountService;
-
+    private TransactionService transactionService;
 
     @Autowired
-    public AccountDetailsController (AccountService accountService) {
+    public AccountDetailsController (AccountService accountService, TransactionService transactionService) {
         this.accountService = accountService;
+        this.transactionService = transactionService;
+    }
+
+    @GetMapping ("/account_details{id}")
+    public String showAccounts (@PathVariable ("id") long accountID, Model model) {
+        Optional<Account> account = accountService.getAccountById(accountID);
+        model.addAttribute(account);
+        System.out.println(account);
+        return "pages/details_overview";
     }
 
     @GetMapping("/account_details/{id}")
     public String AccountDetailsHandler (@PathVariable ("id") long accountID, Model model) {
-        Optional<Account> a = accountService.getAccountById(accountID);
-        System.out.println(a);
-        if (a.isPresent()) {
-            Account accountFound = a.get();
-            model.addAttribute("account",accountFound);
-            model.addAttribute("iban", accountFound.getIban());
-            model.addAttribute("balance", accountFound.getBalance());
-            AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO();
-            accountService.setAccountTransactionDTO(accountTransactionDTO);
-            model.addAttribute("accountWithTransactions", accountTransactionDTO);
-            log.info("Model has account:\n{}", model.getAttribute("account"));
+        Optional<Account> account = accountService.getAccountById(accountID);
+        System.out.println(account);
+        if (account.isPresent()) {
+            Account accountFound = account.get();
+            model.addAttribute("account", accountFound);
+            accountFound.setTransactions(transactionService.getTransactionsForAccount(accountFound));
+            System.out.println(accountFound);
+//        AccountHasTransactionDTO accountHasTransactionDTO = new AccountHasTransactionDTO(accountFound);
+//        accountHasTransactionDTO.setTransactionList(transactionService.getTransactionsForAccount(accountFound));
+//        accountFound.setTransactions(transactionService.getTransactionsForAccount(accountFound));
+            System.out.println(accountFound.getTransactions());
+            for (Transaction transaction : accountFound.getTransactions()) {
+                transaction.addTransactionToAccount(accountFound);
+            }
+            model.addAttribute("accountWithTransactionOverview", accountFound);
             return "pages/account_details";
         }
-        return "errorpage";
+        return "pages/errorpage";
     }
-
-
 
 }

@@ -1,41 +1,64 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<link rel="stylesheet" src="bootstrap.css">
+<link rel="stylesheet" src="custom.css">
+<head th:replace="fragments/head :: head-default (pageTitle='Transaction Details', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Transactieoverzicht</title>
-</head>
 <body>
-<h2>Transactieoverzicht van:</h2>
-<h3 th:text="${account.getIban()}">IBAN</h3>
-<h3 th:text="${account.getBalance()}">Saldo</h3>
-<p th:if="${account.getTransactions().isEmpty()}">Er zijn geen transacties om weer te geven</p>
-<table class="table table-bordered" style="width: 100%"
-       th:unless="${account.getTransactions().isEmpty()}"
-       th:object="${account}">
-    <thead class="thead-dark">
-    <tr>
-        <th scope="col">Datum</th>
-        <th scope="col">Omschrijving</th>
-        <th scope="col">Bij</th>
-        <th scope="col">Af</th>
-    </tr>
-    </thead>
-    <tbody>
-<!--    <tr th:each="a : ${customerWithAccountOverview.getAccountList()}">-->
-<!--        <td>-->
-<!--            <a th:href="@{/account_details/{id}(id= ${a.getAccountID})}" >-->
-<!--                <span th:text="${a.iban}"></span>-->
-<!--            </a>-->
-<!--        </td>-->
-<!--        <td> <ul> <li th:each="customerName : ${a.getAccountHolders()}" th:text="${customerName}"></li></ul></td>-->
-<!--        <td th:text="${a.balance}"></td>-->
-<!--    </tr>-->
-    </tbody>
-</table>
+<div class="container-fluid min-vh-100" id="page">
+    <div id="header" class="row header-default">
+        <header th:replace="fragments/header :: header-default"></header>
+    </div>
 
-<p>Nog geen rekening? <a th:href="@{openaccount/{id}(id=${customer.customerID})}">Open deze hier!</a></p>
+    <div id="main-content" class="row">
+        <main role="main" class="min-vw-100">
+            <div class="jumbotron mb-sm-n5 h-75"
+                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover;">
+                <div class="container pt-sm-2 pb-sm-2 text-white">
+                    <h1><span class="display-5 h-25"><span class="text-blue" th:text="${account.getIban()}">IBAN</span> | <span class="text-orange">Transactieoverzicht</span></span>
+                    </h1>
+                    <h2 align="right"> <span class="display-5 h-25"><span class="text-orange">Saldo</span> | <span class="text-blue" th:text="${account.getBalance()}">Saldo</span></h2>
+                    <p class="mt-5"><a class="btn btn-primary btn-lg" align="right" style="font-size: initial;" href="#"
+                                       role="button">Geld overboeken »</a></p>
+                </div>
+            </div>
+<!--            <div class="col-md-3">-->
+<!--&lt;!&ndash;                <h2 class="text-orange" align="left" th:text="${account.getIban()}">IBAN</h2>&ndash;&gt;-->
+<!--            </div>-->
+<!--            <div class="col-md-6">-->
+<!--                <h2 class="text-blue" align="center">Transactieoverzicht</h2>-->
+<!--            </div>-->
+<!--            <div class="col-md-3">-->
+<!--                <h2 class="text-blue" align="right" th:text="${account.getBalance()}">Saldo</h2>-->
+<!--            </div>-->
+        </div>
+                <p style="font-size: 250%" align="center" th:if="${account.getTransactions().isEmpty()}">Er zijn geen transacties om weer te geven.</p>
+                <table style="width: 100%" class="table-striped"
+                       th:unless="${account.getTransactions().isEmpty()}"
+                       th:object="${account}">
+                    <thead class="text-white" bgcolor="#312783">
+                    <tr>
+                        <th scope="col" style="border-color: #312783; width: 20%">Datum</th>
+                        <th scope="col" style="border-color: #312783; width: 60%">Omschrijving</th>
+                        <th scope="col" style="border-color: #312783; width: 20%; text-align: left">Bedrag</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="t : ${accountWithTransactionOverview.getTransactions}" >
+                        <td  type="datetime" th:text="${t.date}" ></td>
+                        <td th:text="${t.description}"></td>
+                        <td style="text-align: left" step=".01" th:text="${t.getAmount}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+
+    </div>
+
+    </main>
+</div>
+<!--<p>Nog geen rekening? <a th:href="@{openaccount/{id}(id=${customer.customerId})}">Open deze hier!</a></p>-->
 </body>
 </html>

@@ -3,6 +3,7 @@ package nl.hva.miw.internetbanking.service;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dao.TransactionDAO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Transaction;
@@ -19,15 +20,17 @@ public class TransactionService {
     @Getter
     @Setter
     private TransactionDAO transactionDAO;
+    private AccountDAO accountDAO;
 
     @Autowired
-    public TransactionService (TransactionDAO transactionDAO) {
+    public TransactionService (TransactionDAO transactionDAO, AccountDAO accountDAO) {
         this.transactionDAO = transactionDAO;
+        this.accountDAO = accountDAO;
         log.warn("New TransactionService");
     }
 
-    public List<Transaction> getTransactionsByAccountId (long accountID) {
-        return transactionDAO.getTransactionsByAccountId(accountID);
+    public List<Transaction> getTransactionsForAccount (Account account) {
+        return transactionDAO.getTransactionsForAccount(account);
     }
 
     private Optional<Transaction> getTransactionDetails (Optional<Transaction> optionalTransaction) {
@@ -41,6 +44,14 @@ public class TransactionService {
 
     public Optional <Transaction> getTransactionById (long transactionID) {
         return getTransactionDetails(transactionDAO.read(transactionID));
+    }
+
+    public Transaction getCreditTransaction (String iban) {
+        return transactionDAO.getCreditTransaction(iban);
+    }
+
+    public Transaction getDebitTransaction (String iban) {
+        return transactionDAO.getDebitTransaction(iban);
     }
 
     public void doTransaction(Account fromAccount, Account toAccount) {
