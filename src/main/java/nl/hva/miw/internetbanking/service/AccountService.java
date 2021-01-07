@@ -75,7 +75,7 @@ public class AccountService {
     }
 
 
-    public void saveNewAccount(Account account) {
+    public void saveNewAccount(Account account, Customer customer) {
         accountDao.create(account);
     }
 

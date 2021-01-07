@@ -1,7 +1,7 @@
 package nl.hva.miw.internetbanking.data.dao;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.hva.miw.internetbanking.data.dto.AccountTransactionDTO;
+import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
 import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
 import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
 import nl.hva.miw.internetbanking.data.mapper.*;
