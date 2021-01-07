@@ -8,8 +8,8 @@
     <title>Rekeningoverzicht</title>
 </head>
 <body>
-    <h1>Rekeningoverzicht van:</h1>
-    <h2 th:text="${customerWithAccountOverview.getCustomer().getUserName()}">naam</h2>
+    <h1>Rekeningoverzicht</h1>
+    <h2>Welkom, <span th:text="${nameCurrentCus}"></span>.</h2>
     <p th:if="${customerWithAccountOverview.getAccountList().isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
 
     <table class="table table-bordered"
@@ -30,7 +30,7 @@
                 </a>
             </td>
             <td> <ul> <li th:each="customerName : ${a.getAccountHolderNames()}" th:text="${customerName}"></li></ul></td>
-            <td th:text="${a.balance}"></td>
+            <td>€ <span th:text="${a.balance}"></span></td>
         </tr>
         </tbody>
     </table>
