@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <h1>Hoi, welkom Hoofd MKB!</h1>
+    <h1>Welkom, <span th:text="${employee.firstName}"></span></h1>
     <br>
 
     <div class="container my-2">
@@ -40,8 +40,8 @@
             </thead>
             <tbody>
             <tr th:each="b : ${balancePerSector}">
-                <td th:text="${b.sector}"></td>
-                <td th:text="${b.balance}"></td>
+                <td th:text="${b.sector.getLabelSector()}"></td>
+                <td th:text="${b.getBalance()}"></td>
             </tr>
             </tbody>
         </table>
