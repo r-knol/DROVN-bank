@@ -8,29 +8,32 @@
 
     <script>
 
-        function random(){
+        function random() {
             let country_code = "NL"
-            let bank_code= "DROVN";
-            let final_IBAN = [];
+            let bank_code = "DROVN";
+            let IBAN = "";
             let string_length = 11;
             let characters = "0123456789";
-            for( i = 0; i < string_length; i++){
-                final_IBAN += characters.charAt(Math.floor(Math.random() * characters.length));
+            for (let i = 0; i < string_length; i++) {
+                IBAN += characters.charAt(Math.floor(Math.random() * characters.length));
             }
-            document.ibanForm.ibanGenerator.value = country_code + bank_code + final_IBAN;
-        }
+            let first_part = IBAN.substring(0,2)
+            let final_IBAN = IBAN.substring(0,9);
 
-   /*     function ibanClicked() {
-            let button = document.querySelector("#ibanButton");
-            button.addEventListener("click", random())
-            button.removeEventListener("click", removeIbanButton);
-            button.innerHTML = "you clicked";
-            alert("knop is geklikt");
-        }
+            document.ibanForm.ibanGenerator.value = country_code + first_part + bank_code + final_IBAN;
+            }
 
-        window.addEventListener("load", function (){
-            document.querySelector("#ibanButton").addEventListener("click",removeIbanButton );
-        })*/
+        /*document.querySelector('button').addEventListener('click', checkIbanDB);
+
+            function checkIbanDB(){
+            fetch("")
+
+            }*/
+            function ibanButton() {
+                let button = document.querySelector("#ibanButton");
+                document.ibanForm.addEventListener("click", random());
+                document.getElementById("ibanButton").disabled = true;
+            }
 
     </script>
 </head>
@@ -41,19 +44,16 @@
     <h2> Fijn dat u een rekening bij ons wilt openen.</h2>
     <h3> U kunt direct uw nieuwe rekening bevestigen.</h3>
 
-    <form>
-        <div class="form-group">
-            <label for="name">Rekeninghouder</label>
-            <input type="text" th:field="${customer.firstName}" id="name" name="name" placeholder="Rekeninghouder"
-                   class="form-control" readonly/>
-        </div>
-    </form>
+    <dl class="row">
+        <dt class="col-sm-3">Rekeninghouder</dt>
+        <dd class="col-sm-9" th:text="${nameCurrentCus}" id="name" name="name" readonly></dd>
+    </dl>
     <form action="/saveaccount" method="post" name="ibanForm">
         <input type="text" th:field="*{customer.customerID}"  value="customer.customerID" hidden/>
         <div class="form-group">
             <label for="ibanGenerator"></label>
             <input type="text" th:field="*{account.iban}" id="ibanGenerator" value="" placeholder="IBAN"/>
-            <input type="button" id="ibanButton" value="Uw nieuwe rekeningnummer" onclick="random();">
+            <input type="button" value="ibanButton" onclick="ibanButton()"/>
         </div>
         <div class="form-group">
             <label for="balance">Uw huidige saldo:</label>
@@ -69,6 +69,11 @@
             </label>
         </div>
         <button type="submit" id="button"  class="btn btn-primary">Bevestig</button>
+    </form>
+    <form action="#" method="get" th:action="@{/account-overview}">
+        <div class="col-md-4">
+            <input type="submit" class="btn btn-primary" value="Annuleren">
+        </div>
     </form>
 </div>
 </body>
