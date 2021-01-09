@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 <head>
@@ -6,6 +7,47 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
+<style>
+    .client-row:hover{
+        cursor:pointer;
+    }
+    #black-screen{
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(0,0,0, 0.3);
+        position: fixed;
+        display: none;
+        z-index: 9;
+    }
+    #black-screen.show{
+        display: block;
+    }
+    #close{
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 15px;
+        height: 15px;
+        background-color: red;
+    }
+    #popup{
+        z-index: 10;
+        display: none;
+        width: 300px;
+        height: 300px;
+        position: fixed;
+        margin: -150px;
+        background-color: #ffffff;
+        top: -150px;
+        left: 50%;
+        top: 50%;
+    }
+    #popup.show{
+        display: block;
+    }
+</style>
 
     <h1>Welkom, <span th:text="${employee.firstName}"></span></h1>
     <br>
@@ -21,8 +63,8 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="account : ${legalAccounts}">
-                <td th:text="${account.getAccountHolderNames()}"></td>
+            <tr th:each="account : ${legalAccounts}" class="client-row" th:attr="onclick='showMoreInfo(\'' + ${account.getAccountHolderNames()}+ '\');'" >
+                <td th:text="${account.getAccountHolderNames()}" ></td>
                 <td th:text="${account.iban}"></td>
                 <td th:text="${account.balance}"></td>
             </tr>
@@ -63,6 +105,30 @@
             </tbody>
         </table>
     </div>
+    <div id="black-screen" onclick="hideMoreInfo()">
+        <div id="close" onclick="hideMoreInfo()"></div>
+
+    </div>
+    <div id="popup">
+        Dit is een popup met info over de klant.
+        <div id="account"></div>
+    </div>
 
 </body>
+<script>
+    function showMoreInfo(iban){
+        let elementPopup = document.getElementById("popup");
+        let elementOverlay = document.getElementById("black-screen");
+         document.getElementById("account").innerHTML=iban;
+        elementPopup.classList.add("show");
+        elementOverlay.classList.add("show");
+        console.log("SHow info van account: ", iban)
+    }
+    function hideMoreInfo(){
+        let elementPopup = document.getElementById("popup");
+        let elementOverlay = document.getElementById("black-screen");
+        elementPopup.classList.remove("show");
+        elementOverlay.classList.remove("show");
+    }
+</script>
 </html>
