@@ -17,7 +17,6 @@ public class EmployeeService {
     @Autowired
     public EmployeeService(EmployeeDAO employeeDAO) {
         this.employeeDAO = employeeDAO;
-        log.warn("New EmployeeService.");
     }
 
     public Optional<Employee> getEmployeeByUsername(String userName) {

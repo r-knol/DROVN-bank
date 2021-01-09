@@ -26,7 +26,6 @@ public class TransactionService {
     public TransactionService (TransactionDAO transactionDAO, AccountDAO accountDAO) {
         this.transactionDAO = transactionDAO;
         this.accountDAO = accountDAO;
-        log.warn("New TransactionService");
     }
 
     public List<Transaction> getTransactionsForAccount (Account account) {

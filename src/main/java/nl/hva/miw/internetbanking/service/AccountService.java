@@ -3,7 +3,6 @@ package nl.hva.miw.internetbanking.service;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import nl.hva.miw.internetbanking.controller.OpenAccountController;
 import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
 import nl.hva.miw.internetbanking.data.dto.OpenAccountDTO;
@@ -29,8 +28,6 @@ public class AccountService {
     public AccountService(AccountDAO accountDAO) {
         this.accountDao = accountDAO;
         openAccountDTO = new OpenAccountDTO();
-
-        log.warn("New AccountService.");
     }
 
     public List<Account> getAccountsForCustomer(Customer customer) {

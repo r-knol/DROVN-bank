@@ -1,7 +1,5 @@
 package nl.hva.miw.internetbanking.controller;
 
-
-import nl.hva.miw.internetbanking.data.dto.OpenAccountDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.service.AccountService;
@@ -10,8 +8,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
@@ -27,7 +27,6 @@ public class OpenAccountController {
     public OpenAccountController(AccountService accountService, CustomerService customerService) {
         this.accountService = accountService;
         this.customerService = customerService;
-        logger.warn("New OpenAccountController.");
     }
 
    @GetMapping("/openaccount/{id}")

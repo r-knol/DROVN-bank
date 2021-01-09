@@ -1,12 +1,8 @@
 package nl.hva.miw.internetbanking.data.dao;
 
+import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
-import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
-import nl.hva.miw.internetbanking.data.mapper.NaturalPersonRowMapper;
 import nl.hva.miw.internetbanking.model.Customer;
-import nl.hva.miw.internetbanking.model.LegalPerson;
-import nl.hva.miw.internetbanking.model.NaturalPerson;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -18,6 +14,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Repository
+@Slf4j(topic = "CustomerDAO")
 public class CustomerDAO implements DAO<Customer, Long> {
 
     private final JdbcTemplate jdbcTemplate;
@@ -45,17 +42,7 @@ public class CustomerDAO implements DAO<Customer, Long> {
     public Optional<Customer> read(Long customerID) {
         final String sql = "SELECT * FROM Customer WHERE customerID = ?";
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(),
-                customerID));
-    }
-
-    public Optional<Customer> read(String userName) {
-        try {
-            String sql = "SELECT * FROM Customer WHERE userName = ?";
-            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(),
-                    userName));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return Optional.empty();
-        }
+                                                               customerID));
     }
 
     @Override
@@ -63,12 +50,6 @@ public class CustomerDAO implements DAO<Customer, Long> {
         final String sql = "UPDATE Customer SET userName = ?, password = ? WHERE customerID = ?";
         jdbcTemplate.update(sql, customer.getUserName(), customer.getPassword(),
                             customer.getCustomerID());
-    }
-
-    @Override
-    public Optional<List<Customer>> list() {
-        final String sql = "SELECT * FROM Customer";
-        return Optional.of(jdbcTemplate.query(sql, new CustomerRowMapper()));
     }
 
     @Override
@@ -81,30 +62,31 @@ public class CustomerDAO implements DAO<Customer, Long> {
         jdbcTemplate.update("DELETE FROM Customer WHERE customerID = ?", id);
     }
 
+    @Override
+    public Optional<List<Customer>> list() {
+        return Optional.of(jdbcTemplate.query("SELECT * FROM Customer", new CustomerRowMapper()));
+    }
+
+    public Optional<Customer> read(String userName) {
+        String sql = "SELECT * FROM Customer WHERE userName = ?";
+        return Optional
+                .ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), userName));
+    }
+
     public boolean existsByUsername(String username) {
         final String sql = "SELECT * FROM Customer WHERE userName = ?";
         return jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), username) != null;
     }
 
-    public NaturalPerson getNpByCustomerId(long customerId) {
-        final String sql = "SELECT * FROM NaturalPerson WHERE customerID = ?";
-        NaturalPerson np = jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
-                                                       customerId);
-        return np;
-    }
-
-    public LegalPerson getLpByCustomerId(long customerId) {
-        final String sql = "SELECT * FROM LegalPerson WHERE companyID = ?";
-        LegalPerson lp = jdbcTemplate.queryForObject(sql, new LegalPersonRowMapper(), customerId);
-        return lp;
-    }
-
     public List<Customer> getCustomerByAccountId(long accountId) {
         final String sql = "SELECT customer.customerid, customer.username, customer.password, " +
-                "customer.customerType, account.accountid, account.iban, account.balance\n" +
-                "FROM customer_has_account JOIN customer ON customer_has_account" +
-                ".customerID=customer.customerID JOIN account ON\n" +
-                "account.accountID=customer_has_account.accountID WHERE account.accountID = ?";
+                           "customer.customerType, account.accountid, account.iban, account" +
+                           ".balance\n" +
+                           "FROM customer_has_account JOIN customer ON customer_has_account" +
+                           ".customerID=customer.customerID JOIN account ON\n" +
+                           "account.accountID=customer_has_account.accountID WHERE account" +
+                           ".accountID = ?";
         return jdbcTemplate.query(sql, new CustomerRowMapper(), accountId);
     }
+
 }
