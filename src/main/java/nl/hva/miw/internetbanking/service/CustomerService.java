@@ -5,15 +5,11 @@ import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
-import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
-import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
-import nl.hva.miw.internetbanking.data.dto.DTO;
+import nl.hva.miw.internetbanking.data.dto.*;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.CustomerType;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
-import nl.hva.miw.internetbanking.data.dto.*;
-import nl.hva.miw.internetbanking.model.*;
 import nl.hva.miw.internetbanking.util.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -73,14 +69,6 @@ public class CustomerService {
 
     public List<LegalPersonHasAccountDTO> getClientsWithHighestBalance() {
         return legalPersonDAO.getClientsWithHighestBalance();
-    }
-
-    public List<CompanyTransactionDTO> getMostActiveClients() {
-        return legalPersonDAO.getMostActiveClients();
-    }
-
-    public List<BalancePerSectorDTO> getAvgBalancePerSegment() {
-        return legalPersonDAO.getAvgBalancePerSegment();
     }
 
     public Optional<Customer> getCustomerByUsername(String username) {
@@ -206,5 +194,4 @@ public class CustomerService {
     public List<CompanyTransactionDTO> getMostActiveClients() {
         return legalPersonDAO.getMostActiveClients();
     }
-
 }
