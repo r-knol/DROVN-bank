@@ -14,5 +14,6 @@ public class TransactionDetailsDTO {
     private String debitAccount;
     private String creditAccount;
     private String amount;
+    private String description;
 
 }

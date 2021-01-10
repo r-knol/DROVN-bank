@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @Slf4j
-@SessionAttributes("customer") // hier staat welke attributen deze controllers doorgeven aan een volgende controller
+@SessionAttributes({"customer", "nameCurrentCus"})
 public class DoTransactionController {
 
     private TransactionService transactionService;
@@ -34,7 +34,6 @@ public class DoTransactionController {
     }
 
     @GetMapping("/do-transaction/")
-    // hieronder geef je de session attributes door die je krijgt van de vorige controller
     public String doTransactionHandler(@ModelAttribute("customer") Customer c, @ModelAttribute("nameCurrentCus") String currentCusName, Model model){
         CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(c);
         customerDto.setAccountList(accountService.getAccountsForCustomer(c));
@@ -54,9 +53,18 @@ public class DoTransactionController {
     }
 
     @PostMapping("/do-transaction/")
-    public String postDoTransactionHandler(@ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, Model model){
+    public String postDoTransactionHandler(@ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, @ModelAttribute("nameCurrentCus") String currentCusName, Model model){
+        model.addAttribute("nameCurrentCus", currentCusName);
         model.addAttribute("transactionDTO", tDto);
-        System.out.println("!!!!!!!!!!!!!!!!! " + tDto);
+//        System.out.println("????????????????? " + currentCusName);
+//        System.out.println("!!!!!!!!!!!!!!!!! " + tDto);
+        return "pages/transaction-confirmation";
+    }
+
+    @GetMapping("/transaction-confirmation")
+    public String transactionConfirmationHandler(@ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, Model model){
+        model.addAttribute("transactionDTO", tDto);
+        System.out.println("confirmation @@@@@@@@@@@@@@@@@ " + tDto);
         return "pages/transaction-confirmation";
     }
 
