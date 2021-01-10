@@ -12,6 +12,8 @@ import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.CustomerType;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
+import nl.hva.miw.internetbanking.data.dto.*;
+import nl.hva.miw.internetbanking.model.*;
 import nl.hva.miw.internetbanking.util.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -57,6 +59,28 @@ public class CustomerService {
         } catch (DataAccessException e) {
             log.warn("Exception occurred while attempting to save customer: {}", e.getMessage());
         }
+        customerDAO.create(entity);
+        if (entity instanceof NaturalPerson) {
+            naturalPersonDAO.create((NaturalPerson) entity);
+        } else if (entity instanceof LegalPerson) {
+            legalPersonDAO.create((LegalPerson) entity);
+        }
+    }
+
+    public List<NaturalPersonHasAccountDTO> getNaturalAccountsWithHighestBalance() {
+        return naturalPersonDAO.getNaturalAccountsWithHighestBalance();
+    }
+
+    public List<LegalPersonHasAccountDTO> getClientsWithHighestBalance() {
+        return legalPersonDAO.getClientsWithHighestBalance();
+    }
+
+    public List<CompanyTransactionDTO> getMostActiveClients() {
+        return legalPersonDAO.getMostActiveClients();
+    }
+
+    public List<BalancePerSectorDTO> getAvgBalancePerSegment() {
+        return legalPersonDAO.getAvgBalancePerSegment();
     }
 
     public Optional<Customer> getCustomerByUsername(String username) {

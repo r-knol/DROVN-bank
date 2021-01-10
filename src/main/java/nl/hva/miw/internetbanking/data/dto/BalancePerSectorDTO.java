@@ -2,6 +2,8 @@ package nl.hva.miw.internetbanking.data.dto;
 
 import nl.hva.miw.internetbanking.model.Sector;
 
+import java.text.DecimalFormat;
+
 public class BalancePerSectorDTO {
 
     private Sector sector;
@@ -20,8 +22,9 @@ public class BalancePerSectorDTO {
         this.sector = sector;
     }
 
-    public double getBalance() {
-        return balance;
+    public String getBalance() {
+        DecimalFormat d = new DecimalFormat("##.00");
+        return d.format(balance);
     }
 
     public void setBalance(double balance) {

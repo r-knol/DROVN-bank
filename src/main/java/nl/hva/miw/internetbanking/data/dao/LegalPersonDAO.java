@@ -1,11 +1,10 @@
 package nl.hva.miw.internetbanking.data.dao;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
 import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
 import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
+import nl.hva.miw.internetbanking.data.dto.LegalPersonHasAccountDTO;
 import nl.hva.miw.internetbanking.data.mapper.*;
-import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -100,7 +99,15 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
                 "ON L.companyID=C.customerID\n" +
                 "GROUP BY L.companyName\n" +
                 "ORDER BY numberOfTransactions DESC LIMIT 10";
-        return jdbcTemplate.query(sql, new CompanyTransactionRowmapper());
+        return jdbcTemplate.query(sql, new CompanyTransactionRowMapper());
+    }
+
+    public List<LegalPersonHasAccountDTO> getClientsWithHighestBalance() {
+        final String sql = "SELECT l.companyName, a.iban, a.balance, l.kvkNumber, l.sector, CONCAT(l.street, \" \", l.homeNumber, \", \", l.residence) AS address\n" +
+                "FROM customer_has_account cha JOIN customer c ON cha.customerID = c.customerID\n" +
+                "JOIN account a ON cha.accountID = a.accountID JOIN legalperson l ON l.companyID = cha.customerID\n" +
+                "WHERE c.customerType = 'LEGAL' ORDER BY balance DESC LIMIT 10;";
+        return jdbcTemplate.query(sql, new LegalPersonHasAccountRowMapper());
     }
 
 }
