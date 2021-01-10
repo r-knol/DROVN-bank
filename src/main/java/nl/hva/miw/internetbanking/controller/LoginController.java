@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
-@SessionAttributes("customer")
+@SessionAttributes({"customer", "nameCurrentCus"})
 public class LoginController {
 
     private CustomerService customerService;
