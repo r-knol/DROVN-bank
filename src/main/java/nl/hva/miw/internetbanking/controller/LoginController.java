@@ -1,9 +1,10 @@
 package nl.hva.miw.internetbanking.controller;
 
-import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
-import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
-import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
-import nl.hva.miw.internetbanking.model.*;
+import nl.hva.miw.internetbanking.data.dto.*;
+import nl.hva.miw.internetbanking.model.Account;
+import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.Employee;
+import nl.hva.miw.internetbanking.model.EmployeeRole;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
 import nl.hva.miw.internetbanking.service.EmployeeService;
@@ -12,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -71,7 +69,7 @@ public class LoginController {
     }
 
     @GetMapping("/customer-with-accounts")
-    public String showCustomerWithAccounts(@ModelAttribute("customer") Customer c, Model model){
+    public String showCustomerWithAccounts(@ModelAttribute("customer") Customer c, Model model) {
         System.out.println("bla bla" + c);
         // service aanroepen.
         model.addAttribute("nameCurrentCus", customerService.printNameCustomer(c.getCustomerID()));
@@ -90,8 +88,6 @@ public class LoginController {
         return "pages/account-overview";
     }
 
-
-
     @GetMapping("/loginemployee")
     public String showLoginEmployee() {
         return "pages/login-employee";
@@ -109,36 +105,16 @@ public class LoginController {
                 model.addAttribute("employee", employeeFound);
 
                 if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_PRIVATE) {
-
-                    List<Account> accountList = accountService.getAllNaturalAccounts();
-                    model.addAttribute("naturalAccounts", accountList);
-
-                    for (Account account : accountList) {
-                        account.setAccountHolders(customerService.getCustomerByAccountId(account.getAccountID()));
-                        for (Customer customer : account.getAccountHolders()) {
-                            account.addAccountHolderName(customerService.printNameCustomer(customer.getCustomerID()));
-                        }
-                    }
+                    model.addAttribute("npWithHighestBalance", customerService.getNaturalAccountsWithHighestBalance());
                     return "pages/employee-dashboard-private";
                 }
 
                 if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_LEGAL) {
-
-                    List<Account> accountList = accountService.getAllLegalAccounts();
-                    model.addAttribute("legalAccounts", accountList);
-                    for (Account account : accountList) {
-                        account.setAccountHolders(customerService.getCustomerByAccountId(account.getAccountID()));
-                        for (Customer customer : account.getAccountHolders()) {
-                            account.addAccountHolderName(customerService.printNameCustomer(customer.getCustomerID()));
-                        }
-                    }
-                    List<BalancePerSectorDTO> balancePerSector = customerService.getAvgBalancePerSegment();
-                    model.addAttribute("balancePerSector", balancePerSector);
-
-                    List<CompanyTransactionDTO> mostActiveClients = customerService.getMostActiveClients();
-                    model.addAttribute("mostActiveClients", mostActiveClients);
+                    model.addAttribute("lpWithHighestBalance", customerService.getClientsWithHighestBalance());
+                    model.addAttribute("balancePerSector", customerService.getAvgBalancePerSegment());
+                    model.addAttribute("mostActiveClients", customerService.getMostActiveClients());
+                    return "pages/employee-dashboard-legal";
                 }
-                return "pages/employee-dashboard-legal";
             }
         }
         return "pages/errorpage-employee";

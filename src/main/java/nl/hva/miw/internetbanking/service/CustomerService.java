@@ -5,9 +5,7 @@ import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
-import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
-import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
-import nl.hva.miw.internetbanking.data.dto.DTO;
+import nl.hva.miw.internetbanking.data.dto.*;
 import nl.hva.miw.internetbanking.model.*;
 import nl.hva.miw.internetbanking.util.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +48,14 @@ public class CustomerService {
         } else if (entity instanceof LegalPerson) {
             legalPersonDAO.create((LegalPerson) entity);
         }
+    }
+
+    public List<NaturalPersonHasAccountDTO> getNaturalAccountsWithHighestBalance() {
+        return naturalPersonDAO.getNaturalAccountsWithHighestBalance();
+    }
+
+    public List<LegalPersonHasAccountDTO> getClientsWithHighestBalance() {
+        return legalPersonDAO.getClientsWithHighestBalance();
     }
 
     public List<BalancePerSectorDTO> getAvgBalancePerSegment() {

@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class CompanyTransactionRowmapper implements RowMapper<CompanyTransactionDTO> {
+public class CompanyTransactionRowMapper implements RowMapper<CompanyTransactionDTO> {
 
     @Override
     public CompanyTransactionDTO mapRow(ResultSet resultSet, int i) throws SQLException {

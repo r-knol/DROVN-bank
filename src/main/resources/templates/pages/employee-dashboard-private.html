@@ -7,8 +7,21 @@
 </head>
 <body>
 
-<h1>Hoi, welkom Hoofd Particulier!</h1>
+<style>
+#uitloggen {
+position:absolute;
+top:0;
+right:0;
+margin-right:-800px;
+}
+</style>
+
+<h1>Welkom, <span th:text="${employee.firstName}"></span></h1>
 <br>
+
+<div class="col-md-4">
+    <a id="uitloggen" th:href="@{/loginemployee}" class="btn btn-primary" type="submit">Uitloggen</a>
+</div>
 
 <div class="container my-2">
     <h3>10 klanten met hoogste saldo</h3>
@@ -21,10 +34,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="account : ${naturalAccounts}">
-            <td th:text="${account.getAccountHolderNames()}"></td>
-            <td th:text="${account.iban}"></td>
-            <td th:text="${account.balance}"></td>
+        <tr th:each="np : ${npWithHighestBalance}">
+            <td th:text="${np.getFullName()}"></td>
+            <td th:text="${np.iban}"></td>
+            <td th:text="${np.balance}"></td>
         </tr>
         </tbody>
     </table>

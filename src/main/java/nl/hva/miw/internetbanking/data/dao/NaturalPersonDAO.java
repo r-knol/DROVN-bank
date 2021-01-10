@@ -1,6 +1,10 @@
 package nl.hva.miw.internetbanking.data.dao;
 
+import nl.hva.miw.internetbanking.data.dto.NaturalPersonHasAccountDTO;
+import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.NaturalPersonHasAccountRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.NaturalPersonRowMapper;
+import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -40,6 +44,16 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
             ps.setString(13, naturalPerson.getResidence());
             return ps;
         });
+    }
+
+    public List<NaturalPersonHasAccountDTO> getNaturalAccountsWithHighestBalance() {
+        final String sql = "SELECT n.firstName, n.preposition, n.surname, a.iban, a.balance, concat(n.street, \" \", n.homenumber, \", \", n.residence) as address,\n" +
+                "n.phone, n.email, n.dateOfBirth\n" +
+                "FROM customer_has_account cha JOIN customer c ON cha.customerID = c.customerID\n" +
+                "JOIN account a ON cha.accountID = a.accountID JOIN naturalperson n ON\n" +
+                "n.customerID = cha.customerID WHERE c.customerType = 'NATURAL'\n" +
+                "ORDER BY balance DESC LIMIT 10;";
+        return jdbcTemplate.query(sql, new NaturalPersonHasAccountRowMapper());
     }
 
     @Override
