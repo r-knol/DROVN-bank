@@ -2,8 +2,10 @@ package nl.hva.miw.internetbanking.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
+import nl.hva.miw.internetbanking.data.dto.TransactionDetailsDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.Transaction;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
 import nl.hva.miw.internetbanking.service.TransactionService;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Slf4j
-@SessionAttributes("customer")
+@SessionAttributes("customer") // hier staat welke attributen deze controllers doorgeven aan een volgende controller
 public class DoTransactionController {
 
     private TransactionService transactionService;
@@ -30,7 +32,8 @@ public class DoTransactionController {
     }
 
     @GetMapping("/do-transaction/")
-    public String doTransactionHandler(@ModelAttribute("customer") Customer c, Model model){
+    // hieronder geef je de session attributes door die je krijgt van de vorige controller
+    public String doTransactionHandler(@ModelAttribute("customer") Customer c, @ModelAttribute("nameCurrentCus") String currentCusName, Model model){
         CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(c);
         customerDto.setAccountList(accountService.getAccountsForCustomer(c));
 
@@ -42,10 +45,17 @@ public class DoTransactionController {
                 acc.addAccountHolderName(customerService.printNameCustomer(cus.getCustomerID()));
             }
         }
+        model.addAttribute("nameCurrentCus", currentCusName);
         model.addAttribute("customerWithAccountOverview", customerDto);
-        System.out.println("!!!!!!!!!!!!!! " + c);
-
+        model.addAttribute("transactionDTO", new TransactionDetailsDTO());
         return "pages/do-transaction";
+    }
+
+    @PostMapping("/do-transaction/")
+    public String postDoTransactionHandler(@ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, Model model){
+        model.addAttribute("transactionDTO", tDto);
+        System.out.println("!!!!!!!!!!!!!!!!! " + tDto);
+        return "pages/transaction-confirmation";
     }
 
 

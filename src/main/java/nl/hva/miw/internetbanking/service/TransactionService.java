@@ -54,7 +54,7 @@ public class TransactionService {
         return transactionDAO.getDebitTransaction(iban);
     }
 
-    public void doTransaction(Account fromAccount, Account toAccount) {
+    public void doTransaction(String fromAccount, String toAccount) {
 //        Transaction transaction = new Transaction();
 //        transactionDAO.create(transaction);
     }

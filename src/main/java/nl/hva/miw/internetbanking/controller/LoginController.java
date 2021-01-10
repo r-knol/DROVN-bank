@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@SessionAttributes("customer")
+@SessionAttributes({"customer", "nameCurrentCus"})
 public class LoginController {
 
     private CustomerService customerService;
