@@ -29,14 +29,6 @@ public class NaturalPersonHasAccountDTO {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public NaturalPersonHasAccountDTO(String firstName, String preposition, String surName, String iban, double balance) {
-        this.firstName = firstName;
-        this.preposition = preposition;
-        this.surName = surName;
-        this.iban = iban;
-        this.balance = balance;
-    }
-
     public String getFullName() {
         if (preposition == null) {
             return firstName + " " + surName;
