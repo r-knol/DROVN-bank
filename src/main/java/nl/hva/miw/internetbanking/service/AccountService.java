@@ -82,4 +82,21 @@ public class AccountService {
     public void setOpenAccountDTO(OpenAccountDTO openAccountDTO) {
         this.openAccountDTO = openAccountDTO;
     }
+
+    public boolean uniqueIbanViolated(long id, String iban){
+        boolean uniqueIbanViolated = false;
+
+        Optional<Account> accountByIban = accountDao.read(iban);
+        boolean isCreatingNew = (id == 0);
+
+        if (isCreatingNew){
+            if (accountByIban.isPresent()) uniqueIbanViolated = true;
+        }else {
+            if (accountByIban.get().getAccountID() != id){
+                uniqueIbanViolated = true;
+            }
+        }
+        return uniqueIbanViolated;
+
+    }
 }

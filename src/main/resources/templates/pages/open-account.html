@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<link rel="stylesheet" src="bootstrap.css">
+<link rel="stylesheet" src="custom.css">
+<head th:replace="fragments/head :: head-default (pageTitle='Rekening Openen', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
+<meta charset="UTF-8">
 <head>
-    <meta charset="UTF-8">
     <title>Rekening openen</title>
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-
     <script>
 
         function random() {
@@ -20,24 +20,54 @@
             let first_part = IBAN.substring(0,2)
             let final_IBAN = IBAN.substring(0,9);
 
-            document.ibanForm.ibanGenerator.value = country_code + first_part + bank_code + final_IBAN;
+            return document.ibanForm.ibanGenerator.value = country_code + first_part + bank_code + final_IBAN;
             }
 
-        /*document.querySelector('button').addEventListener('click', checkIbanDB);
 
-            function checkIbanDB(){
-            fetch("")
-
-            }*/
             function ibanButton() {
-                let button = document.querySelector("#ibanButton");
-                document.ibanForm.addEventListener("click", random());
-                document.getElementById("ibanButton").disabled = true;
+                document.addEventListener("click", random());
+                disableButton();
             }
 
+            function disableButton(){
+                document.querySelector(`#ibanButtonClicked`).disabled = true;
+            }
+
+            function submitButton(){
+                alert("Uw nieuwe rekening is toegevoegd");
+            }
+
+        let popupWindow = null;
+        function centeredPopup(url,winName,w,h,scroll){
+            LeftPosition = (screen.width) ? (screen.width-w)/2 : 0;
+            TopPosition = (screen.height) ? (screen.height-h)/2 : 0;
+            settings =
+                'height='+h+',width='+w+',top='+TopPosition+',left='+LeftPosition+',scrollbars='+scroll+',resizable'
+            popupWindow = window.open(url,winName,settings)
+        }
+
+        function checkAvailabilityIban(form) {
+            accountID = $("#accountID").val();
+            iban = $("#ibanGenerator").val();
+            url = "[[@{'/openaccount/check_iban'}]]"
+
+            params = {id: accountID, iban: iban};
+
+            $.post(url, params, function (response) {
+                alert(response);
+
+            }).fail(function(){
+                alert("Error connecting to server");
+            });
+            return false;
+        }
     </script>
 </head>
 <body>
+<div class="container-fluid min-vh-100" id="page">
+    <div id="header" class="row header-default">
+        <header th:replace="fragments/header :: header-default"></header>
+    </div>
 <div class="container">
     <h1> Bankrekening openen</h1>
     <hr>
@@ -48,12 +78,13 @@
         <dt class="col-sm-3">Rekeninghouder</dt>
         <dd class="col-sm-9" th:text="${nameCurrentCus}" id="name" name="name" readonly></dd>
     </dl>
-    <form action="/saveaccount" method="post" name="ibanForm">
+    <form action="/saveaccount" method="post" name="ibanForm" onsubmit="return checkAvailabilityIban(this)">
         <input type="text" th:field="*{customer.customerID}"  value="customer.customerID" hidden/>
+        <input type="text" th:field="*{account.accountID}" name="accountID" value="account.accountID" hidden/>
         <div class="form-group">
             <label for="ibanGenerator"></label>
             <input type="text" th:field="*{account.iban}" id="ibanGenerator" value="" placeholder="IBAN"/>
-            <input type="button" value="ibanButton" onclick="ibanButton()"/>
+            <input type="button" class="btn btn-primary" value="Uw nieuwe rekeningnummer" id="ibanButtonClicked" onclick="ibanButton()"/>
         </div>
         <div class="form-group">
             <label for="balance">Uw huidige saldo:</label>
@@ -62,19 +93,21 @@
         </div>
         <div class="form-group form-check">
             <label class="form-check-label">
+                <p><a href="https://www.termsandconditionsgenerator.com/live.php?token=WMGxy8SYoQkOH2QDFKuWdAqUeZ9mgMuS" onclick="centeredPopup(this.href,'myWindow','700','300','yes');return false">Algemene voorwaarden</a></p>
                 <input class="form-check-input" type="checkbox" name="remember" required> Ik ga akkoord met de
                 voorwaarden
                 <div class="valid-feedback">Valid.</div>
                 <div class="invalid-feedback">Graag aanvinken als u door zou willen gaan</div>
             </label>
         </div>
-        <button type="submit" id="button"  class="btn btn-primary">Bevestig</button>
+        <button type="submit" id="submit" class="btn btn-primary" onclick="submitButton()">Bevestig</button>
     </form>
-    <form action="#" method="get" th:action="@{/account-overview}">
+    <form action="#" method="get" th:action="@{/customer-with-accounts}">
         <div class="col-md-4">
             <input type="submit" class="btn btn-primary" value="Annuleren">
         </div>
     </form>
+</div>
 </div>
 </body>
 </html>
