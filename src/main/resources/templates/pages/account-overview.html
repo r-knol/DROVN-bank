@@ -11,8 +11,7 @@
     <h1>Rekeningoverzicht</h1>
     <h2>Welkom, <span th:text="${nameCurrentCus}"></span>.</h2>
     <p th:if="${customerWithAccountOverview.getAccountList().isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
-    <p style="text-align:right">Nieuwe rekening? <a th:href="@{openaccount/{id}(id=${customer.customerID})}" >Open deze hier! </a></p>
-
+    <p style="text-align:right">Nieuwe rekening? <a th:href="@{openaccount}">Open deze hier! </a></p>
     <table class="table table-bordered"
             th:unless="${customerWithAccountOverview.getAccountList().isEmpty()}"
             th:object="${customerWithAccountOverview}">

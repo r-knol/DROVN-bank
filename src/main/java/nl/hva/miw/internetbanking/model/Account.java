@@ -18,6 +18,10 @@ public class Account implements Serializable {
     private List<Customer> accountHolders;
     private List<String> accountHolderNames;
 
+    public Account(String iban) {
+        this.iban = iban;
+    }
+
     public List<Customer> getAccountHolders() {
         return accountHolders;
     }
