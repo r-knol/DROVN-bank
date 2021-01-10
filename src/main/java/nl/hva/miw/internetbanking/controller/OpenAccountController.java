@@ -8,15 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
 
 @Controller
+@SessionAttributes("customer")
 public class OpenAccountController {
 
     private AccountService accountService;
@@ -29,15 +28,14 @@ public class OpenAccountController {
         this.customerService = customerService;
     }
 
-   @GetMapping("/openaccount/{id}")
-    public ModelAndView showNewAccount(@PathVariable(value = "id") long id, ModelAndView model){
-        Optional<Customer> customer = customerService.getCustomerById(id);
+   @GetMapping("/openaccount")
+    public String showNewAccount(@ModelAttribute("customer") Customer customer,  Model model){
         Account newAccount = new Account();
-        model.addObject("account", newAccount);
-        model.addObject("customer", customer.get());
-        model.setViewName("pages/open-account");
+        model.addAttribute("account", newAccount);
+       model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customer.getCustomerID()));
+        model.addAttribute("customer", customer);
        logger.info(" " + model);
-       return model;
+       return "pages/open-account";
     }
 
     @PostMapping("/saveaccount")
