@@ -111,7 +111,7 @@ public class LoginController {
 
                 if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_LEGAL) {
                     model.addAttribute("lpWithHighestBalance", customerService.getClientsWithHighestBalance());
-                    model.addAttribute("balancePerSector", customerService.getAvgBalancePerSegment());
+                    model.addAttribute("balancePerSector", customerService.getAvgBalancePerSector());
                     model.addAttribute("mostActiveClients", customerService.getMostActiveClients());
                     return "pages/employee-dashboard-legal";
                 }
