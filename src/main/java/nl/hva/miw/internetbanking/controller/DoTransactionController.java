@@ -5,6 +5,7 @@ import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
 import nl.hva.miw.internetbanking.data.dto.TransactionDetailsDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.NaturalPerson;
 import nl.hva.miw.internetbanking.model.Transaction;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
@@ -37,15 +38,7 @@ public class DoTransactionController {
     public String doTransactionHandler(@ModelAttribute("customer") Customer c, @ModelAttribute("nameCurrentCus") String currentCusName, Model model){
         CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(c);
         customerDto.setAccountList(accountService.getAccountsForCustomer(c));
-
-        // voor alle accounts de bijbehorende customers ophalen:
-        for (Account acc : customerDto.getAccountList()) {
-            acc.setAccountHolders(customerService.getCustomerByAccountId(acc.getAccountID()));
-            // voor iedere accountHolder de juiste naam ophalen:
-            for (Customer cus : acc.getAccountHolders()) {
-                acc.addAccountHolderName(customerService.printNameCustomer(cus.getCustomerID()));
-            }
-        }
+        customerService.setCustomerWithAccounts(customerDto);
         model.addAttribute("nameCurrentCus", currentCusName);
         model.addAttribute("customerWithAccountOverview", customerDto);
         model.addAttribute("transactionDTO", new TransactionDetailsDTO());
@@ -53,19 +46,30 @@ public class DoTransactionController {
     }
 
     @PostMapping("/do-transaction/")
-    public String postDoTransactionHandler(@ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, @ModelAttribute("nameCurrentCus") String currentCusName, Model model){
+    public String postDoTransactionHandler(@ModelAttribute("customer") Customer c, @ModelAttribute("customerWithAccountOverview") CustomerHasAccountsDTO customerDto, @ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, @ModelAttribute("nameCurrentCus") String currentCusName, Model model){
+        customerDto.setAccountList(accountService.getAccountsForCustomer(c));
+        customerService.setCustomerWithAccounts(customerDto);
+        model.addAttribute("customerWithAccountOverview", customerDto);
         model.addAttribute("nameCurrentCus", currentCusName);
         model.addAttribute("transactionDTO", tDto);
+        System.out.println("@@@@@@@@@@@@@@@@@ postDoTransactionHandler:  " + customerDto);
 //        System.out.println("????????????????? " + currentCusName);
-//        System.out.println("!!!!!!!!!!!!!!!!! " + tDto);
+        System.out.println("!!!!!!!!!!!!!!!!! postDoTransactionHandler:" + tDto);
         return "pages/transaction-confirmation";
     }
 
-    @GetMapping("/transaction-confirmation")
-    public String transactionConfirmationHandler(@ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, Model model){
+    @PostMapping("/transaction-confirmed/")
+    public String transactionConfirmationHandler(@ModelAttribute("customer") Customer c, @ModelAttribute("customerWithAccountOverview") CustomerHasAccountsDTO customerDto, @ModelAttribute("transactionConfirmedDTO") TransactionDetailsDTO tDto, Model model){
+        customerDto.setAccountList(accountService.getAccountsForCustomer(c));
+        customerService.setCustomerWithAccounts(customerDto);
+
+        model.addAttribute("customerWithAccountOverview", customerDto);
         model.addAttribute("transactionDTO", tDto);
-        System.out.println("confirmation @@@@@@@@@@@@@@@@@ " + tDto);
-        return "pages/transaction-confirmation";
+        model.addAttribute("customer", c);
+        System.out.println("!!!!!!! transactionConfirmationHandler: " + tDto);
+
+        transactionService.doTransaction(tDto, Transaction.class);
+        return "pages/account-overview";
     }
 
 

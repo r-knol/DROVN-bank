@@ -6,10 +6,7 @@ import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
 import nl.hva.miw.internetbanking.data.dto.*;
-import nl.hva.miw.internetbanking.model.Customer;
-import nl.hva.miw.internetbanking.model.CustomerType;
-import nl.hva.miw.internetbanking.model.LegalPerson;
-import nl.hva.miw.internetbanking.model.NaturalPerson;
+import nl.hva.miw.internetbanking.model.*;
 import nl.hva.miw.internetbanking.util.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -28,6 +25,7 @@ public class CustomerService {
     private final LegalPersonDAO legalPersonDAO;
     private final AccountDAO accountDAO;
     private final CustomerDAO customerDAO;
+    private AccountService accountService;
 
     @Autowired
     public CustomerService(NaturalPersonDAO naturalPersonDAO, LegalPersonDAO legalPersonDAO,
@@ -201,5 +199,16 @@ public class CustomerService {
     // TODO: Catch DataAccessException?
     public List<CompanyTransactionDTO> getMostActiveClients() {
         return legalPersonDAO.getMostActiveClients();
+    }
+
+    public void setCustomerWithAccounts(CustomerHasAccountsDTO customerDto){
+        // voor alle accounts de bijbehorende customers ophalen:
+        for (Account acc : customerDto.getAccountList()) {
+            acc.setAccountHolders(getCustomerByAccountId(acc.getAccountID()));
+            // voor iedere accountHolder de juiste naam ophalen:
+            for (Customer cus : acc.getAccountHolders()) {
+                acc.addAccountHolderName(printNameCustomer(cus.getCustomerID()));
+            }
+        }
     }
 }
