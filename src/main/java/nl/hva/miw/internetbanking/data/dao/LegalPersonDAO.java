@@ -84,7 +84,7 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
         return Optional.of(jdbcTemplate.query(sql, new LegalPersonRowMapper()));
     }
 
-    public List<BalancePerSectorDTO> getAvgBalancePerSegment() {
+    public List<BalancePerSectorDTO> getAvgBalancePerSector() {
         final String sql = "SELECT legalperson.sector, AVG(account.balance) balance\n" +
                 "FROM legalperson JOIN customer ON customer.customerID=legalperson.companyID JOIN customer_has_account ON customer_has_account.\n" +
                 "customerID=legalperson.companyID JOIN account ON account.accountID=customer_has_account.accountID\n" +
@@ -103,9 +103,11 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
     }
 
     public List<LegalPersonHasAccountDTO> getClientsWithHighestBalance() {
-        final String sql = "SELECT l.companyName, a.iban, a.balance, l.kvkNumber, l.sector, CONCAT(l.street, \" \", l.homeNumber, \", \", l.residence) AS address\n" +
+        final String sql = "SELECT l.companyName, a.iban, a.balance, l.kvkNumber, l.sector, CONCAT(l.street, \" \", l.homeNumber, \", \", l.residence) AS address,\n" +
+                "concat(e.firstname, \" \", e.preposition, \" \", e.surname) as accountmanager\n" +
                 "FROM customer_has_account cha JOIN customer c ON cha.customerID = c.customerID\n" +
                 "JOIN account a ON cha.accountID = a.accountID JOIN legalperson l ON l.companyID = cha.customerID\n" +
+                "JOIN employee e ON e.employeeID=l.accountmanagerID\n" +
                 "WHERE c.customerType = 'LEGAL' ORDER BY balance DESC LIMIT 10;";
         return jdbcTemplate.query(sql, new LegalPersonHasAccountRowMapper());
     }

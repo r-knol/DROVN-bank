@@ -1,9 +1,13 @@
 package nl.hva.miw.internetbanking.data.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import nl.hva.miw.internetbanking.model.Sector;
 
 import java.text.DecimalFormat;
 
+@Getter
+@Setter
 public class BalancePerSectorDTO {
 
     private Sector sector;
@@ -14,20 +18,8 @@ public class BalancePerSectorDTO {
         this.balance = balance;
     }
 
-    public Sector getSector() {
-        return sector;
-    }
-
-    public void setSector(Sector sector) {
-        this.sector = sector;
-    }
-
     public String getBalance() {
         DecimalFormat d = new DecimalFormat("##.00");
         return d.format(balance);
-    }
-
-    public void setBalance(double balance) {
-        this.balance = balance;
     }
 }

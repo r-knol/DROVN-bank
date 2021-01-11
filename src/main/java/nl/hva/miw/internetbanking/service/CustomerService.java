@@ -186,8 +186,8 @@ public class CustomerService {
     }
 
     // TODO: Catch DataAccessException?
-    public List<BalancePerSectorDTO> getAvgBalancePerSegment() {
-        return legalPersonDAO.getAvgBalancePerSegment();
+    public List<BalancePerSectorDTO> getAvgBalancePerSector() {
+        return legalPersonDAO.getAvgBalancePerSector();
     }
 
     // TODO: Catch DataAccessException?

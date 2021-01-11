@@ -2,8 +2,10 @@ package nl.hva.miw.internetbanking.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
+import nl.hva.miw.internetbanking.data.dto.TransactionDetailsDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.Transaction;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
 import nl.hva.miw.internetbanking.service.TransactionService;
@@ -12,11 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @Slf4j
-@SessionAttributes("customer")
+@SessionAttributes({"customer", "nameCurrentCus"})
 public class DoTransactionController {
 
     private TransactionService transactionService;
@@ -31,7 +34,7 @@ public class DoTransactionController {
     }
 
     @GetMapping("/do-transaction/")
-    public String doTransactionHandler(@ModelAttribute("customer") Customer c, Model model){
+    public String doTransactionHandler(@ModelAttribute("customer") Customer c, @ModelAttribute("nameCurrentCus") String currentCusName, Model model){
         CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(c);
         customerDto.setAccountList(accountService.getAccountsForCustomer(c));
 
@@ -43,10 +46,26 @@ public class DoTransactionController {
                 acc.addAccountHolderName(customerService.printNameCustomer(cus.getCustomerID()));
             }
         }
+        model.addAttribute("nameCurrentCus", currentCusName);
         model.addAttribute("customerWithAccountOverview", customerDto);
-        System.out.println("!!!!!!!!!!!!!! " + c);
-
+        model.addAttribute("transactionDTO", new TransactionDetailsDTO());
         return "pages/do-transaction";
+    }
+
+    @PostMapping("/do-transaction/")
+    public String postDoTransactionHandler(@ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, @ModelAttribute("nameCurrentCus") String currentCusName, Model model){
+        model.addAttribute("nameCurrentCus", currentCusName);
+        model.addAttribute("transactionDTO", tDto);
+//        System.out.println("????????????????? " + currentCusName);
+//        System.out.println("!!!!!!!!!!!!!!!!! " + tDto);
+        return "pages/transaction-confirmation";
+    }
+
+    @GetMapping("/transaction-confirmation")
+    public String transactionConfirmationHandler(@ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, Model model){
+        model.addAttribute("transactionDTO", tDto);
+        System.out.println("confirmation @@@@@@@@@@@@@@@@@ " + tDto);
+        return "pages/transaction-confirmation";
     }
 
 

@@ -6,22 +6,38 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 </head>
 <body>
-    <h1>Geld overmaken naar een andere rekening</h1>
-    <form action="#" method="post" th:action="@{/do_transaction}" th:object="${transaction}">
-    <label>Selecteer rekening:</label>
-        <ul th:object="${customerWithAccountOverview}">
-            <li th:each="account : ${customerWithAccountOverview.getAccountList()}" th:text="${account.iban}"></li>
-        </ul>
+<div class="container-my-2">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+        <h1>Geld overmaken naar een andere rekening</h1>
+        <form action="#" method="post" th:action="@{/do-transaction/}" th:object="${transactionDTO}">
+
+        <div class="col-md-6 form-group">
+            <label for="rekening">Rekening</label>
+            <select class="form-control" id="rekening" name="debitAccount"
+                    th:required="true">
+                <option value="">Selecteer uw rekening</option>
+                <option th:each="account : ${customerWithAccountOverview.getAccountList()}"
+                        th:text="${account.iban + ' € ' + account.balance}" th:value="${account.iban}">
+            </select>
+            <div class="invalid-feedback"></div>
+        </div>
+
+        <div class="col-md-6 form-group">
+        <label>Op naam van: (dit moet worden ingeladen obv de rekening die geselecteerd is)</label>
+            <input type="hidden" class="form-control" name="nameDebitCustomer" th:value="${nameCurrentCus}">
+        </div>
 
         <div class="col-md-6 form-group">
         <i class="fa fa-user icon"></i>
         <label>Bedrag</label>
-        <input type="text" class="form-control" name="amount" required>
+            <input type="text" class="form-control" name="amount" required>
     </div>
+
     <div class="col-md-6 form-group">
         <i class="fa fa-key icon"></i>
         <label>Naam ontvanger</label>
-        <input type="text" class="form-control" name="nameReceiver" required>
+        <input type="text" class="form-control" name="nameCreditCustomer" required>
     </div>
         <div class="col-md-6 form-group">
             <i class="fa fa-key icon"></i>
@@ -33,11 +49,6 @@
             <label>Omschrijving</label>
             <input type="text" class="form-control" name="description" required>
         </div>
-        <div class="col-md-6 form-group">
-            <i class="fa fa-key icon"></i>
-            <label>Wanneer</label>
-            <input type="text" class="form-control" name="date" required>
-        </div>
     <div class="col-md-4">
         <input type="submit" class="btn btn-primary" value="Verder">
     </div>
@@ -47,5 +58,8 @@
             <input type="submit" class="btn btn-primary" value="Terug">
         </div>
     </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

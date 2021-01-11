@@ -13,20 +13,16 @@ public class LegalPersonHasAccountDTO {
     private long kvkNumber;
     private String sector;
     private String address;
+    private String accountmanager;
 
-    public LegalPersonHasAccountDTO(String companyName, String iban, double balance, long kvkNumber, String sector, String address) {
+    public LegalPersonHasAccountDTO(String companyName, String iban, double balance, long kvkNumber,
+                                    String sector, String address, String accountmanager) {
         this.companyName = companyName;
         this.iban = iban;
         this.balance = balance;
         this.kvkNumber = kvkNumber;
         this.sector = sector;
         this.address = address;
+        this.accountmanager = accountmanager;
     }
-
-    public LegalPersonHasAccountDTO(String companyName, String iban, double balance) {
-        this.companyName = companyName;
-        this.iban = iban;
-        this.balance = balance;
-    }
-
 }

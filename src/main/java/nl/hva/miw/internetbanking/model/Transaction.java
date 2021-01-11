@@ -22,6 +22,14 @@ public class Transaction implements Serializable {
         this.account = account;
     }
 
+    public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime date) {
+        this.debitAccount = debitAccount;
+        this.creditAccount = creditAccount;
+        this.amount = amount;
+        this.description = description;
+        this.date = date;
+    }
+
     public Transaction(long transactionID, String debitAccount, String creditAccount, double amount, String description, LocalDateTime date) {
         this.transactionID = transactionID;
         this.debitAccount = debitAccount;
