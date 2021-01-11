@@ -53,7 +53,8 @@ public class DoTransactionController {
     }
 
     @PostMapping("/do-transaction/")
-    public String postDoTransactionHandler(@ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, @ModelAttribute("nameCurrentCus") String currentCusName, Model model){
+    public String postDoTransactionHandler(@ModelAttribute("customerWithAccountOverview") CustomerHasAccountsDTO customerDto, @ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, @ModelAttribute("nameCurrentCus") String currentCusName, Model model){
+        model.addAttribute("customerWithAccountOverview", customerDto);
         model.addAttribute("nameCurrentCus", currentCusName);
         model.addAttribute("transactionDTO", tDto);
 //        System.out.println("????????????????? " + currentCusName);
@@ -61,11 +62,14 @@ public class DoTransactionController {
         return "pages/transaction-confirmation";
     }
 
-    @GetMapping("/transaction-confirmation")
-    public String transactionConfirmationHandler(@ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, Model model){
+    @PostMapping("/transaction-confirmed/")
+    public String transactionConfirmationHandler(@ModelAttribute("customer") Customer c, @ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, Model model){
+        // TODO: met service alles ophalen
+        // customerService.get....()
         model.addAttribute("transactionDTO", tDto);
-        System.out.println("confirmation @@@@@@@@@@@@@@@@@ " + tDto);
-        return "pages/transaction-confirmation";
+        model.addAttribute("customer", c);
+        System.out.println("!!!!!!! bevestiging @@@@@@@@@@@@@@@@@ " + tDto + " + klant: " + c);
+        return "pages/account-overview";
     }
 
 
