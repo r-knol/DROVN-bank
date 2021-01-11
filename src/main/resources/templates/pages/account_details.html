@@ -10,55 +10,108 @@
         <header th:replace="fragments/header :: header-default"></header>
     </div>
 
-    <div id="main-content" class="row">
+    <div id="main-content" align="center">
         <main role="main" class="min-vw-100">
-            <div class="jumbotron mb-sm-n5 h-75"
-                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(49, 39, 131, 0.1), rgba(49, 39, 131, 0.3) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover;">
+            <div class="jumbotron"
+                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover; width: 90%; max-height: 60%">
                 <div class="container pt-sm-2 pb-sm-2 text-white">
-                    <h1><span class="display-5 h-25"><span class="text-orange" th:text="${nameCurrentCus}"></span> | <span class="text-orange">Transactieoverzicht</span></span>
+                    <h1><span class="display-5 h-25"><span class="text-blue" th:text="${account.getAccountHolderNames()}">Naam</span> | <span class="text-orange">Bij- en afschrijvingen</span></span>
                     </h1>
-                    <h2 align="right"> <span class="display-5 h-25"><span class="text-blue" th:text="${account.getIban()}">IBAN</span> | <span class="text-orange">Saldo</span> | <span class="text-blue" th:text="${account.getBalance()}">Saldo</span></h2>
-                    <p class="mt-5"><a class="btn btn-primary btn-lg" align="right" style="font-size: initial;" href="#"
-                                       role="button">Geld overboeken »</a></p>
+                    <p> <br></p>
+                    <h2 align="right"><span class="text-blue" th:text="${account.getIban()}">IBAN</span> | <span class="display-5 h-25"><span class="text-orange">Saldo</span> | € <span class="text-blue" th:text="${account.showBalance}">Saldo</span></h2>
+                </div>
+            </div >
+            <div align="center">
+                <p class="mt-5"><a class="btn btn-primary btn-lg btn-block" style="font-size: initial; width: 90%" href="#"
+                                   role="button">Geld overboeken »</a></p>
+            </div>
+            <div class="jumbotron" style="background: linear-gradient(65deg, rgba(243, 146, 0, 0.2), rgba(243, 146, 0, 0.2) );background-size: cover; width: 90%; max-height: 60%">
+                <p style="font-size: 250%; color: #F39200" align="center" th:if="${account.getTransactions().isEmpty()}">Er zijn geen bij- en/of afschrijvingen om weer te geven.</p>
+                <div align="center" style="width: border-box">
+                    <!--                    <table style="width: 100%"  class="table-hover" data-sort-name="Date" data-sort-order="desc"-->
+                    <!--                           th:unless="${account.getTransactions().isEmpty()}"-->
+                    <!--                           th:object="${account}">-->
+                    <!--                        <thead>-->
+                    <!--                        <tr>-->
+
+                    <!--                        </tr>-->
+
+                    <!--                        </thead>-->
+                    <!--                        <tbody>-->
+                    <!--                            <tr th:each="t : ${accountWithTransactionOverview.getTransactions}">-->
+                    <!--                                <td rowspan="100%" data-field="Date" data-sortable="true" th:text="${t.showDate}"></td>-->
+                    <!--                                   <table th:object="${t.getDate}">-->
+                    <!--                                       <thead class="text-white" bgcolor="#312783">-->
+                    <!--                                       <tr>-->
+                    <!--                                           <th scope="col" style="border-color: #312783; width: 60%">Tegenrekening</th>-->
+                    <!--                                           <th scope="col" style="border-color: #312783; width: 20%; text-align: left">Bedrag</th>-->
+                    <!--                                       </tr>-->
+                    <!--                                       </thead>-->
+                    <!--                                       <tbody>-->
+                    <!--                                       <th:block th:each="${a}">-->
+                    <!--                                           <tr data-toggle="collapse" data-target="#transaction-table" class="accordion-toggle">-->
+                    <!--                                               <td th:text="${t.showAccountName}"></td>-->
+                    <!--                                               <td >€ <span style="text-align: right; color: #F39200" th:text="${t.showAmount}"></span></td>-->
+                    <!--                                           </tr>-->
+                    <!--                                           <tr>-->
+                    <!--                                               <td colspan="3" rowspan="3" class="hiddenRow">-->
+                    <!--                                                   <div class="accordion-body collapse" id="transaction-table" th:text="${t.description}">Omschrijving</div>-->
+                    <!--                                               </td>-->
+                    <!--                                           </tr>-->
+                    <!--                                       </th:block>-->
+                    <!--                                       </tbody>-->
+                    <!--                                   </table>-->
+                    <!--                               </tr>-->
+                    <!--                            </th:block>-->
+                    <!--                        </tbody>-->
+
+                    <!--                    </table>-->
+                    <style>
+                        th, td {
+                            padding: 20px;
+                        }
+                    </style>
+                    <table style="width: 100%"  class="table-hover; container-fluid" data-sort-name="Date" data-sort-order="desc"
+                           th:unless="${account.getTransactions().isEmpty()}"
+                           th:object="${account}">
+                        <thead class="text-white" bgcolor="#312783">
+
+                        <tr>
+                            <th scope="col" style="width: 20%">Datum</th>
+                            <th scope="col" style="width: 20%">Tenaamstelling</th>
+                            <th scope="col" style="width: 20%">Tegenrekening</th>
+                            <th scope="col" style="width: 35%">Omschrijving</th>
+                            <th scope="col" style="width: 05%; text-align: right">Bedrag</th>
+                        </tr>
+
+
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="t : ${accountWithTransactionOverview.getTransactions}">
+                            <td style="color: #312783" data-field="Date" data-sortable="true" th:text="${t.showDate}"></td>
+                            <td style="color: #312783">Tenaamstelling</td>
+                            <td style="color: #F39200" th:text="${t.showAccountName}"></td>
+                            <td style="color: #312783" th:text="${t.description}"></td>
+                            <td style="text-align: right"><span style="text-align: right; color: #F39200" th:text="${t.showAmount}"></span></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-<!--            <div class="col-md-3">-->
-<!--&lt;!&ndash;                <h2 class="text-orange" align="left" th:text="${account.getIban()}">IBAN</h2>&ndash;&gt;-->
-<!--            </div>-->
-<!--            <div class="col-md-6">-->
-<!--                <h2 class="text-blue" align="center">Transactieoverzicht</h2>-->
-<!--            </div>-->
-<!--            <div class="col-md-3">-->
-<!--                <h2 class="text-blue" align="right" th:text="${account.getBalance()}">Saldo</h2>-->
-<!--            </div>-->
-        </div>
-                <p style="font-size: 250%" align="center" th:if="${account.getTransactions().isEmpty()}">Er zijn geen transacties om weer te geven.</p>
-                <table style="width: 100%" class="table-striped"
-                       th:unless="${account.getTransactions().isEmpty()}"
-                       th:object="${account}">
-                    <thead class="text-white" bgcolor="#312783">
-                    <tr>
-                        <th scope="col" style="border-color: #312783; width: 20%">Datum</th>
-                        <th scope="col" style="border-color: #312783; width: 60%">Omschrijving</th>
-                        <th scope="col" style="border-color: #312783; width: 20%; text-align: left">Bedrag</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="t : ${accountWithTransactionOverview.getTransactions}" >
-                        <td  type="datetime" th:text="${t.date}" ></td>
-                        <td th:text="${t.description}"></td>
-                        <td style="text-align: left" step=".01" th:text="${t.showTransactionAmount}"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-
-
-
+        </main>
     </div>
 
-    </main>
-</div>
-<!--<p>Nog geen rekening? <a th:href="@{openaccount/{id}(id=${customer.customerId})}">Open deze hier!</a></p>-->
 </body>
+
+<script>
+    $('.accordion-toggle').click(function(){
+        $('.hiddenRow').hide();
+        $(this).next('tr').find('.hiddenRow').show();
+    });
+    $('.collapse').on('show.bs.collapse', function () {
+        $('.collapse.in').collapse('hide');
+    });
+</script>
+
 </html>
