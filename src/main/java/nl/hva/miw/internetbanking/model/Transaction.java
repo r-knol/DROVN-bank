@@ -2,6 +2,7 @@ package nl.hva.miw.internetbanking.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Transaction implements Serializable {
 
@@ -102,6 +103,16 @@ public class Transaction implements Serializable {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public String showDate() {
+        DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        return date.format(formatDate);
+    }
+
+    public String showDateTime() {
+        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm aaa");
+        return date.format(formatDateTime);
     }
 
     public String showAccountName() {
