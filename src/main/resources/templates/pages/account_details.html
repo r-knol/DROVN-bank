@@ -29,6 +29,7 @@
                 <div class="jumbotron-fluid">
                     <a class="mt-lg-5"><input type="submit" class="btn btn-primary btn-lg btn-block" style="font-size: 150%; width: 90%" role="button"
                                               value="Geld overboeken »"></a>
+                    <p><br></p>
                 </div>
             </form>
 
@@ -78,16 +79,16 @@
                             padding: 20px;
                         }
                     </style>
-                    <table style="width: 100%"  class="table-hover; container-fluid" data-sort-name="Date" data-sort-order="desc"
+                    <table style="width: 100%; "  class="table-hover; container-fluid" data-sort-name="Date" data-sort-order="desc"
                            th:unless="${account.getTransactions().isEmpty()}"
                            th:object="${account}">
                         <thead class="text-white" bgcolor="#312783">
 
-                        <tr>
+                        <tr style="font-size: 150%">
                             <th scope="col" style="width: 20%">Datum</th>
                             <th scope="col" style="width: 20%">Tenaamstelling</th>
-                            <th scope="col" style="width: 20%">Tegenrekening</th>
-                            <th scope="col" style="width: 35%">Omschrijving</th>
+                            <th scope="col" style="width: 25%">Tegenrekening</th>
+                            <th scope="col" style="width: 30%">Omschrijving</th>
                             <th scope="col" style="width: 05%; text-align: right">Bedrag</th>
                         </tr>
 
@@ -95,12 +96,12 @@
                         </thead>
 
                         <tbody>
-                        <tr th:each="t : ${accountWithTransactionOverview.getTransactions}">
+                        <tr style="font-size: 150%" th:each="t : ${accountWithTransactionOverview.getTransactions}">
                             <td style="color: #312783" data-field="Date" data-sortable="true" th:text="${t.showDate}"></td>
                             <td style="color: #312783">Tenaamstelling</td>
                             <td style="color: #F39200" th:text="${t.showAccountName}"></td>
                             <td style="color: #312783" th:text="${t.description}"></td>
-                            <td style="text-align: right"><span style="text-align: right; color: #F39200" th:text="${t.showAmount}"></span></td>
+                            <td style="text-align: right"><span style="text-align: right; color: #312783" th:text="${t.showAmount}"></span></td>
                         </tr>
                         </tbody>
                     </table>
