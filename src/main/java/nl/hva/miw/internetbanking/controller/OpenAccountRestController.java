@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -26,11 +27,9 @@ public class OpenAccountRestController {
     }
 
         @PostMapping("/openaccount/check_iban")
-        public String checkDuplicateIban(@Param("accountID") long id, @Param("ibanGenerator") String iban){
-            System.out.println(id);
-            System.out.println(iban);
-
-            if (accountService.uniqueIbanViolated(id, iban)){
+        public String checkDuplicateIban(@Param("ibanGenerator") String iban){
+            logger.info("check_iban " + iban);
+            if (accountService.uniqueIbanViolated(iban)){
                 return "Duplicate";
             }else {
                 return "OK";
