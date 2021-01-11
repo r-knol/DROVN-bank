@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -58,11 +59,6 @@ public class AccountService {
         return account;
     }
 
-  /*  public void createNewAccount() {
-        Account account = createAccountObject(openAccountDTO.getAccount());
-        accountDao.create(account);
-    }*/
-
 //    public List<Account> getAllNaturalAccounts() {
 //        return accountDao.getAllNaturalAccounts();
 //    }
@@ -73,6 +69,7 @@ public class AccountService {
 
     public void saveNewAccount(Account account, Customer customer) {
         accountDao.create(account);
+        accountDao.saveAccountToCustomer(account, customer);
     }
 
     public OpenAccountDTO getOpenAccountDTO() {
@@ -82,4 +79,18 @@ public class AccountService {
     public void setOpenAccountDTO(OpenAccountDTO openAccountDTO) {
         this.openAccountDTO = openAccountDTO;
     }
+
+    public boolean uniqueIbanViolated(String iban){
+        boolean uniqueIbanViolated = false;
+
+        Optional<Account> ibanByAccount = accountDao.read(iban);
+        boolean isCreatingNew = (iban == null);
+
+        if (isCreatingNew){
+            if (ibanByAccount.isPresent()){
+                uniqueIbanViolated = true;
+            }
+        } return uniqueIbanViolated;
+    }
+
 }
