@@ -75,13 +75,17 @@ public class Transaction implements Serializable {
         this.creditAccount = creditAccountNo;
     }
 
-    public double getAmount() {
+    public double transactionAmount() {
         if (account.getIban().equals(debitAccount)) {
             amount = 0 - amount;
         }
         if(account.getIban().equals(creditAccount)) {
 
         }
+        return amount;
+    }
+
+    public double getAmount() {
         return amount;
     }
 
@@ -123,10 +127,10 @@ public class Transaction implements Serializable {
     }
 
     public String showAmount() {
-        if (getAmount() > 0) {
-            return String.format("+%.2f", getAmount());
+        if (transactionAmount() > 0) {
+            return String.format("+%.2f", transactionAmount());
         } else {
-            return String.format("-%.2f", getAmount());
+            return String.format("-%.2f", transactionAmount());
         }
     }
 

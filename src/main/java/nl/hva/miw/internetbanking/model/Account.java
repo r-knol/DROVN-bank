@@ -99,7 +99,13 @@ public class Account implements Serializable {
       transactions.add(transaction);
     }
 
-
+    public String showBalance() {
+        if (balance > 0) {
+            return String.format("+%.2f",balance);
+        } else {
+            return String.format("-%.2f", balance);
+        }
+    }
 
     @Override
     public String toString() {

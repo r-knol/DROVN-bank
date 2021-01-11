@@ -15,16 +15,23 @@
             <div class="jumbotron"
                  style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover; width: 90%; max-height: 60%">
                 <div class="container pt-sm-2 pb-sm-2 text-white">
-                    <h1><span class="display-5 h-25"><span class="text-blue" th:text="${account.getAccountHolderNames()}">Naam</span> | <span class="text-orange">Bij- en afschrijvingen</span></span>
+                    <h1 align="left"><span class="display-4 h-25"><span style="color: #0066ff" th:text="${nameCurrentCus}"></span> | <span class="text-orange">Transactieoverzicht</span></span>
                     </h1>
                     <p> <br></p>
-                    <h2 align="right"><span class="text-blue" th:text="${account.getIban()}">IBAN</span> | <span class="display-5 h-25"><span class="text-orange">Saldo</span> | € <span class="text-blue" th:text="${account.showBalance}">Saldo</span></h2>
+                    <h3 align="right"><span style="color: #0066ff" th:text="${account.getIban()}">IBAN</span> | <span class="display-5 h-25"><span class="text-orange">Saldo</span> | <span style="color: #0066ff">€ </span><span style="color: #0066ff" th:text="${account.showBalance}">Saldo</span> </h3>
                 </div>
             </div >
-            <div align="center">
-                <p class="mt-5"><a class="btn btn-primary btn-lg btn-block" style="font-size: initial; width: 90%" href="#"
-                                   role="button">Geld overboeken »</a></p>
-            </div>
+<!--            <div align="center">-->
+<!--                <p class="mt-5"><a class="btn btn-primary btn-lg btn-block" style="font-size: initial; width: 90%" href="#"-->
+<!--                                   role="button">Geld overboeken »</a></p>-->
+<!--            </div>-->
+            <form action="#" method="get" th:action="@{/do-transaction/}" th:object="${customerWithAccountOverview}">
+                <div class="jumbotron-fluid">
+                    <a class="mt-lg-5"><input type="submit" class="btn btn-primary btn-lg btn-block" style="font-size: 150%; width: 90%" role="button"
+                                              value="Geld overboeken »"></a>
+                </div>
+            </form>
+
             <div class="jumbotron" style="background: linear-gradient(65deg, rgba(243, 146, 0, 0.2), rgba(243, 146, 0, 0.2) );background-size: cover; width: 90%; max-height: 60%">
                 <p style="font-size: 250%; color: #F39200" align="center" th:if="${account.getTransactions().isEmpty()}">Er zijn geen bij- en/of afschrijvingen om weer te geven.</p>
                 <div align="center" style="width: border-box">
@@ -101,6 +108,7 @@
             </div>
         </main>
     </div>
+</div>
 
 </body>
 

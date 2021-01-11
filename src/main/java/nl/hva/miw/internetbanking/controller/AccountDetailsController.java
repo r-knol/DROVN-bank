@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
+@SessionAttributes({"customer", "nameCurrentCus"})
 @Slf4j(topic="accountDetailsOverview")
 public class AccountDetailsController {
 
@@ -31,13 +32,13 @@ public class AccountDetailsController {
         this.customerService = customerService;
     }
 
-    @GetMapping ("/account_details{id}")
-    public String showAccounts (@PathVariable ("id") long accountID, Model model) {
-        Optional<Account> account = accountService.getAccountById(accountID);
-        model.addAttribute(account);
-        System.out.println(account);
-        return "pages/details_overview";
-    }
+//    @GetMapping ("/account_details{id}")
+//    public String showAccounts (@PathVariable ("id") long accountID, Model model) {
+//        Optional<Account> account = accountService.getAccountById(accountID);
+//        model.addAttribute(account);
+//        model.addAttribute("customer");
+//        return "pages/details_overview";
+//    }
 
     @GetMapping("/account_details/{id}")
     public String AccountDetailsHandler (@PathVariable ("id") long accountID, Model model) {
@@ -45,6 +46,7 @@ public class AccountDetailsController {
         if (account.isPresent()) {
             Account accountFound = account.get();
             Customer customerPresent = (Customer) customerService.getCustomerByIban(accountFound.getIban());
+            model.addAttribute("customer", customerPresent);
             model.addAttribute("account", accountFound);
             model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customerPresent.getCustomerID()));
             accountFound.setTransactions(transactionService.getTransactionsForAccount(accountFound));

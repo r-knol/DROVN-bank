@@ -1,22 +1,44 @@
-<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<link rel="stylesheet" src="bootstrap.css">
+<link rel="stylesheet" src="custom.css">
+<head th:replace="fragments/head :: head-default (pageTitle='Account Details', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-<head>
-    <meta charset="UTF-8">
-    <title>Rekeningoverzicht</title>
-</head>
 <body>
-    <h1>Rekeningoverzicht</h1>
-    <h2>Welkom, <span th:text="${nameCurrentCus}"></span>.</h2>
-    <p th:if="${customerWithAccountOverview.getAccountList().isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
-    <p style="text-align:right">Nieuwe rekening? <a th:href="@{openaccount/{id}(id=${customer.customerID})}" >Open deze hier! </a></p>
+<div class="container-fluid min-vh-100" id="page">
+    <div id="header" class="row header-default">
+        <header th:replace="fragments/header :: header-default"></header>
+    </div>
 
-    <table class="table table-bordered"
+    <div id="main-content" align="center">
+        <main role="main" class="min-vw-100">
+            <div class="jumbotron"
+                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover; width: 90%; max-height: 60%">
+                <div class="container pt-sm-2 pb-sm-2 text-white">
+
+                    <h1 align="left"><span class="text-orange"> Welkom, </span><span style="color: #0066ff" th:text="${nameCurrentCus}"></span></h1>
+                    <p> <br></p>
+                    <h1 align="right"><span class="display-4 h-25"><span class="text-orange">Rekeningoverzicht</span></span></h1>
+
+
+                </div>
+            </div >
+
+            <div class="jumbotron" style="background: linear-gradient(65deg, rgba(243, 146, 0, 0.2), rgba(243, 146, 0, 0.2) );background-size: cover; width: 90%; max-height: 60%">
+                <p style="font-size: 250%; color: #F39200" align="center" th:if="${customerWithAccountOverview.getAccountList().isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
+                <div align="center" style="width: border-box">
+
+                    <style>
+                        th, td {
+                            padding: 20px;
+                        }
+                    </style>
+
+
+
+        <table style="width: 100%"  class="table-hover; container-fluid"
             th:unless="${customerWithAccountOverview.getAccountList().isEmpty()}"
             th:object="${customerWithAccountOverview}">
-        <thead class="thead-light">
+        <thead class="text-white" bgcolor="#312783" style="font-size: 150%">
         <tr>
             <th scope="col">IBAN</th>
             <th scope="col">Tenaamstelling</th>
@@ -24,26 +46,32 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="a : ${customerWithAccountOverview.getAccountList()}">
+        <tr style="font-size: 150%" th:each="a : ${customerWithAccountOverview.getAccountList()}">
             <td>
                 <a th:href="@{/account_details/{id}(id= ${a.getAccountID})}" >
                     <span th:text="${a.iban}"></span>
                 </a>
             </td>
-            <td> <ul> <li th:each="customerName : ${a.getAccountHolderNames()}" th:text="${customerName}"></li></ul></td>
-            <td>€ <span th:text="${a.balance}"></span></td>
+            <td style="color: #312783"> <ul> <li th:each="customerName : ${a.getAccountHolderNames()}" th:text="${customerName}"></li></ul></td>
+            <td style="color: #312783">€ <span th:text="${a.showBalance}"></span></td>
         </tr>
         </tbody>
     </table>
+        </div>
+      </div>
 
     <form action="#" method="get" th:action="@{/do-transaction/}" th:object="${customerWithAccountOverview}">
-        <div class="col-md-4">
-            <input type="submit" class="btn btn-primary" value="Overboeken">
+<!--        <div align="center">-->
+<!--            <p class="mt-5"><a class="btn btn-primary btn-lg btn-block" style="font-size: initial; width: 90%" href="#"-->
+<!--                               role="button">Geld overboeken »</a></p>-->
+<!--        </div>-->
+        <div class="jumbotron-fluid">
+            <a class="mt-lg-5"><button class="btn btn-primary btn-lg btn-block" style="font-size: 150%; width: 90%" href="#"
+                                       role="button"> Geld overboeken >></button></a>
         </div>
-        <div class="col-md-4">
-        <a th:href="@{/}" class="btn btn-outline-secondary">Log uit</a>
-        </div>
-        </form>
-
+    </form>
+        </main>
+    </div>
+</div>
 </body>
 </html>
