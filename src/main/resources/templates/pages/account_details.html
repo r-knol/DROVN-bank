@@ -13,11 +13,11 @@
     <div id="main-content" class="row">
         <main role="main" class="min-vw-100">
             <div class="jumbotron mb-sm-n5 h-75"
-                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover;">
+                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(49, 39, 131, 0.1), rgba(49, 39, 131, 0.3) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover;">
                 <div class="container pt-sm-2 pb-sm-2 text-white">
-                    <h1><span class="display-5 h-25"><span class="text-blue" th:text="${account.getIban()}">IBAN</span> | <span class="text-orange">Transactieoverzicht</span></span>
+                    <h1><span class="display-5 h-25"><span class="text-orange" th:text="${nameCurrentCus}"></span> | <span class="text-orange">Transactieoverzicht</span></span>
                     </h1>
-                    <h2 align="right"> <span class="display-5 h-25"><span class="text-orange">Saldo</span> | <span class="text-blue" th:text="${account.getBalance()}">Saldo</span></h2>
+                    <h2 align="right"> <span class="display-5 h-25"><span class="text-blue" th:text="${account.getIban()}">IBAN</span> | <span class="text-orange">Saldo</span> | <span class="text-blue" th:text="${account.getBalance()}">Saldo</span></h2>
                     <p class="mt-5"><a class="btn btn-primary btn-lg" align="right" style="font-size: initial;" href="#"
                                        role="button">Geld overboeken »</a></p>
                 </div>
@@ -47,7 +47,7 @@
                     <tr th:each="t : ${accountWithTransactionOverview.getTransactions}" >
                         <td  type="datetime" th:text="${t.date}" ></td>
                         <td th:text="${t.description}"></td>
-                        <td style="text-align: left" step=".01" th:text="${t.getAmount}"></td>
+                        <td style="text-align: left" step=".01" th:text="${t.showTransactionAmount}"></td>
                     </tr>
                     </tbody>
                 </table>

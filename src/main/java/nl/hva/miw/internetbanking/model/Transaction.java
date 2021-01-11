@@ -104,15 +104,15 @@ public class Transaction implements Serializable {
         this.date = date;
     }
 
-//    public double getTransactionAmount (double amount) {
-//        if (account.getIban().equals(debitAccount)) {
-//             amount = 0 - amount;
-//        }
-//        if(account.getIban().equals(creditAccount)) {
-//
-//        }
-//        return amount;
-//    }
+    public String showTransactionAmount (String amount) {
+        if (getAmount() > 0) {
+            String.format("+%.2f", getAmount());
+        }
+        if (getAmount() < 0) {
+            String.format("-%.2f", getAmount());
+        }
+        return amount;
+    }
 
     @Override
     public String toString() {
