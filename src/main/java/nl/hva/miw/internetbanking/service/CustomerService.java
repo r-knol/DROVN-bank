@@ -148,6 +148,14 @@ public class CustomerService {
         }
     }
 
+    public List<Customer> getCustomerListByIban (String iban) {
+        return  customerDAO.getCustomerListByIban(iban);
+    }
+
+    public Customer getCustomerByIban (String iban) {
+        return customerDAO.getCustomerByIban(iban);
+    }
+
     // TODO: Get name from CustomerController (RESTController)?
     public String printNameCustomer(long customerId) {
         // eerst checken welk type klant het is:

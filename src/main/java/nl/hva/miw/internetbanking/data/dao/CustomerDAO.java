@@ -89,4 +89,26 @@ public class CustomerDAO implements DAO<Customer, Long> {
         return jdbcTemplate.query(sql, new CustomerRowMapper(), accountId);
     }
 
+    public List<Customer> getCustomerListByIban (String iban) {
+        final String sql = "SELECT customer.customerid, customer.username, customer.password, " +
+                "customer.customerType, account.accountid, account.iban, account" +
+                ".balance\n" +
+                "FROM customer_has_account JOIN customer ON customer_has_account" +
+                ".customerID=customer.customerID JOIN account ON\n" +
+                "account.accountID=customer_has_account.accountID WHERE account" +
+                ".iban = ?";
+        return jdbcTemplate.query(sql, new CustomerRowMapper(), iban);
+    }
+
+    public Customer getCustomerByIban (String iban) {
+        final String sql = "SELECT customer.customerid, customer.username, customer.password, " +
+                "customer.customerType, account.accountid, account.iban, account" +
+                ".balance\n" +
+                "FROM customer_has_account JOIN customer ON customer_has_account" +
+                ".customerID=customer.customerID JOIN account ON\n" +
+                "account.accountID=customer_has_account.accountID WHERE account" +
+                ".iban = ?";
+        return jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), iban);
+    }
+
 }
