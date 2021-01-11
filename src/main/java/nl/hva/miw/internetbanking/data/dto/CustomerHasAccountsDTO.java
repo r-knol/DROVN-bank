@@ -36,7 +36,7 @@ public class CustomerHasAccountsDTO {
 
     @Override
     public String toString() {
-        return "CustomerAccountDTO{" +
+        return "CustomerHasAccountsDTO{" +
                 "customer=" + customer +
                 ", accountList=" + accountList +
                 '}';

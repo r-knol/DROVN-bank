@@ -1,13 +1,14 @@
 package nl.hva.miw.internetbanking.data.dto;
 
 import lombok.*;
+import nl.hva.miw.internetbanking.model.Transaction;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
-public class TransactionDetailsDTO {
+public class TransactionDetailsDTO implements DTO<Transaction>{
 
     private String nameDebitCustomer;
     private String nameCreditCustomer;
