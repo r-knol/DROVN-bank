@@ -98,9 +98,9 @@
 
                         <tbody>
                         <tr style="font-size: 150%" th:each="t : ${accountWithTransactionOverview.getTransactions}">
-                            <td style="color: #312783" data-field="Date" data-sortable="true" th:text="${t.showDate}"></td>
+                            <td style="color: #312783" th:text="${t.showDate}"></td>
 <!--                            <td style="color: #312783"> <ul> <li th:each="nameContraCustomer : ${account.getAccountHolderNames()}" th:text="${nameContraCustomer}"></li></ul></td>-->
-                            <td style="color: #312783"><ul><li th:each="contraAccountName : ${account.getAccountHolderNames()}" th:text="${contraAccountName}"></ul></td>
+                            <td style="color: #312783"><ul><li th:each="contraAccountList : ${contraAccountList}" th:text="${contraAccountList}"></ul></td>
                             <td style="color: #F39200" th:text="${t.showContraAccount}"></td>
                             <td style="color: #312783" th:text="${t.description}"></td>
                             <td style="text-align: right"><span style="text-align: right; color: #312783" th:text="${t.showAmount}"></span></td>

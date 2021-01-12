@@ -56,10 +56,11 @@ public class AccountDetailsController {
             model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customer.getCustomerID()));
             accountFound.setTransactions(transactionService.getTransactionsForAccount(accountFound));
             for (Transaction transaction : accountFound.getTransactions()) {
+                System.out.println(accountFound.getTransactions());
                 transaction.addTransactionToAccount(accountFound);
                 CustomerHasTransactionsDTO customerHasTransactionsDTO = new CustomerHasTransactionsDTO(transaction);
                 // Voor alle transacties de bijbehorende contraAccounts ophalen
-                customerHasTransactionsDTO.setAccountList(accountService.getAccountsByIban(transaction.showContraAccount()));
+                customerHasTransactionsDTO.setAccountList(accountService.getAccountsByIban(transaction.addTransactionToAccount();
 //                System.out.println(accountService.getAccountsByIban(transaction.showContraAccount()));
                 for (Account acc : customerHasTransactionsDTO.getAccountList()) {
                     customerHasTransactionsDTO.setCustomerList(customerService.getCustomerByAccountId(acc.getAccountID()));
@@ -71,7 +72,7 @@ public class AccountDetailsController {
 //                        model.addAttribute("contraAccountName", acc.getAccountHolderNames());
                     }
                 }
-                model.addAttribute("contraAccountName", customerHasTransactionsDTO);
+                model.addAttribute("contraAccountList", customerHasTransactionsDTO.getAccountHolderNames());
             }
             model.addAttribute("accountWithTransactionOverview", accountFound);
             return "pages/account_details";
