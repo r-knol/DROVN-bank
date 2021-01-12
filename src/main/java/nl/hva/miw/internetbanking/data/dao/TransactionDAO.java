@@ -3,6 +3,7 @@ package nl.hva.miw.internetbanking.data.dao;
 import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.mapper.TransactionRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
+import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Transaction;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

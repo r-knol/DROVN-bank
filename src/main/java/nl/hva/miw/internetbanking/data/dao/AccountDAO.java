@@ -39,7 +39,6 @@ public class AccountDAO implements DAO<Account, Long> {
         }, keyHolder);
         long id = Objects.requireNonNull(keyHolder.getKey().longValue());
         account.setAccountID(id);
-
     }
 
     public void saveAccountToCustomer(Account account, Customer customer) {
@@ -76,7 +75,13 @@ public class AccountDAO implements DAO<Account, Long> {
 
     @Override
     public void update(Account account) {
-
+        String sql = "UPDATE Account SET iban = ?, balance = ?" +
+                "WHERE accountID = ?";
+        jdbcTemplate.update(sql,
+                account.getIban(),
+                account.getBalance(),
+                account.getAccountID()
+        );
     }
 
     @Override

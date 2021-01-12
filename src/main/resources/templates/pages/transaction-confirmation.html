@@ -34,7 +34,7 @@
         <div class="col-md-6 form-group">
             <i class="fa fa-key icon"></i>
             <label>Naam ontvanger </label>
-            <label th:text="${'€ ' + transactionDTO.getNameCreditCustomer()}">naam</label>
+            <label th:text="${transactionDTO.getNameCreditCustomer()}">naam</label>
             <input type="hidden" class="form-control" name="nameCreditCustomer" th:value="${transactionDTO.getNameCreditCustomer()}">
         </div>
         <div class="col-md-6 form-group">

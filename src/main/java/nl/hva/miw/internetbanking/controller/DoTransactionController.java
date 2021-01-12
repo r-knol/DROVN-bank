@@ -60,6 +60,7 @@ public class DoTransactionController {
 
     @PostMapping("/transaction-confirmed/")
     public String transactionConfirmationHandler(@ModelAttribute("customer") Customer c, @ModelAttribute("customerWithAccountOverview") CustomerHasAccountsDTO customerDto, @ModelAttribute("transactionConfirmedDTO") TransactionDetailsDTO tDto, Model model){
+        transactionService.doTransaction(tDto, Transaction.class);
         customerDto.setAccountList(accountService.getAccountsForCustomer(c));
         customerService.setCustomerWithAccounts(customerDto);
 
@@ -68,7 +69,6 @@ public class DoTransactionController {
         model.addAttribute("customer", c);
         System.out.println("!!!!!!! transactionConfirmationHandler: " + tDto);
 
-        transactionService.doTransaction(tDto, Transaction.class);
         return "pages/account-overview";
     }
 
