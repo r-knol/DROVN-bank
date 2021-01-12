@@ -11,7 +11,6 @@ import nl.hva.miw.internetbanking.util.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +40,7 @@ public class CustomerService {
         saveCustomer(customer);
     }
 
-    @Transactional
-    public <T extends Customer> void saveCustomer(T entity) {
+    private <T extends Customer> void saveCustomer(T entity) {
         try {
             customerDAO.create(entity);
             if (entity instanceof NaturalPerson) {
@@ -51,13 +49,8 @@ public class CustomerService {
                 legalPersonDAO.create((LegalPerson) entity);
             }
         } catch (DataAccessException e) {
-            log.warn("Exception occurred while attempting to save customer: {}", e.getMessage());
-        }
-        customerDAO.create(entity);
-        if (entity instanceof NaturalPerson) {
-            naturalPersonDAO.create((NaturalPerson) entity);
-        } else if (entity instanceof LegalPerson) {
-            legalPersonDAO.create((LegalPerson) entity);
+            log.warn("Failed to save customer [{} - {}]", e.getClass().getSimpleName(),
+                     e.getMessage());
         }
     }
 
@@ -74,14 +67,43 @@ public class CustomerService {
             Optional<Customer> customerOptional = customerDAO.read(username);
             return getCustomerDetails(customerOptional);
         } catch (DataAccessException e) {
-            log.warn("Exception occurred while attempting to read customer data: {}",
-                     e.getMessage());
+            log.warn("Customer not found [{} - {}]", e.getClass().getSimpleName(), e.getMessage());
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Customer> getCustomerBySocialSecurityNumber(String socialSecurityNumber) {
+        try {
+            Optional<NaturalPerson> naturalPersonOptional =
+                    naturalPersonDAO.read(socialSecurityNumber);
+            if (naturalPersonOptional.isPresent()) {
+                Customer customer = naturalPersonOptional.get();
+                return Optional.of(customer);
+            }
+            return Optional.empty();
+        } catch (DataAccessException e) {
+            log.warn("Customer not found [{} - {}]", e.getClass().getSimpleName(), e.getMessage());
+            return Optional.empty();
+        }
+    }
+
+    public Optional<Customer> getCustomerByKvkNumber(long kvkNumber) {
+        try {
+            Optional<LegalPerson> legalPersonOptional = legalPersonDAO.read(kvkNumber);
+            if (legalPersonOptional.isPresent()) {
+                Customer customer = legalPersonOptional.get();
+                return Optional.of(customer);
+            }
+            return Optional.empty();
+        } catch (DataAccessException e) {
+            log.warn("Customer not found [{} - {}]", e.getClass().getSimpleName(), e.getMessage());
             return Optional.empty();
         }
     }
 
     private Optional<Customer> getCustomerDetails(Optional<Customer> optionalCustomer)
             throws DataAccessException {
+        // TODO: Create CustomerConverter ???
         if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
             if (customer.getCustomerType().equals(CustomerType.NATURAL)) {
@@ -94,9 +116,7 @@ public class CustomerService {
         return Optional.empty();
     }
 
-    // TODO: Create CustomerConverter ???
-
-    public Optional<Customer> getPrivateCustomerDetails(Customer customer)
+    private Optional<Customer> getPrivateCustomerDetails(Customer customer)
             throws DataAccessException {
         Optional<NaturalPerson> naturalPersonOptional =
                 naturalPersonDAO.read(customer.getCustomerID());
@@ -110,7 +130,7 @@ public class CustomerService {
         return Optional.empty();
     }
 
-    public Optional<Customer> getBusinessCustomerDetails(Customer customer)
+    private Optional<Customer> getBusinessCustomerDetails(Customer customer)
             throws DataAccessException {
         Optional<LegalPerson> legalPersonOptional =
                 legalPersonDAO.read(customer.getCustomerID());
@@ -185,8 +205,7 @@ public class CustomerService {
         try {
             return getCustomerDetails(customerDAO.read(customerID));
         } catch (DataAccessException e) {
-            log.warn("Exception occurred while attempting to read customer data: {}",
-                     e.getMessage());
+            log.warn("Customer not found [{} - {}]", e.getClass().getSimpleName(), e.getMessage());
             return Optional.empty();
         }
     }

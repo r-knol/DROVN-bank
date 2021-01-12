@@ -8,6 +8,7 @@ import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -23,10 +24,11 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
     }
 
     @Override
+    @Transactional
     public void create(NaturalPerson naturalPerson) {
         String sql = "INSERT INTO NaturalPerson(customerID, initials, firstName, preposition, " +
-                "surName, dateOfBirth, socialSecurityNumber, email, phone, postalCode, " +
-                "homeNumber, street, residence) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                     "surName, dateOfBirth, socialSecurityNumber, email, phone, postalCode, " +
+                     "homeNumber, street, residence) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setLong(1, naturalPerson.getCustomerID());
@@ -60,29 +62,29 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
     public Optional<NaturalPerson> read(Long id) {
         String sql = "SELECT * FROM NaturalPerson WHERE customerID = ?";
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
-                id));
+                                                               id));
     }
 
     @Override
     public void update(NaturalPerson naturalPerson) {
         String sql = "UPDATE NaturalPerson SET initials = ?, firstName = ?, preposition = ?" +
-                ", surName = ?, dateOfBirth = ?, socialSecurityNumber = ?, email = ?" +
-                ", phone = ?, postalCode = ?, homeNumber = ?, street = ?, residence = ? " +
-                "WHERE customerID = ?";
+                     ", surName = ?, dateOfBirth = ?, socialSecurityNumber = ?, email = ?" +
+                     ", phone = ?, postalCode = ?, homeNumber = ?, street = ?, residence = ? " +
+                     "WHERE customerID = ?";
         jdbcTemplate.update(sql, naturalPerson.getInitials(), naturalPerson.getFirstName(),
-                naturalPerson.getPreposition(), naturalPerson.getSurName(),
-                naturalPerson.getDateOfBirth(),
-                naturalPerson.getSocialSecurityNumber(), naturalPerson.getEmail(),
-                naturalPerson.getPhone(),
-                naturalPerson.getPostalCode(), naturalPerson.getHomeNumber(),
-                naturalPerson.getStreet(),
-                naturalPerson.getResidence(), naturalPerson.getCustomerID());
+                            naturalPerson.getPreposition(), naturalPerson.getSurName(),
+                            naturalPerson.getDateOfBirth(),
+                            naturalPerson.getSocialSecurityNumber(), naturalPerson.getEmail(),
+                            naturalPerson.getPhone(),
+                            naturalPerson.getPostalCode(), naturalPerson.getHomeNumber(),
+                            naturalPerson.getStreet(),
+                            naturalPerson.getResidence(), naturalPerson.getCustomerID());
     }
 
     @Override
     public void delete(NaturalPerson naturalPerson) {
         jdbcTemplate.update("DELETE FROM NaturalPerson WHERE customerID = ?",
-                naturalPerson.getCustomerID());
+                            naturalPerson.getCustomerID());
     }
 
     @Override
@@ -94,6 +96,12 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
     public Optional<List<NaturalPerson>> list() {
         String sql = "SELECT * FROM NaturalPerson";
         return Optional.of(jdbcTemplate.query(sql, new NaturalPersonRowMapper()));
+    }
+
+    public Optional<NaturalPerson> read(String socialSecurityNumber) {
+        String sql = "SELECT * FROM NaturalPerson WHERE socialSecurityNumber = ?";
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
+                                                               socialSecurityNumber));
     }
 
     public boolean existsBySocialSecurityNumber(String socialSecurityNumber) {

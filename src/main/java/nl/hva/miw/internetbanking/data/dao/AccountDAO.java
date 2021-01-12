@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -28,6 +29,7 @@ public class AccountDAO implements DAO<Account, Long> {
     }
 
     @Override
+    @Transactional
     public void create(Account account) {
         String sql = "INSERT INTO Account(iban, balance) VALUES (?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();

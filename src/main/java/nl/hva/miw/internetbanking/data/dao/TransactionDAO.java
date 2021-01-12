@@ -6,9 +6,10 @@ import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Transaction;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -28,6 +29,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     }
 
     @Override
+    @Transactional
     public void create(Transaction transaction) {
         String sql = "INSERT INTO TRANSACTION (debitAccount, creditAccount, amount, description, dateTime) " +
                 "VALUES(?,?,?,?,?)";

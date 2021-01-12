@@ -8,6 +8,7 @@ import nl.hva.miw.internetbanking.data.mapper.*;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -24,6 +25,7 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
     }
 
     @Override
+    @Transactional
     public void create(LegalPerson legalPerson) {
         String sql = "INSERT INTO LegalPerson(companyID, companyName, kvkNumber, sector, " +
                 "vatNumber, postalCode, homeNumber, street, residence, accountmanagerID) VALUES" +
@@ -54,6 +56,13 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
             log.error("LegalPerson not found in database.");
         }
         return null;
+    }
+
+    public Optional<LegalPerson> read(long kvkNumber) {
+        String sql = "SELECT * FROM LegalPerson WHERE kvkNumber = ?";
+        return Optional
+                .ofNullable(
+                        jdbcTemplate.queryForObject(sql, new LegalPersonRowMapper(), kvkNumber));
     }
 
     @Override
