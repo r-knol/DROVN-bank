@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "auth.api_key",
+      "type": "java.lang.String",
+      "description": "Description for auth.api_key."
+    }]
+  }
