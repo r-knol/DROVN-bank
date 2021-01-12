@@ -17,6 +17,9 @@ public class CompanyTransactionRowMapper implements RowMapper<CompanyTransaction
     public CompanyTransactionDTO mapRow(ResultSet resultSet, int i) throws SQLException {
         return new CompanyTransactionDTO(
                 resultSet.getString("companyName"),
-                resultSet.getLong("numberOfTransactions"));
+                resultSet.getLong("numberOfTransactions"),
+                resultSet.getLong("kvkNumber"),
+                resultSet.getString("address"),
+                resultSet.getString("accountmanager"));
     }
 }
