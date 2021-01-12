@@ -211,4 +211,13 @@ public class CustomerService {
             }
         }
     }
+
+    public List<String> accountHolderNamesList(CustomerHasAccountsDTO cusAcc, String iban) {
+        for (Account a : cusAcc.getAccountList()) {
+            if (a.getIban().equals(iban)) {
+                return a.getAccountHolderNames();
+            }
+        }
+        return null;
+    }
 }

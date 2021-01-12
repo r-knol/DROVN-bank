@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+<link rel="stylesheet" src="bootstrap.css">
+<link rel="stylesheet" src="custom.css">
+<head th:replace="fragments/head :: head-default (pageTitle='Geld overmaken', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')">
     <title>Geld overmaken</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
         .error {
@@ -12,15 +12,19 @@
     </style>
 </head>
 <body>
-<div class="container-my-2">
+<div class="container-fluid min-vh-100" id="page">
+    <div id="header" class="row header-default">
+        <header th:replace="fragments/header :: header-default"></header>
+    </div>
+
     <div class="row">
         <div class="col-md-8 mx-auto">
         <h1>Geld overmaken naar een andere rekening</h1>
         <form action="#" method="post" th:action="@{/do-transaction/}" th:object="${transactionDTO}">
-
         <div class="col-md-6 form-group">
-            <label for="rekening">Rekening</label>
-            <select class="form-control" id="rekening" name="debitAccount"
+            <i class="fa fa-address-card icon"></i>
+            <label for="selecteerRekening">Rekening</label>
+            <select class="form-control" id="selecteerRekening" name="debitAccount"
                     th:required="true">
                 <option value="">Selecteer uw rekening</option>
                 <option th:each="account : ${customerWithAccountOverview.getAccountList()}"
@@ -30,23 +34,27 @@
         </div>
 
         <div class="col-md-6 form-group">
-        <label>Op naam van: (dit moet worden ingeladen obv de rekening die geselecteerd is)</label>
+            <i class="fa fa-user-o icon"></i>
+        <label>Op naam van:</label>
             <input type="hidden" class="form-control" name="nameDebitCustomer" th:value="${nameCurrentCus}">
+        <br>
+            <label id="namenRekeninghouders"> </label>
         </div>
 
         <div class="col-md-6 form-group">
-        <i class="fa fa-user icon"></i>
+        <i class="fa fa-eur icon"></i>
         <label>Bedrag</label>
             <input type="text" class="form-control" name="amount" required>
     </div>
 
     <div class="col-md-6 form-group">
-        <i class="fa fa-key icon"></i>
+        <i class="fa fa-user icon"></i>
         <label>Naam ontvanger</label>
         <input type="text" class="form-control" name="nameCreditCustomer" required>
     </div>
+
         <div class="col-md-6 form-group">
-            <i class="fa fa-key icon"></i>
+            <i class="fa fa-university icon"></i>
             <label>IBAN</label>
             <input id="iban" type="text" class="form-control" name="creditAccount" required>
             <label id="error" hidden>
@@ -54,7 +62,7 @@
             </label>
         </div>
         <div class="col-md-6 form-group">
-            <i class="fa fa-key icon"></i>
+            <i class="fa fa-commenting icon"></i>
             <label>Omschrijving</label>
             <input type="text" class="form-control" name="description" required>
         </div>
@@ -72,8 +80,9 @@
 </div>
 
 <script>
-
+    // eerste script
     document.querySelector('#iban').addEventListener('focusout', checkForIbanPart);
+    const selectElement = document.querySelector('#selecteerRekening');
 
     function checkForIbanPart() {
         let regex = new RegExp(/^[A-Za-z]{2}[0-9]{2}[A-Za-z0-9]{1,30}$/i)
@@ -115,6 +124,31 @@
     function processError(){
         document.getElementById('error').style.display = 'block';
         document.getElementById('iban').classList.add('error');
+    }
+
+    // tweede script
+    selectElement.addEventListener('change', (event) => {
+        const result = document.querySelector('#namenRekeninghouders');
+        result.innerHTML = `De rekeninghouders ${event.target.value}`;
+        let iban = event.target.value;
+        loadCustomerNames(iban);
+    });
+
+    function loadCustomerNames(iban){
+        let bodyContent = `iban=${iban}`
+        fetch('http://localhost:8080/getnames', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'},
+            body: bodyContent
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    console.log(response.text());
+                } else {
+                    console.log('De rekeninghoudernamen zijn helaas NIET gevonden in de database.')
+                }
+            })
     }
 
 </script>

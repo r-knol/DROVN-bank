@@ -39,7 +39,7 @@ public class LoginController {
         return "pages/login";
     }
 
-    @PostMapping("/login")
+    @PostMapping("/customer-with-accounts")
     public String handleLogin(@RequestParam(name = "userName") String userName, @RequestParam(name = "password")
             String password, Model model) {
 
