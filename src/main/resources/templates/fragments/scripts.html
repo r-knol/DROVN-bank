@@ -44,5 +44,16 @@
             })
         });
     </script>
+    <script>
+        // jQuery script to attach footer to the bottom of the page if content is to short
+        $(document).ready(function () {
+            const docHeight = $(window).height();
+            const footerHeight = $('#footer').height();
+            const footerTop = $('#footer').position().top + footerHeight;
+
+            if (footerTop < docHeight)
+                $('#footer').css('margin-top', 10 + (docHeight - footerTop) + 'px');
+        });
+    </script>
 </div>
 </html>
