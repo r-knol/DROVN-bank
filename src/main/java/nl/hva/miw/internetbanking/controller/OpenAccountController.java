@@ -45,4 +45,15 @@ public class OpenAccountController {
         accountService.saveNewAccount(account, customer);
         return "pages/open-account";
     }
+
+    @CrossOrigin
+    @PostMapping("/check_iban")
+    public @ResponseBody String ibanCheckDB(@RequestParam String iban){
+        System.out.println("Request data in: " + iban);
+        String ibanFound = accountService.getAccountByIban(iban).get().getIban();
+        if (iban.equals(ibanFound)) {
+            return ibanFound;
+        }
+        return null;
+    }
 }
