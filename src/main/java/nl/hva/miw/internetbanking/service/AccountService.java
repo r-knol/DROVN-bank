@@ -8,11 +8,11 @@ import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
 import nl.hva.miw.internetbanking.data.dto.OpenAccountDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -35,9 +35,22 @@ public class AccountService {
         return accountDao.getAccountsForCustomer(customer);
     }
 
+    public List<Account> getAccountsByIban (String iban) {
+        System.out.println(iban);
+        return accountDao.getAccountsByIban(iban);
+    }
+
+//    public List<Customer> getCustomersForAccount (Account account) {
+//        return accountDao.getCustomersForAccount(account);
+//    }
+
     public List<Account> getAccountsByCustomerId(long customerId) {
         return accountDao.getAccountsByCustomerId(customerId);
     }
+
+//    public Optional<Account> getAccountByIban (String iban) {
+//        return accountDao.read(iban);
+//    }
 
     private Optional <Account> getAccountDetails (Optional<Account> optionalAccount) {
         if(optionalAccount.isPresent()) {

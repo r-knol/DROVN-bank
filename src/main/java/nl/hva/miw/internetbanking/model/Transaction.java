@@ -119,7 +119,7 @@ public class Transaction implements Serializable {
         return date.format(formatDateTime);
     }
 
-    public String showAccountName() {
+    public String showContraAccount() {
         if (account.getIban().equals(debitAccount)) {
             return creditAccount;
         } else
@@ -135,7 +135,7 @@ public class Transaction implements Serializable {
     }
 
     public String showDetails() {
-        return String.format("Datum: %s\nOmschrijving: %s\nIBAN: %s", showDateTime(), description, showAccountName());
+        return String.format("Datum: %s\nOmschrijving: %s\nIBAN: %s", showDateTime(), description, showContraAccount());
     }
 
 
@@ -143,11 +143,12 @@ public class Transaction implements Serializable {
     public String toString() {
         return "Transaction{" +
                 "transactionID=" + transactionID +
-                ", debetAccountNo='" + debitAccount + '\'' +
+                ", debitAccountNo='" + debitAccount + '\'' +
                 ", creditAccountNo='" + creditAccount + '\'' +
+                ", TegenrekeningNaam='" + showContraAccount() +'\'' +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
-                ", date=" + date +
+                ", date=" + showDate() +
                 '}';
     }
 }

@@ -1,7 +1,10 @@
 package nl.hva.miw.internetbanking.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
+import nl.hva.miw.internetbanking.data.dto.CustomerHasTransactionsDTO;
+import nl.hva.miw.internetbanking.data.dto.TransactionHasAccountDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Transaction;
@@ -13,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -41,17 +46,32 @@ public class AccountDetailsController {
 //    }
 
     @GetMapping("/account_details/{id}")
-    public String AccountDetailsHandler (@PathVariable ("id") long accountID, Model model) {
+    public String AccountDetailsHandler (@PathVariable ("id") long accountID,
+                                         @ModelAttribute ("customer") Customer customer, Model model) {
         Optional<Account> account = accountService.getAccountById(accountID);
         if (account.isPresent()) {
             Account accountFound = account.get();
-            Customer customerPresent = (Customer) customerService.getCustomerByIban(accountFound.getIban());
-            model.addAttribute("customer", customerPresent);
+            model.addAttribute("customer", customer);
             model.addAttribute("account", accountFound);
-            model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customerPresent.getCustomerID()));
+            model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customer.getCustomerID()));
             accountFound.setTransactions(transactionService.getTransactionsForAccount(accountFound));
             for (Transaction transaction : accountFound.getTransactions()) {
                 transaction.addTransactionToAccount(accountFound);
+                CustomerHasTransactionsDTO customerHasTransactionsDTO = new CustomerHasTransactionsDTO(transaction);
+                // Voor alle transacties de bijbehorende contraAccounts ophalen
+                customerHasTransactionsDTO.setAccountList(accountService.getAccountsByIban(transaction.showContraAccount()));
+//                System.out.println(accountService.getAccountsByIban(transaction.showContraAccount()));
+                for (Account acc : customerHasTransactionsDTO.getAccountList()) {
+                    customerHasTransactionsDTO.setCustomerList(customerService.getCustomerByAccountId(acc.getAccountID()));
+//                    System.out.println(customerService.getCustomerByAccountId(acc.getAccountID()));
+                    for (Customer c : customerHasTransactionsDTO.getCustomerList()) {
+                        acc.addAccountHolderName(customerService.printNameCustomer(c.getCustomerID()));
+                        customerHasTransactionsDTO.setAccountHolderNames(acc.getAccountHolderNames());
+                        System.out.println(customerHasTransactionsDTO.getAccountHolderNames());
+//                        model.addAttribute("contraAccountName", acc.getAccountHolderNames());
+                    }
+                }
+                model.addAttribute("contraAccountName", customerHasTransactionsDTO);
             }
             model.addAttribute("accountWithTransactionOverview", accountFound);
             return "pages/account_details";

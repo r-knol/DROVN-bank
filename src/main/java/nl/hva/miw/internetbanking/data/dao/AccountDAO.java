@@ -3,6 +3,7 @@ package nl.hva.miw.internetbanking.data.dao;
 import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -72,6 +73,11 @@ public class AccountDAO implements DAO<Account, Long> {
             logger.info("No record found for account " + iban, e);
             return Optional.empty();
         }
+    }
+
+    public List<Account> getAccountsByIban (String iban) {
+        final String sql = "SELECT * FROM Account WHERE iban = ?";
+        return jdbcTemplate.query(sql, new AccountRowMapper(), iban);
     }
 
     @Override

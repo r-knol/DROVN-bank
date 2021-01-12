@@ -9,14 +9,10 @@ public class AccountHasCustomersDTO {
 
     private Account account;
     private List<Customer> customerList;
-    private List<Account> accountList;
+
 
     public AccountHasCustomersDTO(Account account) {
         this.account = account;
-    }
-
-    public AccountHasCustomersDTO(List<Account> accountList) {
-        this.accountList = accountList;
     }
 
     public AccountHasCustomersDTO() {
