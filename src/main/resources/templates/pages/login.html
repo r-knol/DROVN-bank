@@ -1,43 +1,48 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Inloggen</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-</head>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head-login (pageTitle='Login Employee', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <body>
 
-    <div class="container-my-3">
-        <div class="row">
-            <div class="col-md-8 mx-auto">
-                <h1>Welkom klant!</h1>
-                <form action="#" th:action="@{/login}" method="post">
+<div class="container-fluid min-vh-100" id="page">
+    <div id="header" class="row header-default">
+        <header th:replace="fragments/header :: head-login"></header>
+    </div>
+    <div id="main-content" class="row">
+        <main role="main" class="min-vw-100">
 
-                    <div class="col-md-6 form-group">
-                        <i class="fa fa-user icon"></i>
-                        <label>Gebruikersnaam</label>
-                        <input type="text" class="form-control" name="userName" required>
+            <div class="container-my-3">
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <h2>Welkom beste klant, u kunt hieronder inloggen</h2>
+                        <form action="#" th:action="@{/login}" method="post">
+
+                            <div class="col-md-6 form-group">
+                                <i class="fa fa-user icon"></i>
+                                <label>Gebruikersnaam</label>
+                                <input type="text" class="form-control" name="userName" required>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <i class="fa fa-key icon"></i>
+                                <label>Wachtwoord</label>
+                                <input type="password" class="form-control" name="password" required>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="submit" class="btn btn-primary" value="Inloggen">
+                            </div>
+                        </form>
+                        <div class="col-md-4 mx-lg-0"> <br/>
+                            <a th:href="@{/}">Ga terug naar home</a><br>
+                            <a th:href="@{/loginemployee}">Inloggen als medewerker</a>
+                        </div>
                     </div>
-                    <div class="col-md-6 form-group">
-                        <i class="fa fa-key icon"></i>
-                        <label>Wachtwoord</label>
-                        <input type="password" class="form-control" name="password" required>
-                    </div>
-                    <div class="col-md-4">
-                        <input type="submit" class="btn btn-primary" value="Inloggen">
-                    </div>
-                </form>
-                <div class="col-md-4 mx-lg-8">
-                    <a th:href="@{/}">Ga terug naar home</a><br>
-                    <a th:href="@{/loginemployee}">Inloggen als medewerker</a>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
-
+</div>
+<div class="col-xs-12" style="height:100px;"></div>
+<div class="row footer-default" id="footer">
+    <footer th:replace="fragments/footer :: footer-default"></footer>
+</div>
 </body>
 </html>
-
-
