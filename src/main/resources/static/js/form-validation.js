@@ -23,7 +23,7 @@ function validateForms(forms, dataVerificationFields) {
         form.valid = false;
 
         // Select all selectboxes for validation
-        // const formSelects = form.querySelectorAll('select');
+        const formSelects = form.querySelectorAll('select');
 
         // Add EventListener to all input fields to validate field constraints on input
         formInputs.forEach(field => {
@@ -53,12 +53,16 @@ function validateForms(forms, dataVerificationFields) {
             });
         });
 
-        // Set EventListener to selectboxes to validate on change
-        // formSelects.forEach(select => {
-        //     select.addEventListener('change', function(){
-
-        //     });
-        // });
+        // Set EventListener to selectboxes to validate on focusout
+        formSelects.forEach(select => {
+            select.addEventListener('focusout', function () {
+                if (select.validity.valueMissing) { // Required, but no value selected.
+                    select.setCustomValidity(select.validationMessage);
+                    updateCss(select);
+                    select.nextElementSibling.innerHTML = select.validationMessage;
+                }
+            });
+        });
 
         // Prevent form submission if the form has fields with invalid input
         form.addEventListener('submit', function (event) {
