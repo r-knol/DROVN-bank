@@ -2,6 +2,7 @@
 <html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 <link rel="stylesheet" src="bootstrap.css">
 <link rel="stylesheet" src="custom.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <head th:replace="fragments/head :: head-default (pageTitle='Rekening Openen', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <meta charset="UTF-8">
 <head>
@@ -10,7 +11,7 @@
 <body>
 <script>
 
-    function random() {
+    window.onload = function random() {
         let country_code = "NL"
         let bank_code = "DROVN";
         let IBAN = "";
@@ -25,33 +26,7 @@
         return document.ibanForm.ibanGenerator.value = country_code + first_part + bank_code + final_IBAN;
     }
 
-    const myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
-    const urlencoded = new URLSearchParams();
-    urlencoded.append("ibanGenerator", "NLDROVN43280240231");
-
-    const requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: urlencoded,
-        redirect: 'follow'
-    };
-
-    function checkUniqueIban() {
-        let element = document.querySelector("#ibanGenerator");
-        element.classList.add("show");
-
-        fetch("http://localhost:8080/saveaccount")
-            .then(function (response) {
-                return response.json()
-            }).then(function (data) {
-            console.log(data)
-        })
-    }
-
     let popupWindow = null;
-
     function centeredPopup(url, winName, w, h, scroll) {
         LeftPosition = (screen.width) ? (screen.width - w) / 2 : 0;
         TopPosition = (screen.height) ? (screen.height - h) / 2 : 0;
@@ -61,17 +36,39 @@
 
     }
 
-    function ibanButton() {
-        document.addEventListener("click", random());
-        disableButton();
+    function ibanSubmitButton() {
+        document.getElementById('submit').addEventListener("click", checkUniqueIban);
+
     }
 
-    function disableButton() {
-        document.getElementById("ibanButtonClicked").style.visibility="hidden";
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer 3efb927f-c13d-4f17-a8ed-ccfac087592d");
+    myHeaders.append("key_drovn", "");
+    myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+    var urlencoded = new URLSearchParams();
+    urlencoded.append("iban", "NL50DROVN505720623");
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    function checkUniqueIban() {
+        let iban = document.getElementById('ibanGenerator').value;
+
+        if (iban) {
+            let formData = `ibanGenerator=${iban}`
+
+            fetch("http://localhost:8080/openaccount/check_iban", requestOptions, {
+                body: formData,
+            })
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+        }
     }
-
-
-    document.getElementById('ibanGenerator').addEventListener('focusout', checkUniqueIban)
 
 </script>
 <div class="container">
@@ -119,6 +116,25 @@
     </div>
 <div class="row footer-default" id="footer">
     <footer th:replace="fragments/footer :: footer-default"></footer>
+</div>
+<div class="modal fade" id="modelConfirmation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Gelukt!</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Sluiten">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Uw nieuwe rekening is toegevoegd aan uw account
+            </div>
+            <div class="modal-footer">
+                <button> <a th:href="@{account-overview}" type="button" class="btn btn-secondary" data-dismiss="modal">Close</a></button>
+                <button type="button" class="btn btn-primary">Nog een rekening openen?</button>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

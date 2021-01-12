@@ -39,8 +39,8 @@ public class AccountService {
         return accountDao.getAccountsByCustomerId(customerId);
     }
 
-    private Optional <Account> getAccountDetails (Optional<Account> optionalAccount) {
-        if(optionalAccount.isPresent()) {
+    private Optional<Account> getAccountDetails(Optional<Account> optionalAccount) {
+        if (optionalAccount.isPresent()) {
             Account account = optionalAccount.get();
             accountDao.read(account.getAccountID());
             return Optional.of(account);
@@ -48,7 +48,7 @@ public class AccountService {
         return optionalAccount;
     }
 
-    public Optional <Account> getAccountById (long accountID) {
+    public Optional<Account> getAccountById(long accountID) {
         return getAccountDetails(accountDao.read(accountID));
     }
 
@@ -76,6 +76,7 @@ public class AccountService {
         return openAccountDTO;
     }
 
+
     public void setOpenAccountDTO(OpenAccountDTO openAccountDTO) {
         this.openAccountDTO = openAccountDTO;
     }
@@ -83,14 +84,15 @@ public class AccountService {
     public boolean uniqueIbanViolated(String iban){
         boolean uniqueIbanViolated = false;
 
-        Optional<Account> ibanByAccount = accountDao.read(iban);
-        boolean isCreatingNew = (iban == null);
+        boolean ibanByAccount = accountDao.existsByIban(iban);
+        log.info("iban check = " + iban);
 
-        if (isCreatingNew){
-            if (ibanByAccount.isPresent()){
+            if (ibanByAccount){
                 uniqueIbanViolated = true;
-            }
+                log.info("iban bestaat al");
+            } else {
+            log.info(" return unieke iban" + uniqueIbanViolated);
+
         } return uniqueIbanViolated;
     }
-
 }
