@@ -52,6 +52,10 @@ public class AccountService {
         return getAccountDetails(accountDao.read(accountID));
     }
 
+    public Optional <Account> getAccountByIban (String iban) {
+        return getAccountDetails(accountDao.read(iban));
+    }
+
     public <T extends Account> Account createAccountObject(Account account) {
         account.setAccountID(openAccountDTO.getAccount().getAccountID());
         account.setIban(openAccountDTO.getAccount().getIban());
