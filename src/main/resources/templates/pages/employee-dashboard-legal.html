@@ -1,16 +1,13 @@
-
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Employee Dashboard Legal</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head-employeeDashboard (pageTitle='Employee Dashboard Legal', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <body>
 <style>
-    .client-row:hover{
-        cursor:pointer;
+    #info {
+    .client-row:hover
+        cursor: pointer;
     }
+
     #black-screen{
         width: 100%;
         height: 100%;
@@ -25,12 +22,12 @@
         display: block;
     }
     #close{
-        position: absolute;
+        position: fixed;
         top: 15px;
         right: 15px;
         width: 15px;
         height: 15px;
-        background: red url("././static/images/close-512.png") center center no-repeat;
+        background: url('/images/close-512.png') center center no-repeat;
         background-size: 15px;
     }
     #popup{
@@ -41,7 +38,6 @@
         position: fixed;
         margin: -150px;
         background-color: #ffffff;
-        top: -150px;
         left: 50%;
         top: 50%;
     }
@@ -49,92 +45,105 @@
         display: block;
     }
 
-    #uitloggen {
+    #uitloggenemployee {
         position:absolute;
         top:0;
         right:0;
-        margin-right:-800px;
+        margin-right:-1000px;
     }
 
 </style>
 
-    <h1>Welkom, <span th:text="${employee.firstName}"></span></h1>
-    <br>
+<div class="container-fluid min-vh-100" id="page">
+    <div id="header" class="row header-default">
+        <header th:replace="fragments/header :: head-employeeDashboard"></header>
+    </div>
+    <div id="main-content" class="row">
+        <main role="main" class="min-vw-100">
+            <div class="jumbotron mb-5"
+                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/happy-online-banking.jpg'); background-position: left center; background-repeat: no-repeat; background-size: cover;">
+                <div class="container pt-5 pb-5 text-white">
+                    <h1>Welkom, <span th:text="${employee.firstName}"></span>  |  <span th:text="${employee.getEmployeeRole().getLabel()}"></span></h1>
+                </div>
+            </div>
+            <div class="container pt-5">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>10 klanten met hoogste saldo</h3>
+                        <table class="table table-striped table-responsive-md">
+                            <thead>
+                            <tr>
+                                <th>Klant</th>
+                                <th>Iban</th>
+                                <th>Saldo</th>
+                                <th>Info</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="lp : ${lpWithHighestBalance}" class="client-row">
+                                <td th:text="${lp.companyName}" ></td>
+                                <td th:text="${lp.iban}"></td>
+                                <td th:text="${lp.balance}"></td>
+                                <td> <a th:attr="onclick='showMoreInfo(\'' + ${lp.accountmanager}+ '\')'"
+                                        id="info" class="btn btn-outline-primary">Meer info</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="container my-2">
+                        <h3>Gemiddelde saldo per segment</h3>
+                        <table class="table table-striped table-responsive-md">
+                            <thead>
+                            <tr>
+                                <th>Sector</th>
+                                <th>Gemiddeld saldo</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="b : ${balancePerSector}">
+                                <td th:text="${b.sector.getLabelSector()}"></td>
+                                <td th:text="${b.getBalance()}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="container my-2">
+                        <h3>10 meest actieve klanten</h3>
+                        <table class="table table-striped table-responsive-md">
+                            <thead>
+                            <tr>
+                                <th>Klant</th>
+                                <th>Aantal transacties</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="m : ${mostActiveClients}">
+                                <td th:text="${m.companyName}"></td>
+                                <td th:text="${m.numberOfTransactions}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="black-screen" onclick="hideMoreInfo()">
+                        <div id="close" onclick="hideMoreInfo()"></div>
+                    </div>
+                    <div id="popup">
+                        <h2>Klantinformatie</h2>
+                        <div id="meerinfo"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
 
-    <div class="col-md-4">
-        <a id="uitloggen" th:href="@{/loginemployee}" class="btn btn-primary" type="submit">Uitloggen</a>
-    </div>
+<div th:replace="fragments/scripts :: scripts-before-closing-tag"></div>
 
-    <div class="container my-2">
-        <h3>10 klanten met hoogste saldo</h3>
-        <table class="table table-striped table-responsive-md">
-            <thead>
-            <tr>
-                <th>Klant</th>
-                <th>Iban</th>
-                <th>Saldo</th>
-                <th>Accountmanager</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="lp : ${lpWithHighestBalance}" class="client-row" th:attr="onclick='showMoreInfo(\'' + ${lp.companyName}+ '\');'" >
-                <td th:text="${lp.companyName}" ></td>
-                <td th:text="${lp.iban}"></td>
-                <td th:text="${lp.balance}"></td>
-                <td th:text="${lp.accountmanager}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="container my-2">
-        <h3>Gemiddelde saldo per segment</h3>
-        <table class="table table-striped table-responsive-md">
-            <thead>
-            <tr>
-                <th>Segment</th>
-                <th>Gemiddeld saldo</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="b : ${balancePerSector}">
-                <td th:text="${b.sector.getLabelSector()}"></td>
-                <td th:text="${b.getBalance()}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="container my-2">
-        <h3>10 meest actieve klanten</h3>
-        <table class="table table-striped table-responsive-md">
-            <thead>
-            <tr>
-                <th>Klant</th>
-                <th>Aantal transacties</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="m : ${mostActiveClients}">
-                <td th:text="${m.companyName}"></td>
-                <td th:text="${m.numberOfTransactions}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <div id="black-screen" onclick="hideMoreInfo()">
-        <div id="close" onclick="hideMoreInfo()"></div>
-
-    </div>
-    <div id="popup">
-        Dit is een popup met info over de klant.
-        <div id="account"></div>
-    </div>
-
-</body>
 <script>
     function showMoreInfo(iban){
         let elementPopup = document.getElementById("popup");
         let elementOverlay = document.getElementById("black-screen");
-         document.getElementById("account").innerHTML=iban;
+        document.getElementById("meerinfo").innerHTML=iban;
         elementPopup.classList.add("show");
         elementOverlay.classList.add("show");
         console.log("Show info van account: ", iban)
@@ -146,4 +155,5 @@
         elementOverlay.classList.remove("show");
     }
 </script>
+</body>
 </html>

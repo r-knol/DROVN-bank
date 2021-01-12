@@ -5,10 +5,13 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dao.TransactionDAO;
-import nl.hva.miw.internetbanking.model.Account;
-import nl.hva.miw.internetbanking.model.Transaction;
+import nl.hva.miw.internetbanking.data.dto.DTO;
+import nl.hva.miw.internetbanking.model.*;
+import nl.hva.miw.internetbanking.util.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,8 +56,17 @@ public class TransactionService {
         return transactionDAO.getDebitTransaction(iban);
     }
 
-    public void doTransaction(String fromAccount, String toAccount) {
-//        Transaction transaction = new Transaction();
-//        transactionDAO.create(transaction);
+    public <T> void doTransaction(DTO<T> dto, Class<T> transactionDetails) {
+        T transaction = DtoMapperUtil.mapDtoToEntity(dto, transactionDetails);
+        saveTransaction(transaction);
+    }
+
+    @Transactional
+    public <T> void saveTransaction(T transaction) {
+        try {
+            transactionDAO.create((Transaction) transaction);
+        } catch (DataAccessException e) {
+            log.warn("Exception occurred while attempting to save transaction: {}", e.getMessage());
+        }
     }
 }

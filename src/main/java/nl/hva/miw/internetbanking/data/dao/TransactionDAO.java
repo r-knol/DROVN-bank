@@ -11,6 +11,7 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,16 +28,17 @@ public class TransactionDAO implements DAO<Transaction, Long> {
 
     @Override
     public void create(Transaction transaction) {
-        String sql = "INSERT INTO TRANSACTION (debetAccount, creditAccount, amount, description, dateTime) " +
+        String sql = "INSERT INTO TRANSACTION (debitAccount, creditAccount, amount, description, dateTime) " +
                 "VALUES(?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
+        System.out.println("!!!!!!!!!!!!! transaction = " + transaction);
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"transactionID"});
             ps.setString(1, transaction.getDebitAccount());
             ps.setString(2, transaction.getCreditAccount());
             ps.setDouble(3, transaction.getAmount());
             ps.setString(4, transaction.getDescription());
-            ps.setDate(5, Date.valueOf(String.valueOf(transaction.getDate())));
+            ps.setTimestamp(5, Timestamp.valueOf(transaction.getDate()));
             return ps;
         }, keyHolder);
         long id = Objects.requireNonNull(keyHolder.getKey().longValue());
@@ -51,7 +53,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
 
     @Override
     public void update(Transaction transaction) {
-        String sql = "UPDATE transaction SET debetAccount = ?, creditAccount = ?, amount = ?" +
+        String sql = "UPDATE transaction SET debitAccount = ?, creditAccount = ?, amount = ?" +
                 ", description = ?, date = ?" + "WHERE transactionID = ?";
         jdbcTemplate.update(sql, transaction.getDebitAccount(),
                 transaction.getCreditAccount(),

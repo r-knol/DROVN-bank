@@ -7,18 +7,6 @@
 </head>
 <body>
 
-<style>
-    #uitloggen {
-        position:absolute;
-        top:0;
-        right:0;
-        margin-right:-800px;
-    }
-</style>
-<div class="col-md-4">
-    <a id="uitloggen" th:href="@{/}" class="btn btn-secondary" type="submit">Uitloggen</a>
-</div>
-
 <div class="container my-3">
     <h3>Bevestig uw overboeking</h3>
     <form action="#" method="post" th:action="@{/transaction-confirmed/}" th:object="${transactionConfirmedDTO}">
@@ -26,7 +14,7 @@
         <div class="col-md-6 form-group">
             <label>Rekening </label>
             <label th:text="${transactionDTO.getDebitAccount()}">rekening</label>
-            <input type="hidden" class="form-control" name="debitAccount">
+            <input type="hidden" class="form-control" name="debitAccount" th:value="${transactionDTO.getDebitAccount()}">
             <div class="invalid-feedback"></div>
         </div>
 
@@ -40,26 +28,26 @@
             <i class="fa fa-user icon"></i>
             <label>Bedrag </label>
             <label th:text="${'€ ' + transactionDTO.getAmount()}">bedrag</label>
-            <input type="hidden" class="form-control" name="amount">
+            <input type="hidden" class="form-control" name="amount" th:value="${transactionDTO.getAmount()}">
         </div>
 
         <div class="col-md-6 form-group">
             <i class="fa fa-key icon"></i>
             <label>Naam ontvanger </label>
             <label th:text="${'€ ' + transactionDTO.getNameCreditCustomer()}">naam</label>
-            <input type="hidden" class="form-control" name="nameCreditCustomer">
+            <input type="hidden" class="form-control" name="nameCreditCustomer" th:value="${transactionDTO.getNameCreditCustomer()}">
         </div>
         <div class="col-md-6 form-group">
             <i class="fa fa-key icon"></i>
             <label>IBAN </label>
             <label th:text="${transactionDTO.getCreditAccount()}">creditAccount</label>
-            <input type="hidden" class="form-control" name="creditAccount">
+            <input type="hidden" class="form-control" name="creditAccount" th:value="${transactionDTO.getCreditAccount()}">
         </div>
         <div class="col-md-6 form-group">
             <i class="fa fa-key icon"></i>
             <label>Omschrijving </label>
             <label th:text="${transactionDTO.getDescription()}">description</label>
-            <input type="hidden" class="form-control" name="description">
+            <input type="hidden" class="form-control" name="description" th:value="${transactionDTO.getDescription()}">
         </div>
         <div class="col-md-4">
             <input type="submit" class="btn btn-primary" value="Bevestigen">
@@ -68,7 +56,7 @@
     <br>
     <form action="#" method="get" th:action="@{/do-transaction/}">
         <div class="col-md-4">
-            <input type="submit" class="btn btn-secondary" value="Terug">
+            <input type="submit" class="btn btn-outline-secondary" value="Terug">
         </div>
     </form>
 </div>

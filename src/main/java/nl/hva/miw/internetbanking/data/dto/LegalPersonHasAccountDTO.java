@@ -2,9 +2,13 @@ package nl.hva.miw.internetbanking.data.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
+import java.text.DecimalFormat;
 
 @Getter
 @Setter
+@ToString
 public class LegalPersonHasAccountDTO {
 
     private String companyName;
@@ -24,5 +28,10 @@ public class LegalPersonHasAccountDTO {
         this.sector = sector;
         this.address = address;
         this.accountmanager = accountmanager;
+    }
+
+    public String getBalance() {
+        DecimalFormat d = new DecimalFormat("###,###.00");
+        return "€" + d.format(balance);
     }
 }
