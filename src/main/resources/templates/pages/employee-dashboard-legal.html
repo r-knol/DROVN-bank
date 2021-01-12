@@ -3,48 +3,6 @@
 <head th:replace="fragments/head :: head-employeeDashboard (pageTitle='Employee Dashboard Legal', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <body>
 <style>
-    #info {
-    .client-row:hover
-        cursor: pointer;
-    }
-
-    #black-screen{
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-color: rgba(0,0,0, 0.3);
-        position: fixed;
-        display: none;
-        z-index: 9;
-    }
-    #black-screen.show{
-        display: block;
-    }
-    #close{
-        position: fixed;
-        top: 15px;
-        right: 15px;
-        width: 15px;
-        height: 15px;
-        background: url('/images/close-512.png') center center no-repeat;
-        background-size: 15px;
-    }
-    #popup{
-        z-index: 10;
-        display: none;
-        width: 300px;
-        height: 300px;
-        position: fixed;
-        margin: -150px;
-        background-color: #ffffff;
-        left: 50%;
-        top: 50%;
-    }
-    #popup.show{
-        display: block;
-    }
-
     #uitloggenemployee {
         position:absolute;
         top:0;
@@ -84,8 +42,9 @@
                                 <td th:text="${lp.companyName}" ></td>
                                 <td th:text="${lp.iban}"></td>
                                 <td th:text="${lp.balance}"></td>
-                                <td> <a th:attr="onclick='showMoreInfo(\'' + ${lp.accountmanager}+ '\')'"
-                                        id="info" class="btn btn-outline-primary">Meer info</a></td>
+                                <td> <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target=".bd-example-modal-lg"
+                                             th:onclick="showMoreInfo([[${lp.kvkNumber}]],[[${lp.address}]],[[${lp.accountmanager}]])">Meer info</button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
@@ -124,12 +83,33 @@
                             </tbody>
                         </table>
                     </div>
-                    <div id="black-screen" onclick="hideMoreInfo()">
-                        <div id="close" onclick="hideMoreInfo()"></div>
-                    </div>
-                    <div id="popup">
-                        <h2>Klantinformatie</h2>
-                        <div id="meerinfo"></div>
+                </div>
+                <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="title">Aanvullende info voor jou, <span th:text="${employee.firstName}"></span> </h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">x</span>
+                                </button>
+                            </div>
+                            <table class="table table-striped table-responsive-md">
+                                <tbody>
+                                <tr>
+                                    <td>Kvk nummer</td>
+                                    <td id="modalKvk"></td>
+                                </tr>
+                                <tr>
+                                    <td>Adres</td>
+                                    <td id="modalAddress"></td>
+                                </tr>
+                                <tr>
+                                    <td>Accountmanager</td>
+                                    <td id="modalAccountManager"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -140,20 +120,14 @@
 <div th:replace="fragments/scripts :: scripts-before-closing-tag"></div>
 
 <script>
-    function showMoreInfo(iban){
-        let elementPopup = document.getElementById("popup");
-        let elementOverlay = document.getElementById("black-screen");
-        document.getElementById("meerinfo").innerHTML=iban;
-        elementPopup.classList.add("show");
-        elementOverlay.classList.add("show");
-        console.log("Show info van account: ", iban)
-    }
-    function hideMoreInfo(){
-        let elementPopup = document.getElementById("popup");
-        let elementOverlay = document.getElementById("black-screen");
-        elementPopup.classList.remove("show");
-        elementOverlay.classList.remove("show");
+    function showMoreInfo(kvkNumber, address, accountManager) {
+        $('#myLargeModalLabel').modal('show')
+        console.log(kvkNumber, address, accountManager)
+        document.getElementById("modalKvk").innerHTML=kvkNumber;
+        document.getElementById("modalAddress").innerHTML=address;
+        document.getElementById("modalAccountManager").innerHTML=accountManager;
     }
 </script>
+
 </body>
 </html>
