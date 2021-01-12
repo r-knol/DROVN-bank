@@ -13,10 +13,7 @@ import nl.hva.miw.internetbanking.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @Slf4j
@@ -70,6 +67,17 @@ public class DoTransactionController {
         System.out.println("!!!!!!! transactionConfirmationHandler: " + tDto);
 
         return "pages/account-overview";
+    }
+
+    @CrossOrigin
+    @PostMapping("/iban")
+    public @ResponseBody String checkExistingIban(@RequestParam String iban){
+        System.out.println("Request data in: " + iban);
+        String ibanFound = accountService.getAccountByIban(iban).get().getIban();
+        if (iban.equals(ibanFound)) {
+            return ibanFound;
+        }
+        return null;
     }
 
 
