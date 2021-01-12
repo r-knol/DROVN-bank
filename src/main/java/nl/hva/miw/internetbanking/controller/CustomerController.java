@@ -22,17 +22,31 @@ public class CustomerController {
     public ResponseEntity<Customer> findCustomerById(@PathVariable String id) {
         try {
             return ResponseEntity.of(customerService.getCustomerById(Long.parseLong(id)));
-            // Returns HTTP status code 404 if optional is empty
         } catch (NumberFormatException e) {
             return ResponseEntity.notFound().build();
         }
-
     }
 
     @GetMapping("/api/customer/find/username/{username}")
     public ResponseEntity<Customer> findCustomerByUsername(@PathVariable String username) {
         return ResponseEntity.of(customerService.getCustomerByUsername(username));
-        // Returns HTTP status code 404 if optional is empty
+    }
+
+    @GetMapping("/api/customer/find/socialsecuritynumber/{socialSecurityNumber}")
+    public ResponseEntity<Customer> findCustomerBySocialSecurityNumber(
+            @PathVariable String socialSecurityNumber) {
+        return ResponseEntity
+                .of(customerService.getCustomerBySocialSecurityNumber(socialSecurityNumber));
+    }
+
+    @GetMapping("/api/customer/find/kvknumber/{kvknumber}")
+    public ResponseEntity<Customer> findCustomerKvkNumber(@PathVariable String kvknumber) {
+        try {
+            return ResponseEntity
+                    .of(customerService.getCustomerByKvkNumber(Long.parseLong(kvknumber)));
+        } catch (NumberFormatException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

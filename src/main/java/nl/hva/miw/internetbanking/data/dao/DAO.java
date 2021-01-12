@@ -1,10 +1,13 @@
 package nl.hva.miw.internetbanking.data.dao;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
 public interface DAO<T, ID> {
 
+    @Transactional
     void create(T entity);
 
     Optional<T> read(ID id);

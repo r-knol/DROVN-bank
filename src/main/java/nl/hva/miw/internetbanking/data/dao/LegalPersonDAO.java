@@ -1,14 +1,15 @@
 package nl.hva.miw.internetbanking.data.dao;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
 import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
 import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
-import nl.hva.miw.internetbanking.data.mapper.*;
-import nl.hva.miw.internetbanking.model.Account;
+import nl.hva.miw.internetbanking.data.mapper.BalancePerSectorRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.CompanyTransactionRowmapper;
+import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -25,6 +26,7 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
     }
 
     @Override
+    @Transactional
     public void create(LegalPerson legalPerson) {
         String sql = "INSERT INTO LegalPerson(companyID, companyName, kvkNumber, sector, " +
                 "vatNumber, postalCode, homeNumber, street, residence, accountmanagerID) VALUES" +
@@ -50,22 +52,32 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
         try {
             String sql = "SELECT * FROM LegalPerson WHERE companyID = ?";
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new LegalPersonRowMapper(),
-                    id));
+                                                                   id));
         } catch (Exception e) {
             log.error("LegalPerson not found in database.");
         }
         return null;
     }
 
+    public Optional<LegalPerson> read(long kvkNumber) {
+        String sql = "SELECT * FROM LegalPerson WHERE kvkNumber = ?";
+        return Optional
+                .ofNullable(
+                        jdbcTemplate.queryForObject(sql, new LegalPersonRowMapper(), kvkNumber));
+    }
+
     @Override
     public void update(LegalPerson legalPerson) {
         String sql = "UPDATE LegalPerson SET companyID = ?, companyName = ?, kvkNumber = ?, " +
-                "sector = ?, vatNumber = ?, postalCode = ?, homeNumber = ?, street = ?, residence" +
-                " = ?, accountmanagerID = ?";
+                     "sector = ?, vatNumber = ?, postalCode = ?, homeNumber = ?, street = ?, " +
+                     "residence" +
+                     " = ?, accountmanagerID = ?";
         jdbcTemplate.update(sql, legalPerson.getCustomerID(), legalPerson.getCompanyName(),
-                legalPerson.getKvkNumber(), legalPerson.getSector(), legalPerson.getVatNumber(),
-                legalPerson.getPostalCode(), legalPerson.getHomeNumber(), legalPerson.getStreet(),
-                legalPerson.getResidence(), legalPerson.getAccountmanagerID());
+                            legalPerson.getKvkNumber(), legalPerson.getSector(),
+                            legalPerson.getVatNumber(),
+                            legalPerson.getPostalCode(), legalPerson.getHomeNumber(),
+                            legalPerson.getStreet(),
+                            legalPerson.getResidence(), legalPerson.getAccountmanagerID());
     }
 
     @Override

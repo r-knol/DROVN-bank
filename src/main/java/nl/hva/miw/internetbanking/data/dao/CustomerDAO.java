@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -24,6 +25,7 @@ public class CustomerDAO implements DAO<Customer, Long> {
     }
 
     @Override
+    @Transactional
     public void create(Customer customer) {
         final String sql = "INSERT INTO Customer(userName, password, customerType) VALUES(?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
