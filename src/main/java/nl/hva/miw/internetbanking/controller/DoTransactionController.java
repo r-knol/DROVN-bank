@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @Slf4j
 @SessionAttributes({"customer", "nameCurrentCus"})
@@ -78,6 +80,15 @@ public class DoTransactionController {
             return ibanFound;
         }
         return null;
+    }
+
+    @CrossOrigin
+    @PostMapping("/getnames")
+    public @ResponseBody List<String> loadCustomerNames(@RequestParam String iban, @ModelAttribute("customer") Customer c){
+        CustomerHasAccountsDTO cusAcc = new CustomerHasAccountsDTO(c);
+        cusAcc.setAccountList(accountService.getAccountsForCustomer(c));
+        customerService.setCustomerWithAccounts(cusAcc);
+        return customerService.accountHolderNamesList(cusAcc, iban);
     }
 
 
