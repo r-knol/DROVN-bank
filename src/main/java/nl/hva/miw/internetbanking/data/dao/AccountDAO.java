@@ -1,8 +1,12 @@
 package nl.hva.miw.internetbanking.data.dao;
 
 import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.EmployeeRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.IbanRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -73,6 +77,7 @@ public class AccountDAO implements DAO<Account, Long> {
         }
     }
 
+
     @Override
     public void update(Account account) {
         String sql = "UPDATE Account SET iban = ?, balance = ?" +
@@ -98,6 +103,13 @@ public class AccountDAO implements DAO<Account, Long> {
     public Optional<List<Account>> list() {
         return Optional.empty();
     }
+
+    public boolean existsByIban(String iban) {
+        final String sql = "SELECT iban FROM account WHERE iban = ?";
+        return jdbcTemplate.queryForObject(sql, new IbanRowMapper(), iban) != null;
+    }
+
+
 
     public List<Account> getAccountsForCustomer(Customer customer) {
         List<Account> accounts = getAccountsByCustomerId(customer.getCustomerID());
