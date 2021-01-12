@@ -13,7 +13,7 @@
             <div class="container-my-3">
                 <div class="row">
                     <div class="col-md-8 mx-auto">
-                        <h2>Welkom beste klant, u kunt hieronder inloggen</h2>
+                        <h2>Inloggen klant</h2>
                         <form action="#" th:action="@{/login}" method="post">
 
                             <div class="col-md-6 form-group">
@@ -25,6 +25,11 @@
                                 <i class="fa fa-key icon"></i>
                                 <label>Wachtwoord</label>
                                 <input type="password" class="form-control" name="password" required>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="remember" value="1"> Onthoud me
+                                </label>
                             </div>
                             <div class="col-md-4">
                                 <input type="submit" class="btn btn-primary" value="Inloggen">
