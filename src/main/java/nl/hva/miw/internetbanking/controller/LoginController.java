@@ -1,6 +1,6 @@
 package nl.hva.miw.internetbanking.controller;
 
-import nl.hva.miw.internetbanking.data.dto.*;
+import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Employee;
@@ -44,7 +44,7 @@ public class LoginController {
             String password, Model model) {
 
         Optional<Customer> customer = customerService.getCustomerByUsername(userName);
-        System.out.println(customer);
+
         if (customer.isPresent()) {
             Customer customerFound = customer.get();
             if (loginService.validCustomer(customerFound, password)) {

@@ -89,7 +89,7 @@ public class CustomerService {
 
     public Optional<Customer> getCustomerByKvkNumber(long kvkNumber) {
         try {
-            Optional<LegalPerson> legalPersonOptional = legalPersonDAO.read(kvkNumber);
+            Optional<LegalPerson> legalPersonOptional = legalPersonDAO.readByKvkNumber(kvkNumber);
             if (legalPersonOptional.isPresent()) {
                 Customer customer = legalPersonOptional.get();
                 return Optional.of(customer);
@@ -132,8 +132,7 @@ public class CustomerService {
 
     private Optional<Customer> getBusinessCustomerDetails(Customer customer)
             throws DataAccessException {
-        Optional<LegalPerson> legalPersonOptional =
-                legalPersonDAO.read(customer.getCustomerID());
+        Optional<LegalPerson> legalPersonOptional = legalPersonDAO.read(customer.getCustomerID());
         if (legalPersonOptional.isPresent()) {
             LegalPerson legalPerson = legalPersonOptional.get();
             legalPerson.setUserName(customer.getUserName());

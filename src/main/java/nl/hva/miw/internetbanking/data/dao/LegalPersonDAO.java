@@ -4,7 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
 import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
 import nl.hva.miw.internetbanking.data.dto.LegalPersonHasAccountDTO;
-import nl.hva.miw.internetbanking.data.mapper.*;
+import nl.hva.miw.internetbanking.data.mapper.BalancePerSectorRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.CompanyTransactionRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.LegalPersonHasAccountRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -58,7 +61,7 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
         return null;
     }
 
-    public Optional<LegalPerson> read(long kvkNumber) {
+    public Optional<LegalPerson> readByKvkNumber(long kvkNumber) {
         String sql = "SELECT * FROM LegalPerson WHERE kvkNumber = ?";
         return Optional
                 .ofNullable(
