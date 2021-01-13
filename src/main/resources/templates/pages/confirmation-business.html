@@ -25,93 +25,18 @@
                         </div>
                     </div>
                     <div class="col-md-6 table-responsive-md">
-                        <table class="table table-striped mb-5" th:object="${businessRegistrationDto}">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th colspan="2" scope="col">Bedrijfsgegevens</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row" width="50%">Bedrijfsnaam</th>
-                                <td th:text="*{companyName}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Sector</th>
-                                <td th:text="*{sector.getLabelSector()}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">KvK-nummer</th>
-                                <td th:text="*{kvkNumber}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Btw-nummer</th>
-                                <td th:text="*{vatNumber}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table class="table table-striped mb-5" th:object="${businessRegistrationDto}">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th colspan="2" scope="col">Accountgegevens</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row" width="50%">Gebruikersnaam</th>
-                                <td th:text="*{userName}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <table th:replace="fragments/table :: table-confirmation-business-details"></table>
+                        <table th:replace="fragments/table :: table-confirmation-business-account"></table>
                     </div>
                     <div class="col-md-6 table-responsive-md">
-                        <table class="table table-striped mb-5" th:object="${businessRegistrationDto}">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th colspan="2" scope="col">Adresgegevens</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row" width="50%">Postcode</th>
-                                <td th:text="*{postalCode}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Huisnummer + toevoeging</th>
-                                <td th:text="*{homeNumber}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Straat</th>
-                                <td th:text="*{street}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Plaats</th>
-                                <td th:text="*{residence}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <form action="#" class="row" method="post" th:action="@{/bevestiging-zakelijk}"
-                              th:object="${businessRegistrationDto}">
-                            <input th:field="*{companyName}" type="hidden">
-                            <input th:field="*{kvkNumber}" type="hidden">
-                            <input th:field="*{sector}" type="hidden">
-                            <input th:field="*{vatNumber}" type="hidden">
-                            <input th:field="*{postalCode}" type="hidden">
-                            <input th:field="*{homeNumber}" type="hidden">
-                            <input th:field="*{street}" type="hidden">
-                            <input th:field="*{residence}" type="hidden">
-                            <input th:field="*{userName}" type="hidden">
-                            <input th:field="*{password}" type="hidden">
-                            <input th:field="*{passwordConfirmation}" type="hidden">
-                            <input class="btn btn-primary btn-lg btn-block mt-0 ml-3 mb-4 mr-2 pt-3 pb-3 " type="submit"
-                                   value="Registratie voltooien"/>
-                        </form>
+                        <table th:replace="fragments/table :: table-confirmation-business-address"></table>
+                        <form th:replace="fragments/form :: form-confirmation-business-hidden"></form>
                     </div>
                 </div>
                 <div class="pt-5 pb-5" id="accordion">
                     <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
                          id="collapseOne">
-                        <form th:replace="fragments/forms :: form-registration-business"></form>
+                        <form th:replace="fragments/form :: form-registration-business"></form>
                     </div>
                 </div>
             </div>
