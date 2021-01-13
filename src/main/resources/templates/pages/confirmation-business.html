@@ -7,35 +7,7 @@
         <header th:replace="fragments/header :: header-home"></header>
     </div>
     <div class="row mb-5" id="main-content">
-        <main class="min-vw-100" role="main">
-            <div class="jumbotron mb-5"
-                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) ), url('/images/klant-worden.jpg'); background-position: left 70%; background-repeat: no-repeat; background-size: cover;">
-                <div class="container text-white">
-                    <h1>Controleer je gegevens</h1>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 mb-4">
-                        <div th:replace="fragments/alert :: alert-registration-confirmation"></div>
-                    </div>
-                    <div class="col-md-6 table-responsive-md">
-                        <table th:replace="fragments/table :: table-confirmation-business-details"></table>
-                        <table th:replace="fragments/table :: table-confirmation-business-account"></table>
-                    </div>
-                    <div class="col-md-6 table-responsive-md">
-                        <table th:replace="fragments/table :: table-confirmation-business-address"></table>
-                        <form th:replace="fragments/form :: form-confirmation-business-hidden"></form>
-                    </div>
-                </div>
-                <div class="pt-5 pb-5" id="accordion">
-                    <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
-                         id="collapseOne">
-                        <form th:replace="fragments/form :: form-registration-business"></form>
-                    </div>
-                </div>
-            </div>
-        </main>
+        <main th:replace="fragments/main :: main-confirmation-business"></main>
     </div>
     <div class="row footer-default" id="footer">
         <footer th:replace="fragments/footer :: footer-default"></footer>

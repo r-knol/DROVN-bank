@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
+
 <head th:fragment="head-default (pageTitle, metaRobots, metaDescription, metaKeywords)">
     <meta charset="UTF-8"/>
     <title th:text="${pageTitle}">Head</title>
@@ -12,12 +13,14 @@
     <script src="/js/jquery/jquery.min.js"></script>
     <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
 </head>
+
 <head th:fragment="head-employeeDashboard">
     <link rel="stylesheet" href="/css/styles.css">
     <script src="https://kit.fontawesome.com/acc6e38b93.js" crossorigin="anonymous"></script>
     <script src="/js/jquery/jquery.min.js"></script>
     <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
 </head>
+
 <head th:fragment="head-login">
     <link rel="stylesheet" href="/css/styles.css">
     <script src="https://kit.fontawesome.com/acc6e38b93.js" crossorigin="anonymous"></script>
@@ -26,6 +29,7 @@
     <script defer src="/js/form-validation.js"></script>
     <script defer src="/js/login.js"></script>
 </head>
+
 <head th:fragment="head-registration (pageTitle, metaRobots, metaDescription, metaKeywords)">
     <meta charset="UTF-8"/>
     <title th:text="${pageTitle}">Head</title>
@@ -40,4 +44,5 @@
     <script defer src="/js/form-validation.js"></script>
     <script defer src="/js/registration.js"></script>
 </head>
+
 </html>

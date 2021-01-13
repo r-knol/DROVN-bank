@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+
+<main class="min-vw-100" role="main" th:fragment="main-home">
+    <div th:replace="fragments/jumbotron :: jumbotron-home"></div>
+    <div th:replace="fragments/main-content :: content-home"></div>
+</main>
+
+<main class="min-vw-100" role="main" th:fragment="main-registration">
+    <div th:replace="fragments/jumbotron :: jumbotron-registration"></div>
+    <div th:replace="fragments/main-content :: content-registration"></div>
+</main>
+
+<main class="min-vw-100" role="main" th:fragment="main-confirmation-business">
+    <div th:replace="fragments/jumbotron :: jumbotron-registration-confirmation"></div>
+    <div th:replace="fragments/main-content :: content-confirmation-business"></div>
+</main>
+
+<main class="min-vw-100" role="main" th:fragment="main-confirmation-private">
+    <div th:replace="fragments/jumbotron :: jumbotron-registration-confirmation"></div>
+    <div th:replace="fragments/main-content :: content-confirmation-private"></div>
+</main>
+
+</html>

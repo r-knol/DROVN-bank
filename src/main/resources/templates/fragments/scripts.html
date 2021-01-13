@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
+
 <div th:fragment="scripts-before-closing-tag">
     <script type="text/javascript">
         const $dropdown = $(".dropdown");
@@ -54,6 +55,12 @@
             if (footerTop < docHeight)
                 $('#footer').css('margin-top', 10 + (docHeight - footerTop) + 'px');
         });
+    </script>
+</div>
+
+<div th:fragment="script-modal-new-account">
+    <script th:if="${accountCreated == 'true'}">
+        $('#modalNewAccount').modal();
     </script>
 </div>
 </html>
