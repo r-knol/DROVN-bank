@@ -17,18 +17,13 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12 mb-4">
-                        <div class="alert alert-success d-flex flex-row align-items-center" role="alert">
-                            <i class="fas fa-info-circle" style="font-size: 2.5rem; padding-right: 20px;"></i>
-                            <span>We hebben de volgende gegevens van je ontvangen. Controleer je gegevens en gebruik de knop
-                            'registratie voltooien' om deze te bevestigen, of gebruik het formulier hieronder om eventuele fouten
-                                te herstellen. Het wachtwoord wordt om veiligheidsredenen niet getoond.</span>
-                        </div>
+                        <div th:replace="fragments/alert :: alert-registration-confirmation"></div>
                     </div>
                     <div class="col-md-6 table-responsive-md">
                         <table th:replace="fragments/table :: table-confirmation-private-details"></table>
                     </div>
                     <div class="col-md-6 table-responsive-md">
-                        <table th:replace="fragments/table :: table-confirmation-private-personal-details"></table>
+                        <table th:replace="fragments/table :: table-confirmation-private-address"></table>
                         <table th:replace="fragments/table :: table-confirmation-private-account"></table>
                         <form th:replace="fragments/form :: form-confirmation-private-hidden"></form>
                     </div>
