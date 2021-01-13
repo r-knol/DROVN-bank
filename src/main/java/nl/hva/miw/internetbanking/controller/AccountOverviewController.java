@@ -1,6 +1,6 @@
 package nl.hva.miw.internetbanking.controller;
 
-import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
+import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionsDTO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Transaction;
@@ -69,16 +69,16 @@ public class AccountOverviewController {
         if (acc.isPresent()) {
             Account accountFound = acc.get();
             model.addAttribute("account", accountFound);
-            AccountHasTransactionDTO accountHasTransactionDTO = new AccountHasTransactionDTO(accountFound);
-            accountHasTransactionDTO.setTransactionList(accountFound.getTransactions());
-            for (Transaction transactions : accountHasTransactionDTO.getTransactionList()) {
+            AccountHasTransactionsDTO accountHasTransactionsDTO = new AccountHasTransactionsDTO(accountFound);
+            accountHasTransactionsDTO.setTransactionList(accountFound.getTransactions());
+            for (Transaction transactions : accountHasTransactionsDTO.getTransactionList()) {
                 if (accountFound.getIban().equals(transactions.getCreditAccount())
                         || accountFound.getIban().equals(transactions.getDebitAccount())) {
                     transactions.addTransactionToAccount(accountFound);
                 }
             }
-            System.out.println(accountHasTransactionDTO);
-            model.addAttribute("accountWithTransactions", accountHasTransactionDTO);
+            System.out.println(accountHasTransactionsDTO);
+            model.addAttribute("accountWithTransactions", accountHasTransactionsDTO);
             return "pages/account_details";
         }
         Optional<Customer> customer = customerService.getCustomerByAccountId2(accountID);

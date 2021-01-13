@@ -23,7 +23,18 @@
 
                 </div>
             </div >
-
+            <form action="#" method="get" th:action="@{/do-transaction/}" th:object="${customerWithAccountOverview}">
+                <!--        <div align="center">-->
+                <!--            <p class="mt-5"><a class="btn btn-primary btn-lg btn-block" style="font-size: initial; width: 90%" href="#"-->
+                <!--                               role="button">Geld overboeken »</a></p>-->
+                <!--        </div>-->
+                <div class="jumbotron-fluid">
+                    <a class="mt-lg-5"><button class="btn btn-primary btn-lg btn-block" style="font-size: 150%; width: 90%" href="#"
+                                               role="button"> Geld overboeken >></button></a>
+                </div>
+            </form>
+            <p><br></p>
+<!--            <p><br></p>-->
             <div class="jumbotron" style="background: linear-gradient(65deg, rgba(243, 146, 0, 0.2), rgba(243, 146, 0, 0.2) );background-size: cover; width: 90%; max-height: 60%">
                 <p style="font-size: 250%; color: #F39200" align="center" th:if="${customerWithAccountOverview.getAccountList().isEmpty()}">Er zijn geen rekeningen om weer te geven</p>
                 <div align="center" style="width: border-box">
@@ -61,18 +72,12 @@
         </div>
       </div>
 
-    <form action="#" method="get" th:action="@{/do-transaction/}" th:object="${customerWithAccountOverview}">
-<!--        <div align="center">-->
-<!--            <p class="mt-5"><a class="btn btn-primary btn-lg btn-block" style="font-size: initial; width: 90%" href="#"-->
-<!--                               role="button">Geld overboeken »</a></p>-->
-<!--        </div>-->
-        <div class="jumbotron-fluid">
-            <a class="mt-lg-5"><button class="btn btn-primary btn-lg btn-block" style="font-size: 150%; width: 90%" href="#"
-                                       role="button"> Geld overboeken >></button></a>
-        </div>
-    </form>
+
         </main>
     </div>
+</div>
+<div id="footer" class="row footer-default">
+    <footer th:replace="fragments/footer :: footer-default"></footer>
 </div>
 </body>
 </html>

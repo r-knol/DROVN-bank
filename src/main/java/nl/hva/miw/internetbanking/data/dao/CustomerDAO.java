@@ -43,8 +43,7 @@ public class CustomerDAO implements DAO<Customer, Long> {
     @Override
     public Optional<Customer> read(Long customerID) {
         final String sql = "SELECT * FROM Customer WHERE customerID = ?";
-        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(),
-                                                               customerID));
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), customerID));
     }
 
     @Override
@@ -89,6 +88,17 @@ public class CustomerDAO implements DAO<Customer, Long> {
                            "account.accountID=customer_has_account.accountID WHERE account" +
                            ".accountID = ?";
         return jdbcTemplate.query(sql, new CustomerRowMapper(), accountId);
+    }
+
+    public Customer getCustomerByAccountForTransaction (long accountID) {
+        final String sql = "SELECT customer.customerid, customer.username, customer.password, " +
+                "customer.customerType, account.accountid, account.iban, account" +
+                ".balance\n" +
+                "FROM customer_has_account JOIN customer ON customer_has_account" +
+                ".customerID=customer.customerID JOIN account ON\n" +
+                "account.accountID=customer_has_account.accountID WHERE account" +
+                ".accountID = ?";
+        return jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), accountID);
     }
 
     public List<Customer> getCustomerListByIban (String iban) {

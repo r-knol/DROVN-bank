@@ -5,17 +5,17 @@ import nl.hva.miw.internetbanking.model.Transaction;
 
 import java.util.List;
 
-public class AccountHasTransactionDTO {
+public class AccountHasTransactionsDTO {
 
     private Account account;
     private List<Transaction> transactionList;
 
-    public AccountHasTransactionDTO(Account account) {
+    public AccountHasTransactionsDTO(Account account) {
         super();
         this.account = account;
     }
 
-    public AccountHasTransactionDTO() {}
+    public AccountHasTransactionsDTO() {}
 
     public Account getAccount() {
         return account;

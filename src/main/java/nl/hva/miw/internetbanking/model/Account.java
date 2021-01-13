@@ -14,7 +14,6 @@ public class Account implements Serializable {
     private String iban;
     private double balance;
     private List<Transaction> transactions;
-    private Transaction transaction;
     private List<Customer> accountHolders;
     private List<String> accountHolderNames;
 

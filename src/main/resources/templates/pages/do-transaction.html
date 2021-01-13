@@ -3,7 +3,6 @@
 <link rel="stylesheet" src="bootstrap.css">
 <link rel="stylesheet" src="custom.css">
 <head th:replace="fragments/head :: head-default (pageTitle='Geld overmaken', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')">
-    <title>Geld overmaken</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
         .error {
@@ -20,7 +19,7 @@
     <div class="row">
         <div class="col-md-8 mx-auto">
         <h1>Geld overmaken naar een andere rekening</h1>
-        <form action="#" method="post" th:action="@{/do-transaction/}" th:object="${transactionDTO}">
+        <form action="#" method="post" th:action="@{/do-transaction/}" th:object="${transactionDTO}" class="needs-validation">
         <div class="col-md-6 form-group">
             <i class="fa fa-address-card icon"></i>
             <label for="selecteerRekening">Rekening</label>
@@ -35,10 +34,9 @@
 
         <div class="col-md-6 form-group">
             <i class="fa fa-user-o icon"></i>
-        <label>Op naam van:</label>
+        <div id="rekeningHouders">Op naam van:</div>
             <input type="hidden" class="form-control" name="nameDebitCustomer" th:value="${nameCurrentCus}">
         <br>
-            <label id="namenRekeninghouders"> </label>
         </div>
 
         <div class="col-md-6 form-group">
@@ -80,6 +78,9 @@
 </div>
 
 <script>
+    // form submit-event listener
+
+
     // eerste script
     document.querySelector('#iban').addEventListener('focusout', checkForIbanPart);
     const selectElement = document.querySelector('#selecteerRekening');
@@ -105,7 +106,7 @@
                     processIban(iban)
                 } else {
                     console.log('De iban is helaas NIET gevonden in de database.')
-                    processError()
+                    showError()
                 }
             })
             // .then(data => processIban(data))
@@ -121,21 +122,22 @@
         document.getElementById('iban').classList.remove('error');
     }
 
-    function processError(){
+    function showError(){
         document.getElementById('error').style.display = 'block';
         document.getElementById('iban').classList.add('error');
     }
 
     // tweede script
     selectElement.addEventListener('change', (event) => {
-        const result = document.querySelector('#namenRekeninghouders');
-        result.innerHTML = `De rekeninghouders ${event.target.value}`;
-        let iban = event.target.value;
+        const iban = event.target.value;
         loadCustomerNames(iban);
     });
 
     function loadCustomerNames(iban){
         let bodyContent = `iban=${iban}`
+        const element = document.querySelector('#rekeningHouders');
+        let result = '';
+
         fetch('http://localhost:8080/getnames', {
             method: 'POST',
             headers: {
@@ -144,11 +146,18 @@
         })
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response.text());
+                    return response.json();
                 } else {
                     console.log('De rekeninghoudernamen zijn helaas NIET gevonden in de database.')
                 }
             })
+        .then(json => {
+            json.forEach(object => {
+                result += object;
+            })
+        })
+        element.innerHTML = result;
+
     }
 
 </script>

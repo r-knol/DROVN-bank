@@ -4,11 +4,14 @@ import nl.hva.miw.internetbanking.data.mapper.EmployeeRowMapper;
 import nl.hva.miw.internetbanking.model.Employee;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -25,8 +28,9 @@ public class EmployeeDAO implements DAO<Employee, Long> {
     public void create(Employee employee) {
         String sql = "INSERT INTO Employee(employeeID, userName, password, firstName, preposition, surName, role) " +
                 "VALUES(?,?,?,?,?,?,?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql);
+            PreparedStatement ps = connection.prepareStatement(sql, new String[]{"employeeId"});
             ps.setLong(1, employee.getEmployeeID());
             ps.setString(1, employee.getUserName());
             ps.setString(2, employee.getPassword());
@@ -35,7 +39,9 @@ public class EmployeeDAO implements DAO<Employee, Long> {
             ps.setString(5, employee.getSurName());
             ps.setString(2, employee.getEmployeeRole().getLabel());
             return ps;
-        });
+        }, keyHolder);
+        int id = Objects.requireNonNull(keyHolder.getKey()).intValue();
+        employee.setEmployeeID(id);
     }
 
     @Override

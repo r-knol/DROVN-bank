@@ -14,12 +14,17 @@
                 <div class="row">
                     <div class="col-md-8 mx-auto">
                         <h2>Inloggen klant</h2>
-                        <form action="#" th:action="@{/customer-with-accounts}" method="post">
-
-                            <div class="col-md-6 form-group">
+                        <form action="#" th:action="@{/customer-with-accounts}" method="post" novalidate class="needs-validation">
+                            <div id="error" class="alert alert-danger d-flex flex-row align-items-center" role="alert" style="display:none!important;">
+                                <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem; padding-right: 20px;"></i>
+                                <span>Je inloggegevens kloppen niet, controleer de combinatie van je gebruikersnaam en wachtwoord.</span>
+                            </div>
+                                <div class="col-md-6 form-group">
                                 <i class="fa fa-user icon"></i>
                                 <label>Gebruikersnaam</label>
-                                <input type="text" class="form-control" name="userName" required>
+                                <input type="text" class="form-control" name="userName" required
+                                       maxlength="16" minlength="1"
+                                       pattern="^[A-Za-z0-9_]+$">
                             </div>
                             <div class="col-md-6 form-group">
                                 <i class="fa fa-key icon"></i>
@@ -48,5 +53,6 @@
 <div class="row footer-default" id="footer">
     <footer th:replace="fragments/footer :: footer-default"></footer>
 </div>
+
 </body>
 </html>
