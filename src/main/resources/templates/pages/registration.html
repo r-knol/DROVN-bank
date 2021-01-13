@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="fragments/head :: head-with-scriptloader (pageTitle='Registratie', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
+<head th:replace="fragments/head :: head-registration (pageTitle='Registratie', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <body>
 <div class="container-fluid min-vh-100" id="page">
     <div class="row header-default" id="header">
@@ -52,7 +52,7 @@
         <footer th:replace="fragments/footer :: footer-default"></footer>
     </div>
 </div> <!-- /container - #page -->
-<div th:replace="fragments/scripts :: scripts-before-closing-tag"></div>
+<!-- TODO: implement
 <div class="modal" id="modalVerificationError" role="dialog" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -67,5 +67,7 @@
         </div>
     </div>
 </div>
+-->
+<div th:replace="fragments/scripts :: scripts-before-closing-tag"></div>
 </body>
 </html>
