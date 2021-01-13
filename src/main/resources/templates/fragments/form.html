@@ -9,12 +9,9 @@
     </div>
     <div class="col-lg-2 col-md-3 col-sm-6 form-group">
         <label for="initials">Voorletters</label>
-        <input class="form-control" id="initials"
-               maxlength="15"
-               name="initials"
+        <input class="form-control" id="initials" maxlength="15" name="initials"
                pattern="^([\s.]|[a-zA-Z0-9]|[À-Ö]|[Ø-ö]|[ø-ǿ]|[Ȁ-ʯ]|[̀-ͯ]|[Ḁ-ỿ]|[Ⅰ-ↈ])+$"
-               patternMismatch="Gebruik alleen hoofdletters, punten of spaties."
-               required
+               patternMismatch="Gebruik alleen hoofdletters, punten of spaties." required
                th:field="*{initials}" type="text"/>
         <div class="invalid-feedback"></div>
     </div>
@@ -96,7 +93,8 @@
     <div class="col-md-4 form-group">
         <label for="street">Straat</label>
         <input class="form-control" id="street" maxlength="45" name="street"
-               pattern="^.*[\w\d\s]$" patternMismatch="Ongeldige straatnaam." required
+               pattern="^([-.\s]|[a-zA-Z0-9]|[À-Ö]|[Ø-ö]|[ø-ǿ]|[Ȁ-ʯ]|[̀-ͯ]|[Ḁ-ỿ]|[Ⅰ-ↈ])+$"
+               patternMismatch="Ongeldige straatnaam." required
                th:field="*{street}" type="text"/>
         <div class="invalid-feedback"></div>
     </div>
@@ -163,8 +161,7 @@
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 form-group">
         <label for="sector">Sector</label>
-        <select class="form-control" id="sector" name="sector" th:field="*{sector}"
-                th:required="true">
+        <select class="form-control" id="sector" name="sector" th:field="*{sector}" th:required="true">
             <option value="">Selecteer een sector</option>
             <option th:each="sector : ${T(nl.hva.miw.internetbanking.model.Sector).values()}"
                     th:text="${sector.getLabelSector()}" th:value="${sector}">
@@ -173,20 +170,14 @@
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 form-group">
         <label for="kvkNumber">KvK-nummer</label>
-        <input class="form-control" id="kvkNumber" maxlength="8" minlength="8"
-               name="kvkNumber"
-               pattern="^[0-9]{8}$"
-               patternMismatch="Een geldig KvK-nummer bestaat uit 8 cijfers."
-               required
-               th:field="*{kvkNumber}"
-               tooShort="Een geldig KvK-nummer bestaat uit 8 cijfers."
-               type="text"/>
+        <input class="form-control" id="kvkNumber" maxlength="8" minlength="8" name="kvkNumber" pattern="^[0-9]{8}$"
+               patternMismatch="Een geldig KvK-nummer bestaat uit 8 cijfers." required th:field="*{kvkNumber}"
+               tooShort="Een geldig KvK-nummer bestaat uit 8 cijfers." type="text"/>
         <div class="invalid-feedback"></div>
     </div>
     <div class="col-lg-4 col-md-6 col-sm-6 form-group">
         <label for="vatNumber">Btw-nummer</label>
-        <input class="form-control" id="vatNumber"
-               name="vatNumber" pattern="^(NL)?[0-9]{9}B[0-9]{2}$"
+        <input class="form-control" id="vatNumber" name="vatNumber" pattern="^(NL)?[0-9]{9}B[0-9]{2}$"
                patternMismatch="Btw-nummer invoeren met format: NL123456789B01"
                required
                th:field="*{vatNumber}" type="text"/>
