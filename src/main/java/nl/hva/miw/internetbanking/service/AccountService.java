@@ -35,9 +35,16 @@ public class AccountService {
         return accountDao.getAccountsForCustomer(customer);
     }
 
+//    public List<Account> getAccountsForCustomers(List<Customer> customers) {
+//        return accountDao.getAccountsForCustomers(customers);
+//    }
+
     public List<Account> getAccountsByIban (String iban) {
-        System.out.println(iban);
         return accountDao.getAccountsByIban(iban);
+    }
+
+    public Account getAccountByIban (String iban) {
+        return accountDao.getAccountByIban(iban);
     }
 
 //    public List<Customer> getCustomersForAccount (Account account) {

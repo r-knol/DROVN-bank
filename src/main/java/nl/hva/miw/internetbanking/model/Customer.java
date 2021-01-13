@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import nl.hva.miw.internetbanking.service.CustomerService;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class Customer implements Serializable {
     private String password;
     private List<Account> accounts;
     private CustomerType customerType;
+    private String customerName;
+
 
     public Customer(String userName, String password, CustomerType customerType) {
         this.userName = userName;
@@ -49,5 +52,10 @@ public class Customer implements Serializable {
     public void addAccount(Account acc) {
         accounts.add(acc);
     }
+
+    public void addCustomerName (String name) {
+
+    }
+
 
 }

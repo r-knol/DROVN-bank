@@ -2,6 +2,7 @@ package nl.hva.miw.internetbanking.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import nl.hva.miw.internetbanking.data.dto.AccountHasCustomersDTO;
 import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
 import nl.hva.miw.internetbanking.data.dto.CustomerHasTransactionsDTO;
 import nl.hva.miw.internetbanking.data.dto.TransactionHasAccountDTO;
@@ -49,6 +50,9 @@ public class AccountDetailsController {
     public String AccountDetailsHandler (@PathVariable ("id") long accountID,
                                          @ModelAttribute ("customer") Customer customer, Model model) {
         Optional<Account> account = accountService.getAccountById(accountID);
+//        AccountHasCustomersDTO accountHasCustomersDTO;
+        CustomerHasTransactionsDTO customerHasTransactionsDTO = new CustomerHasTransactionsDTO();
+//        List <String> contraAccountHolderNames = new ArrayList<>();
         if (account.isPresent()) {
             Account accountFound = account.get();
             model.addAttribute("customer", customer);
@@ -56,28 +60,36 @@ public class AccountDetailsController {
             model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customer.getCustomerID()));
             accountFound.setTransactions(transactionService.getTransactionsForAccount(accountFound));
             for (Transaction transaction : accountFound.getTransactions()) {
-                System.out.println(accountFound.getTransactions());
+                customerHasTransactionsDTO.setTransaction(transaction);
                 transaction.addTransactionToAccount(accountFound);
-                CustomerHasTransactionsDTO customerHasTransactionsDTO = new CustomerHasTransactionsDTO(transaction);
-                // Voor alle transacties de bijbehorende contraAccounts ophalen
-                customerHasTransactionsDTO.setAccountList(accountService.getAccountsByIban(transaction.addTransactionToAccount();
-//                System.out.println(accountService.getAccountsByIban(transaction.showContraAccount()));
-                for (Account acc : customerHasTransactionsDTO.getAccountList()) {
-                    customerHasTransactionsDTO.setCustomerList(customerService.getCustomerByAccountId(acc.getAccountID()));
-//                    System.out.println(customerService.getCustomerByAccountId(acc.getAccountID()));
-                    for (Customer c : customerHasTransactionsDTO.getCustomerList()) {
-                        acc.addAccountHolderName(customerService.printNameCustomer(c.getCustomerID()));
-                        customerHasTransactionsDTO.setAccountHolderNames(acc.getAccountHolderNames());
-                        System.out.println(customerHasTransactionsDTO.getAccountHolderNames());
-//                        model.addAttribute("contraAccountName", acc.getAccountHolderNames());
-                    }
+                Account contraAccount = accountService.getAccountByIban(customerHasTransactionsDTO.getTransaction().showContraAccount());
+                contraAccount.setAccountHolders(customerService.getCustomerByAccountId(contraAccount.getAccountID()));
+                List <Customer> contraCustomers = customerService.getCustomerListByIban(contraAccount.getIban()); // krijgt hier 2 customers terug ipv 1 voor AccountID 1
+                customerHasTransactionsDTO.setAccountList(contraAccount);
+                customerHasTransactionsDTO.setCustomerList(contraCustomers);
+                for( Customer c : contraCustomers) {
+                    contraAccount.addAccountHolderName(customerService.printNameCustomer(c.getCustomerID()));
                 }
-                model.addAttribute("contraAccountList", customerHasTransactionsDTO.getAccountHolderNames());
+
+                System.out.println(customerHasTransactionsDTO);
+
+
+
+//                customerHasTransactionsDTO.setAccountList(accountService.getAccountsForCustomer((customerService.getCustomerByAccountId(contraAccount.getAccountID())));
+//                for (Account acc : customerHasTransactionsDTO.getAccountList()) {
+//                    acc.setAccountHolders(customerService.getCustomerByAccountId(acc.getAccountID()));
+//
+//                    for (Customer c : acc.getAccountHolders()) {
+//                        acc.addAccountHolderName(customerService.printNameCustomer(c.getCustomerID()));
+//                    }
+//                    System.out.println(customerHasTransactionsDTO);
+//                }
+
             }
+            model.addAttribute("contraAccountLis", customerHasTransactionsDTO.getAccountHolderNames());
             model.addAttribute("accountWithTransactionOverview", accountFound);
             return "pages/account_details";
         }
         return "pages/errorpage";
     }
-
 }

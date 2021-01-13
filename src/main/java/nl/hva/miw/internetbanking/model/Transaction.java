@@ -11,7 +11,7 @@ public class Transaction implements Serializable {
     private String creditAccount;
     private double amount;
     private String description;
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDateTime date;
     private Account account;
 
     public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime date, Account account) {
@@ -19,7 +19,7 @@ public class Transaction implements Serializable {
         this.creditAccount = creditAccount;
         this.amount = amount;
         this.description = description;
-        this.date = LocalDateTime.now();
+        this.date = date;
         this.account = account;
     }
 
@@ -28,7 +28,7 @@ public class Transaction implements Serializable {
         this.creditAccount = creditAccount;
         this.amount = amount;
         this.description = description;
-        this.date = LocalDateTime.now();
+        this.date = date;
     }
 
     public Transaction(long transactionID, String debitAccount, String creditAccount, double amount, String description, LocalDateTime date) {
@@ -37,7 +37,7 @@ public class Transaction implements Serializable {
         this.creditAccount = creditAccount;
         this.amount = amount;
         this.description = description;
-        this.date = LocalDateTime.now();
+        this.date = date;
     }
 
     public void addTransactionToAccount (Account account) {

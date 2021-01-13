@@ -80,6 +80,11 @@ public class AccountDAO implements DAO<Account, Long> {
         return jdbcTemplate.query(sql, new AccountRowMapper(), iban);
     }
 
+    public Account getAccountByIban (String iban) {
+        final String sql = "SELECT * FROM Account WHERE iban = ?";
+        return jdbcTemplate.queryForObject(sql, new AccountRowMapper(), iban);
+    }
+
     @Override
     public void update(Account account) {
 

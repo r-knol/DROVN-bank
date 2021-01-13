@@ -146,6 +146,10 @@ public class CustomerService {
         }
     }
 
+    public Customer getCustomerByAccountForTransaction (long accountID) {
+        return customerDAO.getCustomerByAccountForTransaction(accountID);
+    }
+
     public List<Customer> getCustomerListByIban (String iban) {
         return  customerDAO.getCustomerListByIban(iban);
     }
@@ -180,6 +184,8 @@ public class CustomerService {
         }
         return null;
     }
+
+
 
     public Optional<Customer> getCustomerById(long customerID) {
         try {

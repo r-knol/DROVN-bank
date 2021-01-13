@@ -2,6 +2,7 @@ package nl.hva.miw.internetbanking.data.dto;
 
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.Transaction;
 
 import java.util.List;
 
@@ -9,7 +10,6 @@ public class AccountHasCustomersDTO {
 
     private Account account;
     private List<Customer> customerList;
-
 
     public AccountHasCustomersDTO(Account account) {
         this.account = account;

@@ -4,21 +4,23 @@ import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Transaction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerHasTransactionsDTO {
 
     private List<Customer> customerList;
-    private List<Account> accountHoldersList;
     private Transaction transaction;
+    private String accountHolderName;
+    private Customer contraCustomer;
+    private List<Account> accountList;
+    private Account contraAccount;
     private List<String> accountHolderNames;
 
 
-    public CustomerHasTransactionsDTO (Transaction transaction) {
+    public CustomerHasTransactionsDTO () {
         super();
-        this.transaction = transaction;
     }
-
 
     public List<Customer> getCustomerList() {
         return customerList;
@@ -28,16 +30,8 @@ public class CustomerHasTransactionsDTO {
         this.customerList = customerList;
     }
 
-    public List<Account> getAccountList() {
-        return accountHoldersList;
-    }
-
-    public void setAccountList(List<Account> accountList) {
-        this.accountHoldersList = accountList;
-    }
-
-    public List<String> getAccountHolderNames() {
-        return accountHolderNames;
+    public String getAccountHolderNames() {
+        return accountHolderName;
     }
 
     public void setAccountHolderNames(List<String> accountHolderNames) {
@@ -52,18 +46,52 @@ public class CustomerHasTransactionsDTO {
         this.transaction = transaction;
     }
 
+    public Customer getContraCustomer() {
+        return contraCustomer;
+    }
 
+    public void setContraCustomer(Customer contraCustomer) {
+        this.contraCustomer = contraCustomer;
+    }
 
-    public void addAccountHolderName(String name) {
+    public Account getContraAccount() {
+        return contraAccount;
+    }
+
+    public void setContraAccount(Account contraAccount) {
+        this.contraAccount = contraAccount;
+    }
+
+    public String getAccountHolderName() {
+        return accountHolderName;
+    }
+
+    public void setAccountHolderName(String accountHolderName) {
+        this.accountHolderName = accountHolderName;
+    }
+
+    public List<Account> getAccountList() {
+        return accountList;
+    }
+
+    public void setAccountList(List<Account> accountList) {
+        this.accountList = accountList;
+    }
+
+    public void addAccountHolderName (String name) {
         accountHolderNames.add(name);
     }
 
     @Override
     public String toString() {
         return "CustomerHasTransactionsDTO{" +
-                "customers=" + customerList +
-                ", accounts=" + accountHoldersList +
+                "customerList=" + customerList +
                 ", transaction=" + transaction +
+                ", accountHolderName='" + accountHolderName + '\'' +
+                ", contraCustomer=" + contraCustomer +
+                ", accountList=" + accountList +
+                ", contraAccount=" + contraAccount +
+                ", accountHolderNames=" + accountHolderNames +
                 '}';
     }
 }
