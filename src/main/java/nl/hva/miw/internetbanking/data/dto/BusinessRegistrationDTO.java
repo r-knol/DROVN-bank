@@ -15,65 +15,56 @@ import javax.validation.constraints.Size;
 @ToString
 public class BusinessRegistrationDTO implements DTO<LegalPerson> {
 
-    @NotBlank(message = "Dit is een verplicht veld.")
-    @Size(min = 4, max = 16, message = "Minimaal 6 karakters, maximaal 16.")
-    @Pattern(regexp = "^[A-Za-z0-9_]$",
-             message = "Hoofdletters, kleine letters, cijfers of underscore '_'.")
-    // Min. 4 characters, lower- or uppercase characters, numbers or underscore
+    @NotBlank
+    @Size(min = 4, max = 16)
+    @Pattern(regexp = "^[A-Za-z0-9_]+$")
     private String userName;
 
-    @NotBlank(message = "Dit is een verplicht veld.")
-    @Size(min = 6, max = 16, message = "Minimaal 6 karakters, maximaal 16.")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,16}$",
-             message = "Tenminste één hoofdletter, één kleine letter, een cijfer en een speciaal " +
-                       "teken.")
-    // Min. 6 characters, min 1 number, 1 lower- and uppercase letter, 1 special character
+    @NotBlank
+    @Size(min = 6, max = 16)
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{0,}$")
     private String password;
 
-    @NotBlank(message = "Dit is een verplicht veld.")
-    @Size(min = 6, max = 16, message = "Minimaal 6 karakters, maximaal 16.")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,16}$",
-             message = "Tenminste één hoofdletter, één kleine letter, één cijfer en één speciaal " +
-                       "teken.")
+    @NotBlank
+    @Size(min = 6, max = 16)
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{0,}$")
     private String passwordConfirmation;
 
-    @NotBlank(message = "Dit is een verplicht veld.")
-    @Size(max = 45, message = "Maximaal 45 karakters.")
+    @NotBlank
+    @Size(max = 45)
     private String companyName;
 
-    @NotBlank(message = "Dit is een verplicht veld.")
-    @Pattern(regexp = "^[0-9]{8}$", message = "Voer een geldig KvK-nummer in (8 cijfers).")
-    @Size(min = 8, max = 8, message = "KvK-nummer moet uit 8 cijfers bestaan.")
+    @NotBlank
+    @Pattern(regexp = "^[0-9]{8}$")
+    @Size(min = 8, max = 8)
     private long kvkNumber;
 
-    @NotBlank(message = "Dit is een verplicht veld.")
+    @NotBlank
     private Sector sector;
 
-    @NotBlank(message = "Dit is een verplicht veld.")
-    @Pattern(regexp = "^(NL)?[0-9]{9}B[0-9]{2}$", message = "Voer een geldig Btw-nummer in (9 " +
-                                                            "cijfers, letter B, 2 cijfers).")
-    @Size(min = 12, max = 12, message = "9 cijfers, letter B, 2 cijfers.")
+    @NotBlank
+    @Pattern(regexp = "^(NL)?[0-9]{9}B[0-9]{2}$")
+    @Size(min = 14, max = 15)
     private String vatNumber;
 
-    @NotBlank(message = "Dit is een verplicht veld.")
-    @Pattern(regexp = "^[0-9]{4}[ A-Z]{2,3}$", message = "Voer een geldige postcode in.")
-    @Size(max = 7, message = "Maximaal 7 karakters.")
-    @Size(min = 6, message = "Minimaal 6 karakters.")
+    @NotBlank
+    @Pattern(regexp = "^[1-9][0-9]{3}[\\s]?[A-Za-z]{2}$")
+    @Size(min = 6, max = 7)
     private String postalCode;
 
-    @NotBlank(message = "Dit is een verplicht veld.")
-    @Pattern(regexp = "^.*[0-9a-zA-z-. ]{0,10}$", message = "Invoer bevat ongeldige tekens.")
-    @Size(max = 10, message = "Maximaal 10 karakters.")
+    @NotBlank
+    @Pattern(regexp = "([-.,&_`() ]|[A-z0-9])+")
+    @Size(max = 10)
     private String homeNumber;
 
-    @NotBlank(message = "Dit is een verplicht veld.")
-    @Pattern(regexp = "^.*[0-9a-zA-z-. ]{0,45}$", message = "Invoer bevat ongeldige tekens.")
-    @Size(max = 45, message = "Maximaal 45 karakters.")
+    @NotBlank
+    @Pattern(regexp = "^([-.\\s]|[a-zA-Z0-9]|[À-Ö]|[Ø-ö]|[ø-ǿ]|[Ȁ-ʯ]|[̀-ͯ]|[Ḁ-ỿ]|[Ⅰ-ↈ])+$")
+    @Size(max = 45)
     private String street;
 
-    @NotBlank(message = "Dit is een verplicht veld.")
-    @Pattern(regexp = "^.*[0-9a-zA-z-. ]{0,45}$", message = "Invoer bevat ongeldige tekens.")
-    @Size(max = 45, message = "Maximaal 45 karakters.")
+    @NotBlank
+    @Pattern(regexp = "^([-.\\s]|[a-zA-Z0-9]|[À-Ö]|[Ø-ö]|[ø-ǿ]|[Ȁ-ʯ]|[̀-ͯ]|[Ḁ-ỿ]|[Ⅰ-ↈ])+$")
+    @Size(max = 45)
     private String residence;
 
 }
