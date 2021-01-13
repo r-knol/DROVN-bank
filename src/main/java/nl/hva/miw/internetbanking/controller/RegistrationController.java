@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
+
 @Controller
 @Slf4j(topic = "CustomerRegistration")
 public class RegistrationController {
@@ -32,15 +34,16 @@ public class RegistrationController {
 
     @PostMapping("/registratie-particulier")
     public String registrationPostHandlerPrivate(
-            @ModelAttribute("privateRegistrationDto") PrivateRegistrationDTO dto, Model model) {
+            @Valid @ModelAttribute("privateRegistrationDto") PrivateRegistrationDTO dto,
+            Model model) {
         model.addAttribute("privateRegistrationDto", dto);
         return "pages/confirmation-private";
     }
 
     @PostMapping("/bevestiging-particulier")
     public String confirmationPostHandlerPrivate(
-            @ModelAttribute("privateRegistrationDto") PrivateRegistrationDTO dto, Model model,
-            RedirectAttributes redirectAttributes) {
+            @Valid @ModelAttribute("privateRegistrationDto") PrivateRegistrationDTO dto,
+            Model model, RedirectAttributes redirectAttributes) {
         customerService.registerCustomer(dto, NaturalPerson.class);
         redirectAttributes.addFlashAttribute("accountCreated", "true");
         return "redirect:/";
@@ -48,15 +51,16 @@ public class RegistrationController {
 
     @PostMapping("/registratie-zakelijk")
     public String registrationPostHandlerBusiness(
-            @ModelAttribute("businessRegistrationDto") BusinessRegistrationDTO dto, Model model) {
+            @Valid @ModelAttribute("businessRegistrationDto") BusinessRegistrationDTO dto,
+            Model model) {
         model.addAttribute("businessRegistrationDto", dto);
         return "pages/confirmation-business";
     }
 
     @PostMapping("/bevestiging-zakelijk")
     public String confirmationPostHandlerBusiness(
-            @ModelAttribute("businessRegistrationDto") BusinessRegistrationDTO dto, Model model,
-            RedirectAttributes redirectAttributes) {
+            @Valid @ModelAttribute("businessRegistrationDto") BusinessRegistrationDTO dto,
+            Model model, RedirectAttributes redirectAttributes) {
         customerService.registerCustomer(dto, LegalPerson.class);
         redirectAttributes.addFlashAttribute("accountCreated", "true");
         return "redirect:/";
