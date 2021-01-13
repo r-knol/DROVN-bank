@@ -35,6 +35,12 @@ public class AccountDetailsController {
         this.customerService = customerService;
     }
 
+    @RequestMapping(path = "/account-overview")
+    public String index() {
+
+        return "account-overview";
+    }
+
 //    @GetMapping ("/account_details{id}")
 //    public String showAccounts (@PathVariable ("id") long accountID, Model model) {
 //        Optional<Account> account = accountService.getAccountById(accountID);
@@ -44,7 +50,7 @@ public class AccountDetailsController {
 //    }
 
     @GetMapping("/account_details/{id}")
-    public String AccountDetailsHandler (@PathVariable ("id") long accountID,
+    public String accountDetailsHandler (@PathVariable ("id") long accountID,
                                          @ModelAttribute ("customer") Customer customer, Model model) {
         Optional<Account> account = accountService.getAccountById(accountID);
         model.addAttribute("account", account.get());
@@ -53,6 +59,12 @@ public class AccountDetailsController {
         transactionService.setTransactionWithContraAccountNames(accountHasTransactionsDTO, account.get());
         model.addAttribute("accountWithTransactions", accountHasTransactionsDTO);
         return "pages/account_details";
+    }
+
+    @PostMapping("/account-overview")
+    public String returnToAccountOverview (@ModelAttribute ("customer") Customer customer, Model model) {
+        model.addAttribute("customer", customer);
+        return "pages/account-overview";
     }
 
 }
