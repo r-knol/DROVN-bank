@@ -269,4 +269,42 @@
     </div>
 </form>
 
+<form action="#" class="row" method="post" th:action="@{/bevestiging-zakelijk}"
+      th:fragment="form-confirmation-business-hidden" th:object="${businessRegistrationDto}">
+    <input th:field="*{companyName}" type="hidden">
+    <input th:field="*{kvkNumber}" type="hidden">
+    <input th:field="*{sector}" type="hidden">
+    <input th:field="*{vatNumber}" type="hidden">
+    <input th:field="*{postalCode}" type="hidden">
+    <input th:field="*{homeNumber}" type="hidden">
+    <input th:field="*{street}" type="hidden">
+    <input th:field="*{residence}" type="hidden">
+    <input th:field="*{userName}" type="hidden">
+    <input th:field="*{password}" type="hidden">
+    <input th:field="*{passwordConfirmation}" type="hidden">
+    <input class="btn btn-primary btn-lg btn-block mt-0 ml-3 mb-4 mr-2 pt-3 pb-3 " type="submit"
+           value="Registratie voltooien"/>
+</form>
+
+<form action="#" class="row" method="post" th:action="@{/bevestiging-particulier}"
+      th:fragment="form-confirmation-private-hidden" th:object="${privateRegistrationDto}">
+    <input th:field="*{initials}" type="hidden">
+    <input th:field="*{firstName}" type="hidden">
+    <input th:field="*{preposition}" type="hidden">
+    <input th:field="*{surName}" type="hidden">
+    <input th:field="*{dateOfBirth}" type="hidden">
+    <input th:field="*{socialSecurityNumber}" type="hidden">
+    <input th:field="*{email}" type="hidden">
+    <input th:field="*{phone}" type="hidden">
+    <input th:field="*{postalCode}" type="hidden">
+    <input th:field="*{homeNumber}" type="hidden">
+    <input th:field="*{street}" type="hidden">
+    <input th:field="*{residence}" type="hidden">
+    <input th:field="*{userName}" type="hidden">
+    <input th:field="*{password}" type="hidden">
+    <input th:field="*{passwordConfirmation}" type="hidden">
+    <input class="btn btn-primary btn-lg btn-block mt-0 ml-3 mb-4 mr-2 pt-3 pb-3 " type="submit"
+           value="Registratie voltooien"/>
+</form>
+
 </html>
