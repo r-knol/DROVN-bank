@@ -25,87 +25,11 @@
                         </div>
                     </div>
                     <div class="col-md-6 table-responsive-md">
-                        <table class="table table-striped mb-5" th:object="${privateRegistrationDto}">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th colspan="2" scope="col">Persoonlijke gegevens</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row" width="50%">Voorletters</th>
-                                <td th:text="*{initials}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Voornaam</th>
-                                <td th:text="*{firstName}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Tussenvoegsel</th>
-                                <td th:text="*{preposition}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Achternaam</th>
-                                <td th:text="*{surName}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Geboortedatum</th>
-                                <td th:text="*{dateOfBirth}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Burgerservicenummer (BSN)</th>
-                                <td th:text="*{socialSecurityNumber}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Emailadres</th>
-                                <td th:text="*{email}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Telefoon (mobiel)</th>
-                                <td th:text="*{phone}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <table th:replace="fragments/table :: table-confirmation-private-details"></table>
                     </div>
                     <div class="col-md-6 table-responsive-md">
-                        <table class="table table-striped mb-5" th:object="${privateRegistrationDto}">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th colspan="2" scope="col">Adresgegevens</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row" width="50%">Postcode</th>
-                                <td th:text="*{postalCode}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Huisnummer + toevoeging</th>
-                                <td th:text="*{homeNumber}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Straat</th>
-                                <td th:text="*{street}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Woonplaats</th>
-                                <td th:text="*{residence}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table class="table table-striped mb-5" th:object="${privateRegistrationDto}">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th colspan="2" scope="col">Accountgegevens</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row" width="50%">Gebruikersnaam</th>
-                                <td th:text="*{userName}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <table th:replace="fragments/table :: table-confirmation-private-personal-details"></table>
+                        <table th:replace="fragments/table :: table-confirmation-private-account"></table>
                         <form th:replace="fragments/form :: form-confirmation-private-hidden"></form>
                     </div>
                 </div>

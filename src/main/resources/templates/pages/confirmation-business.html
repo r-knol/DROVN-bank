@@ -25,71 +25,11 @@
                         </div>
                     </div>
                     <div class="col-md-6 table-responsive-md">
-                        <table class="table table-striped mb-5" th:object="${businessRegistrationDto}">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th colspan="2" scope="col">Bedrijfsgegevens</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row" width="50%">Bedrijfsnaam</th>
-                                <td th:text="*{companyName}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Sector</th>
-                                <td th:text="*{sector.getLabelSector()}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">KvK-nummer</th>
-                                <td th:text="*{kvkNumber}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Btw-nummer</th>
-                                <td th:text="*{vatNumber}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table class="table table-striped mb-5" th:object="${businessRegistrationDto}">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th colspan="2" scope="col">Accountgegevens</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row" width="50%">Gebruikersnaam</th>
-                                <td th:text="*{userName}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <table th:replace="fragments/table :: table-confirmation-business-details"></table>
+                        <table th:replace="fragments/table :: table-confirmation-business-account"></table>
                     </div>
                     <div class="col-md-6 table-responsive-md">
-                        <table class="table table-striped mb-5" th:object="${businessRegistrationDto}">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th colspan="2" scope="col">Adresgegevens</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row" width="50%">Postcode</th>
-                                <td th:text="*{postalCode}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Huisnummer + toevoeging</th>
-                                <td th:text="*{homeNumber}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Straat</th>
-                                <td th:text="*{street}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Plaats</th>
-                                <td th:text="*{residence}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <table th:replace="fragments/table :: table-confirmation-business-address"></table>
                         <form th:replace="fragments/form :: form-confirmation-business-hidden"></form>
                     </div>
                 </div>
