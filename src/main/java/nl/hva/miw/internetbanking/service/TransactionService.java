@@ -65,8 +65,23 @@ public class TransactionService {
     public <T> void saveTransaction(T transaction) {
         try {
             transactionDAO.create((Transaction) transaction);
+            doMoneyTransaction((Transaction) transaction);
         } catch (DataAccessException e) {
             log.warn("Exception occurred while attempting to save transaction: {}", e.getMessage());
         }
+    }
+
+    public void doMoneyTransaction(Transaction t){
+        // update debit account:
+        Account debitAccount = accountDAO.read(t.getDebitAccount()).get();
+        Double newBalanceDebAcc = debitAccount.getBalance() - t.getAmount();
+        debitAccount.setBalance(newBalanceDebAcc);
+        accountDAO.update(debitAccount);
+
+        // update credit account:
+        Account creditAccount = accountDAO.read(t.getCreditAccount()).get();
+        Double newBalanceCredAcc = creditAccount.getBalance() + t.getAmount();
+        creditAccount.setBalance(newBalanceCredAcc);
+        accountDAO.update(creditAccount);
     }
 }

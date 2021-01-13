@@ -1,9 +1,12 @@
 package nl.hva.miw.internetbanking.data.dao;
 
 import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.EmployeeRowMapper;
+import nl.hva.miw.internetbanking.data.mapper.IbanRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
-import nl.hva.miw.internetbanking.model.Transaction;
+import nl.hva.miw.internetbanking.model.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -11,6 +14,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -29,6 +33,7 @@ public class AccountDAO implements DAO<Account, Long> {
     }
 
     @Override
+    @Transactional
     public void create(Account account) {
         String sql = "INSERT INTO Account(iban, balance) VALUES (?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -40,7 +45,6 @@ public class AccountDAO implements DAO<Account, Long> {
         }, keyHolder);
         long id = Objects.requireNonNull(keyHolder.getKey().longValue());
         account.setAccountID(id);
-
     }
 
     public void saveAccountToCustomer(Account account, Customer customer) {
@@ -75,19 +79,16 @@ public class AccountDAO implements DAO<Account, Long> {
         }
     }
 
-    public List<Account> getAccountsByIban (String iban) {
-        final String sql = "SELECT * FROM Account WHERE iban = ?";
-        return jdbcTemplate.query(sql, new AccountRowMapper(), iban);
-    }
-
-    public Account getAccountByIban (String iban) {
-        final String sql = "SELECT * FROM Account WHERE iban = ?";
-        return jdbcTemplate.queryForObject(sql, new AccountRowMapper(), iban);
-    }
 
     @Override
     public void update(Account account) {
-
+        String sql = "UPDATE Account SET iban = ?, balance = ?" +
+                "WHERE accountID = ?";
+        jdbcTemplate.update(sql,
+                account.getIban(),
+                account.getBalance(),
+                account.getAccountID()
+        );
     }
 
     @Override
@@ -104,6 +105,13 @@ public class AccountDAO implements DAO<Account, Long> {
     public Optional<List<Account>> list() {
         return Optional.empty();
     }
+
+    public boolean existsByIban(String iban) {
+        final String sql = "SELECT iban FROM account WHERE iban = ?";
+        return jdbcTemplate.queryForObject(sql, new IbanRowMapper(), iban) != null;
+    }
+
+
 
     public List<Account> getAccountsForCustomer(Customer customer) {
         List<Account> accounts = getAccountsByCustomerId(customer.getCustomerID());

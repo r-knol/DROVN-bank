@@ -5,9 +5,7 @@
     <div class="container pl-0 pr-0">
         <nav class="navbar navbar-expand-lg">
             <a class="navbar-brand" href="#">
-                <img src="/images/DROVN2.svg" width="150" height="150"
-                     class="d-inline-block align-top" alt="">
-
+                <img alt="" class="d-inline-block align-top" height="50" src="/images/DROVN2.svg" width="50">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,9 +70,7 @@
     <div class="container pl-0 pr-0">
         <nav class="navbar navbar-expand-lg">
             <a class="navbar-brand" href="#">
-                <img src="/images/DROVN2.svg" width="150" height="150"
-                     class="d-inline-block align-top" alt="">
-
+                <img alt="" class="d-inline-block align-top" height="50" src="/images/DROVN2.svg" width="50">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,7 +118,7 @@
                 </ul>
                 <div class="container pl-0 pr-0">
                     <div class="col-12 d-flex flex-row align-items-lg-end justify-content-lg-end">
-                        <a class="btn btn-primary mr-2" th:href="@{open-account/{id}(id=${customer.customerID})}">Rekening Openen</a>
+                        <a class="btn btn-primary mr-2" th:href="@{openaccount}">Rekening Openen</a>
                         <a class="btn btn-outline-primary mr-2" href="/">Uitloggen</a>
                     </div>
                 </div>
@@ -155,6 +151,16 @@
             <a class="btn btn-outline-primary float-right" id="uitloggenemployee" href="/loginemployee">Uitloggen</a>
         </div>
     </div>
+    </nav>
+</header>
+
+<header class="header" id="login" th:fragment="head-login">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <a class="navbar-brand">
+            <img src="images/DROVN BANK_1-02.png" width="80" height="80"
+                 class="d-inline-block align-top" alt=""></a>
+        <div class="container pl-0 pr-0">
+        </div>
     </nav>
 </header>
 

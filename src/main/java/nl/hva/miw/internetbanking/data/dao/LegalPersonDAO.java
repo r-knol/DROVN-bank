@@ -8,6 +8,7 @@ import nl.hva.miw.internetbanking.data.mapper.*;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -24,6 +25,7 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
     }
 
     @Override
+    @Transactional
     public void create(LegalPerson legalPerson) {
         String sql = "INSERT INTO LegalPerson(companyID, companyName, kvkNumber, sector, " +
                 "vatNumber, postalCode, homeNumber, street, residence, accountmanagerID) VALUES" +
@@ -54,6 +56,13 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
             log.error("LegalPerson not found in database.");
         }
         return null;
+    }
+
+    public Optional<LegalPerson> read(long kvkNumber) {
+        String sql = "SELECT * FROM LegalPerson WHERE kvkNumber = ?";
+        return Optional
+                .ofNullable(
+                        jdbcTemplate.queryForObject(sql, new LegalPersonRowMapper(), kvkNumber));
     }
 
     @Override
@@ -93,12 +102,14 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
     }
 
     public List<CompanyTransactionDTO> getMostActiveClients() {
-        final String sql = "SELECT L.companyName, COUNT(T.transactionID) numberOfTransactions\n" +
+        final String sql = "SELECT L.companyName, COUNT(T.transactionID) numberOfTransactions, L.kvkNumber, \n" +
+                "CONCAT(l.street, \" \", l.homeNumber, \", \", l.residence) AS address, \n" +
+                "concat(e.firstname, \" \", e.preposition, \" \", e.surname) as accountmanager\n" +
                 "FROM transaction_has_account T JOIN account A ON T.accountID=A.accountID\n" +
                 "JOIN customer_has_account C ON C.accountID=T.accountID JOIN legalperson L\n" +
-                "ON L.companyID=C.customerID\n" +
+                "ON L.companyID=C.customerID JOIN employee E ON E.employeeID=l.accountmanagerID\n" +
                 "GROUP BY L.companyName\n" +
-                "ORDER BY numberOfTransactions DESC LIMIT 10";
+                "ORDER BY numberOfTransactions DESC LIMIT 10;";
         return jdbcTemplate.query(sql, new CompanyTransactionRowMapper());
     }
 
