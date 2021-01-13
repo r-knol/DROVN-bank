@@ -43,8 +43,7 @@ public class CustomerDAO implements DAO<Customer, Long> {
     @Override
     public Optional<Customer> read(Long customerID) {
         final String sql = "SELECT * FROM Customer WHERE customerID = ?";
-        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(),
-                                                               customerID));
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), customerID));
     }
 
     @Override

@@ -97,10 +97,10 @@
                         </thead>
 
                         <tbody>
-                        <tr style="font-size: 150%" th:each="t : ${accountWithTransactionOverview.getTransactions}">
+                        <tr style="font-size: 150%" th:each="t : ${account.getTransactions}">
                             <td style="color: #312783" th:text="${t.showDate}"></td>
 <!--                            <td style="color: #312783"> <ul> <li th:each="nameContraCustomer : ${account.getAccountHolderNames()}" th:text="${nameContraCustomer}"></li></ul></td>-->
-                            <td style="color: #312783"><ul><li th:each="contraAccountList : ${contraAccountList}" th:text="${contraAccountList}"></ul></td>
+                            <td style="color: #312783"><ul style="list-style-type:none; display: table-row;"><li th:each="name : ${t.getContraAccountHolderNames()}" th:text="${name}"></ul></td>
                             <td style="color: #F39200" th:text="${t.showContraAccount}"></td>
                             <td style="color: #312783" th:text="${t.description}"></td>
                             <td style="text-align: right"><span style="text-align: right; color: #312783" th:text="${t.showAmount}"></span></td>

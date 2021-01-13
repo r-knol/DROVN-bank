@@ -1,11 +1,6 @@
 package nl.hva.miw.internetbanking.data.mapper;
 
-import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionDTO;
-import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
 import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
-import nl.hva.miw.internetbanking.model.Account;
-import nl.hva.miw.internetbanking.model.LegalPerson;
-import nl.hva.miw.internetbanking.model.Sector;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

@@ -205,8 +205,6 @@ public class CustomerService {
         return null;
     }
 
-
-
     public Optional<Customer> getCustomerById(long customerID) {
         try {
             return getCustomerDetails(customerDAO.read(customerID));

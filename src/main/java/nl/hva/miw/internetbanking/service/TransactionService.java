@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dao.TransactionDAO;
+import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionsDTO;
 import nl.hva.miw.internetbanking.data.dto.DTO;
 import nl.hva.miw.internetbanking.model.*;
 import nl.hva.miw.internetbanking.util.DtoMapperUtil;
@@ -24,11 +25,14 @@ public class TransactionService {
     @Setter
     private TransactionDAO transactionDAO;
     private AccountDAO accountDAO;
+    private CustomerService customerService;
+
 
     @Autowired
-    public TransactionService (TransactionDAO transactionDAO, AccountDAO accountDAO) {
+    public TransactionService (TransactionDAO transactionDAO, AccountDAO accountDAO, CustomerService customerService) {
         this.transactionDAO = transactionDAO;
         this.accountDAO = accountDAO;
+        this.customerService = customerService;
     }
 
     public List<Transaction> getTransactionsForAccount (Account account) {
@@ -83,5 +87,29 @@ public class TransactionService {
         Double newBalanceCredAcc = creditAccount.getBalance() + t.getAmount();
         creditAccount.setBalance(newBalanceCredAcc);
         accountDAO.update(creditAccount);
+    }
+
+    public String getDebetAccountIban (long transactionID) {
+        Optional <Transaction> transaction = transactionDAO.read(transactionID);
+        if (transaction.isPresent()) {
+             return transaction.get().getDebitAccount();
+        }
+        return null;
+    }
+
+    public void setTransactionWithContraAccountNames (AccountHasTransactionsDTO accountHasTransactionsDTO, Account account) {
+
+        // voor alle transacties de bijbehorende namen van tegenrekeningen ophalen.
+        for (Transaction transaction : accountHasTransactionsDTO.getTransactionList()) {
+            if (account.getIban().equals(transaction.getCreditAccount())){
+                transaction.setCreditAccount(getDebetAccountIban(transaction.getTransactionID()));
+            } else {
+                transaction.setDebitAccount(getDebetAccountIban(transaction.getTransactionID()));
+            }
+            List<Customer> contraCustomers = customerService.getCustomerListByIban(transaction.getCreditAccount());
+            for (Customer c : contraCustomers) {
+                transaction.addDebetAccountHolderName(customerService.printNameCustomer(c.getCustomerID()));
+            }
+        }
     }
 }

@@ -3,6 +3,8 @@ package nl.hva.miw.internetbanking.model;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Transaction implements Serializable {
 
@@ -13,6 +15,8 @@ public class Transaction implements Serializable {
     private String description;
     private LocalDateTime date;
     private Account account;
+    private List<String> contraAccountHolderNames;
+
 
     public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime date, Account account) {
         this.debitAccount = debitAccount;
@@ -21,6 +25,7 @@ public class Transaction implements Serializable {
         this.description = description;
         this.date = date;
         this.account = account;
+        this.contraAccountHolderNames = new ArrayList<>();
     }
 
     public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime date) {
@@ -29,6 +34,7 @@ public class Transaction implements Serializable {
         this.amount = amount;
         this.description = description;
         this.date = date;
+        this.contraAccountHolderNames = new ArrayList<>();
     }
 
     public Transaction(long transactionID, String debitAccount, String creditAccount, double amount, String description, LocalDateTime date) {
@@ -38,6 +44,7 @@ public class Transaction implements Serializable {
         this.amount = amount;
         this.description = description;
         this.date = date;
+        this.contraAccountHolderNames = new ArrayList<>();
     }
 
     public void addTransactionToAccount (Account account) {
@@ -109,6 +116,18 @@ public class Transaction implements Serializable {
         this.date = date;
     }
 
+    public List<String> getContraAccountHolderNames() {
+        return contraAccountHolderNames;
+    }
+
+    public void setContraAccountHolderNames(List<String> contraAccountHolderNames) {
+        this.contraAccountHolderNames = contraAccountHolderNames;
+    }
+
+    public void addDebetAccountHolderName (String name) {
+        contraAccountHolderNames.add(name);
+    }
+
     public String showDate() {
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("d MMMM yyyy");
         return date.format(formatDate);
@@ -134,6 +153,8 @@ public class Transaction implements Serializable {
         }
     }
 
+
+
     public String showDetails() {
         return String.format("Datum: %s\nOmschrijving: %s\nIBAN: %s", showDateTime(), description, showContraAccount());
     }
@@ -143,12 +164,12 @@ public class Transaction implements Serializable {
     public String toString() {
         return "Transaction{" +
                 "transactionID=" + transactionID +
-                ", debitAccountNo='" + debitAccount + '\'' +
-                ", creditAccountNo='" + creditAccount + '\'' +
-                ", TegenrekeningNaam='" + showContraAccount() +'\'' +
+                ", debitAccount='" + debitAccount + '\'' +
+                ", creditAccount='" + creditAccount + '\'' +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
-                ", date=" + showDate() +
+                ", date=" + date +
+                ", contraAccountHolderNames=" + contraAccountHolderNames +
                 '}';
     }
 }
