@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+
+<div class="container pt-5" th:fragment="content-home">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
+                tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+                malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Heading</h2>
+            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
+                tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+                malesuada magna mollis euismod. Donec sed odio dui. </p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Heading</h2>
+            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum
+                id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+                condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="container pt-5" th:fragment="content-registration">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="values"></div>
+        </div>
+        <div class="col-md-12">
+            <button aria-controls="collapseOne" aria-expanded="true"
+                    class="btn btn-outline-primary rounded-3 pt-3 pb-3 pl-5 pr-5 active"
+                    data-target="#collapseOne" data-toggle="collapse"
+                    id="private">
+                Particuliere Klant
+            </button>
+            <button aria-controls="collapseTwo" aria-expanded="false"
+                    class="btn btn-outline-primary rounded-3 pt-3 pb-3 pl-5 pr-5 collapsed"
+                    data-target="#collapseTwo" data-toggle="collapse"
+                    id="legal">
+                Zakelijke Klant
+            </button>
+            <div class="pt-5 pb-5" id="accordion">
+                <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
+                     id="collapseOne">
+                    <form th:replace="fragments/form :: form-registration-private"></form>
+                </div>
+                <div aria-labelledby="headingTwo" class="collapse" data-parent="#accordion"
+                     id="collapseTwo">
+                    <form th:replace="fragments/form :: form-registration-business"></form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container" th:fragment="content-confirmation-business">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div th:replace="fragments/alert :: alert-registration-confirmation"></div>
+        </div>
+        <div class="col-md-6 table-responsive-md">
+            <table th:replace="fragments/table :: table-confirmation-business-details"></table>
+            <table th:replace="fragments/table :: table-confirmation-business-account"></table>
+        </div>
+        <div class="col-md-6 table-responsive-md">
+            <table th:replace="fragments/table :: table-confirmation-business-address"></table>
+            <form th:replace="fragments/form :: form-confirmation-business-hidden"></form>
+        </div>
+    </div>
+    <div class="pt-5 pb-5" id="accordion">
+        <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
+             id="collapseOne">
+            <form th:replace="fragments/form :: form-registration-business"></form>
+        </div>
+    </div>
+</div>
+
+<div class="container" th:fragment="content-confirmation-private">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div th:replace="fragments/alert :: alert-registration-confirmation"></div>
+        </div>
+        <div class="col-md-6 table-responsive-md">
+            <table th:replace="fragments/table :: table-confirmation-private-details"></table>
+        </div>
+        <div class="col-md-6 table-responsive-md">
+            <table th:replace="fragments/table :: table-confirmation-private-address"></table>
+            <table th:replace="fragments/table :: table-confirmation-private-account"></table>
+            <form th:replace="fragments/form :: form-confirmation-private-hidden"></form>
+        </div>
+    </div>
+    <div class="pt-5 pb-5" id="accordion">
+        <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
+             id="collapseOne">
+            <form th:replace="fragments/form :: form-registration-private"></form>
+        </div>
+    </div>
+</div>
+
+</html>
