@@ -1,94 +1,58 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
-<link rel="stylesheet" src="bootstrap.css">
-<link rel="stylesheet" src="custom.css">
-<script defer src="/js/openAccount.js"></script>
-<head th:replace="fragments/head :: head-default (pageTitle='Rekening Openen', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
-<meta charset="UTF-8">
-<head>
-    <title>Rekening openen</title>
-</head>
+<head th:replace="fragments/head :: head-openAccount (pageTitle='Rekening Openen', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <body>
-
-<div class="container-fluid min-vh-100" id="page">
+<div class="jumbotron jumbotron-fluid"
+     style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover; width: 100%; max-height: 60%">
     <div id="header" class="row header-default">
-        <header th:replace="fragments/header :: header-default"></header>
+        <header th:replace="fragments/header :: head-openAccount"></header>
     </div>
-    <div id="main-content" align="center">
-        <main role="main" class="min-vw-100">
-            <div class="jumbotron"
-                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover; width: 90%; max-height: 60%">
+        <div class="mainContainer" align="center">
                 <div class="container pt-sm-2 pb-sm-2 text-white">
                     <div class="container">
-                        <h2><span class="text-orange">Fijn dat u een rekening bij ons wilt openen.</span></h2>
+                        <h1><span class="text-orange">Fijn dat u een rekening bij ons wilt openen.</span></h1>
                         <h3> U kunt direct uw nieuwe rekening bevestigen.</h3>
 
-                        <h1 align="center"><span class="text-orange"> Rekeninghouder: </span><span
-                                style="color: #0066ff" th:text="${nameCurrentCus}"></span></h1>
+                        <h2 align="center"><span class="text-orange"> Rekeninghouder: </span><span
+                                style="color: #0066ff" th:text="${nameCurrentCus}"></span></h2>
                         <p><br></p>
-                        <form action="/saveaccount" method="post" name="ibanForm" class="needs-validation">
+                        <form action="/saveaccount" method="post" name="ibanForm"> <!--class="needs-validation"!-->
                             <input type="text" th:field="*{customer.customerID}" value="customer.customerID" hidden/>
 
                             <div class="form-group w-25">
-                                <label for="ibanGenerator">Uw nieuwe rekeningnummer:</label>
+                                <label for="ibanGenerator">Uw nieuwe rekeningnummer: </label>
                                 <input type="text" th:field="*{account.iban}" id="ibanGenerator"
                                        placeholder="IBAN" readonly required/>
-                                </div>
+                            </div>
                             <div class="form-group w-25">
                                 <label for="balance">Uw huidige saldo:</label>
                                 <input type="text" th:field="*{account.balance}" id="balance" class="form-control"
-                                       placeholder="Saldo"
-                                       name="balance" readonly/>
+                                       placeholder="Saldo" readonly/>
                             </div>
                             <div class="form-group form-check">
-                                <label class="form-check-label">
-                                    <p>
-                                        <a href="https://www.termsandconditionsgenerator.com/live.php?token=WMGxy8SYoQkOH2QDFKuWdAqUeZ9mgMuS"
-                                           onclick="centeredPopup(this.href,'myWindow','700','300','yes');return false">Algemene
-                                            voorwaarden</a></p>
-                                    <input class="form-check-input" type="checkbox" name="remember" required> Ik ga
-                                    akkoord met de voorwaarden
-                                    <div class="valid-feedback">Valid.</div>
-                                    <div class="invalid-feedback">Graag aanvinken als u door zou willen gaan</div>
-                                </label>
-                            </div>
-                            <div class="button-group">
-                                <button type="submit" id="submit" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#modelConfirmation">
-                                    Bevestigen
-                                </button>
+                                <p>
+                                    <a href="https://www.termsandconditionsgenerator.com/live.php?token=WMGxy8SYoQkOH2QDFKuWdAqUeZ9mgMuS"
+                                       data-toggle="modal" data-target="#termsConditions">Algemene voorwaarden</a>
+                                </p>
+                                <input type="checkbox" id="terms" required> Ik heb de algemene voorwaarden gelezen en ik
+                                ga
+                                hiermee akkoord
+                                <div class="button-group">
+                                    <button type="submit" id="submit" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#confirmationNewAccount">Bevestigen
+                                    </button>
+                                </div>
                             </div>
                         </form>
-                        <form action="#" method="get" th:action="@{/customer-with-accounts}">
-                            <input type="submit" class="btn btn-primary" value="Annuleren">
-                        </form>
-                    </div>
-                    <div class="row footer-default" id="footer">
-                        <footer th:replace="fragments/footer :: footer-default"></footer>
+
                     </div>
                 </div>
-            </div>
-        </main>
-    </div>
-</div>
-<div class="modal fade" id="modelConfirmation" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Gelukt!</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Sluiten">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Uw nieuwe rekening is toegevoegd aan uw account
-            </div>
-            <div class="modal-footer">
-                <button> <a th:href="@{account-overview}" type="button" class="btn btn-secondary" data-dismiss="modal">Close</a></button>
-                <button type="button" class="btn btn-primary">Nog een rekening openen?</button>
-            </div>
         </div>
     </div>
+<div class="row footer-default" id="footer">
+    <footer th:replace="fragments/footer :: footer-default"></footer>
 </div>
+<div th:replace="fragments/modal :: modal-confirmationNewAccount"></div>
+<div th:replace="fragments/modal :: modal-termsConditions"></div>
 </body>
 </html>
