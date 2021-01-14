@@ -52,3 +52,22 @@ $font-family-sans-serif: 'PT Sans', -apple-system, BlinkMacSystemFont, "Segoe UI
 .table-striped>tbody>tr:nth-child(odd)>th {
   background-color: hsla(35,100,95,0.2);
 }
+
+.menu {
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+}
+
+.menu li {
+  display: inline-block;
+  list-style: none;
+}
+
+.menu li:not(:last-of-type) {
+  margin: 0 5px;
+}
+
+.menu li:last-of-type {
+  margin-left: auto;
+}
