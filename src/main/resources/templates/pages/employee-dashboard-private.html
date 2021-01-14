@@ -42,7 +42,7 @@
                             <tr th:each="np : ${npWithHighestBalance}" class="client-row">
                                 <td th:text="${np.getFullName()}"></td>
                                 <td th:text="${np.iban}"></td>
-                                <td th:text="${np.balance}"></td>
+                                <td th:text="${np.getBalance()}"></td>
                                 <td>
                                     <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                                             data-target=".bd-example-modal-lg"

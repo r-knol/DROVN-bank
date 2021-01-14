@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.text.DecimalFormat;
+
 @Getter
 @Setter
 @ToString
@@ -38,4 +40,10 @@ public class NaturalPersonHasAccountDTO {
             return firstName + " " + preposition + " " + surName;
         }
     }
+
+    public String getBalance() {
+        DecimalFormat d = new DecimalFormat("###,###.00");
+        return "€" + d.format(balance);
+    }
+
 }
