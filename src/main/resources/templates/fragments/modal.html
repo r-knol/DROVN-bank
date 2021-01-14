@@ -34,7 +34,7 @@
     </div>
 </div>
 
-<div class="modal fade" id="confirmationNewAccount" tabindex="-1" th:fragment="modal-confirmationNewAccount">
+<div class="modal fade" id="confirmationNewAccount" tabindex="-1" th:fragment="modal-confirmationNewAccount" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
@@ -44,7 +44,11 @@
             Uw nieuwe rekening is toegevoegd aan uw account
         </div>
         <div class="modal-footer">
-            <button> <a th:href="@{pages/account-overview}" type="button" class="btn btn-secondary" data-dismiss="modal">Terug naar rekeningoverzicht</a></button>
+            <form action="#" method="get" th:action="@{/customer-with-accounts}">
+                <div class="col-md-4">
+                    <input type="submit" class="btn btn-primary" value="Terug">
+                </div>
+            </form>
             <button type="button" class="close" data-dismiss="modal" aria-label="Nog een rekening openen?"></button>
             <span aria-hidden="true">&times;</span>
         </div>
