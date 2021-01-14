@@ -97,10 +97,12 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
     }
 
     public List<BalancePerSectorDTO> getAvgBalancePerSector() {
-        final String sql = "SELECT legalperson.sector, AVG(account.balance) balance\n" +
-                "FROM legalperson JOIN customer ON customer.customerID=legalperson.companyID JOIN customer_has_account ON customer_has_account.\n" +
-                "customerID=legalperson.companyID JOIN account ON account.accountID=customer_has_account.accountID\n" +
-                "GROUP BY sector";
+        final String sql = "SELECT l.sector, AVG(a.balance) balance\n" +
+                "FROM legalperson l JOIN customer c ON c.customerID=l.companyID \n" +
+                "JOIN customer_has_account cha ON cha.customerID=l.companyID \n" +
+                "JOIN account a ON a.accountID=cha.accountID\n" +
+                "GROUP BY sector\n" +
+                "ORDER BY balance DESC;";
         return jdbcTemplate.query(sql, new BalancePerSectorRowMapper());
     }
 
