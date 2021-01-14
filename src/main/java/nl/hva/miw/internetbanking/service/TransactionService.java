@@ -82,6 +82,13 @@ public class TransactionService {
         }
     }
 
+    public String transferToDouble(String amount){
+        String amountFormatted = amount.replace(",", ".");
+        System.out.println("Voor ene transactie: komma's omzetten naar punten, van " + amount + " naar " + amountFormatted);
+        return amountFormatted;
+
+    }
+
     public void doMoneyTransaction(Transaction t){
         // update debit account:
         Account debitAccount = accountDAO.read(t.getDebitAccount()).get();
