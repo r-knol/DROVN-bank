@@ -17,17 +17,29 @@ public class LegalPersonHasAccountDTO {
     private long kvkNumber;
     private String sector;
     private String address;
-    private String accountmanager;
+    private String firstNameAccountmanager;
+    private String prepositionAccountmanager;
+    private String surNameAccountmanager;
 
-    public LegalPersonHasAccountDTO(String companyName, String iban, double balance, long kvkNumber,
-                                    String sector, String address, String accountmanager) {
+    public LegalPersonHasAccountDTO(String companyName, String iban, double balance, long kvkNumber, String sector, String address,
+                                    String firstNameAccountmanager, String prepositionAccountmanager, String surNameAccountmanager) {
         this.companyName = companyName;
         this.iban = iban;
         this.balance = balance;
         this.kvkNumber = kvkNumber;
         this.sector = sector;
         this.address = address;
-        this.accountmanager = accountmanager;
+        this.firstNameAccountmanager = firstNameAccountmanager;
+        this.prepositionAccountmanager = prepositionAccountmanager;
+        this.surNameAccountmanager = surNameAccountmanager;
+    }
+
+    public String getFullName() {
+        if (prepositionAccountmanager == null) {
+            return firstNameAccountmanager + " " + surNameAccountmanager;
+        } else {
+            return firstNameAccountmanager + " " + prepositionAccountmanager + " " + surNameAccountmanager;
+        }
     }
 
     public String getBalance() {

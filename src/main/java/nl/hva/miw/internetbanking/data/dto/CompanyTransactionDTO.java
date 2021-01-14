@@ -13,13 +13,26 @@ public class CompanyTransactionDTO {
     private long numberOfTransactions;
     private long kvkNumber;
     private String address;
-    private String accountmanager;
+    private String firstNameAccountmanager;
+    private String prepositionAccountmanager;
+    private String surNameAccountmanager;
 
-    public CompanyTransactionDTO(String companyName, long numberOfTransactions, long kvkNumber, String address, String accountmanager) {
+    public CompanyTransactionDTO(String companyName, long numberOfTransactions, long kvkNumber, String address,
+                                 String firstNameAccountmanager, String prepositionAccountmanager, String surNameAccountmanager) {
         this.companyName = companyName;
         this.numberOfTransactions = numberOfTransactions;
         this.kvkNumber = kvkNumber;
         this.address = address;
-        this.accountmanager = accountmanager;
+        this.firstNameAccountmanager = firstNameAccountmanager;
+        this.prepositionAccountmanager = prepositionAccountmanager;
+        this.surNameAccountmanager = surNameAccountmanager;
+    }
+
+    public String getFullName() {
+        if (prepositionAccountmanager == null) {
+            return firstNameAccountmanager + " " + surNameAccountmanager;
+        } else {
+            return firstNameAccountmanager + " " + prepositionAccountmanager + " " + surNameAccountmanager;
+        }
     }
 }

@@ -15,6 +15,8 @@ public class CompanyTransactionRowMapper implements RowMapper<CompanyTransaction
                 resultSet.getLong("numberOfTransactions"),
                 resultSet.getLong("kvkNumber"),
                 resultSet.getString("address"),
-                resultSet.getString("accountmanager"));
+                resultSet.getString("firstName"),
+                resultSet.getString("preposition"),
+                resultSet.getString("surName"));
     }
 }

@@ -17,6 +17,8 @@ public class LegalPersonHasAccountRowMapper implements RowMapper<LegalPersonHasA
                 resultSet.getLong("kvkNumber"),
                 resultSet.getString("sector"),
                 resultSet.getString("address"),
-                resultSet.getString("accountmanager"));
+                resultSet.getString("firstName"),
+                resultSet.getString("preposition"),
+                resultSet.getString("surName"));
     }
 }

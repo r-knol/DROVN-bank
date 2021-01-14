@@ -109,7 +109,7 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
     public List<CompanyTransactionDTO> getMostActiveClients() {
         final String sql = "SELECT L.companyName, COUNT(T.transactionID) numberOfTransactions, L.kvkNumber, \n" +
                 "CONCAT(l.street, \" \", l.homeNumber, \", \", l.residence) AS address, \n" +
-                "concat(e.firstname, \" \", e.preposition, \" \", e.surname) as accountmanager\n" +
+                "e.firstname, e.preposition, e.surname\n" +
                 "FROM transaction_has_account T JOIN account A ON T.accountID=A.accountID\n" +
                 "JOIN customer_has_account C ON C.accountID=T.accountID JOIN legalperson L\n" +
                 "ON L.companyID=C.customerID JOIN employee E ON E.employeeID=l.accountmanagerID\n" +
@@ -119,8 +119,8 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
     }
 
     public List<LegalPersonHasAccountDTO> getClientsWithHighestBalance() {
-        final String sql = "SELECT l.companyName, a.iban, a.balance, l.kvkNumber, l.sector, CONCAT(l.street, \" \", l.homeNumber, \", \", l.residence) AS address,\n" +
-                "concat(e.firstname, \" \", e.preposition, \" \", e.surname) as accountmanager\n" +
+        final String sql = "SELECT l.companyName, a.iban, a.balance, l.kvkNumber, l.sector, CONCAT(l.street, \" \", l.homeNumber, \" \", l.residence) AS address,\n" +
+                "e.firstName, e.preposition, e.surName\n" +
                 "FROM customer_has_account cha JOIN customer c ON cha.customerID = c.customerID\n" +
                 "JOIN account a ON cha.accountID = a.accountID JOIN legalperson l ON l.companyID = cha.customerID\n" +
                 "JOIN employee e ON e.employeeID=l.accountmanagerID\n" +
