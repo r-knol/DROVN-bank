@@ -115,6 +115,13 @@
         </div>
 
         <div class="col-md-8">
+            <div th:if="${account.getTransactions().isEmpty()}">
+                <p style="font-size: 200%; color: #F39200" align="center"
+                   >Er zijn geen bij- en/of afschrijvingen om weer te geven.</p>
+            </div>
+        </div>
+
+        <div class="col-md-8">
             <div class="container pt-0" th:each="t : ${account.getTransactions}" >
 
                 <!--Accordion wrapper-->
@@ -162,73 +169,73 @@
     </div>
 </div>
 
-<div class="container pt-5" th:fragment="content-account-overview">
-    <div class="row">
-        <div class="col-md-4">
-            <p action="#" method="get" th:action="@{/do-transaction/}" th:object="${customerWithAccountOverview}">
-                <a class="btn btn-primary btn-lg btn-block" style="font-size: 125%; width: 100%" th:href="@{/do-transaction/}" role="button"
-                >Geld overboeken »</a></p>
-            <p action="#" method="post" th:action="@{/customer-with-accounts}" th:object="${customerWithAccountOverview}">
-                <a class="btn btn-primary btn-lg btn-block" style="font-size: 125%; width: 100%" th:href="@{/customer-with-accounts}" role="button"
-                >« Terug naar de Homepagina</a></p>
-            </p>
-        </div>
+<!--<div class="container pt-5" th:fragment="content-account-overview">-->
+<!--    <div class="row">-->
+<!--        <div class="col-md-4">-->
+<!--            <p action="#" method="get" th:action="@{/do-transaction/}" th:object="${customerWithAccountOverview}">-->
+<!--                <a class="btn btn-primary btn-lg btn-block" style="font-size: 125%; width: 100%" th:href="@{/do-transaction/}" role="button"-->
+<!--                >Geld overboeken »</a></p>-->
+<!--            <p action="#" method="post" th:action="@{/customer-with-accounts}" th:object="${customerWithAccountOverview}">-->
+<!--                <a class="btn btn-primary btn-lg btn-block" style="font-size: 125%; width: 100%" th:href="@{/customer-with-accounts}" role="button"-->
+<!--                >« Terug naar de Homepagina</a></p>-->
+<!--            </p>-->
+<!--        </div>-->
 
 
 
-        <div class="col-md-8">
+<!--        <div class="col-md-8">-->
 
-            <div class="container pt-0" style="border-color: #312783; border-width: medium;
-                        background-color: white">
-                <p style="font-size: 125%" align="center" th:if="${account.getTransactions().isEmpty(}">
-                Er zijn geen bij- en afschrijvingen om weer te geven</p>
+<!--            <div class="container pt-0" style="border-color: #312783; border-width: medium;-->
+<!--                        background-color: white">-->
+<!--                <p style="font-size: 125%" align="center" th:if="${account.getTransactions().isEmpty(}">-->
+<!--                Er zijn geen bij- en afschrijvingen om weer te geven</p>-->
 
-            <div class="container pt-0" style="border-color: #312783;border-width: medium;
-                         background-color: white"  th:unless="${account.getTransactions().isEmpty()}"
-                 th:object="${account}">
+<!--            <div class="container pt-0" style="border-color: #312783;border-width: medium;-->
+<!--                         background-color: white"  th:unless="${account.getTransactions().isEmpty()}"-->
+<!--                 th:object="${account}">-->
 
-                <!--Accordion wrapper-->
-                <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="false" th:each="t : ${account.getTransactions}" >
+<!--                &lt;!&ndash;Accordion wrapper&ndash;&gt;-->
+<!--                <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="false" th:each="t : ${account.getTransactions}" >-->
 
-                    <!-- Accordion card -->
-                    <div class="card"  style="border-color: #312783;border-width: medium
-                         ;background-color: white" th:each="date :${t.showDate}">
+<!--                    &lt;!&ndash; Accordion card &ndash;&gt;-->
+<!--                    <div class="card"  style="border-color: #312783;border-width: medium-->
+<!--                         ;background-color: white" th:each="date :${t.showDate}">-->
 
-                        <!-- Card header -->
-                        <div class="card-header" role="tab" id="transaction" >
-                            <a data-toggle="collapse" href="#collapse" aria-expanded="false"
-                               aria-controls="collapseOne1">
-                                <h4> <span class="mb-0" style="color: #F39200"  th:text="${date}">Datum></span>
-                                    <i class="fas fa-angle-down rotate-icon; float-right" style="color: #F39200"></i>
-                                </h4>
-                                <h5>
-                                    <dl class="row">
-                                        <dt class="col-md-10" style="color: #312783" th:each="name : ${t.getContraAccountHolderNames()}" th:text="${name}" ></dt>
-                                        <dd class="col-md-2; float-md-right" style="color: #312783" th:each="amount :${t.showAmount}"th:text="${amount}"></dd>
-                                    </dl>
-                                </h5>
-                            </a>
-                        </div>
+<!--                        &lt;!&ndash; Card header &ndash;&gt;-->
+<!--                        <div class="card-header" role="tab" id="transaction" >-->
+<!--                            <a data-toggle="collapse" href="#collapse" aria-expanded="false"-->
+<!--                               aria-controls="collapseOne1">-->
+<!--                                <h4> <span class="mb-0" style="color: #F39200"  th:text="${date}">Datum></span>-->
+<!--                                    <i class="fas fa-angle-down rotate-icon; float-right" style="color: #F39200"></i>-->
+<!--                                </h4>-->
+<!--                                <h5>-->
+<!--                                    <dl class="row">-->
+<!--                                        <dt class="col-md-10" style="color: #312783" th:each="name : ${t.getContraAccountHolderNames()}" th:text="${name}" ></dt>-->
+<!--                                        <dd class="col-md-2; float-md-right" style="color: #312783" th:each="amount :${t.showAmount}"th:text="${amount}"></dd>-->
+<!--                                    </dl>-->
+<!--                                </h5>-->
+<!--                            </a>-->
+<!--                        </div>-->
 
-                        <!-- Card body -->
-                        <div id="collapse" class="collapse hide" role="tabpanel" aria-labelledby="heading">
-                            <div class="card-body" style="background-color: rgba(243, 146, 0, 0.2)">
-                                <p style="color: #312783" th:text="${t.showTransactionDetails()}"></p>
-                            </div>
-                        </div>
+<!--                        &lt;!&ndash; Card body &ndash;&gt;-->
+<!--                        <div id="collapse" class="collapse hide" role="tabpanel" aria-labelledby="heading">-->
+<!--                            <div class="card-body" style="background-color: rgba(243, 146, 0, 0.2)">-->
+<!--                                <p style="color: #312783" th:text="${t.showTransactionDetails()}"></p>-->
+<!--                            </div>-->
+<!--                        </div>-->
 
-                    </div>
-                    <!-- Accordion card -->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Accordion card &ndash;&gt;-->
 
-                </div>
-                <!-- Accordion wrapper -->
-                <br>
+<!--                </div>-->
+<!--                &lt;!&ndash; Accordion wrapper &ndash;&gt;-->
+<!--                <br>-->
 
 
-            </div>
+<!--            </div>-->
 
-        </div>
+<!--        </div>-->
 
-    </div>
-</div>
+<!--    </div>-->
+<!--</div>-->
 </html>

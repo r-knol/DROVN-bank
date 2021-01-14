@@ -40,4 +40,15 @@
         <h3 align="right"><span style="color: #0066ff" th:text="${account.getIban()}">IBAN</span> | <span class="text-orange">Saldo</span> | <span style="color: #0066ff">€ </span><span style="color: #0066ff" th:text="${account.showBalance}">Saldo</span> </h3>
     </div>
 </div>
+
+<div class="jumbotron mb-5"
+     style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) ), url('/images/DROVN5.svg'); background-position: left 70%; background-repeat: no-repeat; background-size: cover; "
+     th:fragment="jumbotron-accounts">
+    <div class="container text-white">
+        <h1 align="left"><span class="display-4 h-25">Welkom, </span><span style="color: #0066ff" th:text="${nameCurrentCus}"></span>
+        </h1>
+        <p> <br></p>
+        <h1 align="right"><span class="display-4 h-25"><span class="text-orange">Rekeningoverzicht</span></span></h1>
+    </div>
+</div>
 </html>
