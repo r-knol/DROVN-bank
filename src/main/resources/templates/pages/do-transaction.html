@@ -2,8 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 <link rel="stylesheet" src="bootstrap.css">
 <link rel="stylesheet" src="custom.css">
-<head th:replace="fragments/head :: head-default (pageTitle='Geld overmaken', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<head th:replace="fragments/head :: head-transaction-do (pageTitle='Geld overmaken', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')">
     <style>
         .error {
             background-color: red;
@@ -34,9 +33,9 @@
 
         <div class="col-md-6 form-group">
             <i class="fa fa-user-o icon"></i>
-        <div id="rekeningHouders">Op naam van:</div>
+            <label>Van</label>
+        <div id="rekeningHouders"></div>
             <input type="hidden" class="form-control" name="nameDebitCustomer" th:value="${nameCurrentCus}">
-        <br>
         </div>
 
         <div class="col-md-6 form-group">
@@ -47,7 +46,7 @@
 
     <div class="col-md-6 form-group">
         <i class="fa fa-user icon"></i>
-        <label>Naam ontvanger</label>
+        <label>Achternaam ontvanger,  zonder voorvoegsels</label>
         <input type="text" class="form-control" name="nameCreditCustomer" required>
     </div>
 
@@ -55,9 +54,7 @@
             <i class="fa fa-university icon"></i>
             <label>IBAN</label>
             <input id="iban" type="text" class="form-control" name="creditAccount" required>
-            <label id="error" hidden>
-                Ongeldige IBAN, probeer het opnieuw.
-            </label>
+            <label id="iban_error"></label>
         </div>
         <div class="col-md-6 form-group">
             <i class="fa fa-commenting icon"></i>
@@ -70,97 +67,11 @@
     </form>
     <form action="#" method="get" th:action="@{/customer-with-accounts}">
         <div class="col-md-4">
-            <input type="submit" class="btn btn-primary" value="Terug">
+            <input type="submit" class="btn btn-outline-secondary" value="Terug">
         </div>
     </form>
         </div>
     </div>
 </div>
-
-<script>
-    // form submit-event listener
-
-
-    // eerste script
-    document.querySelector('#iban').addEventListener('focusout', checkForIbanPart);
-    const selectElement = document.querySelector('#selecteerRekening');
-
-    function checkForIbanPart() {
-        let regex = new RegExp(/^[A-Za-z]{2}[0-9]{2}[A-Za-z0-9]{1,30}$/i)
-        let iban = document.querySelector('#iban').value
-        let bodyContent = `iban=${iban}`
-
-        console.log('Iban is valide: ' + regex.test(iban))
-
-        if(regex.test(iban)){
-            fetch('http://localhost:8080/iban', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'},
-                body: bodyContent
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    console.log('De iban is gevonden in de database.')
-                    let iban = response.text()
-                    processIban(iban)
-                } else {
-                    console.log('De iban is helaas NIET gevonden in de database.')
-                    showError()
-                }
-            })
-            // .then(data => processIban(data))
-            .catch(error => {
-                console.log('Foutje ergens! ' + error)
-            })
-            ;
-        }
-    }
-
-    function processIban(iban){
-        document.getElementById('error').style.display = 'none';
-        document.getElementById('iban').classList.remove('error');
-    }
-
-    function showError(){
-        document.getElementById('error').style.display = 'block';
-        document.getElementById('iban').classList.add('error');
-    }
-
-    // tweede script
-    selectElement.addEventListener('change', (event) => {
-        const iban = event.target.value;
-        loadCustomerNames(iban);
-    });
-
-    function loadCustomerNames(iban){
-        let bodyContent = `iban=${iban}`
-        const element = document.querySelector('#rekeningHouders');
-        let result = '';
-
-        fetch('http://localhost:8080/getnames', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'},
-            body: bodyContent
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json();
-                } else {
-                    console.log('De rekeninghoudernamen zijn helaas NIET gevonden in de database.')
-                }
-            })
-        .then(json => {
-            json.forEach(object => {
-                result += object;
-            })
-        })
-        element.innerHTML = result;
-
-    }
-
-</script>
-
 </body>
 </html>

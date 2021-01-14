@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
+<head th:replace="fragments/head :: head-transaction (pageTitle='Ongeldige IBAN of niet bestaande IBAN/Ontvanger combinatie', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')">
+</head>
+<body>
+<div class="container-fluid min-vh-100" id="page">
+    <div id="header" class="row header-default">
+        <header th:replace="fragments/header :: header-default"></header>
+    </div>
+<div class="col-md-8 mx-auto">
+    <div>
+        <h1>Oeps, er ging iets mis!</h1>
+        <h3>Transactie mislukt vanwege een ongeldige IBAN of niet bestaande IBAN/Ontvanger combinatie. Probeer het nog een keer.</h3>
+        <a href="/do-transaction/" class="btn btn-primary">Opnieuw een transactie starten</a>
+    </div>
+</div>
+</div>
+</body>
+</html>

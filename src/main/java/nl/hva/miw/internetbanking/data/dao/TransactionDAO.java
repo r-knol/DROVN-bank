@@ -34,7 +34,6 @@ public class TransactionDAO implements DAO<Transaction, Long> {
         String sql = "INSERT INTO TRANSACTION (debitAccount, creditAccount, amount, description, dateTime) " +
                 "VALUES(?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        System.out.println("!!!!!!!!!!!!! transaction = " + transaction);
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"transactionID"});
             ps.setString(1, transaction.getDebitAccount());

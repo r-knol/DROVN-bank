@@ -242,4 +242,14 @@ public class CustomerService {
         }
         return null;
     }
+
+    public Optional<Customer> getCustomerByName(String name) {
+        try {
+            Optional<Customer> customerOptional = customerDAO.read(name);
+            return getCustomerDetails(customerOptional);
+        } catch (DataAccessException e) {
+            log.warn("Customer not found [{} - {}]", e.getClass().getSimpleName(), e.getMessage());
+            return Optional.empty();
+        }
+    }
 }
