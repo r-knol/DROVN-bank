@@ -3,6 +3,8 @@ package nl.hva.miw.internetbanking.data.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import nl.hva.miw.internetbanking.data.validator.SocialSecurityNumberExistsConstraint;
+import nl.hva.miw.internetbanking.data.validator.UsernameExistsConstraint;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 
 import javax.validation.constraints.Email;
@@ -18,16 +20,17 @@ public class PrivateRegistrationDTO implements DTO<NaturalPerson> {
     @NotBlank
     @Size(min = 4, max = 16)
     @Pattern(regexp = "^[A-Za-z0-9_]+$")
+    @UsernameExistsConstraint
     private String userName;
 
     @NotBlank
     @Size(min = 6, max = 16)
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{0,}$")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,16}$")
     private String password;
 
     @NotBlank
     @Size(min = 6, max = 16)
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{0,}$")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,16}$")
     private String passwordConfirmation;
 
     @NotBlank
@@ -40,7 +43,7 @@ public class PrivateRegistrationDTO implements DTO<NaturalPerson> {
     @Size(max = 25)
     private String firstName;
 
-    @Pattern(regexp = "^([-.\\s]|[a-zA-Z0-9]|[À-Ö]|[Ø-ö]|[ø-ǿ]|[Ȁ-ʯ]|[̀-ͯ]|[Ḁ-ỿ]|[Ⅰ-ↈ])+$")
+    @Pattern(regexp = "^([-.\\s]|[a-zA-Z0-9]|[À-Ö]|[Ø-ö]|[ø-ǿ]|[Ȁ-ʯ]|[̀-ͯ]|[Ḁ-ỿ]|[Ⅰ-ↈ])*$")
     @Size(max = 15)
     private String preposition;
 
@@ -57,6 +60,7 @@ public class PrivateRegistrationDTO implements DTO<NaturalPerson> {
     @NotBlank
     @Pattern(regexp = "^[0-9]{8,9}$")
     @Size(min = 8, max = 9)
+    @SocialSecurityNumberExistsConstraint
     private String socialSecurityNumber;
 
     @NotBlank

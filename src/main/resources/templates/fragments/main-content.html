@@ -60,7 +60,7 @@
     </div>
 </div>
 
-<div class="container" th:fragment="content-confirmation-business">
+<div class="container" th:fragment="content-confirmation-business-no-errors">
     <div class="row">
         <div class="col-12 mb-4">
             <div th:replace="fragments/alert :: alert-registration-confirmation"></div>
@@ -82,11 +82,9 @@
     </div>
 </div>
 
-<div class="container" th:fragment="content-confirmation-private">
+<div class="container" th:fragment="content-confirmation-private-no-errors">
     <div class="row">
-        <div class="col-12 mb-4">
-            <div th:replace="fragments/alert :: alert-registration-confirmation"></div>
-        </div>
+        <div class="col-12 mb-4" th:include="fragments/alert :: alert-registration-confirmation"></div>
         <div class="col-md-6 table-responsive-md">
             <table th:replace="fragments/table :: table-confirmation-private-details"></table>
         </div>
@@ -104,5 +102,28 @@
     </div>
 </div>
 
+<div class="container" th:fragment="content-confirmation-private-with-errors">
+    <div class="row">
+        <div class="col-12 mb-4" th:include="fragments/alert :: alert-registration-confirmation-has-errors"></div>
+    </div>
+    <div class="pt-1 pb-5" id="accordion">
+        <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
+             id="collapseOne">
+            <form th:replace="fragments/form :: form-registration-private"></form>
+        </div>
+    </div>
+</div>
+
+<div class="container" th:fragment="content-confirmation-business-with-errors">
+    <div class="row">
+        <div class="col-12 mb-4" th:include="fragments/alert :: alert-registration-confirmation-has-errors"></div>
+    </div>
+    <div class="pt-1 pb-5" id="accordion">
+        <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
+             id="collapseOne">
+            <form th:replace="fragments/form :: form-registration-business"></form>
+        </div>
+    </div>
+</div>
 
 </html>

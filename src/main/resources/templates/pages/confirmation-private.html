@@ -6,8 +6,11 @@
     <div class="row header-default" id="header">
         <header th:replace="fragments/header :: header-home"></header>
     </div>
-    <div class="row mb-5" id="main-content">
-        <main th:replace="fragments/main :: main-confirmation-private"></main>
+    <div class="row mb-5" id="main-content" th:if="${hasErrors == 'false'}">
+        <main th:replace="fragments/main :: main-confirmation-private-no-errors"></main>
+    </div>
+    <div class="row mb-5" id="main-content" th:if="${hasErrors == 'true'}">
+        <main th:replace="fragments/main :: main-confirmation-private-with-errors"></main>
     </div>
     <div class="row footer-default" id="footer">
         <footer th:replace="fragments/footer :: footer-default"></footer>

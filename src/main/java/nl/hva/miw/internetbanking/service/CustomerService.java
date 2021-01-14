@@ -11,6 +11,7 @@ import nl.hva.miw.internetbanking.util.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class CustomerService {
         this.customerDAO = customerDAO;
     }
 
+    @Transactional
     public <T extends Customer> void registerCustomer(DTO<T> dto, Class<T> customerClass) {
         T customer = DtoMapperUtil.mapDtoToEntity(dto, customerClass);
         saveCustomer(customer);
