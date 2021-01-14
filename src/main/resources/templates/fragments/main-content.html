@@ -115,13 +115,15 @@
         </div>
 
         <div class="col-md-8">
-            <div th:if="${account.getTransactions().isEmpty()}">
-                <p style="font-size: 200%; color: #F39200" align="center"
-                   >Er zijn geen bij- en/of afschrijvingen om weer te geven.</p>
-            </div>
-        </div>
 
-        <div class="col-md-8">
+            <div class="container pt-0">
+                <div th:if="${account.getTransactions().isEmpty()}">
+                    <p style="font-size: 200%; color: #F39200" align="center"
+                    >Er zijn geen bij- en/of afschrijvingen om weer te geven.</p>
+                </div>
+            </div>
+
+
             <div class="container pt-0" th:each="t : ${account.getTransactions}" >
 
                 <!--Accordion wrapper-->
@@ -238,5 +240,4 @@
 
 <!--    </div>-->
 <!--</div>-->
-
 </html>
