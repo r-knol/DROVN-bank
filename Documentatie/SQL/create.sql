@@ -27,7 +27,7 @@ CREATE TABLE `NaturalPerson`
     `dateOfBirth`          VARCHAR(10) NOT NULL,
     `socialSecurityNumber` VARCHAR(10) NOT NULL,
     `email`                VARCHAR(45) NOT NULL,
-    `phone`                BIGINT(14)  NOT NULL,
+    `phone`                VARCHAR(45) NOT NULL,
     `postalCode`           VARCHAR(7)  NOT NULL,
     `homeNumber`           VARCHAR(10) NOT NULL,
     `street`               VARCHAR(45) NOT NULL,

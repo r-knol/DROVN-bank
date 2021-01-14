@@ -14,15 +14,37 @@ window.onload = function random() {
     return document.ibanForm.ibanGenerator.value = country_code + first_part + bank_code + final_IBAN;
 }
 
-let popupWindow = null;
-function centeredPopup(url, winName, w, h, scroll) {
-    LeftPosition = (screen.width) ? (screen.width - w) / 2 : 0;
-    TopPosition = (screen.height) ? (screen.height - h) / 2 : 0;
-    settings =
-        'height=' + h + ',width=' + w + ',top=' + TopPosition + ',left=' + LeftPosition + ',scrollbars=' + scroll + ',resizable'
-    popupWindow = window.open(url, winName, settings);
-}
+    window.addEventListener("DOMContentLoaded", function(e) {
 
+    const myForm = document.querySelector("#ibanForm");
+    const checkForm = function(e) {
+        if(!this.terms.checked) {
+            alert("Om uw nieuwe rekening te bevestigen dient u akkoord te gaan met de algemene voorwaarden");
+            this.terms.focus();
+            e.preventDefault(); // equivalent to return false
+        }
+    };
+
+    // attach the form submit handler
+    myForm.addEventListener("submit", checkForm, false);
+
+    var myCheckbox = document.querySelector("#terms");
+    var myCheckboxMsg = "Graag de algemene voorwaarden accepteren";
+
+    // set the starting error message
+    myCheckbox.setCustomValidity(myCheckboxMsg);
+
+    // attach checkbox handler to toggle error message
+    myCheckbox.addEventListener("change", function(e) {
+        this.setCustomValidity(this.validity.valueMissing ? myCheckboxMsg : "");
+    }, false);
+
+}, false);
+
+
+
+
+/*
 const form = document.querySelector('.needs-validation');
 console.log(form);
 
@@ -64,3 +86,4 @@ function showError(){
     document.getElementById('error').style.display = 'block';
     document.getElementById('iban').classList.add('error');
 }
+*/
