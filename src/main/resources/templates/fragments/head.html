@@ -45,4 +45,32 @@
     <script defer src="/js/registration.js"></script>
 </head>
 
+<head th:fragment="head-transaction-do (pageTitle, metaRobots, metaDescription, metaKeywords)">
+    <meta charset="UTF-8"/>
+    <title th:text="${pageTitle}">Head</title>
+    <meta name="robots" th:content="${metaRobots}"/>
+    <meta name="description" th:content="${metaDescription}"/>
+    <meta name="keywords" th:content="${metaKeywords}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://kit.fontawesome.com/acc6e38b93.js" crossorigin="anonymous"></script>
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script defer src="/js/do-transaction.js"></script>
+</head>
+
+<head th:fragment="head-transaction-confirm (pageTitle, metaRobots, metaDescription, metaKeywords)">
+    <meta charset="UTF-8"/>
+    <title th:text="${pageTitle}">Head</title>
+    <meta name="robots" th:content="${metaRobots}"/>
+    <meta name="description" th:content="${metaDescription}"/>
+    <meta name="keywords" th:content="${metaKeywords}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://kit.fontawesome.com/acc6e38b93.js" crossorigin="anonymous"></script>
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
+    <script defer src="/js/confirm-transaction.js"></script>
+</head>
+
 </html>

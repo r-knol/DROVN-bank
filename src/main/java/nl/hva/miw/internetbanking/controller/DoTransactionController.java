@@ -46,15 +46,16 @@ public class DoTransactionController {
 
     @PostMapping("/do-transaction/")
     public String postDoTransactionHandler(@ModelAttribute("customer") Customer c, @ModelAttribute("customerWithAccountOverview") CustomerHasAccountsDTO customerDto, @ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, @ModelAttribute("nameCurrentCus") String currentCusName, Model model){
-        customerDto.setAccountList(accountService.getAccountsForCustomer(c));
-        customerService.setCustomerWithAccounts(customerDto);
-        model.addAttribute("customerWithAccountOverview", customerDto);
         model.addAttribute("nameCurrentCus", currentCusName);
         model.addAttribute("transactionDTO", tDto);
-        System.out.println("@@@@@@@@@@@@@@@@@ postDoTransactionHandler:  " + customerDto);
-//        System.out.println("????????????????? " + currentCusName);
-        System.out.println("!!!!!!!!!!!!!!!!! postDoTransactionHandler:" + tDto);
-        return "pages/transaction-confirmation";
+        if (transactionService.checkValidTransaction(tDto)) {
+            customerDto.setAccountList(accountService.getAccountsForCustomer(c));
+            customerService.setCustomerWithAccounts(customerDto);
+            model.addAttribute("customerWithAccountOverview", customerDto);
+            return "pages/transaction-confirmation";
+        } else {
+            return "pages/errorpage-transaction";
+        }
     }
 
     @PostMapping("/transaction-confirmed/")
@@ -62,18 +63,16 @@ public class DoTransactionController {
         transactionService.doTransaction(tDto, Transaction.class);
         customerDto.setAccountList(accountService.getAccountsForCustomer(c));
         customerService.setCustomerWithAccounts(customerDto);
-
         model.addAttribute("customerWithAccountOverview", customerDto);
         model.addAttribute("transactionDTO", tDto);
         model.addAttribute("customer", c);
-        System.out.println("!!!!!!! transactionConfirmationHandler: " + tDto);
-
         return "pages/account-overview";
     }
 
     @CrossOrigin
     @PostMapping("/iban")
-    public @ResponseBody String checkExistingIban(@RequestParam String iban){
+    @ResponseBody
+    public String checkExistingIban(@RequestParam String iban){
         System.out.println("Request data in: " + iban);
         String ibanFound = accountService.getAccountByIban(iban).get().getIban();
         if (iban.equals(ibanFound)) {
@@ -84,7 +83,8 @@ public class DoTransactionController {
 
     @CrossOrigin
     @PostMapping("/getnames")
-    public @ResponseBody List<String> loadCustomerNames(@RequestParam String iban, @ModelAttribute("customer") Customer c){
+    @ResponseBody
+    public List<String> loadCustomerNames(@RequestParam String iban, @ModelAttribute("customer") Customer c){
         CustomerHasAccountsDTO cusAcc = new CustomerHasAccountsDTO(c);
         cusAcc.setAccountList(accountService.getAccountsForCustomer(c));
         customerService.setCustomerWithAccounts(cusAcc);

@@ -1,64 +1,65 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Bevestig uw overboeking</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <head th:replace="fragments/head :: head-transaction-confirm (pageTitle='Bevesting uw overboeking', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 </head>
 <body>
 
-<div class="container my-3">
+<div class="container-fluid min-vh-100" id="page">
+    <div id="header" class="row header-home">
+        <header th:replace="fragments/header :: header-default"></header>
+    </div>
+    <div class="col-md-8 mx-auto">
     <h3>Bevestig uw overboeking</h3>
     <form action="#" method="post" th:action="@{/transaction-confirmed/}" th:object="${transactionConfirmedDTO}">
 
         <div class="col-md-6 form-group">
-            <label>Rekening </label>
-            <label th:text="${transactionDTO.getDebitAccount()}">rekening</label>
-            <input type="hidden" class="form-control" name="debitAccount" th:value="${transactionDTO.getDebitAccount()}">
+            <i class="fa fa-address-card icon"></i>
+            <label>Vanaf</label>
+            <input type="text" class="form-control" id="ibanDebitAccount" name="debitAccount" th:value="${transactionDTO.getDebitAccount()}" readonly>
             <div class="invalid-feedback"></div>
         </div>
 
         <div class="col-md-6 form-group">
-            <label>Op naam van (dit moet worden ingeladen obv de rekening die geselecteerd is) </label>
-            <label>Naam</label>
+            <i class="fa fa-user-o icon"></i>
+            <label>Van</label>
+            <p id="rekeningHouders"></p>
             <input type="hidden" class="form-control" name="nameDebitCustomer" th:value="${nameCurrentCus}">
         </div>
 
         <div class="col-md-6 form-group">
-            <i class="fa fa-user icon"></i>
+            <i class="fa fa-eur icon"></i>
             <label>Bedrag </label>
-            <label th:text="${'€ ' + transactionDTO.getAmount()}">bedrag</label>
-            <input type="hidden" class="form-control" name="amount" th:value="${transactionDTO.getAmount()}">
+            <input type="text" class="form-control" name="amount" th:value="${transactionDTO.getAmount()}" readonly>
         </div>
 
         <div class="col-md-6 form-group">
-            <i class="fa fa-key icon"></i>
-            <label>Naam ontvanger </label>
-            <label th:text="${transactionDTO.getNameCreditCustomer()}">naam</label>
-            <input type="hidden" class="form-control" name="nameCreditCustomer" th:value="${transactionDTO.getNameCreditCustomer()}">
+            <i class="fa fa-user icon"></i>
+            <label>Achternaam ontvanger, zonder voorvoegsels</label>
+            <input type="text" class="form-control" name="nameCreditCustomer" th:value="${transactionDTO.getNameCreditCustomer()}" readonly>
         </div>
+
         <div class="col-md-6 form-group">
-            <i class="fa fa-key icon"></i>
-            <label>IBAN </label>
-            <label th:text="${transactionDTO.getCreditAccount()}">creditAccount</label>
-            <input type="hidden" class="form-control" name="creditAccount" th:value="${transactionDTO.getCreditAccount()}">
+            <i class="fa fa-university icon"></i>
+            <label>IBAN</label>
+            <input type="text" class="form-control" name="creditAccount" th:value="${transactionDTO.getCreditAccount()}" readonly>
         </div>
+
         <div class="col-md-6 form-group">
-            <i class="fa fa-key icon"></i>
+            <i class="fa fa-commenting icon"></i>
             <label>Omschrijving </label>
-            <label th:text="${transactionDTO.getDescription()}">description</label>
-            <input type="hidden" class="form-control" name="description" th:value="${transactionDTO.getDescription()}">
+            <input type="text" class="form-control" name="description" th:value="${transactionDTO.getDescription()}" readonly>
         </div>
         <div class="col-md-4">
             <input type="submit" class="btn btn-primary" value="Bevestigen">
         </div>
     </form>
-    <br>
     <form action="#" method="get" th:action="@{/do-transaction/}">
         <div class="col-md-4">
             <input type="submit" class="btn btn-outline-secondary" value="Terug">
         </div>
     </form>
+</div>
 </div>
 </body>
 </html>

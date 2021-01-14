@@ -42,9 +42,7 @@ public class LoginController {
     @PostMapping("/customer-with-accounts")
     public String handleLogin(@RequestParam(name = "userName") String userName, @RequestParam(name = "password")
             String password, Model model) {
-
         Optional<Customer> customer = customerService.getCustomerByUsername(userName);
-
         if (customer.isPresent()) {
             Customer customerFound = customer.get();
             if (loginService.validCustomer(customerFound, password)) {
@@ -52,15 +50,7 @@ public class LoginController {
                 model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customerFound.getCustomerID()));
                 CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(customerFound);
                 customerDto.setAccountList(accountService.getAccountsForCustomer(customerFound));
-
-                // voor alle accounts de bijbehorende customers ophalen:
-                for (Account acc : customerDto.getAccountList()) {
-                    acc.setAccountHolders(customerService.getCustomerByAccountId(acc.getAccountID()));
-                    // voor iedere accountHolder de juiste naam ophalen:
-                    for (Customer c : acc.getAccountHolders()) {
-                        acc.addAccountHolderName(customerService.printNameCustomer(c.getCustomerID()));
-                    }
-                }
+                customerService.setCustomerWithAccounts(customerDto);
                 model.addAttribute("customerWithAccountOverview", customerDto);
                 return "pages/account-overview";
             }
@@ -75,15 +65,7 @@ public class LoginController {
         model.addAttribute("nameCurrentCus", customerService.printNameCustomer(c.getCustomerID()));
         CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(c);
         customerDto.setAccountList(accountService.getAccountsForCustomer(c));
-
-        // voor alle accounts de bijbehorende customers ophalen:
-        for (Account acc : customerDto.getAccountList()) {
-            acc.setAccountHolders(customerService.getCustomerByAccountId(acc.getAccountID()));
-            // voor iedere accountHolder de juiste naam ophalen:
-            for (Customer cus : acc.getAccountHolders()) {
-                acc.addAccountHolderName(customerService.printNameCustomer(cus.getCustomerID()));
-            }
-        }
+        customerService.setCustomerWithAccounts(customerDto);
         model.addAttribute("customerWithAccountOverview", customerDto);
         return "pages/account-overview";
     }
