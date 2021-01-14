@@ -4,20 +4,14 @@ const form = document.querySelector('.needs-validation');
 // Select the fields that need additional validation of input data
 const userNameField = document.querySelector('[name=userName]');
 const passwordField = document.querySelector('[name=password]');
-updateStyle('display: none!important;');
 
-userNameField.addEventListener('submit', function() {
+userNameField.addEventListener('input', function () {
     console.log(userNameField.value);
 });
 
-form.addEventListener('submit', function(event){
-    let userName = userNameField.value;
-    doFetch(userName);
-    if (!form.checkValidity()) {
-        event.preventDefault();
-        event.stopPropagation();
-    }
-})
+document.getElementById("loginvalid").addEventListener("click", function () {
+    doFetch(userNameField.value);
+});
 
 function doFetch(userName) {
     fetch('/api/customer/find/username/' + userName, {
@@ -28,31 +22,45 @@ function doFetch(userName) {
     })
         .then(response => {
             if (response.ok) {
-                userNameField.setCustomValidity('');
                 return response.json();
             } else {
-                userNameField.setCustomValidity('Ongeldige invoer');
-                console.log(userNameField.validity);
                 showError();
+                console.log("Username not found");
             }
         })
-        .then(json => {
+        .then(res => {
             const passwordInput = passwordField.value;
-            const password = json.password;
+            const password = res.password;
             if (passwordInput !== password) {
-                passwordField.setCustomValidity('Ongeldige invoer');
+                console.log("Password not correct");
                 showError();
             } else {
-                passwordField.setCustomValidity('');
+                showSuccess();
+                console.log("Password correct");
             }
         })
 }
 
 function showError() {
-    updateStyle('display:block!important;')
+    updateStyleError('display:block!important;');
 }
 
-function updateStyle(style) {
+function showSuccess() {
+    updateStyleSuccess('display:block!important;');
+}
+
+function updateStyleError(style) {
     const error = document.querySelector('#error');
     error.setAttribute('style', style);
+    window.setTimeout(function () {
+        $('.alert-danger').alert('close');
+    }, 2000);
+}
+
+function updateStyleSuccess(style) {
+    const success = document.querySelector('#success');
+    success.setAttribute('style', style);
+    window.setTimeout(function () {
+        $('.alert-success').alert('close');
+    }, 2000);
 }

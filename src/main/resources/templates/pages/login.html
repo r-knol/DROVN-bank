@@ -14,33 +14,44 @@
                 <div class="row">
                     <div class="col-md-8 mx-auto">
                         <h2>Inloggen klant</h2>
-                        <form action="#" th:action="@{/customer-with-accounts}" method="post" novalidate class="needs-validation">
-                            <div id="error" class="alert alert-danger d-flex flex-row align-items-center" role="alert" style="display:none!important;">
-                                <i class="fas fa-exclamation-triangle" style="font-size: 2.5rem; padding-right: 20px;"></i>
-                                <span>Je inloggegevens kloppen niet, controleer de combinatie van je gebruikersnaam en wachtwoord.</span>
-                            </div>
-                                <div class="col-md-6 form-group">
+                        <form action="#" th:action="@{/customer-with-accounts}" method="post" novalidate
+                              class="needs-validation">
+
+                                <div id="error" class="alert alert-danger alert-dismissible fade show" role="alert"
+                                     style="display:none!important;">
+                                    <i class="fas fa-exclamation-triangle"
+                                       style="font-size: 2.5rem; padding-right: 20px;"></i>
+                                    <span>Je inloggegevens kloppen niet, controleer de combinatie van je gebruikersnaam en wachtwoord.</span>
+                                </div>
+                                <div id="success" class="alert alert-success alert-dismissible fade show" role="alert"
+                                     style="display:none!important;">
+                                    <i class="fas fa-check-circle" style="font-size: 2.5rem; padding-right: 20px;"></i>
+                                    <span>Je inloggegevens kloppen!</span>
+                                </div>
+
+                            <div class="col-auto form-group">
                                 <i class="fa fa-user icon"></i>
                                 <label>Gebruikersnaam</label>
-                                <input type="text" class="form-control" name="userName" required
-                                       maxlength="16" minlength="1"
-                                       pattern="^[A-Za-z0-9_]+$">
+                                <input type="text" class="form-control" name="userName" required>
                             </div>
-                            <div class="col-md-6 form-group">
+
+                            <div class="col-auto form-group">
                                 <i class="fa fa-key icon"></i>
                                 <label>Wachtwoord</label>
                                 <input type="password" class="form-control" name="password" required>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="remember" value="1"> Onthoud me
-                                </label>
+
+                            <div class="row">
+                                <div class="col-md-auto">
+                                    <input type="submit" class="btn btn-primary" value="Inloggen"></div>
+                                <div class="col-md-auto">
+                                    <input id="loginvalid" type="button" class="btn btn-outline-primary"
+                                           data-dismiss="alert" value="Login validatie">
+                                </div>
                             </div>
-                            <div class="col-md-4">
-                                <input type="submit" class="btn btn-primary" value="Inloggen">
-                            </div>
+
                         </form>
-                        <div class="col-md-4 mx-lg-0"> <br/>
+                        <div class="col-md-4 mx-lg-0"><br/>
                             <a th:href="@{/}">Ga terug naar home</a><br>
                             <a th:href="@{/loginemployee}">Inloggen als medewerker</a>
                         </div>
