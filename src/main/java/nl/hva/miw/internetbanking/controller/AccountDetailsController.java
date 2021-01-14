@@ -61,8 +61,13 @@ public class AccountDetailsController {
         return "pages/account_details";
     }
 
-    @PostMapping("/account-overview")
-    public String returnToAccountOverview (@ModelAttribute ("customer") Customer customer, Model model) {
+    @PostMapping("/account_details/")
+    public String returnToAccountOverview (@ModelAttribute ("customer") Customer customer,
+                                           @ModelAttribute ("customerWithAccountOverview") CustomerHasAccountsDTO customerDto,
+                                           Model model) {
+        customerDto.setAccountList(accountService.getAccountsForCustomer(customer));
+        customerService.setCustomerWithAccounts(customerDto);
+        model.addAttribute("customerWithAccountOverview", customerDto);
         model.addAttribute("customer", customer);
         return "pages/account-overview";
     }

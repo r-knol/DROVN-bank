@@ -1,6 +1,7 @@
 package nl.hva.miw.internetbanking.model;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -134,7 +135,7 @@ public class Transaction implements Serializable {
     }
 
     public String showDateTime() {
-        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm aaa");
+        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("d MMMM yyyy");
         return date.format(formatDateTime);
     }
 
@@ -147,16 +148,16 @@ public class Transaction implements Serializable {
 
     public String showAmount() {
         if (transactionAmount() > 0) {
-            return String.format("+%.2f", transactionAmount());
+            return String.format("€ +%.2f", transactionAmount());
         } else {
-            return String.format("-%.2f", transactionAmount());
+            return String.format("€ -%.2f", transactionAmount());
         }
     }
 
-
-
-    public String showDetails() {
-        return String.format("Datum: %s\nOmschrijving: %s\nIBAN: %s", showDateTime(), description, showContraAccount());
+    public String showTransactionDetails() {
+        return String.format("TransactieNo: %d\n\tTegenrekening: %s\n\tDatum/tijd: %s\n\tOmschrijving: %s",
+                transactionID, showContraAccount(), showDateTime(),
+                description);
     }
 
 
