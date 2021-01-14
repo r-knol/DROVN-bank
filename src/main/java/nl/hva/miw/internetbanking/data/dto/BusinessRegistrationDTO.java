@@ -3,6 +3,9 @@ package nl.hva.miw.internetbanking.data.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import nl.hva.miw.internetbanking.data.validator.KvkNumberConstraint;
+import nl.hva.miw.internetbanking.data.validator.SectorConstraint;
+import nl.hva.miw.internetbanking.data.validator.UsernameExistsConstraint;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import nl.hva.miw.internetbanking.model.Sector;
 
@@ -18,28 +21,27 @@ public class BusinessRegistrationDTO implements DTO<LegalPerson> {
     @NotBlank
     @Size(min = 4, max = 16)
     @Pattern(regexp = "^[A-Za-z0-9_]+$")
+    @UsernameExistsConstraint
     private String userName;
 
     @NotBlank
     @Size(min = 6, max = 16)
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{0,}$")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,16}$")
     private String password;
 
     @NotBlank
     @Size(min = 6, max = 16)
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{0,}$")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,16}$")
     private String passwordConfirmation;
 
     @NotBlank
     @Size(max = 45)
     private String companyName;
 
-    @NotBlank
-    @Pattern(regexp = "^[0-9]{8}$")
-    @Size(min = 8, max = 8)
+    @KvkNumberConstraint
     private long kvkNumber;
 
-    @NotBlank
+    @SectorConstraint
     private Sector sector;
 
     @NotBlank
@@ -57,7 +59,7 @@ public class BusinessRegistrationDTO implements DTO<LegalPerson> {
     @Size(max = 10)
     private String homeNumber;
 
-    @NotBlank
+    @NotBlank(message = "street")
     @Pattern(regexp = "^([-.\\s]|[a-zA-Z0-9]|[À-Ö]|[Ø-ö]|[ø-ǿ]|[Ȁ-ʯ]|[̀-ͯ]|[Ḁ-ỿ]|[Ⅰ-ↈ])+$")
     @Size(max = 45)
     private String street;

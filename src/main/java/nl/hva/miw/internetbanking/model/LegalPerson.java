@@ -10,6 +10,7 @@ import java.io.Serializable;
 public class LegalPerson extends Customer implements Serializable {
 
     private static final long serialVersionUID = -4561050351049225947L;
+    private static final long DEFAULT_ACCOUNTMANAGER_ID = 1;
     private String companyName;
     private long kvkNumber;
     private Sector sector;
@@ -54,6 +55,7 @@ public class LegalPerson extends Customer implements Serializable {
     public LegalPerson() {
         super(ZERO, EMPTY_STRING, EMPTY_STRING, CustomerType.LEGAL);
         sector = Sector.NOT_SPECIFIED;
+        accountmanagerID = DEFAULT_ACCOUNTMANAGER_ID;
     }
 
     @Override

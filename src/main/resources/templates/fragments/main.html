@@ -11,14 +11,24 @@
     <div th:replace="fragments/main-content :: content-registration"></div>
 </main>
 
-<main class="min-vw-100" role="main" th:fragment="main-confirmation-business">
+<main class="min-vw-100" role="main" th:fragment="main-confirmation-business-no-errors">
     <div th:replace="fragments/jumbotron :: jumbotron-registration-confirmation"></div>
-    <div th:replace="fragments/main-content :: content-confirmation-business"></div>
+    <div th:replace="fragments/main-content :: content-confirmation-business-no-errors"></div>
 </main>
 
-<main class="min-vw-100" role="main" th:fragment="main-confirmation-private">
+<main class="min-vw-100" role="main" th:fragment="main-confirmation-private-no-errors">
     <div th:replace="fragments/jumbotron :: jumbotron-registration-confirmation"></div>
-    <div th:replace="fragments/main-content :: content-confirmation-private"></div>
+    <div th:replace="fragments/main-content :: content-confirmation-private-no-errors"></div>
+</main>
+
+<main class="min-vw-100" role="main" th:fragment="main-confirmation-private-with-errors">
+    <div th:replace="fragments/jumbotron :: jumbotron-registration-confirmation"></div>
+    <div th:replace="fragments/main-content :: content-confirmation-private-with-errors"></div>
+</main>
+
+<main class="min-vw-100" role="main" th:fragment="main-confirmation-business-with-errors">
+    <div th:replace="fragments/jumbotron :: jumbotron-registration-confirmation"></div>
+    <div th:replace="fragments/main-content :: content-confirmation-business-with-errors"></div>
 </main>
 
 </html>
