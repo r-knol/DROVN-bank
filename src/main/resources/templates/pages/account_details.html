@@ -1,136 +1,65 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
-<head th:replace="fragments/head :: head-default (pageTitle='Transactieoverzicht', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
-
+<head th:replace="fragments/head :: head-account_details (pageTitle='Bij- en afschrijvingen', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <body>
 <div class="container-fluid min-vh-100" id="page">
-    <div id="header" class="row header-default">
+    <div class="row header-default" id="header">
         <header th:replace="fragments/header :: header-default"></header>
     </div>
-
-    <div id="main-content" align="center">
-        <main role="main" class="min-vw-100">
-            <div class="jumbotron"
-                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover; width: 90%; max-height: 60%">
-                <div class="container pt-sm-2 pb-sm-2 text-white">
-                    <h1 align="left"><span class="display-4 h-25"><span style="color: #0066ff" th:text="${nameCurrentCus}"></span> | <span class="text-orange">Bij- en afschrijvingen</span></span>
-                    </h1>
-                    <p> <br></p>
-                    <h3 align="right"><span style="color: #0066ff" th:text="${account.getIban()}">IBAN</span> | <span class="display-5 h-25"><span class="text-orange">Saldo</span> | <span style="color: #0066ff">€ </span><span style="color: #0066ff" th:text="${account.showBalance}">Saldo</span> </h3>
-                </div>
-            </div >
-<!--            <div align="center">-->
-<!--                <p class="mt-5"><a class="btn btn-primary btn-lg btn-block" style="font-size: initial; width: 90%" href="#"-->
-<!--                                   role="button">Geld overboeken »</a></p>-->
-<!--            </div>-->
-
-            <form action="#" method="get" th:action="@{/account-overview.html}" th:object="${customer}">
-                <div class="jumbotron-fluid">
-                    <a class="mt-lg-5"><input type="submit" class="btn btn-primary btn-lg btn-block" style="font-size: 150%; width: 90%" role="button"
-                                              value="« Terug naar Rekeningoverzicht"></a>
-                    <p><br></p>
-                </div>
-            </form>
-
-            <div> <br> </div>
-
-            <form action="#" method="get" th:action="@{/do-transaction/}" th:object="${customerWithAccountOverview}">
-                <div class="jumbotron-fluid">
-                    <a class="mt-lg-5"><input type="submit" class="btn btn-primary btn-lg btn-block" style="font-size: 150%; width: 90%" role="button"
-                                              value="Geld overboeken »"></a>
-                    <p><br></p>
-                </div>
-            </form>
-
-            <div> <br> </div>
-
-            <div class="jumbotron" style="background: linear-gradient(65deg, rgba(243, 146, 0, 0.2), rgba(243, 146, 0, 0.2) );background-size: cover; width: 90%; max-height: 60%">
-                <p style="font-size: 250%; color: #F39200" align="center" th:if="${account.getTransactions().isEmpty()}">Er zijn geen bij- en/of afschrijvingen om weer te geven.</p>
-                <div align="center" style="width: border-box">
-
-<!--                    <div class="accordion" id="accordionTransactione">-->
-<!--                        <div class="card" style="font-size: 125%" th:each="t : ${account.getTransactions}">-->
-<!--                            <div class="card-header" id="transaction">-->
-<!--                                <h5 class="mb-0">-->
-<!--                                    <button class="btn btn-link" type="button" data-toggle="collapse"-->
-<!--                                            data-target="#collapseOne"-->
-<!--                                            aria-expanded="true" aria-controls="collapseOne">-->
-<!--                                        <p style="color: #312783" th:text="${t.showDate}"></p>-->
-<!--                                        <p style="color: #312783">-->
-<!--                                        <ul class="list-group-horizontal list-inline" style="list-style-type:none; display: table-row">-->
-<!--                                            <li class="list-inline-item" th:each="name : ${t.getContraAccountHolderNames()}" th:text="${name}" > </li>-->
-<!--                                        </ul>-->
-<!--                                            <p style="color: #312783" class="list-inline-item" th:text="${t.showAmount}"></p>-->
-<!--                                    </button>-->
-<!--                                </h5>-->
-<!--                            </div>-->
-<!--                            <div id="collapseOne" class="collapse show"-->
-<!--                                 aria-labelledby="headingOne" data-parent="#accordionExample">-->
-<!--                                <div class="card-body">-->
-<!--                                    <p style="color: #F39200" th:text="${t.showContraAccount}"></p>-->
-<!--                                    <p style="color: #312783" th:text="${t.description}"></p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-
-
-
-                    <style>
-                        th, td {
-                            padding: 20px;
-                        }
-                    </style>
-
-                    <table style="width: 100%; "  class="fold-table; container-fluid" data-sort-name="Date" data-sort-order="desc"
-                           th:unless="${account.getTransactions().isEmpty()}"
-                           th:object="${account}">
-                        <thead class="text-white" bgcolor="#312783">
-
-                        <tr style="font-size: 150%">
-                            <th scope="col" style="width: 20%">Datum</th>
-                            <th scope="col" style="width: 30%">Tenaamstelling</th>
-                            <th scope="col" style="width: 20%">Tegenrekening</th>
-                            <th scope="col" style="width: 25%">Omschrijving</th>
-                            <th scope="col" style="width: 10%; text-align: right">Bedrag</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        <tr style="font-size: 125%" th:each="t : ${account.getTransactions}">
-                            <td style="color: #312783" th:text="${t.showDate}"></td>
-                            <td style="color: #312783">
-                                <ul class="list-group-horizontal list-inline" style="list-style-type:none; display: table-row">
-                                        <li class="list-inline-item" th:each="name : ${t.getContraAccountHolderNames()}" th:text="${name}" > </li>
-                                </ul>
-                            </td>
-                            <td style="color: #F39200" th:text="${t.showContraAccount}"></td>
-                            <td style="color: #312783" th:text="${t.description}"></td>
-                            <td style="text-align: right"><span style="text-align: right; color: #312783" th:text="${t.showAmount}"></span></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-
-        </main>
+    <div class="row mb-5" id="main-content">
+        <main th:replace="fragments/main :: main-mutations"></main>
+    </div>
+    <div class="row footer-default" id="footer">
+        <footer th:replace="fragments/footer :: footer-default"></footer>
     </div>
 </div>
-
 </body>
-<div id="footer" class="row footer-default">
-    <footer th:replace="fragments/footer :: footer-default"></footer>
-</div>
-<script>
-    $('.accordion-toggle').click(function(){
-        $('.hiddenRow').hide();
-        $(this).next('tr').find('.hiddenRow').show();
-    });
-    $('.collapse').on('show.bs.collapse', function () {
-        $('.collapse.in').collapse('hide');
-    });
-</script>
 
 </html>
+
+
+
+
+
+
+
+
+
+<!--                    <style>-->
+<!--                        th, td {-->
+<!--                            padding: 20px;-->
+<!--                        }-->
+<!--                    </style>-->
+
+<!--                    <table style="width: 100%; "  class="fold-table; container-fluid" data-sort-name="Date" data-sort-order="desc"-->
+<!--                           th:unless="${account.getTransactions().isEmpty()}"-->
+<!--                           th:object="${account}">-->
+<!--                        <thead class="text-white" bgcolor="#312783">-->
+
+<!--                        <tr style="font-size: 150%">-->
+<!--                            <th scope="col" style="width: 20%">Datum</th>-->
+<!--                            <th scope="col" style="width: 30%">Tenaamstelling</th>-->
+<!--                            <th scope="col" style="width: 20%">Tegenrekening</th>-->
+<!--                            <th scope="col" style="width: 25%">Omschrijving</th>-->
+<!--                            <th scope="col" style="width: 10%; text-align: right">Bedrag</th>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
+
+<!--                        <tbody>-->
+<!--                        <tr style="font-size: 125%" th:each="t : ${account.getTransactions}">-->
+<!--                            <td style="color: #312783" th:text="${t.showDate}"></td>-->
+<!--                            <td style="color: #312783">-->
+                              <!--  <ul class="list-group-horizontal list-inline" style="list-style-type:none; display: table-row">
+                                        <li class="list-inline-item" th:each="name : ${t.getContraAccountHolderNames()}" th:text="${name}" > </li>
+                                </ul>-->
+<!--                            </td>-->
+<!--                            <td style="color: #F39200" th:text="${t.showContraAccount}"></td>-->
+<!--                            <td style="color: #312783" th:text="${t.description}"></td>-->
+<!--                            <td style="text-align: right"><span style="text-align: right; color: #312783" th:text="${t.showAmount}"></span></td>-->
+<!--                        </tr>-->
+<!--                        </tbody>-->
+<!--                    </table>-->
+
+
+
