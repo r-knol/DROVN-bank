@@ -2,6 +2,13 @@
 <html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
 <head th:replace="fragments/head :: head-openAccount (pageTitle='Rekening Openen', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <body>
+<style>
+    #submit {
+        position: fixed;
+        left: 550px;
+        top: 585px;
+    }
+</style>
 <div class="jumbotron jumbotron-fluid"
      style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover; width: 100%; max-height: 60%">
     <div id="header" class="row header-default">
@@ -19,29 +26,28 @@
                 <form action="/saveaccount" method="post" name="ibanForm">
                     <input type="text" th:field="*{customer.customerID}" value="customer.customerID" hidden/>
 
-                    <div class="form-group mb-sm-5">
-                        <label for="ibanGenerator">Uw nieuwe rekeningnummer: </label>
+                    <div class="form-group mb-sm-4">
+                        <label for="ibanGenerator"><h4> Uw nieuwe rekeningnummer: </h4></label>
                         <input type="text" th:field="*{account.iban}" id="ibanGenerator"
                                placeholder="IBAN" readonly required/>
                     </div>
-                    <div class="form-group mb-sm-5">
-                        <label for="balance">Uw huidige saldo: <i class="fa fa-eur"></i></label>
-                        <input type="text" size="4" th:field="*{account.balance}" id="balance"
+                    <div class="form-group mb-sm-4">
+                        <label for="balance"><h4>Uw huidige saldo: <i class="fa fa-eur"></i></h4></label>
+                        <input type="text" size="3" th:field="*{account.balance}" id="balance"
                                placeholder="Saldo" readonly/>
                     </div>
-                    <p>
-                        <a href="https://www.termsandconditionsgenerator.com/live.php?token=WMGxy8SYoQkOH2QDFKuWdAqUeZ9mgMuS">Algemene
+                    <div class="form-group mb-sm-4">
+                    <p>Door te bevestigen gaat u akkoord met de <a href="https://www.termsandconditionsgenerator.com/live.php?token=WMGxy8SYoQkOH2QDFKuWdAqUeZ9mgMuS">algemene
                             voorwaarden</a>
-                    </p>
-                    <input type="checkbox" required> Ik heb de algemene voorwaarden gelezen en ik ga hiermee akkoord
-                    <div class="row">
-                        <div class="col-md-4">
+                    <br> </p>
+                    <br>
+                        <div class="row-cols-2">
                     <input type="submit" id="submit" class="btn btn-primary" value="Bevestigen"
                                        data-toggle="modal" data-target="#confirmationNewAccount">
                         </div>
                     </div>
                 </form>
-                <div class="row-cols-4">
+                <div class="row-cols-3">
                 <form action="#" method="get" th:action="@{/customer-with-accounts}">
                     <div class="col-md-4">
                         <input type="submit" class="btn btn-primary" value="Rekeningoverzicht">
