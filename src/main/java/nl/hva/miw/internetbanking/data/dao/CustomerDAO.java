@@ -27,7 +27,7 @@ public class CustomerDAO implements DAO<Customer, Long> {
     @Override
     @Transactional
     public void create(Customer customer) {
-        final String sql = "INSERT INTO Customer(userName, password, customerType) VALUES(?,?,?)";
+        final String sql = "INSERT INTO customer(userName, password, customerType) VALUES(?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"customerId"});
@@ -42,46 +42,46 @@ public class CustomerDAO implements DAO<Customer, Long> {
 
     @Override
     public Optional<Customer> read(Long customerID) {
-        final String sql = "SELECT * FROM Customer WHERE customerID = ?";
+        final String sql = "SELECT * FROM customer WHERE customerID = ?";
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), customerID));
     }
 
     @Override
     public void update(Customer customer) {
-        final String sql = "UPDATE Customer SET userName = ?, password = ? WHERE customerID = ?";
+        final String sql = "UPDATE customer SET userName = ?, password = ? WHERE customerID = ?";
         jdbcTemplate.update(sql, customer.getUserName(), customer.getPassword(),
                             customer.getCustomerID());
     }
 
     @Override
     public void delete(Customer customer) {
-        jdbcTemplate.update("DELETE FROM Customer WHERE customerID = ?", customer.getCustomerID());
+        jdbcTemplate.update("DELETE FROM customer WHERE customerID = ?", customer.getCustomerID());
     }
 
     @Override
     public void deleteById(Long id) {
-        jdbcTemplate.update("DELETE FROM Customer WHERE customerID = ?", id);
+        jdbcTemplate.update("DELETE FROM customer WHERE customerID = ?", id);
     }
 
     @Override
     public Optional<List<Customer>> list() {
-        return Optional.of(jdbcTemplate.query("SELECT * FROM Customer", new CustomerRowMapper()));
+        return Optional.of(jdbcTemplate.query("SELECT * FROM customer", new CustomerRowMapper()));
     }
 
     public Optional<Customer> read(String userName) {
-        String sql = "SELECT * FROM Customer WHERE userName = ?";
+        String sql = "SELECT * FROM customer WHERE userName = ?";
         return Optional
                 .ofNullable(jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), userName));
     }
 
     public boolean existsByUsername(String username) {
-        final String sql = "SELECT * FROM Customer WHERE userName = ?";
+        final String sql = "SELECT * FROM customer WHERE userName = ?";
         return jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), username) != null;
     }
 
     public List<Customer> getCustomerByAccountId(long accountId) {
-        final String sql = "SELECT customer.customerid, customer.username, customer.password, " +
-                           "customer.customerType, account.accountid, account.iban, account" +
+        final String sql = "SELECT customer.customerID, customer.userName, customer.password, " +
+                           "customer.customerType, account.accountID, account.iban, account" +
                            ".balance\n" +
                            "FROM customer_has_account JOIN customer ON customer_has_account" +
                            ".customerID=customer.customerID JOIN account ON\n" +
@@ -91,35 +91,35 @@ public class CustomerDAO implements DAO<Customer, Long> {
     }
 
     public Customer getCustomerByAccountForTransaction (long accountID) {
-        final String sql = "SELECT customer.customerid, customer.username, customer.password, " +
-                "customer.customerType, account.accountid, account.iban, account" +
-                ".balance\n" +
-                "FROM customer_has_account JOIN customer ON customer_has_account" +
-                ".customerID=customer.customerID JOIN account ON\n" +
-                "account.accountID=customer_has_account.accountID WHERE account" +
-                ".accountID = ?";
+        final String sql = "SELECT customer.customerID, customer.userName, customer.password, " +
+                           "customer.customerType, account.accountid, account.iban, account" +
+                           ".balance\n" +
+                           "FROM customer_has_account JOIN customer ON customer_has_account" +
+                           ".customerID=customer.customerID JOIN account ON\n" +
+                           "account.accountID=customer_has_account.accountID WHERE account" +
+                           ".accountID = ?";
         return jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), accountID);
     }
 
     public List<Customer> getCustomerListByIban (String iban) {
-        final String sql = "SELECT customer.customerid, customer.username, customer.password, " +
-                "customer.customerType, account.accountid, account.iban, account" +
-                ".balance\n" +
-                "FROM customer_has_account JOIN customer ON customer_has_account" +
-                ".customerID=customer.customerID JOIN account ON\n" +
-                "account.accountID=customer_has_account.accountID WHERE account" +
-                ".iban = ?";
+        final String sql = "SELECT customer.customerID, customer.userName, customer.password, " +
+                           "customer.customerType, account.accountID, account.iban, account" +
+                           ".balance\n" +
+                           "FROM customer_has_account JOIN customer ON customer_has_account" +
+                           ".customerID=customer.customerID JOIN account ON\n" +
+                           "account.accountID=customer_has_account.accountID WHERE account" +
+                           ".iban = ?";
         return jdbcTemplate.query(sql, new CustomerRowMapper(), iban);
     }
 
     public Customer getCustomerByIban (String iban) {
-        final String sql = "SELECT customer.customerid, customer.username, customer.password, " +
-                "customer.customerType, account.accountid, account.iban, account" +
-                ".balance\n" +
-                "FROM customer_has_account JOIN customer ON customer_has_account" +
-                ".customerID=customer.customerID JOIN account ON\n" +
-                "account.accountID=customer_has_account.accountID WHERE account" +
-                ".iban = ?";
+        final String sql = "SELECT customer.customerID, customer.userName, customer.password, " +
+                           "customer.customerType, account.accountID, account.iban, account" +
+                           ".balance\n" +
+                           "FROM customer_has_account JOIN customer ON customer_has_account" +
+                           ".customerID=customer.customerID JOIN account ON\n" +
+                           "account.accountID=customer_has_account.accountID WHERE account" +
+                           ".iban = ?";
         return jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), iban);
     }
 
