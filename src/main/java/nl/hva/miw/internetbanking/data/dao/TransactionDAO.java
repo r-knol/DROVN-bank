@@ -81,7 +81,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     }
 
     public List<Transaction> getTransactionsForAccount (Account account) {
-        List<Transaction> transactions = getTransactionsByAccountId(account.getAccountID());
+        List<Transaction> transactions = getTransactionsByIban(account.getIban());
         System.out.println(account.getAccountID());
         for (Transaction t : transactions) {
             t.addTransactionToAccount(account);
@@ -91,17 +91,14 @@ public class TransactionDAO implements DAO<Transaction, Long> {
         return transactions;
     }
 
-    public List<Transaction> getTransactionsByAccountId (long accountID) {
-        final String sql = "SELECT account.accountID, account.iban, account.balance, transaction" +
-                           ".transactionID, transaction.amount, transaction.description, \n" +
-                           "transaction.dateTime, transaction.creditAccount, transaction" +
-                           ".debitAccount " +
-                           "FROM transaction_has_account JOIN transaction ON \n" +
-                           "transaction_has_account.transactionID=transaction.transactionID JOIN " +
-                           "account" +
-                           " ON account.accountID=transaction_has_account.accountID \n" +
-                           "WHERE account.accountID = ?";
-        return jdbcTemplate.query(sql, new TransactionRowMapper(), accountID);
+    public List<Transaction> getTransactionsByIban (String iban) {
+        final String sql = "SELECT account.accountid, account.iban, account.balance, " +
+                "transaction.transactionID, transaction.amount, transaction.description,\n" +
+                "transaction.dateTime, transaction.creditAccount, transaction.debitAccount " +
+                "FROM transaction JOIN account ON account.iban = transaction.creditAccount\n" +
+                "WHERE transaction.creditAccount OR transaction.debitAccount = ?\n" +
+                "ORDER BY transaction.dateTime DESC";
+        return jdbcTemplate.query(sql, new TransactionRowMapper(), iban);
     }
 
     public Transaction getCreditTransaction (String iban) {
