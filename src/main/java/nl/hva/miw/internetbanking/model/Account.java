@@ -1,19 +1,29 @@
 package nl.hva.miw.internetbanking.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account {
+public class Account implements Serializable {
+
+    private static final long serialVersionUID = 8922473667746953263L;
 
     private long accountID;
-    private double balance;
     private String iban;
+    private double balance;
     private List<Transaction> transactions;
     private List<Customer> accountHolders;
+    private List<String> accountHolderNames;
 
-  public List<Customer> getAccountHolders() {
-    return accountHolders;
-  }
+    public Account(String iban) {
+        this.iban = iban;
+    }
+
+    public List<Customer> getAccountHolders() {
+        return accountHolders;
+    }
 
   public void setAccountHolders(List<Customer> accountHolders) {
     this.accountHolders = accountHolders;
@@ -23,12 +33,18 @@ public class Account {
     this.accountHolders.add(customer);
   }
 
+  @Autowired
   public Account(long accountID, double balance, String iban) {
         this.accountID = accountID;
         this.balance = balance;
         this.iban = iban;
         this.transactions = new ArrayList<>();
         this.accountHolders = new ArrayList<>();
+        this.accountHolderNames = new ArrayList<>();
+    }
+
+    public Account(double balance, String iban) {
+        this(0,balance, iban);
     }
 
     public Account() {
@@ -70,12 +86,36 @@ public class Account {
         this.transactions = transactions;
     }
 
+    public List<String> getAccountHolderNames() {
+        return accountHolderNames;
+    }
+
+    public void setAccountHolderNames(List<String> accountHolderNames) {
+        this.accountHolderNames = accountHolderNames;
+    }
+
+    public void addAccountHolderName(String name) {
+        accountHolderNames.add(name);
+    }
+
+    public void addTransaction (Transaction transaction) {
+      transactions.add(transaction);
+    }
+
+    public String showBalance() {
+        if (balance > 0) {
+            return String.format("+%.2f",balance);
+        } else {
+            return String.format("-%.2f", balance);
+        }
+    }
+
     @Override
     public String toString() {
         return "Account{" +
                 "accountID=" + accountID +
-                ", balance=" + balance +
                 ", iban='" + iban + '\'' +
+                ", balance=" + balance +
                 ", transactions=" + transactions +
                 '}';
     }

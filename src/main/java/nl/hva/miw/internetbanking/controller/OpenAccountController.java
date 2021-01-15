@@ -1,17 +1,22 @@
 package nl.hva.miw.internetbanking.controller;
 
-
 import nl.hva.miw.internetbanking.model.Account;
+import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Optional;
 
 @Controller
+@SessionAttributes("customer")
 public class OpenAccountController {
 
     private AccountService accountService;
@@ -22,16 +27,33 @@ public class OpenAccountController {
     public OpenAccountController(AccountService accountService, CustomerService customerService) {
         this.accountService = accountService;
         this.customerService = customerService;
-        logger.warn("New OpenAccountController.");
     }
 
-    @GetMapping("/rekeningOpenen")
-    public String rekeningOpenen(Model model) {
-        Account account = new Account();
-        model.addAttribute("rekening", account);
-        return "rekeningOpenen";
+   @GetMapping("/openaccount")
+    public String showNewAccount(@ModelAttribute("customer") Customer customer,  Model model){
+        Account newAccount = new Account();
+        model.addAttribute("account", newAccount);
+        model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customer.getCustomerID()));
+        model.addAttribute("customer", customer);
+       logger.info(" openaccount " + model);
+       return "pages/open-account";
     }
 
-    //@Author Veroniek methode toevoegen die IBAN genereert, in rekeningOpenen.html toont en daarna opslaan in DB met customerID
+    @PostMapping("/saveaccount")
+    public String saveAccount (@ModelAttribute ("account") Account account, @ModelAttribute ("customer") Customer customer){
+        logger.info(" Dit is huidige: " + account + customer);
+        accountService.saveNewAccount(account, customer);
+        return "pages/open-account";
+    }
 
+    @CrossOrigin
+    @PostMapping("/check_iban")
+    public @ResponseBody String ibanCheckDB(@RequestParam String iban){
+        System.out.println("Request data in: " + iban);
+        String ibanFound = accountService.getAccountByIban(iban).get().getIban();
+        if (iban.equals(ibanFound)) {
+            return ibanFound;
+        }
+        return null;
+    }
 }

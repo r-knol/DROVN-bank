@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns:th="http://www.thymeleaf.org">
+
 <div th:fragment="scripts-before-closing-tag">
     <script type="text/javascript">
         const $dropdown = $(".dropdown");
@@ -44,5 +45,23 @@
             })
         });
     </script>
+    <script>
+        // jQuery script to attach footer to the bottom of the page if content is to short
+        $(document).ready(function () {
+            const docHeight = $(window).height();
+            const footerHeight = $('#footer').height();
+            const footerTop = $('#footer').position().top + footerHeight;
+
+            if (footerTop < docHeight)
+                $('#footer').css('margin-top', 10 + (docHeight - footerTop) + 'px');
+        });
+    </script>
 </div>
+
+<div th:fragment="script-trigger-modal-new-account">
+    <script th:if="${accountCreated == 'true'}">
+        $('#modalNewAccount').modal();
+    </script>
+</div>
+
 </html>

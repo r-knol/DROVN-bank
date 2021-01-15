@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="fragments/head :: head-login (pageTitle='Login Customer', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
+<body>
+
+<div class="container-fluid min-vh-100" id="page">
+    <div id="header" class="row header-default">
+        <header th:replace="fragments/header :: head-login"></header>
+    </div>
+    <div id="main-content" class="row">
+        <main role="main" class="min-vw-100">
+
+            <div class="container-my-3">
+                <div class="row">
+                    <div class="col-md-8 mx-auto">
+                        <h2>Inloggen medewerker</h2>
+                        <form action="#" th:action="@{/loginemployee}" method="post">
+
+                            <div class="col-auto form-group">
+                                <i class="fa fa-user icon"></i>
+                                <label>Gebruikersnaam</label>
+                                <input type="text" class="form-control" name="userName" required
+                                       maxlength="16" minlength="1"
+                                       pattern="^[A-Za-z0-9_]+$">
+                            </div>
+
+                            <div class="col-auto form-group">
+                                <i class="fa fa-key icon"></i>
+                                <label>Wachtwoord</label>
+                                <input type="password" class="form-control" name="password" required>
+                            </div>
+
+                            <div class="col-md-auto">
+                                <input type="submit" class="btn btn-primary" value="Inloggen">
+                            </div>
+
+                        </form>
+                        <div class="col-md-4 mx-lg-0"><br/>
+                            <a th:href="@{/}">Ga terug naar home</a><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<div class="row footer-default" id="footer">
+    <footer th:replace="fragments/footer :: footer-default"></footer>
+</div>
+
+</body>
+</html>

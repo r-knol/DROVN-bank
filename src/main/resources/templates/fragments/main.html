@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+
+<main class="min-vw-100" role="main" th:fragment="main-home">
+    <div th:replace="fragments/jumbotron :: jumbotron-home"></div>
+    <div th:replace="fragments/main-content :: content-home"></div>
+</main>
+
+<main class="min-vw-100" role="main" th:fragment="main-registration">
+    <div th:replace="fragments/jumbotron :: jumbotron-registration"></div>
+    <div th:replace="fragments/main-content :: content-registration"></div>
+</main>
+
+<main class="min-vw-100" role="main" th:fragment="main-confirmation-business-no-errors">
+    <div th:replace="fragments/jumbotron :: jumbotron-registration-confirmation"></div>
+    <div th:replace="fragments/main-content :: content-confirmation-business-no-errors"></div>
+</main>
+
+<main class="min-vw-100" role="main" th:fragment="main-confirmation-private-no-errors">
+    <div th:replace="fragments/jumbotron :: jumbotron-registration-confirmation"></div>
+    <div th:replace="fragments/main-content :: content-confirmation-private-no-errors"></div>
+</main>
+
+<main class="min-vw-100" role="main" th:fragment="main-confirmation-private-with-errors">
+    <div th:replace="fragments/jumbotron :: jumbotron-registration-confirmation"></div>
+    <div th:replace="fragments/main-content :: content-confirmation-private-with-errors"></div>
+</main>
+
+<main class="min-vw-100" role="main" th:fragment="main-confirmation-business-with-errors">
+    <div th:replace="fragments/jumbotron :: jumbotron-registration-confirmation"></div>
+    <div th:replace="fragments/main-content :: content-confirmation-business-with-errors"></div>
+</main>
+
+<main class="min-vw-100" role="main" th:fragment="main-mutations">
+    <div th:replace="fragments/jumbotron :: jumbotron-mutations"></div>
+    <div th:replace="fragments/main-content :: content-mutations"></div>
+</main>
+
+<main class="min-vw-100" role="main" th:fragment="main-accounts">
+<div th:replace="fragments/jumbotron :: jumbotron-accounts"></div>
+<div th:replace="fragments/main-content :: content-mutations"></div>
+</main>
+
+</html>

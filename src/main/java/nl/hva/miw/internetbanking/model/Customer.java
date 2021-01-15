@@ -1,20 +1,34 @@
 package nl.hva.miw.internetbanking.model;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import nl.hva.miw.internetbanking.service.CustomerService;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuperBuilder
 @NoArgsConstructor
+@Getter
+@Setter
 @ToString
-public class Customer {
+public class Customer implements Serializable {
+
+    public static final String EMPTY_STRING = "";
+    public static final long ZERO = 0L;
+    private static final long serialVersionUID = 6793528094836886930L;
 
     private long customerID;
     private String userName;
     private String password;
     private List<Account> accounts;
     private CustomerType customerType;
+    private String customerName;
+
 
     public Customer(String userName, String password, CustomerType customerType) {
         this.userName = userName;
@@ -28,62 +42,20 @@ public class Customer {
         this.userName = userName;
         this.password = password;
         this.customerType = customerType;
+        this.accounts = new ArrayList<>();
     }
 
     public Customer(long id) {
         this.customerID = id;
     }
 
-    public long getCustomerID() {
-        return customerID;
+    public void addAccount(Account acc) {
+        accounts.add(acc);
     }
 
-    public void setCustomerID(long customerID) {
-        this.customerID = customerID;
+    public void addCustomerName (String name) {
+
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-  public String getUserName() {
-    return userName;
-  }
-
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
-
-  public List<Account> getAccounts() {
-    return accounts;
-  }
-
-  public void setAccounts(List<Account> accounts) {
-    this.accounts = accounts;
-  }
-
-  public void addAccount(Account account) {
-      this.accounts.add(account);
-  }
-
-  @Override
-  public String toString() {
-    return "Customer{" +
-        "customerID=" + customerID +
-        ", userName='" + userName + '\'' +
-        ", password='" + password + '\'' +
-        '}';
-  }
-    public CustomerType getCustomerType() {
-        return customerType;
-    }
-
-    public void setCustomerType(CustomerType customerType) {
-        this.customerType = customerType;
-    }
 
 }

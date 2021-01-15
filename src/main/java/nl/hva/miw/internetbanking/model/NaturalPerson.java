@@ -2,24 +2,22 @@ package nl.hva.miw.internetbanking.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+
+import java.io.Serializable;
 
 @Getter
 @Setter
-@ToString
-public class NaturalPerson extends Customer {
+public class NaturalPerson extends Customer implements Serializable {
 
-    private static final String EMPTY_STRING = "";
-    private static final long LONG_0 = 0;
-
+    private static final long serialVersionUID = 2314734678022380045L;
     private String initials;
     private String firstName;
     private String preposition;
     private String surName;
     private String dateOfBirth;
-    private long socialSecurityNumber;
+    private String socialSecurityNumber;
     private String email;
-    private long phone;
+    private String phone;
     private String postalCode;
     private String homeNumber;
     private String street;
@@ -27,8 +25,8 @@ public class NaturalPerson extends Customer {
 
     public NaturalPerson(long id, String username, String password, CustomerType customerType,
                          String initials, String firstName, String preposition,
-                         String surName, String dateOfBirth, long socialSecurityNumber,
-                         String email, long phone, String postalCode, String homeNumber,
+                         String surName, String dateOfBirth, String socialSecurityNumber,
+                         String email, String phone, String postalCode, String homeNumber,
                          String street, String residence) {
         super(id, username, password, customerType);
         this.initials = initials;
@@ -47,10 +45,10 @@ public class NaturalPerson extends Customer {
 
     public NaturalPerson(String username, String password, CustomerType customerType,
                          String initials, String firstName, String preposition,
-                         String surName, String dateOfBirth, long socialSecurityNumber,
-                         String email, long phone, String postalCode, String homeNumber,
+                         String surName, String dateOfBirth, String socialSecurityNumber,
+                         String email, String phone, String postalCode, String homeNumber,
                          String street, String residence) {
-        super(username, password, customerType);
+        super(ZERO, username, password, customerType);
         this.initials = initials;
         this.firstName = firstName;
         this.preposition = preposition;
@@ -66,10 +64,10 @@ public class NaturalPerson extends Customer {
     }
 
     public NaturalPerson(long id, String initials, String firstName, String preposition,
-                         String surName, String dateOfBirth, long socialSecurityNumber,
-                         String email, long phone, String postalCode, String homeNumber,
+                         String surName, String dateOfBirth, String socialSecurityNumber,
+                         String email, String phone, String postalCode, String homeNumber,
                          String street, String residence) {
-        super(id);
+        super(id, EMPTY_STRING, EMPTY_STRING, CustomerType.NATURAL);
         this.initials = initials;
         this.firstName = firstName;
         this.preposition = preposition;
@@ -85,7 +83,25 @@ public class NaturalPerson extends Customer {
     }
 
     public NaturalPerson() {
-        super(LONG_0, EMPTY_STRING, EMPTY_STRING, CustomerType.NATURAL);
+        super(Customer.ZERO, Customer.EMPTY_STRING, Customer.EMPTY_STRING, CustomerType.NATURAL);
+    }
+
+    @Override
+    public String toString() {
+        return "NaturalPerson{" +
+                "initials='" + initials + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", preposition='" + preposition + '\'' +
+                ", surName='" + surName + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
+                ", socialSecurityNumber=" + socialSecurityNumber +
+                ", email='" + email + '\'' +
+                ", phone=" + phone +
+                ", postalCode='" + postalCode + '\'' +
+                ", homeNumber='" + homeNumber + '\'' +
+                ", street='" + street + '\'' +
+                ", residence='" + residence + '\'' +
+                '}' + "\n" + super.toString();
     }
 
 }

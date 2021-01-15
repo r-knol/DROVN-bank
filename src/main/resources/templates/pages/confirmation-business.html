@@ -1,235 +1,24 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="fragments/head :: head-default (pageTitle='Registratie bevestigen', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
+<head th:replace="fragments/head :: head-registration (pageTitle='Bevestiging Registratie - Zakelijk', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <body>
 <div class="container-fluid min-vh-100" id="page">
     <div class="row header-default" id="header">
-        <header th:replace="fragments/header :: header-default"></header>
+        <header th:replace="fragments/header :: header-home"></header>
     </div>
-    <div class="row mb-5" id="main-content">
-        <main class="min-vw-100" role="main">
-            <div class="jumbotron mb-5"
-                 style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) ), url('/images/klant-worden.jpg'); background-position: left 70%; background-repeat: no-repeat; background-size: cover;">
-                <div class="container text-white">
-                    <h1>Controleer je gegevens</h1>
-                </div>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 mb-4">
-                        <div class="alert alert-success d-flex flex-row align-items-center" role="alert">
-                            <i class="fas fa-info-circle" style="font-size: 2.5rem; padding-right: 20px;"></i>
-                            <span>We hebben de volgende gegevens van je ontvangen. Controleer je gegevens en gebruik de knop
-                            'registratie voltooien' om deze te bevestigen, of gebruik het formulier hieronder om eventuele fouten
-                                te herstellen. Het wachtwoord wordt om veiligheidsredenen niet getoond.</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 table-responsive-md">
-                        <table class="table table-striped mb-5" th:object="${registrationDto}">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th colspan="2" scope="col">Bedrijfsgegevens</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row" width="50%">Bedrijfsnaam</th>
-                                <td th:text="*{legalPerson.companyName}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">KvK-nummer</th>
-                                <td th:text="*{legalPerson.kvkNumber}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Btw-nummer</th>
-                                <td th:text="*{legalPerson.vatNumber}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <table class="table table-striped mb-5" th:object="${registrationDto}">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th colspan="2" scope="col">Accountgegevens</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row" width="50%">Gebruikersnaam</th>
-                                <td th:text="*{customer.userName}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-md-6 table-responsive-md">
-                        <table class="table table-striped mb-5" th:object="${registrationDto}">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th colspan="2" scope="col">Adresgegevens</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <th scope="row" width="50%">Postcode</th>
-                                <td th:text="*{legalPerson.postalCode}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Huisnummer + toevoeging</th>
-                                <td th:text="*{legalPerson.homeNumber}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Straat</th>
-                                <td th:text="*{legalPerson.street}"></td>
-                            </tr>
-                            <tr>
-                                <th scope="row" width="50%">Plaats</th>
-                                <td th:text="*{legalPerson.residence}"></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <form action="#" class="row" method="post" th:action="@{/bevestiging-zakelijk}"
-                              th:object="${registrationDto}">
-                            <input class="btn btn-primary btn-lg btn-block mt-0 ml-3 mb-4 mr-2 pt-3 pb-3 " type="submit"
-                                   value="Registratie voltooien"/>
-                        </form>
-                    </div>
-                </div>
-                <div class="pt-5 pb-5" id="accordion">
-                    <div aria-labelledby="headingOne" class="collapse show" data-parent="#accordion"
-                         id="collapseOne">
-                        <form action="#" class="row needs-validation" method="post" novalidate
-                              th:action="@{/registratie-zakelijk}" th:object="${registrationDto}">
-                            <div class="col-md-12 mt-2 mb-3">
-                                <h4 class="border border-dark border-w-2 rounded p-3">Bedrijfsgegevens</h4>
-                            </div>
-                            <div class="col-md-2 form-group">
-                                <label for="companyName">Bedrijfsnaam</label>
-                                <input class="form-control" id="companyName" name="companyName" required
-                                       th:field="*{legalPerson.companyName}" type="text"/>
-                                <div class="invalid-feedback">
-                                    Hier custom error-message
-                                </div>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="kvkNumber">KvK-nummer</label>
-                                <input class="form-control" id="kvkNumber" name="kvkNumber" required
-                                       th:field="*{legalPerson.kvkNumber}" type="text"/>
-                                <div class="invalid-feedback">
-                                    Hier custom error-message
-                                </div>
-                            </div>
-                            <div class="col-md-2 form-group">
-                                <label for="vatNumber">Btw-nummer</label>
-                                <input class="form-control" id="vatNumber" name="vatNumber" required
-                                       th:field="*{legalPerson.vatNumber}" type="text"/>
-                                <div class="invalid-feedback">
-                                    Hier custom error-message
-                                </div>
-                            </div>
-                            <div class="col-md-12 mt-5 mb-3">
-                                <h4 class="border border-dark border-w-2 rounded p-3">Adresgegevens</h4>
-                            </div>
-                            <div class="col-md-2 form-group">
-                                <label for="postalCode_legal">Postcode</label>
-                                <input aria-describedby="postalCode_legalHelp" class="form-control"
-                                       id="postalCode_legal" name="postalCode_legal" required
-                                       th:field="*{legalPerson.postalCode}" type="text"/>
-                                <div class="invalid-feedback">
-                                    Hier custom error-message
-                                </div>
-                                <small class="form-text text-muted" id="postalCode_legalHelp">Format:
-                                    1234AB</small>
-                            </div>
-                            <div class="col-md-2 form-group">
-                                <label for="homeNumber_legal">Huisnr.</label>
-                                <input aria-describedby="homeNumber_legalHelp" class="form-control"
-                                       id="homeNumber_legal" name="homeNumber_legal" required
-                                       th:field="*{legalPerson.homeNumber}" type="text"/>
-                                <div class="invalid-feedback">
-                                    Hier custom error-message
-                                </div>
-                                <small class="form-text text-muted" id="homeNumber_legalHelp">Format: 123, 12b,
-                                    123-I</small>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="street_legal">Straat</label>
-                                <input class="form-control" id="street_legal" name="street_legal" required
-                                       th:field="*{legalPerson.street}" type="text"/>
-                                <div class="invalid-feedback">
-                                    Hier custom error-message
-                                </div>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="residence_legal">Plaats</label>
-                                <input class="form-control" id="residence_legal" name="residence_legal" required
-                                       th:field="*{legalPerson.residence}" type="text"/>
-                                <div class="invalid-feedback">
-                                    Hier custom error-message
-                                </div>
-                            </div>
-                            <div class="col-md-12 mt-5 mb-3">
-                                <h4 class="border border-dark border-w-2 rounded p-3">Accountgegevens</h4>
-                            </div>
-                            <div class="col-md-2 form-group">
-                                <label for="username_legal">Gebruikersnaam</label>
-                                <input class="form-control" id="username_legal" name="username_legal" required
-                                       th:field="*{customer.userName}" type="text"/>
-                                <div class="invalid-feedback">
-                                    Hier custom error-message
-                                </div>
-                            </div>
-                            <div class="col-md-2 form-group">
-                                <label for="password_legal">Wachtwoord</label>
-                                <input class="form-control" id="password_legal" name="password_legal" required
-                                       th:field="*{customer.password}" type="password"/>
-                                <div class="invalid-feedback">
-                                    Hier custom error-message
-                                </div>
-                            </div>
-                            <div class="col-md-2 form-group">
-                                <label for="password_legal_confirmation">Wachtwoord</label>
-                                <input class="form-control" id="password_legal_confirmation"
-                                       name="password_legal_confirmation" required th:field="*{passwordConfirmation}"
-                                       type="password"/>
-                                <div class="invalid-feedback">
-                                    Hier custom error-message
-                                </div>
-                            </div>
-                            <div class="col-md-12 mt-3">
-                                <div class="col-md-6 pl-0">
-                                    <input class="btn btn-secondary btn-lg btn-block mt-4 mb-4 pt-3 pb-3" type="submit"
-                                           value="Gegevens wijzigen"/>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </main>
+    <div class="row mb-5" id="main-content" th:if="${hasErrors == 'false'}">
+        <main th:replace="fragments/main :: main-confirmation-business-no-errors"></main>
+    </div>
+    <div class="row mb-5" id="main-content" th:if="${hasErrors == 'true'}">
+        <main th:replace="fragments/main :: main-confirmation-business-with-errors"></main>
     </div>
     <div class="row footer-default" id="footer">
         <footer th:replace="fragments/footer :: footer-default"></footer>
     </div>
 </div> <!-- /container - #page -->
+<!-- TODO: implement
+<div th:replace="fragments/modal :: modal-registration-error"></div>
+-->
 <div th:replace="fragments/scripts :: scripts-before-closing-tag"></div>
-<script>
-    // Script for custom form-validation
-    (function () {
-        'use strict';
-        window.addEventListener('load', function () {
-            // Fetch all forms for custom validation
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over the forms and prevent submission
-            var validation = Array.prototype.filter.call(forms, function (form) {
-                form.addEventListener('submit', function (event) {
-                    if (form.checkValidity() === false) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        }, false);
-    })();
-</script>
 </body>
 </html>

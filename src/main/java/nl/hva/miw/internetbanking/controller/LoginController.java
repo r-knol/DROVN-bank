@@ -1,46 +1,104 @@
 package nl.hva.miw.internetbanking.controller;
 
-import nl.hva.miw.internetbanking.data.dto.CustomerAccountDTO;
+import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
+import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
+import nl.hva.miw.internetbanking.model.Employee;
+import nl.hva.miw.internetbanking.model.EmployeeRole;
+import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
+import nl.hva.miw.internetbanking.service.EmployeeService;
 import nl.hva.miw.internetbanking.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
-@SessionAttributes("customer")
+@SessionAttributes({"customer", "nameCurrentCus"})
 public class LoginController {
 
     private CustomerService customerService;
     private LoginService loginService;
+    private AccountService accountService;
+    private EmployeeService employeeService;
 
     @Autowired
-    public LoginController(CustomerService customerService, LoginService loginService) {
-      this.customerService = customerService;
-      this.loginService = loginService;
+    public LoginController(CustomerService customerService, LoginService loginService, AccountService accountService,
+                           EmployeeService employeeService) {
+        this.customerService = customerService;
+        this.loginService = loginService;
+        this.accountService = accountService;
+        this.employeeService = employeeService;
     }
 
-    @GetMapping("/login") //@Richard Knol
+    @GetMapping("/login")
     public String showLogin() {
         return "pages/login";
     }
 
-    @PostMapping("/login")
-    public String handleLogin(@RequestParam String userName, @RequestParam String password, Model model) {
-      Customer customer = customerService.getCustomerByName(userName);
-      if (customer != null) {
-        if (loginService.validCustomer(customer, password)) {
-          model.addAttribute("customer", customer);
-          CustomerAccountDTO customerDto = new CustomerAccountDTO(customer);
-          model.addAttribute("customerWithAccountOverview", customerDto);
-          return "pages/rekeningoverzicht";
+    @PostMapping("/customer-with-accounts")
+    public String handleLogin(@RequestParam(name = "userName") String userName, @RequestParam(name = "password")
+            String password, Model model) {
+        Optional<Customer> customer = customerService.getCustomerByUsername(userName);
+        if (customer.isPresent()) {
+            Customer customerFound = customer.get();
+            if (loginService.validCustomer(customerFound, password)) {
+                model.addAttribute("customer", customerFound);
+                model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customerFound.getCustomerID()));
+                CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(customerFound);
+                customerDto.setAccountList(accountService.getAccountsForCustomer(customerFound));
+                customerService.setCustomerWithAccounts(customerDto);
+                model.addAttribute("customerWithAccountOverview", customerDto);
+                return "pages/account-overview";
+            }
         }
-      }
-      return "pages/foutpagina";
+        return "pages/errorpage";
+    }
+
+    @GetMapping("/customer-with-accounts")
+    public String showCustomerWithAccounts(@ModelAttribute("customer") Customer c, Model model) {
+        System.out.println("!!!!!!!!!! bla bla !!!!!!!!!! " + c);
+        // service aanroepen.
+        model.addAttribute("nameCurrentCus", customerService.printNameCustomer(c.getCustomerID()));
+        CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(c);
+        customerDto.setAccountList(accountService.getAccountsForCustomer(c));
+        customerService.setCustomerWithAccounts(customerDto);
+        model.addAttribute("customerWithAccountOverview", customerDto);
+        return "pages/account-overview";
+    }
+
+    @GetMapping("/loginemployee")
+    public String showLoginEmployee() {
+        return "pages/login-employee";
+    }
+
+    @PostMapping("/loginemployee")
+    public String handleLoginEmployee(@RequestParam(name = "userName") String userName, @RequestParam(name = "password")
+            String password, Model model) {
+
+        Optional<Employee> employee = employeeService.getEmployeeByUsername(userName);
+
+        if (employee.isPresent()) {
+            Employee employeeFound = employee.get();
+            if (loginService.validEmployee(employeeFound, password)) {
+                model.addAttribute("employee", employeeFound);
+
+                if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_PRIVATE) {
+                    model.addAttribute("npWithHighestBalance", customerService.getNaturalAccountsWithHighestBalance());
+                    return "pages/employee-dashboard-private";
+                }
+
+                if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_LEGAL) {
+                    model.addAttribute("lpWithHighestBalance", customerService.getClientsWithHighestBalance());
+                    model.addAttribute("balancePerSector", customerService.getAvgBalancePerSector());
+                    model.addAttribute("mostActiveClients", customerService.getMostActiveClients());
+                    return "pages/employee-dashboard-legal";
+                }
+            }
+        }
+        return "pages/errorpage-employee";
     }
 }

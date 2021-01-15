@@ -1,6 +1,7 @@
 package nl.hva.miw.internetbanking.data.mapper;
 
 import nl.hva.miw.internetbanking.model.LegalPerson;
+import nl.hva.miw.internetbanking.model.Sector;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -14,7 +15,7 @@ public class LegalPersonRowMapper implements RowMapper<LegalPerson> {
                 resultSet.getLong("companyID"),
                 resultSet.getString("companyName"),
                 resultSet.getLong("kvkNumber"),
-                resultSet.getString("sector"),
+                Sector.valueOf(resultSet.getString("sector")),
                 resultSet.getString("vatNumber"),
                 resultSet.getString("postalCode"),
                 resultSet.getString("homeNumber"),
