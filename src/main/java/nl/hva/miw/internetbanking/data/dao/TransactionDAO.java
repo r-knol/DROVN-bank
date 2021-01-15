@@ -55,7 +55,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     @Override
     public void update(Transaction transaction) {
         String sql = "UPDATE transaction SET debitAccount = ?, creditAccount = ?, amount = ?" +
-                ", description = ?, date = ?" + "WHERE transactionID = ?";
+                     ", description = ?, dateTime = ?" + "WHERE transactionID = ?";
         jdbcTemplate.update(sql, transaction.getDebitAccount(),
                 transaction.getCreditAccount(),
                 transaction.getAmount(),
