@@ -11,7 +11,7 @@ function checkForIbanPart() {
     console.log('Iban is valide: ' + regex.test(iban))
 
     if (regex.test(iban)) {
-        fetch('http://localhost:8080/iban', {
+        fetch('/iban', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -56,7 +56,7 @@ function loadCustomerNames(iban) {
     const element = document.querySelector('#rekeningHouders');
     let result = '';
 
-    fetch('http://localhost:8080/getnames', {
+    fetch('/getnames', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

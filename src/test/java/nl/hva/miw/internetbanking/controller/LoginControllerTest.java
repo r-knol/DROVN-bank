@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static nl.hva.miw.internetbanking.model.CustomerType.NATURAL;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,31 +57,33 @@ class LoginControllerTest {
         super();
     }
 
-    @Test
-    void handleLoginTest() {
-        Mockito.when(customerService.getCustomerByUsername("nvanloo")).thenReturn(Optional.of(nina));
-        Mockito.when(loginService.validCustomer(nina, "myPassword")).thenReturn(true);
-        Mockito.when(customerService.printNameCustomer(1)).thenReturn("Nina van Loo");
-        Mockito.when(customerService.printNameCustomer(2)).thenReturn("Richard Knol");
-        Mockito.when(accountService.getAccountsForCustomer(nina)).thenReturn(accountsNina);
-        Mockito.when(customerService.getCustomerByAccountId(1)).thenReturn(customerList);
-
-        try {
-            MockHttpServletRequestBuilder postRequest = MockMvcRequestBuilders.post("/login")
-                    .param("userName", "nvanloo")
-                    .param("password", "myPassword");
-            ResultActions response = mockMvc.perform(postRequest);
-            response
-                    .andDo(print())
-                    .andExpect(status().isOk());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    //    @Test
+    //    void handleLoginTest() {
+    //        Mockito.when(customerService.getCustomerByUsername("nvanloo")).thenReturn(Optional
+    //        .of(nina));
+    //        Mockito.when(loginService.validCustomer(nina, "myPassword")).thenReturn(true);
+    //        Mockito.when(customerService.printNameCustomer(1)).thenReturn("Nina van Loo");
+    //        Mockito.when(customerService.printNameCustomer(2)).thenReturn("Richard Knol");
+    //        Mockito.when(accountService.getAccountsForCustomer(nina)).thenReturn(accountsNina);
+    //        Mockito.when(customerService.getCustomerByAccountId(1)).thenReturn(customerList);
+    //
+    //        try {
+    //            MockHttpServletRequestBuilder postRequest = MockMvcRequestBuilders.post("/login")
+    //                    .param("userName", "nvanloo")
+    //                    .param("password", "myPassword");
+    //            ResultActions response = mockMvc.perform(postRequest);
+    //            response
+    //                    .andDo(print())
+    //                    .andExpect(status().isOk());
+    //        } catch (Exception e) {
+    //            e.printStackTrace();
+    //        }
+    //    }
 
     @Test
     void handleLoginEmployee() {
-        Mockito.when(employeeService.getEmployeeByUsername("pdeboer")).thenReturn(Optional.of(pieter));
+        Mockito.when(employeeService.getEmployeeByUsername("pdeboer"))
+                .thenReturn(Optional.of(pieter));
         Mockito.when(loginService.validEmployee(pieter, "test")).thenReturn(true);
 
         try {

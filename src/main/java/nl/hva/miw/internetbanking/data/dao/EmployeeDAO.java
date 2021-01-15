@@ -26,8 +26,9 @@ public class EmployeeDAO implements DAO<Employee, Long> {
     @Override
     @Transactional
     public void create(Employee employee) {
-        String sql = "INSERT INTO Employee(employeeID, userName, password, firstName, preposition, surName, role) " +
-                "VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO employee(employeeID, userName, password, firstName, " +
+                     "preposition, surName, role) " +
+                     "VALUES(?,?,?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"employeeId"});
@@ -46,39 +47,41 @@ public class EmployeeDAO implements DAO<Employee, Long> {
 
     @Override
     public Optional<Employee> read(Long id) {
-        String sql = "SELECT * FROM Employee WHERE employeeID = ?";
+        String sql = "SELECT * FROM employee WHERE employeeID = ?";
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new EmployeeRowMapper(), id));
-    }
-
-    public Optional<Employee> read(String userName) {
-        try {
-            String sql = "SELECT * FROM Employee WHERE userName = ?";
-            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new EmployeeRowMapper(), userName));
-        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
-            return Optional.empty();
-        }
     }
 
     @Override
     public void update(Employee employee) {
-        String sql = "UPDATE Employee SET role = ? WHERE employeeID = ?";
+        String sql = "UPDATE employee SET role = ? WHERE employeeID = ?";
         jdbcTemplate.update(sql, employee.getEmployeeRole().getLabel(), employee.getEmployeeID());
     }
 
     @Override
     public void delete(Employee employee) {
-        jdbcTemplate.update("DELETE FROM Employee WHERE employeeID = ?",
-                employee.getEmployeeID());
+        jdbcTemplate.update("DELETE FROM employee WHERE employeeID = ?",
+                            employee.getEmployeeID());
     }
 
     @Override
     public void deleteById(Long id) {
-        jdbcTemplate.update("DELETE FROM Employee WHERE employeeID = ?", id);
+        jdbcTemplate.update("DELETE FROM employee WHERE employeeID = ?", id);
     }
 
     @Override
     public Optional<List<Employee>> list() {
-        String sql = "SELECT * FROM Employee";
+        String sql = "SELECT * FROM employee";
         return Optional.of(jdbcTemplate.query(sql, new EmployeeRowMapper()));
     }
+
+    public Optional<Employee> read(String userName) {
+        try {
+            String sql = "SELECT * FROM employee WHERE userName = ?";
+            return Optional.ofNullable(
+                    jdbcTemplate.queryForObject(sql, new EmployeeRowMapper(), userName));
+        } catch (EmptyResultDataAccessException emptyResultDataAccessException) {
+            return Optional.empty();
+        }
+    }
+
 }
