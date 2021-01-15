@@ -93,10 +93,14 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     }
 
     public List<Transaction> getTransactionsByIban (String iban) {
-        final String sql = "SELECT account.accountid, account.iban, account.balance, transaction.transactionID, transaction.amount, transaction.description,\n" +
-                "transaction.dateTime, transaction.creditAccount, transaction.debitAccount FROM transaction JOIN account ON account.iban = transaction.creditAccount\n" +
-                "WHERE transaction.creditAccount OR transaction.debitAccount = ?\n" +
-                "ORDER BY transaction.dateTime DESC";
+        final String sql = "SELECT account.accountid, account.iban, " +
+                "account.balance, transaction.transactionID, transaction.amount, " +
+                "transaction.description,\n" +
+                "transaction.dateTime, transaction.creditAccount, transaction.debitAccount " +
+                "FROM transaction JOIN account ON account.iban = transaction.creditAccount \n" +
+                "OR account.iban = Transaction.debitAccount\n" +
+                "WHERE account.iban = ?\n" +
+                "ORDER BY transaction.dateTime DESC;";
         return jdbcTemplate.query(sql, new TransactionRowMapper(), iban);
     }
 
