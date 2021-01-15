@@ -65,31 +65,13 @@ public class AccountOverviewController {
 
     @PostMapping("/account-overview/{id}")
     public String PostHandlerAccountDetails (@PathVariable ("id") long accountID, Model model) {
-        Optional<Account> acc = accountService.getAccountById(accountID);
-        if (acc.isPresent()) {
-            Account accountFound = acc.get();
-            model.addAttribute("account", accountFound);
-            AccountHasTransactionsDTO accountHasTransactionsDTO = new AccountHasTransactionsDTO(accountFound);
-            accountHasTransactionsDTO.setTransactionList(accountFound.getTransactions());
-            for (Transaction transactions : accountHasTransactionsDTO.getTransactionList()) {
-                if (accountFound.getIban().equals(transactions.getCreditAccount())
-                        || accountFound.getIban().equals(transactions.getDebitAccount())) {
-                    transactions.addTransactionToAccount(accountFound);
-                }
-            }
-            System.out.println(accountHasTransactionsDTO);
-            model.addAttribute("accountWithTransactions", accountHasTransactionsDTO);
-            return "pages/account_details";
-        }
+        Optional<Account> account = accountService.getAccountById(accountID);
+        model.addAttribute("account", account.get());
+        System.out.println(account.get().getTransactions());
         Optional<Customer> customer = customerService.getCustomerByAccountId2(accountID);
-        System.out.println(customer);
-        if (customer.isPresent()) {
-            Customer customerFound = customer.get();
-            model.addAttribute("customer", customerFound);
-            model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customerFound.getCustomerID()));
-            return "pages/open-account";
-        }
+        Customer customerFound = customer.get();
+        model.addAttribute("customer", customerFound);
+        model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customerFound.getCustomerID()));
         return "pages/open-account";
-
     }
 }
