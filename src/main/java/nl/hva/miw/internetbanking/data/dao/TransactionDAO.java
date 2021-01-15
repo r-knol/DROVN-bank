@@ -3,7 +3,6 @@ package nl.hva.miw.internetbanking.data.dao;
 import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.mapper.TransactionRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
-import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Transaction;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -11,7 +10,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Timestamp;
 import java.util.List;
@@ -31,8 +29,9 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     @Override
     @Transactional
     public void create(Transaction transaction) {
-        String sql = "INSERT INTO TRANSACTION (debitAccount, creditAccount, amount, description, dateTime) " +
-                "VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO transaction (debitAccount, creditAccount, amount, description, " +
+                     "dateTime) " +
+                     "VALUES(?,?,?,?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"transactionID"});
@@ -56,7 +55,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     @Override
     public void update(Transaction transaction) {
         String sql = "UPDATE transaction SET debitAccount = ?, creditAccount = ?, amount = ?" +
-                ", description = ?, date = ?" + "WHERE transactionID = ?";
+                     ", description = ?, dateTime = ?" + "WHERE transactionID = ?";
         jdbcTemplate.update(sql, transaction.getDebitAccount(),
                 transaction.getCreditAccount(),
                 transaction.getAmount(),
@@ -93,10 +92,15 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     }
 
     public List<Transaction> getTransactionsByAccountId (long accountID) {
-        final String sql = "SELECT account.accountid, account.iban, account.balance, transaction.transactionID, transaction.amount, transaction.description, \n" +
-                    "transaction.dateTime, transaction.creditAccount, transaction.debitAccount FROM transaction_has_account JOIN Transaction ON \n" +
-                    "Transaction_has_account.transactionID=transaction.transactionID JOIN account ON account.accountID=transaction_has_account.accountID \n" +
-                    "WHERE account.accountID = ?";
+        final String sql = "SELECT account.accountID, account.iban, account.balance, transaction" +
+                           ".transactionID, transaction.amount, transaction.description, \n" +
+                           "transaction.dateTime, transaction.creditAccount, transaction" +
+                           ".debitAccount " +
+                           "FROM transaction_has_account JOIN transaction ON \n" +
+                           "transaction_has_account.transactionID=transaction.transactionID JOIN " +
+                           "account" +
+                           " ON account.accountID=transaction_has_account.accountID \n" +
+                           "WHERE account.accountID = ?";
         return jdbcTemplate.query(sql, new TransactionRowMapper(), accountID);
     }
 

@@ -1,10 +1,8 @@
 package nl.hva.miw.internetbanking.data.dao;
 
 import nl.hva.miw.internetbanking.data.dto.NaturalPersonHasAccountDTO;
-import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.NaturalPersonHasAccountRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.NaturalPersonRowMapper;
-import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -26,7 +24,7 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
     @Override
     @Transactional
     public void create(NaturalPerson naturalPerson) {
-        String sql = "INSERT INTO NaturalPerson(customerID, initials, firstName, preposition, " +
+        String sql = "INSERT INTO naturalperson(customerID, initials, firstName, preposition, " +
                      "surName, dateOfBirth, socialSecurityNumber, email, phone, postalCode, " +
                      "homeNumber, street, residence) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         jdbcTemplate.update(connection -> {
@@ -48,26 +46,16 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
         });
     }
 
-    public List<NaturalPersonHasAccountDTO> getNaturalAccountsWithHighestBalance() {
-        final String sql = "SELECT n.firstName, n.preposition, n.surname, a.iban, a.balance, concat(n.street, \" \", n.homenumber, \", \", n.residence) as address,\n" +
-                "n.phone, n.email, n.dateOfBirth\n" +
-                "FROM customer_has_account cha JOIN customer c ON cha.customerID = c.customerID\n" +
-                "JOIN account a ON cha.accountID = a.accountID JOIN naturalperson n ON\n" +
-                "n.customerID = cha.customerID WHERE c.customerType = 'NATURAL'\n" +
-                "ORDER BY balance DESC LIMIT 10;";
-        return jdbcTemplate.query(sql, new NaturalPersonHasAccountRowMapper());
-    }
-
     @Override
     public Optional<NaturalPerson> read(Long id) {
-        String sql = "SELECT * FROM NaturalPerson WHERE customerID = ?";
+        String sql = "SELECT * FROM naturalperson WHERE customerID = ?";
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
                                                                id));
     }
 
     @Override
     public void update(NaturalPerson naturalPerson) {
-        String sql = "UPDATE NaturalPerson SET initials = ?, firstName = ?, preposition = ?" +
+        String sql = "UPDATE naturalperson SET initials = ?, firstName = ?, preposition = ?" +
                      ", surName = ?, dateOfBirth = ?, socialSecurityNumber = ?, email = ?" +
                      ", phone = ?, postalCode = ?, homeNumber = ?, street = ?, residence = ? " +
                      "WHERE customerID = ?";
@@ -83,31 +71,45 @@ public class NaturalPersonDAO implements DAO<NaturalPerson, Long> {
 
     @Override
     public void delete(NaturalPerson naturalPerson) {
-        jdbcTemplate.update("DELETE FROM NaturalPerson WHERE customerID = ?",
+        jdbcTemplate.update("DELETE FROM naturalperson WHERE customerID = ?",
                             naturalPerson.getCustomerID());
     }
 
     @Override
     public void deleteById(Long id) {
-        jdbcTemplate.update("DELETE FROM NaturalPerson WHERE customerID = ?", id);
+        jdbcTemplate.update("DELETE FROM naturalperson WHERE customerID = ?", id);
     }
 
     @Override
     public Optional<List<NaturalPerson>> list() {
-        String sql = "SELECT * FROM NaturalPerson";
+        String sql = "SELECT * FROM naturalperson";
         return Optional.of(jdbcTemplate.query(sql, new NaturalPersonRowMapper()));
     }
 
     public Optional<NaturalPerson> read(String socialSecurityNumber) {
-        String sql = "SELECT * FROM NaturalPerson WHERE socialSecurityNumber = ?";
+        String sql = "SELECT * FROM naturalperson WHERE socialSecurityNumber = ?";
         return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
                                                                socialSecurityNumber));
     }
 
     public boolean existsBySocialSecurityNumber(String socialSecurityNumber) {
-        final String sql = "SELECT * FROM NaturalPerson WHERE socialSecurityNumber = ?";
+        final String sql = "SELECT * FROM naturalperson WHERE socialSecurityNumber = ?";
         return jdbcTemplate.queryForObject(sql, new NaturalPersonRowMapper(),
                                            socialSecurityNumber) != null;
+    }
+
+    public List<NaturalPersonHasAccountDTO> getNaturalAccountsWithHighestBalance() {
+        final String sql = "SELECT n.firstName, n.preposition, n.surName, a.iban, a.balance, " +
+                           "concat(n.street, \" \", n.homeNumber, \", \", n.residence) as " +
+                           "address,\n" +
+                           "n.phone, n.email, n.dateOfBirth\n" +
+                           "FROM customer_has_account cha JOIN customer c ON cha.customerID = c" +
+                           ".customerID\n" +
+                           "JOIN account a ON cha.accountID = a.accountID JOIN naturalperson n " +
+                           "ON\n" +
+                           "n.customerID = cha.customerID WHERE c.customerType = 'NATURAL'\n" +
+                           "ORDER BY balance DESC LIMIT 10;";
+        return jdbcTemplate.query(sql, new NaturalPersonHasAccountRowMapper());
     }
 
 }

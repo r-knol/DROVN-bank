@@ -7,7 +7,7 @@ function loadCustomerNames(iban) {
     const element = document.querySelector('#rekeningHouders');
     let result = '';
 
-    fetch('http://localhost:8080/getnames', {
+    fetch('/getnames', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

@@ -1,12 +1,9 @@
 package nl.hva.miw.internetbanking.data.dao;
 
 import nl.hva.miw.internetbanking.data.mapper.AccountRowMapper;
-import nl.hva.miw.internetbanking.data.mapper.CustomerRowMapper;
-import nl.hva.miw.internetbanking.data.mapper.EmployeeRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.IbanRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
-import nl.hva.miw.internetbanking.model.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -35,7 +32,7 @@ public class AccountDAO implements DAO<Account, Long> {
     @Override
     @Transactional
     public void create(Account account) {
-        String sql = "INSERT INTO Account(iban, balance) VALUES (?,?)";
+        String sql = "INSERT INTO account(iban, balance) VALUES (?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"accountID"});
@@ -61,7 +58,7 @@ public class AccountDAO implements DAO<Account, Long> {
     @Override
     public Optional<Account> read(Long accountID) {
         try {
-            String sql = "SELECT * FROM Account WHERE accountID = ?";
+            String sql = "SELECT * FROM account WHERE accountID = ?";
             return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new AccountRowMapper(), accountID));
         } catch (EmptyResultDataAccessException e) {
             logger.info("No record found for account " + accountID, e);
@@ -69,26 +66,26 @@ public class AccountDAO implements DAO<Account, Long> {
         }
     }
 
-    public Optional <Account> read(String iban) {
+    @Override
+    public void update(Account account) {
+        String sql = "UPDATE account SET iban = ?, balance = ?" +
+                     "WHERE accountID = ?";
+        jdbcTemplate.update(sql,
+                            account.getIban(),
+                            account.getBalance(),
+                            account.getAccountID()
+                           );
+    }
+
+    public Optional<Account> read(String iban) {
         try {
-            String sql = "SELECT * FROM Account WHERE iban = ?";
-            return Optional.ofNullable(jdbcTemplate.queryForObject(sql, new AccountRowMapper(), iban));
+            String sql = "SELECT * FROM account WHERE iban = ?";
+            return Optional
+                    .ofNullable(jdbcTemplate.queryForObject(sql, new AccountRowMapper(), iban));
         } catch (EmptyResultDataAccessException e) {
             logger.info("No record found for account " + iban, e);
             return Optional.empty();
         }
-    }
-
-
-    @Override
-    public void update(Account account) {
-        String sql = "UPDATE Account SET iban = ?, balance = ?" +
-                "WHERE accountID = ?";
-        jdbcTemplate.update(sql,
-                account.getIban(),
-                account.getBalance(),
-                account.getAccountID()
-        );
     }
 
     @Override
@@ -123,11 +120,11 @@ public class AccountDAO implements DAO<Account, Long> {
     }
 
     public List<Account> getAccountsByCustomerId(long customerID) {
-        final String sql = "SELECT customer.customerid, customer.username, account.accountid, " +
-                "account.iban, account.balance\n" +
-                "FROM customer_has_account JOIN customer ON customer_has_account" +
-                ".customerID=customer.customerID JOIN account ON\n" +
-                "account.accountID=customer_has_account.accountID WHERE customer.customerID = ?";
+        final String sql = "SELECT customer.customerID, customer.userName, account.accountID, " +
+                           "account.iban, account.balance\n" +
+                           "FROM customer_has_account JOIN customer ON customer_has_account" +
+                           ".customerID=customer.customerID JOIN account ON\n" +
+                           "account.accountID=customer_has_account.accountID WHERE customer.customerID = ?";
         return jdbcTemplate.query(sql, new AccountRowMapper(), customerID);
     }
 
