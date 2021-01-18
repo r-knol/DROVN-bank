@@ -2,18 +2,17 @@ package nl.hva.miw.internetbanking.service;
 
 import nl.hva.miw.internetbanking.data.dao.EmployeeDAO;
 import nl.hva.miw.internetbanking.model.Employee;
-import nl.hva.miw.internetbanking.model.EmployeeRole;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EmployeeServiceTest {
 
+    @MockBean
     EmployeeDAO employeeDAO = Mockito.mock(EmployeeDAO.class);
+
     EmployeeService employeeService = new EmployeeService(employeeDAO);
 
     public EmployeeServiceTest() {
@@ -22,13 +21,13 @@ class EmployeeServiceTest {
 
     @Test
     void getEmployeeByUsername() {
-        String userName = "pdeboer";
         Employee employee = new Employee();
+        String expected = "pdeboer";
         employee.setUserName("pdeboer");
 
-        Mockito.when(employeeService.getEmployeeByUsername(userName)).
+        Mockito.when(employeeService.getEmployeeByUsername(expected)).
                 thenReturn(java.util.Optional.of(employee));
 
-        assertEquals(userName, employee.getUserName());
+        assertEquals(expected, employee.getUserName());
     }
 }
