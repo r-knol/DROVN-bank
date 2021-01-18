@@ -54,10 +54,14 @@ public class AccountDetailsController {
                                          @ModelAttribute ("customer") Customer customer, Model model) {
         Optional<Account> account = accountService.getAccountById(accountID);
         model.addAttribute("account", account.get());
-        AccountHasTransactionsDTO accountHasTransactionsDTO = new AccountHasTransactionsDTO();
+        AccountHasTransactionsDTO accountHasTransactionsDTO = new AccountHasTransactionsDTO(account.get());
         accountHasTransactionsDTO.setTransactionList(transactionService.getTransactionsForAccount(account.get()));
         transactionService.setTransactionWithContraAccountNames(accountHasTransactionsDTO, account.get());
-        model.addAttribute("accountWithTransactions", accountHasTransactionsDTO);
+//        System.out.println(accountHasTransactionsDTO);
+        transactionService.setTransactionWithDateAsString(accountHasTransactionsDTO);
+        System.out.println("Transacties grouped by date: " + accountHasTransactionsDTO);
+        model.addAttribute("accountWithTransactionsByDate", accountHasTransactionsDTO.getTransactionListByDate());
+        model.addAttribute("accountWithTransactions", accountHasTransactionsDTO.getTransactionList());
         return "pages/account_details";
     }
 

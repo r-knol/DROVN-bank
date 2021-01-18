@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -125,6 +125,11 @@ public class TransactionService {
                 transaction.addDebetAccountHolderName(customerService.printNameCustomer(c.getCustomerID()));
             }
         }
+    }
+
+    public void setTransactionWithDateAsString (AccountHasTransactionsDTO accountHasTransactionsDTO) {
+        accountHasTransactionsDTO.setTransactionListByDate(accountHasTransactionsDTO.getTransactionList().stream()
+                .collect(Collectors.groupingBy(Transaction :: getShowDate)));
     }
 
     public boolean checkValidTransaction(TransactionDetailsDTO tDto) {

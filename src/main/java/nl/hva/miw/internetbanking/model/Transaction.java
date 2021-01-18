@@ -15,6 +15,7 @@ public class Transaction implements Serializable {
     private double amount;
     private String description;
     private LocalDateTime date;
+    private String showDate;
     private Account account;
     private List<String> contraAccountHolderNames;
 
@@ -25,6 +26,7 @@ public class Transaction implements Serializable {
         this.amount = amount;
         this.description = description;
         this.date = date;
+        this.showDate = convertToshowDate();
         this.account = account;
         this.contraAccountHolderNames = new ArrayList<>();
     }
@@ -35,6 +37,7 @@ public class Transaction implements Serializable {
         this.amount = amount;
         this.description = description;
         this.date = date;
+        this.showDate = convertToshowDate();
         this.contraAccountHolderNames = new ArrayList<>();
     }
 
@@ -45,6 +48,7 @@ public class Transaction implements Serializable {
         this.amount = amount;
         this.description = description;
         this.date = date;
+        this.showDate = convertToshowDate();
         this.contraAccountHolderNames = new ArrayList<>();
     }
 
@@ -117,6 +121,14 @@ public class Transaction implements Serializable {
         this.date = date;
     }
 
+    public String getShowDate() {
+        return showDate;
+    }
+
+    public void setShowDate(String showDate) {
+        this.showDate = showDate;
+    }
+
     public List<String> getContraAccountHolderNames() {
         return contraAccountHolderNames;
     }
@@ -129,7 +141,7 @@ public class Transaction implements Serializable {
         contraAccountHolderNames.add(name);
     }
 
-    public String showDate() {
+    public String convertToshowDate() {
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("d MMMM yyyy");
         return date.format(formatDate);
     }
@@ -169,6 +181,7 @@ public class Transaction implements Serializable {
                 ", creditAccount='" + creditAccount + '\'' +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
+                ", showDate='" + showDate + '\'' +
                 ", date=" + date +
                 ", contraAccountHolderNames=" + contraAccountHolderNames +
                 '}';
