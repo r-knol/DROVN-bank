@@ -37,10 +37,10 @@ public class AccountOverviewController {
     @GetMapping("/account-overview/{id}") // http://localhost:8080/rekeningoverzicht
     public String accountOverviewHandler(@ModelAttribute Account account,
                                          @PathVariable ("id") long accountID, Model model) {
-        System.out.println(account.getAccountID());
+//        System.out.println(account.getAccountID());
         Optional <Account> acc = accountService.getAccountById(accountID);
         model.addAttribute(acc);
-        System.out.println(acc);
+//        System.out.println(acc);
 
 
         // search customer info by customer id:
@@ -67,7 +67,7 @@ public class AccountOverviewController {
     public String PostHandlerAccountDetails (@PathVariable ("id") long accountID, Model model) {
         Optional<Account> account = accountService.getAccountById(accountID);
         model.addAttribute("account", account.get());
-        System.out.println(account.get().getTransactions());
+//        System.out.println(account.get().getTransactions());
         Optional<Customer> customer = customerService.getCustomerByAccountId2(accountID);
         Customer customerFound = customer.get();
         model.addAttribute("customer", customerFound);

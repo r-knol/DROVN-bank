@@ -3,6 +3,7 @@ package nl.hva.miw.internetbanking.data.dto;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Transaction;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +13,7 @@ public class AccountHasTransactionsDTO {
     private Account account;
     private Transaction transaction;
     private List<Transaction> transactionList;
-    private Map<String, List<Transaction>> transactionListByDate;
+    private Map<LocalDate, List<Transaction>> transactionListByDate;
 
     public AccountHasTransactionsDTO(Account account) {
         super();
@@ -41,11 +42,11 @@ public class AccountHasTransactionsDTO {
         this.transactionList = transactionList;
     }
 
-    public Map<String, List<Transaction>> getTransactionListByDate() {
+    public Map<LocalDate, List<Transaction>> getTransactionListByDate() {
         return transactionListByDate;
     }
 
-    public void setTransactionListByDate(Map<String, List<Transaction>> transactionListByDate) {
+    public void setTransactionListByDate(Map<LocalDate, List<Transaction>> transactionListByDate) {
         this.transactionListByDate = transactionListByDate;
     }
 

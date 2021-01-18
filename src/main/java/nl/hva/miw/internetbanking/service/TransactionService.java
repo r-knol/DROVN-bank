@@ -74,7 +74,7 @@ public class TransactionService {
     @Transactional
     public <T> void saveTransaction(T transaction) {
         try {
-            ((Transaction) transaction).setDate(LocalDateTime.now());
+            ((Transaction) transaction).setDateTime(LocalDateTime.now());
             transactionDAO.create((Transaction) transaction);
             doMoneyTransaction((Transaction) transaction);
         } catch (DataAccessException e) {
@@ -129,7 +129,7 @@ public class TransactionService {
 
     public void setTransactionWithDateAsString (AccountHasTransactionsDTO accountHasTransactionsDTO) {
         accountHasTransactionsDTO.setTransactionListByDate(accountHasTransactionsDTO.getTransactionList().stream()
-                .collect(Collectors.groupingBy(Transaction :: getShowDate)));
+                .collect(Collectors.groupingBy(Transaction :: getDate)));
     }
 
     public boolean checkValidTransaction(TransactionDetailsDTO tDto) {

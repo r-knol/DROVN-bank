@@ -41,14 +41,6 @@ public class AccountDetailsController {
         return "account-overview";
     }
 
-//    @GetMapping ("/account_details{id}")
-//    public String showAccounts (@PathVariable ("id") long accountID, Model model) {
-//        Optional<Account> account = accountService.getAccountById(accountID);
-//        model.addAttribute(account);
-//        model.addAttribute("customer");
-//        return "pages/details_overview";
-//    }
-
     @GetMapping("/account_details/{id}")
     public String accountDetailsHandler (@PathVariable ("id") long accountID,
                                          @ModelAttribute ("customer") Customer customer, Model model) {
@@ -59,9 +51,9 @@ public class AccountDetailsController {
         transactionService.setTransactionWithContraAccountNames(accountHasTransactionsDTO, account.get());
 //        System.out.println(accountHasTransactionsDTO);
         transactionService.setTransactionWithDateAsString(accountHasTransactionsDTO);
-        System.out.println("Transacties grouped by date: " + accountHasTransactionsDTO);
+        System.out.println("Transacties grouped by date: " + accountHasTransactionsDTO.getTransactionListByDate());
         model.addAttribute("accountWithTransactionsByDate", accountHasTransactionsDTO.getTransactionListByDate());
-        model.addAttribute("accountWithTransactions", accountHasTransactionsDTO.getTransactionList());
+//        model.addAttribute("accountWithTransactions", accountHasTransactionsDTO.getTransactionList());
         return "pages/account_details";
     }
 

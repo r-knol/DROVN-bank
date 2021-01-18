@@ -39,7 +39,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
             ps.setString(2, transaction.getCreditAccount());
             ps.setDouble(3, transaction.getAmount());
             ps.setString(4, transaction.getDescription());
-            ps.setTimestamp(5, Timestamp.valueOf(transaction.getDate()));
+            ps.setTimestamp(5, Timestamp.valueOf(transaction.getDateTime()));
             return ps;
         }, keyHolder);
         long id = Objects.requireNonNull(keyHolder.getKey().longValue());
@@ -60,7 +60,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
                 transaction.getCreditAccount(),
                 transaction.getAmount(),
                 transaction.getDescription(),
-                transaction.getDate());
+                transaction.getDateTime());
     }
 
     @Override
@@ -82,7 +82,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
 
     public List<Transaction> getTransactionsForAccount (Account account) {
         List<Transaction> transactions = getTransactionsByIban(account.getIban());
-        System.out.println(account.getAccountID());
+//        System.out.println(account.getAccountID());
         for (Transaction t : transactions) {
             t.addTransactionToAccount(account);
             account.addTransaction(t);
