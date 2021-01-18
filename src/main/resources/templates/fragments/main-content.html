@@ -162,13 +162,13 @@
                         <div >
                             <h5>
                                 <th:block>
-                                        <div class = card-header tyle="border-color: #312783;border-width: medium
+                                        <div class = card-header style="border-color: #312783;border-width: medium
                                                 ;background-color: white">
-                                            <i class="fas fa-angle-down rotate-icon; float-right" style="color: #F39200"></i>
+                                            <i class="fas fa-angle-down rotate-icon; float-right" style="color: #F39200;font-size: x-large"></i>
                                     <dl data-toggle="collapse" href="#collapse" aria-expanded="false"
                                         aria-controls="collapseOne1">
-                                        <dt class="col-md-10" style="color: #312783" th:each="name : ${t.contraAccountHolderNames}" th:text="${name}" ></dt>
-                                        <dd class="col-md-2; float-md-right" style="color: #312783" th:each="amount :${t.amount}"th:text="${t.showAmount()}"></dd>
+                                        <dt class="col-md-10" style="color: #312783; background-color: white" th:each="name : ${t.contraAccountHolderNames}" th:text="${name}" ></dt>
+                                        <dd class="col-md-2; float-md-right" style="color: #312783; background-color: white" th:each="amount :${t.amount}"th:text="${t.showAmount()}"></dd>
                                     </dl>
                                         </div>
                                 </th:block>
