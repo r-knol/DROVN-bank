@@ -53,7 +53,7 @@ public class AccountDetailsController {
         transactionService.setTransactionWithDateAsString(accountHasTransactionsDTO);
         System.out.println("Transacties grouped by date: " + accountHasTransactionsDTO.getTransactionListByDate());
         model.addAttribute("accountWithTransactionsByDate", accountHasTransactionsDTO.getTransactionListByDate());
-//        model.addAttribute("accountWithTransactions", accountHasTransactionsDTO.getTransactionList());
+        model.addAttribute("accountWithTransactions", accountHasTransactionsDTO.getTransactionList());
         return "pages/account_details";
     }
 

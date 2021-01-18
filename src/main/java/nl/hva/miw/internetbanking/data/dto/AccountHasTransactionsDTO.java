@@ -34,6 +34,14 @@ public class AccountHasTransactionsDTO {
         this.account = account;
     }
 
+    public Transaction getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+    }
+
     public List<Transaction> getTransactionList() {
         return transactionList;
     }
@@ -55,6 +63,7 @@ public class AccountHasTransactionsDTO {
         return "AccountHasTransactionsDTO{" +
                 "account=" + account +
                 ", transactionListByDate=" + transactionListByDate +
+                ", transactionList=" + transactionList +
                 '}';
     }
 }

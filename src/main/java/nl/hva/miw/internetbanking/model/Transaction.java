@@ -122,6 +122,7 @@ public class Transaction implements Serializable {
     }
 
     public LocalDate getDate() {
+
         setDate(dateTime.toLocalDate());
         return date;
     }
@@ -148,7 +149,7 @@ public class Transaction implements Serializable {
     }
 
     public String showDateTime() {
-        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("d MMMM yyyy");
+        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm");
         return dateTime.format(formatDateTime);
     }
 
