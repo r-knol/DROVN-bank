@@ -66,7 +66,7 @@ class LoginControllerTest {
         Mockito.when(customerService.getCustomerByAccountId(1)).thenReturn(customerList);
 
         try {
-            MockHttpServletRequestBuilder postRequest = MockMvcRequestBuilders.post("/login")
+            MockHttpServletRequestBuilder postRequest = MockMvcRequestBuilders.post("/customer-with-accounts")
                     .param("userName", "nvanloo")
                     .param("password", "myPassword");
             ResultActions response = mockMvc.perform(postRequest);
