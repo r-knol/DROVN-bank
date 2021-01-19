@@ -84,7 +84,7 @@ public class TransactionService {
 
     public String transferToDouble(String amount){
         String amountFormatted = amount.replace(",", ".");
-        System.out.println("Voor ene transactie: komma's omzetten naar punten, van " + amount + " naar " + amountFormatted);
+        System.out.println("Voor een transactie: komma's omzetten naar punten, van " + amount + " naar " + amountFormatted);
         return amountFormatted;
 
     }
@@ -149,9 +149,13 @@ public class TransactionService {
         // voor iedere customer uit de lijst, haal de naam op:
         for (Customer c : customerList) {
             String nameCusFound = customerService.printNameCustomer(c.getCustomerID());
+            System.out.println("Naam klant: " + nameCusFound);
             //  vergelijk de achternaam van de ontvanger met de namen uit de lijst
-            return nameCusFound.toLowerCase().contains(nameFilledIn.toLowerCase());
+            if (nameCusFound.toLowerCase().contains(nameFilledIn.toLowerCase())) {
+                return true;
+            }
         }
+        System.out.println("Klantnaam ingevoerd niet gevonden in " + customerList);
         return false;
     }
 
