@@ -17,8 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -74,7 +74,7 @@ public class TransactionService {
     @Transactional
     public <T> void saveTransaction(T transaction) {
         try {
-            ((Transaction) transaction).setDate(LocalDateTime.now());
+            ((Transaction) transaction).setDateTime(LocalDateTime.now());
             transactionDAO.create((Transaction) transaction);
             doMoneyTransaction((Transaction) transaction);
         } catch (DataAccessException e) {
@@ -84,7 +84,7 @@ public class TransactionService {
 
     public String transferToDouble(String amount){
         String amountFormatted = amount.replace(",", ".");
-        System.out.println("Voor ene transactie: komma's omzetten naar punten, van " + amount + " naar " + amountFormatted);
+        System.out.println("Voor een transactie: komma's omzetten naar punten, van " + amount + " naar " + amountFormatted);
         return amountFormatted;
 
     }
@@ -127,6 +127,11 @@ public class TransactionService {
         }
     }
 
+    public void setTransactionWithDateAsString (AccountHasTransactionsDTO accountHasTransactionsDTO) {
+        accountHasTransactionsDTO.setTransactionListByDate(accountHasTransactionsDTO.getTransactionList().stream()
+                .collect(Collectors.groupingBy(Transaction :: getDate)));
+    }
+
     public boolean checkValidTransaction(TransactionDetailsDTO tDto) {
         // check of iban voorkomt in db:
         Optional<Account> a = accountService.getAccountByIban(tDto.getCreditAccount());
@@ -144,9 +149,13 @@ public class TransactionService {
         // voor iedere customer uit de lijst, haal de naam op:
         for (Customer c : customerList) {
             String nameCusFound = customerService.printNameCustomer(c.getCustomerID());
+            System.out.println("Naam klant: " + nameCusFound);
             //  vergelijk de achternaam van de ontvanger met de namen uit de lijst
-            return nameCusFound.toLowerCase().contains(nameFilledIn.toLowerCase());
+            if (nameCusFound.toLowerCase().contains(nameFilledIn.toLowerCase())) {
+                return true;
+            }
         }
+        System.out.println("Klantnaam ingevoerd niet gevonden in " + customerList);
         return false;
     }
 

@@ -39,7 +39,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
             ps.setString(2, transaction.getCreditAccount());
             ps.setDouble(3, transaction.getAmount());
             ps.setString(4, transaction.getDescription());
-            ps.setTimestamp(5, Timestamp.valueOf(transaction.getDate()));
+            ps.setTimestamp(5, Timestamp.valueOf(transaction.getDateTime()));
             return ps;
         }, keyHolder);
         long id = Objects.requireNonNull(keyHolder.getKey().longValue());
@@ -55,12 +55,12 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     @Override
     public void update(Transaction transaction) {
         String sql = "UPDATE transaction SET debitAccount = ?, creditAccount = ?, amount = ?" +
-                     ", description = ?, dateTime = ?" + "WHERE transactionID = ?";
+                ", description = ?, dateTime = ?" + "WHERE transactionID = ?";
         jdbcTemplate.update(sql, transaction.getDebitAccount(),
                 transaction.getCreditAccount(),
                 transaction.getAmount(),
                 transaction.getDescription(),
-                transaction.getDate());
+                transaction.getDateTime());
     }
 
     @Override
@@ -82,7 +82,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
 
     public List<Transaction> getTransactionsForAccount (Account account) {
         List<Transaction> transactions = getTransactionsByIban(account.getIban());
-        System.out.println(account.getAccountID());
+//        System.out.println(account.getAccountID());
         for (Transaction t : transactions) {
             t.addTransactionToAccount(account);
             account.addTransaction(t);
@@ -92,13 +92,14 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     }
 
     public List<Transaction> getTransactionsByIban (String iban) {
-        final String sql = "SELECT account.accountid, account.iban, account.balance, " +
-                "transaction.transactionID, transaction.amount, transaction.description,\n" +
+        final String sql = "SELECT account.accountid, account.iban, " +
+                "account.balance, transaction.transactionID, transaction.amount, " +
+                "transaction.description,\n" +
                 "transaction.dateTime, transaction.creditAccount, transaction.debitAccount " +
                 "FROM transaction JOIN account ON account.iban = transaction.creditAccount \n" +
                 "OR account.iban = Transaction.debitAccount\n" +
-                "WHERE account.iban = ?" +
-                "ORDER BY transaction.dateTime DESC";
+                "WHERE account.iban = ?\n" +
+                "ORDER BY transaction.dateTime DESC;";
         return jdbcTemplate.query(sql, new TransactionRowMapper(), iban);
     }
 

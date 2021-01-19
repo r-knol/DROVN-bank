@@ -60,7 +60,7 @@ public class LoginController {
 
     @GetMapping("/customer-with-accounts")
     public String showCustomerWithAccounts(@ModelAttribute("customer") Customer c, Model model) {
-        System.out.println("!!!!!!!!!! bla bla !!!!!!!!!! " + c);
+//        System.out.println("!!!!!!!!!! bla bla !!!!!!!!!! " + c);
         // service aanroepen.
         model.addAttribute("nameCurrentCus", customerService.printNameCustomer(c.getCustomerID()));
         CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(c);
