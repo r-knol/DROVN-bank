@@ -21,7 +21,8 @@ public class NaturalPersonHasAccountDTO {
     private String email;
     private String dateOfBirth;
 
-    public NaturalPersonHasAccountDTO(String firstName, String preposition, String surName, String iban, double balance, String address, String phoneNumber, String email, String dateOfBirth) {
+    public NaturalPersonHasAccountDTO(String firstName, String preposition, String surName, String iban,
+                                      double balance, String address, String phoneNumber, String email, String dateOfBirth) {
         this.firstName = firstName;
         this.preposition = preposition;
         this.surName = surName;
@@ -45,5 +46,4 @@ public class NaturalPersonHasAccountDTO {
         DecimalFormat d = new DecimalFormat("###,###.00");
         return "€" + d.format(balance);
     }
-
 }
