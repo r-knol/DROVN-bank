@@ -10,6 +10,7 @@ import nl.hva.miw.internetbanking.model.*;
 import nl.hva.miw.internetbanking.util.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -103,8 +104,7 @@ public class CustomerService {
         }
     }
 
-    private Optional<Customer> getCustomerDetails(Optional<Customer> optionalCustomer)
-            throws DataAccessException {
+    private Optional<Customer> getCustomerDetails(Optional<Customer> optionalCustomer) {
         // TODO: Create CustomerConverter ???
         if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
