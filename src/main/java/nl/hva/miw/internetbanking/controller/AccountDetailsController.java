@@ -41,23 +41,19 @@ public class AccountDetailsController {
         return "account-overview";
     }
 
-//    @GetMapping ("/account_details{id}")
-//    public String showAccounts (@PathVariable ("id") long accountID, Model model) {
-//        Optional<Account> account = accountService.getAccountById(accountID);
-//        model.addAttribute(account);
-//        model.addAttribute("customer");
-//        return "pages/details_overview";
-//    }
-
     @GetMapping("/account_details/{id}")
     public String accountDetailsHandler (@PathVariable ("id") long accountID,
                                          @ModelAttribute ("customer") Customer customer, Model model) {
         Optional<Account> account = accountService.getAccountById(accountID);
         model.addAttribute("account", account.get());
-        AccountHasTransactionsDTO accountHasTransactionsDTO = new AccountHasTransactionsDTO();
+        AccountHasTransactionsDTO accountHasTransactionsDTO = new AccountHasTransactionsDTO(account.get());
         accountHasTransactionsDTO.setTransactionList(transactionService.getTransactionsForAccount(account.get()));
         transactionService.setTransactionWithContraAccountNames(accountHasTransactionsDTO, account.get());
-        model.addAttribute("accountWithTransactions", accountHasTransactionsDTO);
+//        System.out.println(accountHasTransactionsDTO);
+        transactionService.setTransactionWithDateAsString(accountHasTransactionsDTO);
+        System.out.println("Transacties grouped by date: " + accountHasTransactionsDTO.getTransactionListByDate());
+        model.addAttribute("accountWithTransactionsByDate", accountHasTransactionsDTO.getTransactionListByDate());
+        model.addAttribute("accountWithTransactions", accountHasTransactionsDTO.getTransactionList());
         return "pages/account_details";
     }
 

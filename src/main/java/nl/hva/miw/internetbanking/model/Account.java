@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Account implements Serializable {
 
@@ -16,6 +18,7 @@ public class Account implements Serializable {
     private List<Transaction> transactions;
     private List<Customer> accountHolders;
     private List<String> accountHolderNames;
+    private Map<String, List<Transaction>> transactionListByDate;
 
     public Account(String iban) {
         this.iban = iban;
@@ -41,6 +44,7 @@ public class Account implements Serializable {
         this.transactions = new ArrayList<>();
         this.accountHolders = new ArrayList<>();
         this.accountHolderNames = new ArrayList<>();
+        this.transactionListByDate = new HashMap<>();
     }
 
     public Account(double balance, String iban) {
@@ -100,6 +104,14 @@ public class Account implements Serializable {
 
     public void addTransaction (Transaction transaction) {
       transactions.add(transaction);
+    }
+
+    public Map<String, List<Transaction>> getTransactionListByDate() {
+        return transactionListByDate;
+    }
+
+    public void setTransactionListByDate(Map<String, List<Transaction>> transactionListByDate) {
+        this.transactionListByDate = transactionListByDate;
     }
 
     public String showBalance() {

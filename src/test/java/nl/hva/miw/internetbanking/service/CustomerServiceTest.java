@@ -29,7 +29,7 @@ class CustomerServiceTest {
             new Account(1, 99.95, "84NL0563171251"),
             new Account(2, 1234.56, "56NL0563172222")
     );
-    Customer richard = new Customer(1, "rknol", "knolPassword", NATURAL);
+    Customer richard = new Customer(2, "rknol", "knolPassword", NATURAL);
     List<Customer> customerList = List.of(nina, richard);
 
     NaturalPersonDAO naturalPersonDAO = Mockito.mock(NaturalPersonDAO.class);

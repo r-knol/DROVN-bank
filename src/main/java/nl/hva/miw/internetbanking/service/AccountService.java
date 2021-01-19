@@ -22,12 +22,10 @@ public class AccountService {
     @Getter
     @Setter
     private AccountHasTransactionsDTO accountTransactionDTO;
-    private OpenAccountDTO openAccountDTO;
 
     @Autowired
     public AccountService(AccountDAO accountDAO) {
         this.accountDao = accountDAO;
-        openAccountDTO = new OpenAccountDTO();
     }
 
     public List<Account> getAccountsForCustomer(Customer customer) {
@@ -55,12 +53,6 @@ public class AccountService {
         return getAccountDetails(accountDao.read(iban));
     }
 
-    public <T extends Account> Account createAccountObject(Account account) {
-        account.setAccountID(openAccountDTO.getAccount().getAccountID());
-        account.setIban(openAccountDTO.getAccount().getIban());
-        account.setBalance(openAccountDTO.getAccount().getBalance());
-        return account;
-    }
 
 //    public List<Account> getAllNaturalAccounts() {
 //        return accountDao.getAllNaturalAccounts();
@@ -75,27 +67,4 @@ public class AccountService {
         accountDao.saveAccountToCustomer(account, customer);
     }
 
-    public OpenAccountDTO getOpenAccountDTO() {
-        return openAccountDTO;
-    }
-
-
-    public void setOpenAccountDTO(OpenAccountDTO openAccountDTO) {
-        this.openAccountDTO = openAccountDTO;
-    }
-
-    public boolean uniqueIbanViolated(String iban){
-        boolean uniqueIbanViolated = false;
-
-        boolean ibanByAccount = accountDao.existsByIban(iban);
-        log.info("iban check = " + iban);
-
-            if (ibanByAccount){
-                uniqueIbanViolated = true;
-                log.info("iban bestaat al");
-            } else {
-            log.info(" return unieke iban" + uniqueIbanViolated);
-
-        } return uniqueIbanViolated;
-    }
 }

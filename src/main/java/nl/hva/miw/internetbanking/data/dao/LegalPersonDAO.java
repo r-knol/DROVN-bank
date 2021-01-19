@@ -118,7 +118,7 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
                            ".accountID\n" +
                            "JOIN customer_has_account C ON C.accountID=T.accountID JOIN " +
                            "legalperson L\n" +
-                           "ON L.companyID=C.customerID JOIN employee E ON E.employeeID=l" +
+                           "ON L.companyID=C.customerID JOIN employee E ON E.employeeID=L" +
                            ".accountmanagerID\n" +
                            "GROUP BY L.companyName\n" +
                            "ORDER BY numberOfTransactions DESC LIMIT 10;";

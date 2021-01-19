@@ -1,7 +1,7 @@
 package nl.hva.miw.internetbanking.model;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -14,37 +14,41 @@ public class Transaction implements Serializable {
     private String creditAccount;
     private double amount;
     private String description;
-    private LocalDateTime date;
+    private LocalDateTime dateTime;
+    private LocalDate date;
     private Account account;
     private List<String> contraAccountHolderNames;
 
 
-    public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime date, Account account) {
+    public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime dateTime, Account account) {
         this.debitAccount = debitAccount;
         this.creditAccount = creditAccount;
         this.amount = amount;
         this.description = description;
-        this.date = date;
+        this.dateTime = dateTime;
+        this.date = dateTime.toLocalDate();
         this.account = account;
         this.contraAccountHolderNames = new ArrayList<>();
     }
 
-    public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime date) {
+    public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime dateTime) {
         this.debitAccount = debitAccount;
         this.creditAccount = creditAccount;
         this.amount = amount;
         this.description = description;
-        this.date = date;
+        this.dateTime = dateTime;
+        this.date = dateTime.toLocalDate();
         this.contraAccountHolderNames = new ArrayList<>();
     }
 
-    public Transaction(long transactionID, String debitAccount, String creditAccount, double amount, String description, LocalDateTime date) {
+    public Transaction(long transactionID, String debitAccount, String creditAccount, double amount, String description, LocalDateTime dateTime) {
         this.transactionID = transactionID;
         this.debitAccount = debitAccount;
         this.creditAccount = creditAccount;
         this.amount = amount;
         this.description = description;
-        this.date = date;
+        this.dateTime = dateTime;
+        this.date = dateTime.toLocalDate();
         this.contraAccountHolderNames = new ArrayList<>();
     }
 
@@ -109,12 +113,22 @@ public class Transaction implements Serializable {
         this.description = description;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public LocalDate getDate() {
+
+        setDate(dateTime.toLocalDate());
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setDate(LocalDate date) {
+        this.date = dateTime.toLocalDate();
     }
 
     public List<String> getContraAccountHolderNames() {
@@ -129,14 +143,14 @@ public class Transaction implements Serializable {
         contraAccountHolderNames.add(name);
     }
 
-    public String showDate() {
+    public String convertDateToString() {
         DateTimeFormatter formatDate = DateTimeFormatter.ofPattern("d MMMM yyyy");
         return date.format(formatDate);
     }
 
     public String showDateTime() {
-        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("d MMMM yyyy");
-        return date.format(formatDateTime);
+        DateTimeFormatter formatDateTime = DateTimeFormatter.ofPattern("d MMMM yyyy HH:mm");
+        return dateTime.format(formatDateTime);
     }
 
     public String showContraAccount() {
@@ -170,6 +184,7 @@ public class Transaction implements Serializable {
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
                 ", date=" + date +
+                ", date as String=" + convertDateToString() +
                 ", contraAccountHolderNames=" + contraAccountHolderNames +
                 '}';
     }
