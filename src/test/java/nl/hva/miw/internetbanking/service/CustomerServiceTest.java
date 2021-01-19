@@ -7,13 +7,14 @@ import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.NaturalPerson;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.List;
 import java.util.Optional;
-
 import static nl.hva.miw.internetbanking.model.CustomerType.NATURAL;
 
 class CustomerServiceTest {
@@ -50,9 +51,9 @@ class CustomerServiceTest {
 
     @Test
     void printNameCustomerTest() {
-        //        System.out.println("printNameCustomerTest");
-        //        String actual = customerService.printNameCustomer(1);
-        //        String expected = "Nina van Loo";
-        //        assertEquals(expected, actual);
+//                System.out.println("printNameCustomerTest");
+//                String actual = customerService.printNameCustomer(1);
+//                String expected = "Nina van Loo";
+//                Assertions.assertEquals(expected, actual);
     }
 }
