@@ -37,37 +37,19 @@ public class AccountOverviewController {
     @GetMapping("/account-overview/{id}") // http://localhost:8080/rekeningoverzicht
     public String accountOverviewHandler(@ModelAttribute Account account,
                                          @PathVariable ("id") long accountID, Model model) {
-//        System.out.println(account.getAccountID());
+        System.out.println(account.getAccountID());
         Optional <Account> acc = accountService.getAccountById(accountID);
         model.addAttribute(acc);
-//        System.out.println(acc);
-
-
-        // search customer info by customer id:
-//        NaturalPerson np = customerService.getNpByCustomerId(customerId);
-
-
-        // search accounts by customer id:
-//        List<Account> accountList = accountService.getAccountsByCustomerId(customerId);
-//        model.addAttribute("allAccountsList", accountList);
-
-//        logger.info("De rekeningen van klantID " + customerId + " worden getoond.");
-
+        System.out.println(acc);
         return "/account-overview";
     }
 
-//    @RequestMapping(value = "/account-overview/{a.iban}", method = RequestMethod.GET)
-//    public Optional<Account> getAccount (@PathVariable("a.iban") String iban, Model model) {
-//        accountService.getAccountByIban(iban);
-//        System.out.println(iban);
-//        return accountService.getAccountByIban(iban);
-//    }
 
     @PostMapping("/account-overview/{id}")
     public String PostHandlerAccountDetails (@PathVariable ("id") long accountID, Model model) {
         Optional<Account> account = accountService.getAccountById(accountID);
         model.addAttribute("account", account.get());
-//        System.out.println(account.get().getTransactions());
+        System.out.println(account.get().getTransactions());
         Optional<Customer> customer = customerService.getCustomerByAccountId2(accountID);
         Customer customerFound = customer.get();
         model.addAttribute("customer", customerFound);
