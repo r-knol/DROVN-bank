@@ -162,15 +162,15 @@
                 <h4 style="font-size: 125%; padding: 20px" >
                     <p style="padding: 0px">
                         <a th:href="@{/account_details/{id}(id= ${a.getAccountID})}" >
-                        <span style="font-size: 150%; font-weight: bold; color: white" th:text="${a.iban}"></span>
-                            <i th:href="@{/account_details/{id}(id= ${a.getAccountID})}" class="fas fa-angle-right rotate-icon; float-right" style="color: white;font-size: 200%"></i>
+                        <span style="font-size: 150%; font-weight: bold; color: #312783" th:text="${a.iban}"></span>
+                            <i th:href="@{/account_details/{id}(id= ${a.getAccountID})}" class="fas fa-angle-right rotate-icon; float-right" style="color: #312783;font-size: 200%"></i>
                         </a>
                     </p>
 
 
                     <dl>
-                        <dt class="col-md-6" style="color: #312783;font-size: 125%" th:each="customerName : ${a.getAccountHolderNames()}" th:text="${customerName}" ></dt>
-                        <dd class="col-md-2; float-md-right" style="color: #312783; font-size: 125%; font-weight: bold" th:text="${a.showBalance}"></dd>
+                        <dt class="col-md-6" style="color:#0066ff;font-size: 125%" th:each="customerName : ${a.getAccountHolderNames()}" th:text="${customerName}" ></dt>
+                        <dd class="col-md-2; float-md-right" style="color: #0066ff; font-size: 125%; font-weight: bold" th:text="${a.showBalance}"></dd>
                     </dl>
                 </h4>
                 </th:block>
@@ -210,7 +210,7 @@
                 <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="false">
 
                     <h4>
-                        <span class="mb-0" style="color: #F39200"  th:value="${entry.key}" th:text="${entry.key}">Datum></span>
+                        <span class="mb-0" style="color: #F39200; font-weight: bold"  th:value="${entry.key}" th:text="${entry.key}">Datum></span>
                     </h4>
 
                     <!-- Accordion card -->
@@ -223,12 +223,12 @@
                             <h5>
                                 <th:block>
                                         <div class = card-header style="border-color: #312783;border-width: medium
-                                                ;background-color: white">
+                                                ;background-color: rgba(0,102,255, 0.2)">
                                             <i class="fas fa-angle-down rotate-icon; float-right" style="color: #F39200;font-size: x-large"></i>
                                     <dl data-toggle="collapse" href="#collapse" aria-expanded="false"
                                         aria-controls="collapseOne1">
-                                        <dt class="col-md-10" style="color: #312783; background-color: white" th:each="name : ${t.contraAccountHolderNames}" th:text="${name}" ></dt>
-                                        <dd class="col-md-2; float-md-right" style="color: #312783; background-color: white" th:each="amount :${t.amount}"th:text="${t.showAmount()}"></dd>
+                                        <dt class="col-md-10" style="color: #312783" th:each="name : ${t.contraAccountHolderNames}" th:text="${name}" ></dt>
+                                        <dd class="col-md-2; float-md-right" style="color: #312783" th:each="amount :${t.amount}"th:text="${t.showAmount()}"></dd>
                                     </dl>
                                         </div>
                                 </th:block>
@@ -238,8 +238,8 @@
 
                         <!-- Card body -->
                         <div id="collapse" class="collapse hide" role="tabpanel" aria-labelledby="heading">
-                            <div class="card-body" style="background-color: rgba(243, 146, 0, 0.2)">
-                                <p style="color: #312783; font-size: large" th:each="description : ${t.description}" th:text="${t.showTransactionDetails()}"> </p>
+                            <div class="card-body" style="background-color: rgba(243, 146, 0, 0.6)">
+                                <p style="color: #312783; font-size: large; font-weight: bold" th:each="description : ${t.description}" th:text="${t.showTransactionDetails()}"> </p>
                             </div>
                         </div>
 
