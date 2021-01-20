@@ -41,12 +41,12 @@
                             <tbody>
                             <tr th:each="np : ${npWithHighestBalance}" class="client-row">
                                 <td th:text="${np.getFullName()}"></td>
-                                <td th:text="${np.iban}"></td>
+                                <td th:text="${np.account.getIban()}"></td>
                                 <td th:text="${np.getBalance()}"></td>
                                 <td>
                                     <button type="button" class="btn btn-outline-primary" data-toggle="modal"
                                             data-target=".bd-example-modal-lg"
-                                            th:onclick="showMoreInfo([[${np.dateOfBirth}]],[[${np.address}]],[[${np.email}]],[[${np.phoneNumber}]])">
+                                            th:onclick="showMoreInfo([[${np.naturalPerson.getDateOfBirth()}]],[[${np.naturalPerson.getAddress()}]],[[${np.naturalPerson.getEmail()}]],[[${np.naturalPerson.getPhone()}]])">
                                             Meer info
                                     </button>
                                 </td>

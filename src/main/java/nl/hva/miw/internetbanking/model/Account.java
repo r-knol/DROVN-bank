@@ -47,6 +47,11 @@ public class Account implements Serializable {
         this.transactionListByDate = new HashMap<>();
     }
 
+    public Account(String iban, double balance) {
+        this.iban = iban;
+        this.balance = balance;
+    }
+
     public Account(double balance, String iban) {
         this(0,balance, iban);
     }
