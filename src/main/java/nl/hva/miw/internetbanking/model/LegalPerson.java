@@ -2,15 +2,17 @@ package nl.hva.miw.internetbanking.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
+@SuperBuilder
 @Getter
 @Setter
 public class LegalPerson extends Customer implements Serializable {
-
+    
     private static final long serialVersionUID = -4561050351049225947L;
-    private static final long DEFAULT_ACCOUNTMANAGER_ID = 1;
+    public static final long DEFAULT_ACCOUNTMANAGER_ID = 1;
     private String companyName;
     private long kvkNumber;
     private Sector sector;
@@ -20,7 +22,7 @@ public class LegalPerson extends Customer implements Serializable {
     private String street;
     private String residence;
     private long accountmanagerID;
-
+    
     public LegalPerson(long id, String username, String password, CustomerType customerType,
                        String companyName, long kvkNumber, Sector sector, String vatNumber,
                        String postalCode, String homeNumber, String street, String residence,
@@ -36,7 +38,7 @@ public class LegalPerson extends Customer implements Serializable {
         this.residence = residence;
         this.accountmanagerID = accountmanagerID;
     }
-
+    
     public LegalPerson(long id, String companyName, long kvkNumber, Sector sector,
                        String vatNumber, String postalCode, String homeNumber, String street,
                        String residence, long accountmanagerID) {
@@ -51,13 +53,13 @@ public class LegalPerson extends Customer implements Serializable {
         this.residence = residence;
         this.accountmanagerID = accountmanagerID;
     }
-
+    
     public LegalPerson() {
         super(ZERO, EMPTY_STRING, EMPTY_STRING, CustomerType.LEGAL);
         sector = Sector.NOT_SPECIFIED;
         accountmanagerID = DEFAULT_ACCOUNTMANAGER_ID;
     }
-
+    
     @Override
     public String toString() {
         return "LegalPerson{" +
@@ -72,5 +74,5 @@ public class LegalPerson extends Customer implements Serializable {
                 ", accountmanagerID=" + accountmanagerID +
                 '}' + "\n" + super.toString();
     }
-
+    
 }
