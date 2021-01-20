@@ -1,6 +1,5 @@
 package nl.hva.miw.internetbanking.util;
 
-import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.dto.BusinessRegistrationDTO;
 import nl.hva.miw.internetbanking.data.dto.PrivateRegistrationDTO;
 import nl.hva.miw.internetbanking.model.*;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Slf4j(topic = "DtoMapperUtilTest")
 class DtoMapperUtilTest {
     
     private static final String EMPTY_STRING = "";
@@ -80,7 +78,8 @@ class DtoMapperUtilTest {
             assertThat(mappedCustomer.getPreposition()).isEqualTo(initializedDTO.getPreposition());
             assertThat(mappedCustomer.getSurName()).isEqualTo(initializedDTO.getSurName());
             assertThat(mappedCustomer.getDateOfBirth()).isEqualTo(initializedDTO.getDateOfBirth());
-            assertThat(mappedCustomer.getSocialSecurityNumber()).isEqualTo(initializedDTO.getSocialSecurityNumber());
+            assertThat(mappedCustomer.getSocialSecurityNumber()).isEqualTo(
+                    initializedDTO.getSocialSecurityNumber());
             assertThat(mappedCustomer.getEmail()).isEqualTo(initializedDTO.getEmail());
             assertThat(mappedCustomer.getPhone()).isEqualTo(initializedDTO.getPhone());
             assertThat(mappedCustomer.getPostalCode()).isEqualTo(initializedDTO.getPostalCode());
@@ -138,15 +137,18 @@ class DtoMapperUtilTest {
                     PrivateRegistrationDTO.class);
             // Field values should be mapped to corresponding fields from entity
             // userName & password set to empty string by default constructor of NaturalPerson class
-            assertThat(mappedDTO.getUserName()).isEqualTo(entity.getUserName()).isEqualTo(EMPTY_STRING);
-            assertThat(mappedDTO.getPassword()).isEqualTo(entity.getPassword()).isEqualTo(EMPTY_STRING);
+            assertThat(mappedDTO.getUserName()).isEqualTo(entity.getUserName()).isEqualTo(
+                    Customer.EMPTY_STRING);
+            assertThat(mappedDTO.getPassword()).isEqualTo(entity.getPassword()).isEqualTo(
+                    Customer.EMPTY_STRING);
             // All other fields of mappedDTO should be null, because the corresponding fields in
             // NaturalPerson class are null when using default constructor
             assertThat(mappedDTO.getInitials()).isEqualTo(entity.getInitials()).isNull();
             assertThat(mappedDTO.getPreposition()).isEqualTo(entity.getPreposition()).isNull();
             assertThat(mappedDTO.getSurName()).isEqualTo(entity.getSurName()).isNull();
             assertThat(mappedDTO.getDateOfBirth()).isEqualTo(entity.getDateOfBirth()).isNull();
-            assertThat(mappedDTO.getSocialSecurityNumber()).isEqualTo(entity.getSocialSecurityNumber()).isNull();
+            assertThat(mappedDTO.getSocialSecurityNumber()).isEqualTo(
+                    entity.getSocialSecurityNumber()).isNull();
             assertThat(mappedDTO.getEmail()).isEqualTo(entity.getEmail()).isNull();
             assertThat(mappedDTO.getPhone()).isEqualTo(entity.getPhone()).isNull();
             assertThat(mappedDTO.getPostalCode()).isEqualTo(entity.getPostalCode()).isNull();
