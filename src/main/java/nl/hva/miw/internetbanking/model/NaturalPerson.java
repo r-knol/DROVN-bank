@@ -24,6 +24,7 @@ public class NaturalPerson extends Customer implements Serializable {
     private String homeNumber;
     private String street;
     private String residence;
+    private String address;
     
     public NaturalPerson(long id, String username, String password, CustomerType customerType,
                          String initials, String firstName, String preposition,
@@ -87,7 +88,17 @@ public class NaturalPerson extends Customer implements Serializable {
     public NaturalPerson() {
         super(Customer.ZERO, Customer.EMPTY_STRING, Customer.EMPTY_STRING, CustomerType.NATURAL);
     }
-    
+
+    public NaturalPerson(String firstName, String preposition, String surName, String dateOfBirth, String email, String phone, String address) {
+        this.firstName = firstName;
+        this.preposition = preposition;
+        this.surName = surName;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "NaturalPerson{" +
@@ -105,6 +116,5 @@ public class NaturalPerson extends Customer implements Serializable {
                 ", residence='" + residence + '\'' +
                 '}' + "\n" + super.toString();
     }
-    
 }
 
