@@ -4,26 +4,38 @@ import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Employee;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DataJpaTest
+@ActiveProfiles("test")
 class AccountDAOTest {
 
-    @MockBean
-    AccountDAO accountDAO = Mockito.mock(AccountDAO.class);
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public AccountDAOTest(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Test
-    void read() {
-        Account account = new Account();
-        long expected = 5;
-        account.setAccountID(5);
-
-        Mockito.when(accountDAO.read(expected)).
-                thenReturn(Optional.of(account));
-        assertEquals(expected, account.getAccountID());
+    public void DAOTestReadID(){
+        AccountDAO dao = new AccountDAO(jdbcTemplate);
+        Optional<Account> optionaleAccount = dao.read(1L);
+        assertTrue(optionaleAccount.isPresent());
     }
 
+    @Test
+    public void DAOTestReadIBAN(){
+        AccountDAO dao = new AccountDAO(jdbcTemplate);
+        Optional<Account> optionaleAccount = dao.read("NL34DROVN8392873654");
+        assertTrue(optionaleAccount.isPresent());
     }
+}
