@@ -92,29 +92,47 @@ class DtoMapperUtilTest {
                     DtoMapperUtil.mapDtoToEntity(srcDTO, NaturalPerson.class);
     
             // Field values should be mapped to corresponding values from srcDTO
-            assertThat(destination.getUserName()).isEqualTo(srcDTO.getUserName())
+            assertThat(destination.getUserName())
+                    .isEqualTo(srcDTO.getUserName())
                     .isEqualTo(USERNAME);
-            assertThat(destination.getPassword()).isEqualTo(srcDTO.getPassword())
+            assertThat(destination.getPassword())
+                    .isEqualTo(srcDTO.getPassword())
                     .isEqualTo(PASSWORD);
-            assertThat(destination.getInitials()).isEqualTo(srcDTO.getInitials())
+            assertThat(destination.getInitials())
+                    .isEqualTo(srcDTO.getInitials())
                     .isEqualTo(INITIALS);
-            assertThat(destination.getFirstName()).isEqualTo(srcDTO.getFirstName())
+            assertThat(destination.getFirstName())
+                    .isEqualTo(srcDTO.getFirstName())
                     .isEqualTo(FIRSTNAME);
-            assertThat(destination.getPreposition()).isEqualTo(srcDTO.getPreposition())
+            assertThat(destination.getPreposition())
+                    .isEqualTo(srcDTO.getPreposition())
                     .isEqualTo(PREPOSITION);
-            assertThat(destination.getSurName()).isEqualTo(srcDTO.getSurName()).isEqualTo(SURNAME);
-            assertThat(destination.getDateOfBirth()).isEqualTo(srcDTO.getDateOfBirth())
+            assertThat(destination.getSurName())
+                    .isEqualTo(srcDTO.getSurName())
+                    .isEqualTo(SURNAME);
+            assertThat(destination.getDateOfBirth())
+                    .isEqualTo(srcDTO.getDateOfBirth())
                     .isEqualTo(DATE_OF_BIRTH);
             assertThat(destination.getSocialSecurityNumber())
-                    .isEqualTo(srcDTO.getSocialSecurityNumber()).isEqualTo(SOCIAL_SECURITY);
-            assertThat(destination.getEmail()).isEqualTo(srcDTO.getEmail()).isEqualTo(EMAIL);
-            assertThat(destination.getPhone()).isEqualTo(srcDTO.getPhone()).isEqualTo(PHONE);
-            assertThat(destination.getPostalCode()).isEqualTo(srcDTO.getPostalCode())
+                    .isEqualTo(srcDTO.getSocialSecurityNumber())
+                    .isEqualTo(SOCIAL_SECURITY);
+            assertThat(destination.getEmail())
+                    .isEqualTo(srcDTO.getEmail())
+                    .isEqualTo(EMAIL);
+            assertThat(destination.getPhone())
+                    .isEqualTo(srcDTO.getPhone())
+                    .isEqualTo(PHONE);
+            assertThat(destination.getPostalCode())
+                    .isEqualTo(srcDTO.getPostalCode())
                     .isEqualTo(POSTAL_CODE);
-            assertThat(destination.getHomeNumber()).isEqualTo(srcDTO.getHomeNumber())
+            assertThat(destination.getHomeNumber())
+                    .isEqualTo(srcDTO.getHomeNumber())
                     .isEqualTo(HOME_NUMBER);
-            assertThat(destination.getStreet()).isEqualTo(srcDTO.getStreet()).isEqualTo(STREET);
-            assertThat(destination.getResidence()).isEqualTo(srcDTO.getResidence())
+            assertThat(destination.getStreet())
+                    .isEqualTo(srcDTO.getStreet())
+                    .isEqualTo(STREET);
+            assertThat(destination.getResidence())
+                    .isEqualTo(srcDTO.getResidence())
                     .isEqualTo(RESIDENCE);
     
             // Fields not in srcDTO set with default values in NaturalPerson class
@@ -132,16 +150,36 @@ class DtoMapperUtilTest {
             LegalPerson destination = DtoMapperUtil.mapDtoToEntity(source, LegalPerson.class);
     
             // Field values should be mapped to corresponding values from source
-            assertThat(destination.getUserName()).isEqualTo(source.getUserName()).isNull();
-            assertThat(destination.getPassword()).isEqualTo(source.getPassword()).isNull();
-            assertThat(destination.getCompanyName()).isEqualTo(source.getCompanyName()).isNull();
-            assertThat(destination.getKvkNumber()).isEqualTo(source.getKvkNumber()).isEqualTo(0L);
-            assertThat(destination.getSector()).isEqualTo(source.getSector()).isNull();
-            assertThat(destination.getVatNumber()).isEqualTo(source.getVatNumber()).isNull();
-            assertThat(destination.getPostalCode()).isEqualTo(source.getPostalCode()).isNull();
-            assertThat(destination.getHomeNumber()).isEqualTo(source.getHomeNumber()).isNull();
-            assertThat(destination.getStreet()).isEqualTo(source.getStreet()).isNull();
-            assertThat(destination.getResidence()).isEqualTo(source.getResidence()).isNull();
+            assertThat(destination.getUserName())
+                    .isEqualTo(source.getUserName())
+                    .isNull();
+            assertThat(destination.getPassword())
+                    .isEqualTo(source.getPassword())
+                    .isNull();
+            assertThat(destination.getCompanyName())
+                    .isEqualTo(source.getCompanyName())
+                    .isNull();
+            assertThat(destination.getKvkNumber())
+                    .isEqualTo(source.getKvkNumber())
+                    .isEqualTo(0L);
+            assertThat(destination.getSector())
+                    .isEqualTo(source.getSector())
+                    .isNull();
+            assertThat(destination.getVatNumber())
+                    .isEqualTo(source.getVatNumber())
+                    .isNull();
+            assertThat(destination.getPostalCode())
+                    .isEqualTo(source.getPostalCode())
+                    .isNull();
+            assertThat(destination.getHomeNumber())
+                    .isEqualTo(source.getHomeNumber())
+                    .isNull();
+            assertThat(destination.getStreet())
+                    .isEqualTo(source.getStreet())
+                    .isNull();
+            assertThat(destination.getResidence())
+                    .isEqualTo(source.getResidence())
+                    .isNull();
     
             // Fields not in source are set with default values in LegalPerson class
             assertThat(destination.getCustomerID()).isEqualTo(Customer.ZERO);
@@ -163,25 +201,35 @@ class DtoMapperUtilTest {
                     BusinessRegistrationDTO.class);
     
             // Field values should be mapped to corresponding values from srcEntity
-            assertThat(destination.getUserName()).isEqualTo(srcEntity.getUserName())
+            assertThat(destination.getUserName())
+                    .isEqualTo(srcEntity.getUserName())
                     .isEqualTo(USERNAME);
-            assertThat(destination.getPassword()).isEqualTo(srcEntity.getPassword())
+            assertThat(destination.getPassword())
+                    .isEqualTo(srcEntity.getPassword())
                     .isEqualTo(PASSWORD);
-            assertThat(destination.getCompanyName()).isEqualTo(srcEntity.getCompanyName())
+            assertThat(destination.getCompanyName())
+                    .isEqualTo(srcEntity.getCompanyName())
                     .isEqualTo(COMPANY);
-            assertThat(destination.getKvkNumber()).isEqualTo(srcEntity.getKvkNumber())
+            assertThat(destination.getKvkNumber())
+                    .isEqualTo(srcEntity.getKvkNumber())
                     .isEqualTo(KVK_NUMBER);
-            assertThat(destination.getSector()).isEqualTo(srcEntity.getSector())
+            assertThat(destination.getSector())
+                    .isEqualTo(srcEntity.getSector())
                     .isEqualTo(SECTOR);
-            assertThat(destination.getVatNumber()).isEqualTo(srcEntity.getVatNumber())
+            assertThat(destination.getVatNumber())
+                    .isEqualTo(srcEntity.getVatNumber())
                     .isEqualTo(VAT_NUMBER);
-            assertThat(destination.getPostalCode()).isEqualTo(srcEntity.getPostalCode())
+            assertThat(destination.getPostalCode())
+                    .isEqualTo(srcEntity.getPostalCode())
                     .isEqualTo(POSTAL_CODE);
-            assertThat(destination.getHomeNumber()).isEqualTo(srcEntity.getHomeNumber())
+            assertThat(destination.getHomeNumber())
+                    .isEqualTo(srcEntity.getHomeNumber())
                     .isEqualTo(HOME_NUMBER);
-            assertThat(destination.getStreet()).isEqualTo(srcEntity.getStreet())
+            assertThat(destination.getStreet())
+                    .isEqualTo(srcEntity.getStreet())
                     .isEqualTo(STREET);
-            assertThat(destination.getResidence()).isEqualTo(srcEntity.getResidence())
+            assertThat(destination.getResidence())
+                    .isEqualTo(srcEntity.getResidence())
                     .isEqualTo(RESIDENCE);
             // passwordConfirmation is not a field in LegalPerson class, so should remain null
             assertThat(destination.getPasswordConfirmation()).isNull();
@@ -195,24 +243,47 @@ class DtoMapperUtilTest {
                     PrivateRegistrationDTO.class);
             // Field values should be mapped to corresponding values from source
             // userName & password set to empty string by default constructor of NaturalPerson class
-            assertThat(destination.getUserName()).isEqualTo(source.getUserName()).isEqualTo(
-                    Customer.EMPTY_STRING);
-            assertThat(destination.getPassword()).isEqualTo(source.getPassword()).isEqualTo(
-                    Customer.EMPTY_STRING);
+            assertThat(destination.getUserName())
+                    .isEqualTo(source.getUserName())
+                    .isEqualTo(Customer.EMPTY_STRING);
+            assertThat(destination.getPassword())
+                    .isEqualTo(source.getPassword())
+                    .isEqualTo(Customer.EMPTY_STRING);
             // All other fields of destination should be null, because the corresponding fields in
             // NaturalPerson class are null when using default constructor
-            assertThat(destination.getInitials()).isEqualTo(source.getInitials()).isNull();
-            assertThat(destination.getPreposition()).isEqualTo(source.getPreposition()).isNull();
-            assertThat(destination.getSurName()).isEqualTo(source.getSurName()).isNull();
-            assertThat(destination.getDateOfBirth()).isEqualTo(source.getDateOfBirth()).isNull();
-            assertThat(destination.getSocialSecurityNumber()).isEqualTo(
-                    source.getSocialSecurityNumber()).isNull();
-            assertThat(destination.getEmail()).isEqualTo(source.getEmail()).isNull();
-            assertThat(destination.getPhone()).isEqualTo(source.getPhone()).isNull();
-            assertThat(destination.getPostalCode()).isEqualTo(source.getPostalCode()).isNull();
-            assertThat(destination.getHomeNumber()).isEqualTo(source.getHomeNumber()).isNull();
-            assertThat(destination.getStreet()).isEqualTo(source.getStreet()).isNull();
-            assertThat(destination.getResidence()).isEqualTo(source.getResidence()).isNull();
+            assertThat(destination.getInitials())
+                    .isEqualTo(source.getInitials())
+                    .isNull();
+            assertThat(destination.getPreposition())
+                    .isEqualTo(source.getPreposition())
+                    .isNull();
+            assertThat(destination.getSurName())
+                    .isEqualTo(source.getSurName())
+                    .isNull();
+            assertThat(destination.getDateOfBirth())
+                    .isEqualTo(source.getDateOfBirth())
+                    .isNull();
+            assertThat(destination.getSocialSecurityNumber())
+                    .isEqualTo(source.getSocialSecurityNumber())
+                    .isNull();
+            assertThat(destination.getEmail())
+                    .isEqualTo(source.getEmail())
+                    .isNull();
+            assertThat(destination.getPhone())
+                    .isEqualTo(source.getPhone())
+                    .isNull();
+            assertThat(destination.getPostalCode())
+                    .isEqualTo(source.getPostalCode())
+                    .isNull();
+            assertThat(destination.getHomeNumber())
+                    .isEqualTo(source.getHomeNumber())
+                    .isNull();
+            assertThat(destination.getStreet())
+                    .isEqualTo(source.getStreet())
+                    .isNull();
+            assertThat(destination.getResidence())
+                    .isEqualTo(source.getResidence())
+                    .isNull();
             // passwordConfirmation is not a field in NaturalPerson class, so should remain null
             assertThat(destination.getPasswordConfirmation()).isNull();
         }
