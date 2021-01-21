@@ -1,12 +1,6 @@
 package nl.hva.miw.internetbanking.data.dao;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.hva.miw.internetbanking.data.dto.BalancePerSectorDTO;
-import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
-import nl.hva.miw.internetbanking.data.dto.LegalPersonHasAccountDTO;
-import nl.hva.miw.internetbanking.data.mapper.BalancePerSectorRowMapper;
-import nl.hva.miw.internetbanking.data.mapper.CompanyTransactionRowMapper;
-import nl.hva.miw.internetbanking.data.mapper.LegalPersonHasAccountRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.LegalPersonRowMapper;
 import nl.hva.miw.internetbanking.model.LegalPerson;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,9 +25,9 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
     @Transactional
     public void create(LegalPerson legalPerson) {
         String sql = "INSERT INTO legalperson(companyID, companyName, kvkNumber, sector, " +
-                     "vatNumber, postalCode, homeNumber, street, residence, accountmanagerID) " +
-                     "VALUES" +
-                     "(?,?,?,?,?,?,?,?,?,?)";
+                "vatNumber, postalCode, homeNumber, street, residence, accountmanagerID) " +
+                "VALUES" +
+                "(?,?,?,?,?,?,?,?,?,?)";
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setLong(1, legalPerson.getCustomerID());
@@ -65,9 +59,9 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
     @Override
     public void update(LegalPerson legalPerson) {
         String sql = "UPDATE legalperson SET companyID = ?, companyName = ?, kvkNumber = ?, " +
-                     "sector = ?, vatNumber = ?, postalCode = ?, homeNumber = ?, street = ?, " +
-                     "residence" +
-                     " = ?, accountmanagerID = ?";
+                "sector = ?, vatNumber = ?, postalCode = ?, homeNumber = ?, street = ?, " +
+                "residence" +
+                " = ?, accountmanagerID = ?";
         jdbcTemplate.update(sql, legalPerson.getCustomerID(), legalPerson.getCompanyName(),
                 legalPerson.getKvkNumber(), legalPerson.getSector(), legalPerson.getVatNumber(),
                 legalPerson.getPostalCode(), legalPerson.getHomeNumber(), legalPerson.getStreet(),
@@ -77,7 +71,7 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
     @Override
     public void delete(LegalPerson legalPerson) {
         jdbcTemplate.update("DELETE FROM legalperson WHERE companyID = ?",
-                            legalPerson.getCustomerID());
+                legalPerson.getCustomerID());
     }
 
     @Override
@@ -97,42 +91,4 @@ public class LegalPersonDAO implements DAO<LegalPerson, Long> {
                 .ofNullable(
                         jdbcTemplate.queryForObject(sql, new LegalPersonRowMapper(), kvkNumber));
     }
-
-    public List<BalancePerSectorDTO> getAvgBalancePerSector() {
-        final String sql = "SELECT l.sector, AVG(a.balance) balance\n" +
-                           "FROM legalperson l JOIN customer c ON c.customerID=l.companyID \n" +
-                           "JOIN customer_has_account cha ON cha.customerID=l.companyID \n" +
-                           "JOIN account a ON a.accountID=cha.accountID\n" +
-                           "GROUP BY sector\n" +
-                           "ORDER BY balance DESC;";
-        return jdbcTemplate.query(sql, new BalancePerSectorRowMapper());
-    }
-
-    public List<CompanyTransactionDTO> getMostActiveClients() {
-        final String sql = "SELECT L.companyName, COUNT(T.transactionID) numberOfTransactions, L" +
-                           ".kvkNumber, \n" +
-                           "CONCAT(L.street, \" \", L.homeNumber, \", \", L.residence) AS " +
-                           "address, \n" +
-                           "E.firstName, E.preposition, E.surName\n" +
-                           "FROM transaction_has_account T JOIN account A ON T.accountID=A" +
-                           ".accountID\n" +
-                           "JOIN customer_has_account C ON C.accountID=T.accountID JOIN " +
-                           "legalperson L\n" +
-                           "ON L.companyID=C.customerID JOIN employee E ON E.employeeID=L" +
-                           ".accountmanagerID\n" +
-                           "GROUP BY L.companyName\n" +
-                           "ORDER BY numberOfTransactions DESC LIMIT 10;";
-        return jdbcTemplate.query(sql, new CompanyTransactionRowMapper());
-    }
-
-    public List<LegalPersonHasAccountDTO> getClientsWithHighestBalance() {
-        final String sql = "SELECT l.companyName, a.iban, a.balance, l.kvkNumber, l.sector, CONCAT(l.street, \" \", l.homeNumber, \" \", l.residence) AS address,\n" +
-                "e.firstName, e.preposition, e.surName\n" +
-                "FROM customer_has_account cha JOIN customer c ON cha.customerID = c.customerID\n" +
-                "JOIN account a ON cha.accountID = a.accountID JOIN legalperson l ON l.companyID = cha.customerID\n" +
-                "JOIN employee e ON e.employeeID=l.accountmanagerID\n" +
-                "WHERE c.customerType = 'LEGAL' ORDER BY balance DESC LIMIT 10;";
-        return jdbcTemplate.query(sql, new LegalPersonHasAccountRowMapper());
-    }
-
 }

@@ -22,6 +22,7 @@ public class LegalPerson extends Customer implements Serializable {
     private String street;
     private String residence;
     private long accountmanagerID;
+    private String address;
     
     public LegalPerson(long id, String username, String password, CustomerType customerType,
                        String companyName, long kvkNumber, Sector sector, String vatNumber,
@@ -59,7 +60,24 @@ public class LegalPerson extends Customer implements Serializable {
         sector = Sector.NOT_SPECIFIED;
         accountmanagerID = DEFAULT_ACCOUNTMANAGER_ID;
     }
-    
+
+    public LegalPerson(String companyName, long kvkNumber, Sector sector, String address) {
+        this.companyName = companyName;
+        this.kvkNumber = kvkNumber;
+        this.sector = sector;
+        this.address = address;
+    }
+
+    public LegalPerson(String companyName, long kvkNumber, String address) {
+        this.companyName = companyName;
+        this.kvkNumber = kvkNumber;
+        this.address = address;
+    }
+
+    public LegalPerson(Sector sector) {
+        this.sector = sector;
+    }
+
     @Override
     public String toString() {
         return "LegalPerson{" +

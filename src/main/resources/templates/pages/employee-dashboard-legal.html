@@ -39,11 +39,11 @@
                             </thead>
                             <tbody>
                             <tr th:each="lp : ${lpWithHighestBalance}" class="client-row">
-                                <td th:text="${lp.companyName}" ></td>
-                                <td th:text="${lp.iban}"></td>
-                                <td th:text="${lp.balance}"></td>
+                                <td th:text="${lp.legalPerson.getCompanyName()}" ></td>
+                                <td th:text="${lp.account.iban}"></td>
+                                <td th:text="${lp.getBalance()}"></td>
                                 <td> <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target=".bd-example-modal-lg"
-                                             th:onclick="showMoreInfo([[${lp.kvkNumber}]],[[${lp.address}]],[[${lp.getFullName()}]])">Meer info</button>
+                                             th:onclick="showMoreInfo([[${lp.legalPerson.getKvkNumber()}]],[[${lp.legalPerson.getAddress()}]],[[${lp.getFullName()}]])">Meer info</button>
                                 </td>
                             </tr>
                             </tbody>
@@ -78,10 +78,10 @@
                             </thead>
                             <tbody>
                             <tr th:each="m : ${mostActiveClients}">
-                                <td th:text="${m.companyName}"></td>
-                                <td th:text="${m.numberOfTransactions}"></td>
+                                <td th:text="${m.legalPerson.getCompanyName()}"></td>
+                                <td th:text="${m.transaction.getNumberOfTransactions()}"></td>
                                 <td> <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target=".bd-example-modal-lg"
-                                             th:onclick="showMoreInfo([[${m.kvkNumber}]],[[${m.address}]],[[${m.getFullName()}]])">Meer info</button>
+                                             th:onclick="showMoreInfo([[${m.legalPerson.getKvkNumber()}]],[[${m.legalPerson.getAddress()}]],[[${m.getFullName()}]])">Meer info</button>
                                 </td>
                             </tr>
                             </tbody>

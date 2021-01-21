@@ -1,14 +1,10 @@
 package nl.hva.miw.internetbanking.controller;
 
 import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
-import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Employee;
 import nl.hva.miw.internetbanking.model.EmployeeRole;
-import nl.hva.miw.internetbanking.service.AccountService;
-import nl.hva.miw.internetbanking.service.CustomerService;
-import nl.hva.miw.internetbanking.service.EmployeeService;
-import nl.hva.miw.internetbanking.service.LoginService;
+import nl.hva.miw.internetbanking.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,14 +20,18 @@ public class LoginController {
     private LoginService loginService;
     private AccountService accountService;
     private EmployeeService employeeService;
+    private BalanceService balanceService;
+    private TransactionService transactionService;
 
     @Autowired
     public LoginController(CustomerService customerService, LoginService loginService, AccountService accountService,
-                           EmployeeService employeeService) {
+                           EmployeeService employeeService, BalanceService balanceService, TransactionService transactionService) {
         this.customerService = customerService;
         this.loginService = loginService;
         this.accountService = accountService;
         this.employeeService = employeeService;
+        this.balanceService = balanceService;
+        this.transactionService = transactionService;
     }
 
     @GetMapping("/login")
@@ -87,14 +87,14 @@ public class LoginController {
                 model.addAttribute("employee", employeeFound);
 
                 if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_PRIVATE) {
-                    model.addAttribute("npWithHighestBalance", customerService.getNaturalAccountsWithHighestBalance());
+                    model.addAttribute("npWithHighestBalance", balanceService.getNaturalAccountsWithHighestBalance());
                     return "pages/employee-dashboard-private";
                 }
 
                 if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_LEGAL) {
-                    model.addAttribute("lpWithHighestBalance", customerService.getClientsWithHighestBalance());
-                    model.addAttribute("balancePerSector", customerService.getAvgBalancePerSector());
-                    model.addAttribute("mostActiveClients", customerService.getMostActiveClients());
+                    model.addAttribute("lpWithHighestBalance", balanceService.getClientsWithHighestBalance());
+                    model.addAttribute("balancePerSector", balanceService.getAvgBalancePerSector());
+                    model.addAttribute("mostActiveClients", transactionService.getMostActiveClients());
                     return "pages/employee-dashboard-legal";
                 }
             }
