@@ -23,16 +23,14 @@ public class CustomerService {
 
     private final NaturalPersonDAO naturalPersonDAO;
     private final LegalPersonDAO legalPersonDAO;
-    private final AccountDAO accountDAO;
     private final CustomerDAO customerDAO;
-    private AccountService accountService;
 
     @Autowired
-    public CustomerService(NaturalPersonDAO naturalPersonDAO, LegalPersonDAO legalPersonDAO,
-                           AccountDAO accountDAO, CustomerDAO customerDAO) {
+    public CustomerService(NaturalPersonDAO naturalPersonDAO,
+                           LegalPersonDAO legalPersonDAO,
+                           CustomerDAO customerDAO) {
         this.naturalPersonDAO = naturalPersonDAO;
         this.legalPersonDAO = legalPersonDAO;
-        this.accountDAO = accountDAO;
         this.customerDAO = customerDAO;
     }
 
@@ -181,22 +179,17 @@ public class CustomerService {
 
     // TODO: Get name from CustomerController (RESTController)?
     public String printNameCustomer(long customerId) {
-        // eerst checken welk type klant het is:
         try {
             Optional<Customer> optionalCustomer = getCustomerById(customerId);
-            // in case of NaturalPerson:
-            if (optionalCustomer.isPresent())
+            if (optionalCustomer.isPresent()) // in case of NaturalPerson:
                 if (optionalCustomer.get() instanceof NaturalPerson) {
                     NaturalPerson np = (NaturalPerson) optionalCustomer.get();
-                    // afhandeling voorvoegsel:
-                    if (np.getPreposition() != null) {
+                    if (np.getPreposition() != null) { // afhandeling voorvoegsel:
                         return String.format("%s %s %s", np.getFirstName(), np.getPreposition(),
                                              np.getSurName());
-                    }
-                    // bij geen voorvoegsel:
+                    } // bij geen voorvoegsel:
                     return String.format("%s %s", np.getFirstName(), np.getSurName());
-                    // in case of LegalPerson:
-                } else {
+                } else { // in case of LegalPerson:
                     LegalPerson lp = (LegalPerson) optionalCustomer.get();
                     return String.format("%s", lp.getCompanyName());
                 }
@@ -243,15 +236,5 @@ public class CustomerService {
             }
         }
         return null;
-    }
-
-    public Optional<Customer> getCustomerByName(String name) {
-        try {
-            Optional<Customer> customerOptional = customerDAO.read(name);
-            return getCustomerDetails(customerOptional);
-        } catch (DataAccessException e) {
-            log.warn("Customer not found [{} - {}]", e.getClass().getSimpleName(), e.getMessage());
-            return Optional.empty();
-        }
     }
 }
