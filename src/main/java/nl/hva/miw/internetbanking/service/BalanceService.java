@@ -16,14 +16,10 @@ import java.util.List;
 @Slf4j(topic = "BalanceService")
 public class BalanceService {
 
-    private final NaturalPersonDAO naturalPersonDAO;
-    private final LegalPersonDAO legalPersonDAO;
     private final BalanceDAO balanceDAO;
 
     @Autowired
-    public BalanceService(NaturalPersonDAO naturalPersonDAO, LegalPersonDAO legalPersonDAO, BalanceDAO balanceDAO) {
-        this.naturalPersonDAO = naturalPersonDAO;
-        this.legalPersonDAO = legalPersonDAO;
+    public BalanceService(BalanceDAO balanceDAO) {
         this.balanceDAO = balanceDAO;
     }
 
