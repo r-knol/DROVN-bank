@@ -6,8 +6,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class Transaction implements Serializable {
+public class Transaction extends Object implements Serializable {
 
     private long transactionID;
     private String debitAccount;
@@ -174,7 +175,6 @@ public class Transaction implements Serializable {
                 description);
     }
 
-
     @Override
     public String toString() {
         return "Transaction{" +
@@ -183,9 +183,31 @@ public class Transaction implements Serializable {
                 ", creditAccount='" + creditAccount + '\'' +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
+                ", dateTime=" + dateTime +
                 ", date=" + date +
-                ", date as String=" + convertDateToString() +
+                ", account=" + account +
                 ", contraAccountHolderNames=" + contraAccountHolderNames +
                 '}';
+    }
+
+    @Override // nodig voor TransactionDAOTest
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return transactionID == that.transactionID &&
+                Double.compare(that.amount, amount) == 0 &&
+                debitAccount.equals(that.debitAccount) &&
+                creditAccount.equals(that.creditAccount) &&
+                description.equals(that.description) &&
+                dateTime.equals(that.dateTime) &&
+                date.equals(that.date) &&
+                Objects.equals(account, that.account) &&
+                Objects.equals(contraAccountHolderNames, that.contraAccountHolderNames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(transactionID, debitAccount, creditAccount, amount, description, dateTime, date, account, contraAccountHolderNames);
     }
 }
