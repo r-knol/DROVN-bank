@@ -17,5 +17,4 @@ public abstract class JDBCSetupDAOTest {
     public JDBCSetupDAOTest(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-
 }

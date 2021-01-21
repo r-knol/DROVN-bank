@@ -12,17 +12,11 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@AutoConfigureTestDatabase(replace= AutoConfigureTestDatabase.Replace.NONE)
-@DataJpaTest // aan Spring aangeven dat data/een DAO getest gaat worden
-@ActiveProfiles("test")
-class EmployeeDAOTest {
-
-    private final JdbcTemplate jdbcTemplate;
+class EmployeeDAOTest extends JDBCSetupDAOTest {
 
     @Autowired
     public EmployeeDAOTest(JdbcTemplate jdbcTemplate) {
-        super();
-        this.jdbcTemplate = jdbcTemplate;
+        super(jdbcTemplate);
     }
 
     @Test
