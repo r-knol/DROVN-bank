@@ -3,6 +3,11 @@ package nl.hva.miw.internetbanking.data.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
+import nl.hva.miw.internetbanking.model.Account;
+import nl.hva.miw.internetbanking.model.Employee;
+import nl.hva.miw.internetbanking.model.LegalPerson;
+import nl.hva.miw.internetbanking.model.Sector;
 
 import java.text.DecimalFormat;
 
@@ -11,39 +16,28 @@ import java.text.DecimalFormat;
 @ToString
 public class LegalPersonHasAccountDTO {
 
-    private String companyName;
-    private String iban;
-    private double balance;
-    private long kvkNumber;
-    private String sector;
-    private String address;
-    private String firstNameAccountmanager;
-    private String prepositionAccountmanager;
-    private String surNameAccountmanager;
+    private LegalPerson legalPerson;
+    private Account account;
+    private Sector sector;
+    private Employee employee;
 
-    public LegalPersonHasAccountDTO(String companyName, String iban, double balance, long kvkNumber, String sector, String address,
-                                    String firstNameAccountmanager, String prepositionAccountmanager, String surNameAccountmanager) {
-        this.companyName = companyName;
-        this.iban = iban;
-        this.balance = balance;
-        this.kvkNumber = kvkNumber;
-        this.sector = sector;
-        this.address = address;
-        this.firstNameAccountmanager = firstNameAccountmanager;
-        this.prepositionAccountmanager = prepositionAccountmanager;
-        this.surNameAccountmanager = surNameAccountmanager;
+    public LegalPersonHasAccountDTO(LegalPerson lp, Employee employee, Account account) {
+        this.legalPerson = new LegalPerson(lp.getCompanyName(), lp.getKvkNumber(), lp.getSector(),
+                lp.getAddress());
+        this.employee = new Employee(employee.getFirstName(), employee.getPreposition(), employee.getSurName());
+        this.account = new Account(account.getIban(), account.getBalance());
     }
 
     public String getFullName() {
-        if (prepositionAccountmanager == null) {
-            return firstNameAccountmanager + " " + surNameAccountmanager;
+        if (employee.getPreposition() == null) {
+            return employee.getFirstName() + " " + employee.getSurName();
         } else {
-            return firstNameAccountmanager + " " + prepositionAccountmanager + " " + surNameAccountmanager;
+            return employee.getFirstName() + " " + employee.getPreposition() + " " + employee.getSurName();
         }
     }
 
     public String getBalance() {
         DecimalFormat d = new DecimalFormat("###,###.00");
-        return "€" + d.format(balance);
+        return "€" + d.format(account.getBalance());
     }
 }

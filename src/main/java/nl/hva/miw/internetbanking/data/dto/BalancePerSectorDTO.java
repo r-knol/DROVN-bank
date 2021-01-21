@@ -3,6 +3,7 @@ package nl.hva.miw.internetbanking.data.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Sector;
 
 import java.text.DecimalFormat;
@@ -13,15 +14,15 @@ import java.text.DecimalFormat;
 public class BalancePerSectorDTO {
 
     private Sector sector;
-    private double balance;
+    private Account account;
 
-    public BalancePerSectorDTO(Sector sector, double balance) {
+    public BalancePerSectorDTO(Sector sector, Account account) {
         this.sector = sector;
-        this.balance = balance;
+        this.account = new Account(account.getBalance());
     }
 
     public String getBalance() {
         DecimalFormat d = new DecimalFormat("###,###.00");
-        return "€" + d.format(balance);
+        return "€" + d.format(account.getBalance());
     }
 }

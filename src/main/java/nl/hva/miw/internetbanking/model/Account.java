@@ -24,6 +24,10 @@ public class Account implements Serializable {
         this.iban = iban;
     }
 
+    public Account(double balance) {
+        this.balance = balance;
+    }
+
     public List<Customer> getAccountHolders() {
         return accountHolders;
     }
@@ -53,7 +57,7 @@ public class Account implements Serializable {
     }
 
     public Account(double balance, String iban) {
-        this(0,balance, iban);
+        this(0, balance, iban);
     }
 
     public Account() {

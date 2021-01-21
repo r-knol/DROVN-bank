@@ -56,14 +56,6 @@ public class CustomerService {
         }
     }
 
-    public List<NaturalPersonHasAccountDTO> getNaturalAccountsWithHighestBalance() {
-        return naturalPersonDAO.getNaturalAccountsWithHighestBalance();
-    }
-
-    public List<LegalPersonHasAccountDTO> getClientsWithHighestBalance() {
-        return legalPersonDAO.getClientsWithHighestBalance();
-    }
-
     public Optional<Customer> getCustomerByUsername(String username) {
         try {
             Optional<Customer> customerOptional = customerDAO.read(username);
@@ -213,16 +205,6 @@ public class CustomerService {
             log.warn("Customer not found [{} - {}]", e.getClass().getSimpleName(), e.getMessage());
             return Optional.empty();
         }
-    }
-
-    // TODO: Catch DataAccessException?
-    public List<BalancePerSectorDTO> getAvgBalancePerSector() {
-        return legalPersonDAO.getAvgBalancePerSector();
-    }
-
-    // TODO: Catch DataAccessException?
-    public List<CompanyTransactionDTO> getMostActiveClients() {
-        return legalPersonDAO.getMostActiveClients();
     }
 
     public void setCustomerWithAccounts(CustomerHasAccountsDTO customerDto){
