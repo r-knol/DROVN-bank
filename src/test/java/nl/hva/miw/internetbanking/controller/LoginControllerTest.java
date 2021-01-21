@@ -4,10 +4,7 @@ import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Employee;
 import nl.hva.miw.internetbanking.model.EmployeeRole;
-import nl.hva.miw.internetbanking.service.AccountService;
-import nl.hva.miw.internetbanking.service.CustomerService;
-import nl.hva.miw.internetbanking.service.EmployeeService;
-import nl.hva.miw.internetbanking.service.LoginService;
+import nl.hva.miw.internetbanking.service.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +36,10 @@ class LoginControllerTest {
     private AccountService accountService;
     @MockBean
     private EmployeeService employeeService;
+    @MockBean
+    private BalanceService balanceService;
+    @MockBean
+    private TransactionService transactionService;
 
     public LoginControllerTest() {
         super();
