@@ -18,7 +18,7 @@ class TransactionDAOTest extends JDBCSetupDAOTest {
     }
 
     @Test
-    void createAndRead() {
+    void createAndReadTest() {
         LocalDateTime testLocalTime = LocalDateTime.of(2021, 01, 01, 01, 20, 00);
         TransactionDAO transactionDAO = new TransactionDAO(jdbcTemplate);
         Transaction testTransaction = new Transaction("NL47DROVN687253648", "NL97DROVN527874997",

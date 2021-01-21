@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Transaction extends Object implements Serializable {
+public class Transaction implements Serializable {
 
     private long transactionID;
     private String debitAccount;
