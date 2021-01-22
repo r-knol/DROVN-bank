@@ -2,13 +2,15 @@ package nl.hva.miw.internetbanking.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
+@SuperBuilder
 @Getter
 @Setter
 public class NaturalPerson extends Customer implements Serializable {
-
+    
     private static final long serialVersionUID = 2314734678022380045L;
     private String initials;
     private String firstName;
@@ -22,7 +24,8 @@ public class NaturalPerson extends Customer implements Serializable {
     private String homeNumber;
     private String street;
     private String residence;
-
+    private String address;
+    
     public NaturalPerson(long id, String username, String password, CustomerType customerType,
                          String initials, String firstName, String preposition,
                          String surName, String dateOfBirth, String socialSecurityNumber,
@@ -42,7 +45,7 @@ public class NaturalPerson extends Customer implements Serializable {
         this.street = street;
         this.residence = residence;
     }
-
+    
     public NaturalPerson(String username, String password, CustomerType customerType,
                          String initials, String firstName, String preposition,
                          String surName, String dateOfBirth, String socialSecurityNumber,
@@ -62,7 +65,7 @@ public class NaturalPerson extends Customer implements Serializable {
         this.street = street;
         this.residence = residence;
     }
-
+    
     public NaturalPerson(long id, String initials, String firstName, String preposition,
                          String surName, String dateOfBirth, String socialSecurityNumber,
                          String email, String phone, String postalCode, String homeNumber,
@@ -81,9 +84,20 @@ public class NaturalPerson extends Customer implements Serializable {
         this.street = street;
         this.residence = residence;
     }
-
+    
     public NaturalPerson() {
         super(Customer.ZERO, Customer.EMPTY_STRING, Customer.EMPTY_STRING, CustomerType.NATURAL);
+    }
+
+    public NaturalPerson(String firstName, String preposition, String surName, String dateOfBirth,
+                         String email, String phone, String address) {
+        this.firstName = firstName;
+        this.preposition = preposition;
+        this.surName = surName;
+        this.dateOfBirth = dateOfBirth;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
     }
 
     @Override
@@ -103,6 +117,5 @@ public class NaturalPerson extends Customer implements Serializable {
                 ", residence='" + residence + '\'' +
                 '}' + "\n" + super.toString();
     }
-
 }
 

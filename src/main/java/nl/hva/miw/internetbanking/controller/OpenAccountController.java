@@ -21,7 +21,7 @@ public class OpenAccountController {
 
     private AccountService accountService;
     private CustomerService customerService;
-    private Logger logger = LoggerFactory.getLogger(AccountOverviewController.class);
+    private Logger logger = LoggerFactory.getLogger(OpenAccountController.class);
 
     @Autowired
     public OpenAccountController(AccountService accountService, CustomerService customerService) {
@@ -46,14 +46,4 @@ public class OpenAccountController {
         return "pages/open-account";
     }
 
-    @CrossOrigin
-    @PostMapping("/check_iban")
-    public @ResponseBody String ibanCheckDB(@RequestParam String iban){
-        System.out.println("Request data in: " + iban);
-        String ibanFound = accountService.getAccountByIban(iban).get().getIban();
-        if (iban.equals(ibanFound)) {
-            return ibanFound;
-        }
-        return null;
-    }
 }

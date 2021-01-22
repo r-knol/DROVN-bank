@@ -4,10 +4,7 @@ import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Employee;
 import nl.hva.miw.internetbanking.model.EmployeeRole;
-import nl.hva.miw.internetbanking.service.AccountService;
-import nl.hva.miw.internetbanking.service.CustomerService;
-import nl.hva.miw.internetbanking.service.EmployeeService;
-import nl.hva.miw.internetbanking.service.LoginService;
+import nl.hva.miw.internetbanking.service.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +36,10 @@ class LoginControllerTest {
     private AccountService accountService;
     @MockBean
     private EmployeeService employeeService;
+    @MockBean
+    private BalanceService balanceService;
+    @MockBean
+    private TransactionService transactionService;
 
     public LoginControllerTest() {
         super();
@@ -49,7 +50,7 @@ class LoginControllerTest {
             new Account(1, 99.95, "84NL0563171251"),
             new Account(2, 1234.56, "56NL0563172222"));
 
-    Customer richard = new Customer(1, "rknol", "knolPassword", NATURAL);
+    Customer richard = new Customer(2, "rknol", "knolPassword", NATURAL);
     List<Customer> customerList = List.of(nina, richard);
 
     Employee pieter = new Employee(1, "pdeboer", "test",
@@ -66,7 +67,7 @@ class LoginControllerTest {
         Mockito.when(customerService.getCustomerByAccountId(1)).thenReturn(customerList);
 
         try {
-            MockHttpServletRequestBuilder postRequest = MockMvcRequestBuilders.post("/login")
+            MockHttpServletRequestBuilder postRequest = MockMvcRequestBuilders.post("/customer-with-accounts")
                     .param("userName", "nvanloo")
                     .param("password", "myPassword");
             ResultActions response = mockMvc.perform(postRequest);

@@ -23,16 +23,14 @@ public class CustomerService {
 
     private final NaturalPersonDAO naturalPersonDAO;
     private final LegalPersonDAO legalPersonDAO;
-    private final AccountDAO accountDAO;
     private final CustomerDAO customerDAO;
-    private AccountService accountService;
 
     @Autowired
-    public CustomerService(NaturalPersonDAO naturalPersonDAO, LegalPersonDAO legalPersonDAO,
-                           AccountDAO accountDAO, CustomerDAO customerDAO) {
+    public CustomerService(NaturalPersonDAO naturalPersonDAO,
+                           LegalPersonDAO legalPersonDAO,
+                           CustomerDAO customerDAO) {
         this.naturalPersonDAO = naturalPersonDAO;
         this.legalPersonDAO = legalPersonDAO;
-        this.accountDAO = accountDAO;
         this.customerDAO = customerDAO;
     }
 
@@ -54,14 +52,6 @@ public class CustomerService {
             log.warn("Failed to save customer [{} - {}]", e.getClass().getSimpleName(),
                      e.getMessage());
         }
-    }
-
-    public List<NaturalPersonHasAccountDTO> getNaturalAccountsWithHighestBalance() {
-        return naturalPersonDAO.getNaturalAccountsWithHighestBalance();
-    }
-
-    public List<LegalPersonHasAccountDTO> getClientsWithHighestBalance() {
-        return legalPersonDAO.getClientsWithHighestBalance();
     }
 
     public Optional<Customer> getCustomerByUsername(String username) {
@@ -175,28 +165,24 @@ public class CustomerService {
         return  customerDAO.getCustomerListByIban(iban);
     }
 
-    public Customer getCustomerByIban (String iban) {
-        return customerDAO.getCustomerByIban(iban);
-    }
+    // Nina: volgens mij kan deze weg
+//    public Customer getCustomerByIban (String iban) {
+//        return customerDAO.getCustomerByIban(iban);
+//    }
 
     // TODO: Get name from CustomerController (RESTController)?
     public String printNameCustomer(long customerId) {
-        // eerst checken welk type klant het is:
         try {
             Optional<Customer> optionalCustomer = getCustomerById(customerId);
-            // in case of NaturalPerson:
-            if (optionalCustomer.isPresent())
+            if (optionalCustomer.isPresent()) // in case of NaturalPerson:
                 if (optionalCustomer.get() instanceof NaturalPerson) {
                     NaturalPerson np = (NaturalPerson) optionalCustomer.get();
-                    // afhandeling voorvoegsel:
-                    if (np.getPreposition() != null) {
+                    if (np.getPreposition() != null) { // afhandeling voorvoegsel:
                         return String.format("%s %s %s", np.getFirstName(), np.getPreposition(),
                                              np.getSurName());
-                    }
-                    // bij geen voorvoegsel:
+                    } // bij geen voorvoegsel:
                     return String.format("%s %s", np.getFirstName(), np.getSurName());
-                    // in case of LegalPerson:
-                } else {
+                } else { // in case of LegalPerson:
                     LegalPerson lp = (LegalPerson) optionalCustomer.get();
                     return String.format("%s", lp.getCompanyName());
                 }
@@ -213,16 +199,6 @@ public class CustomerService {
             log.warn("Customer not found [{} - {}]", e.getClass().getSimpleName(), e.getMessage());
             return Optional.empty();
         }
-    }
-
-    // TODO: Catch DataAccessException?
-    public List<BalancePerSectorDTO> getAvgBalancePerSector() {
-        return legalPersonDAO.getAvgBalancePerSector();
-    }
-
-    // TODO: Catch DataAccessException?
-    public List<CompanyTransactionDTO> getMostActiveClients() {
-        return legalPersonDAO.getMostActiveClients();
     }
 
     public void setCustomerWithAccounts(CustomerHasAccountsDTO customerDto){
@@ -243,15 +219,5 @@ public class CustomerService {
             }
         }
         return null;
-    }
-
-    public Optional<Customer> getCustomerByName(String name) {
-        try {
-            Optional<Customer> customerOptional = customerDAO.read(name);
-            return getCustomerDetails(customerOptional);
-        } catch (DataAccessException e) {
-            log.warn("Customer not found [{} - {}]", e.getClass().getSimpleName(), e.getMessage());
-            return Optional.empty();
-        }
     }
 }
