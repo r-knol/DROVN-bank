@@ -160,13 +160,12 @@ public class TransactionService {
         // voor iedere customer uit de lijst, haal de naam op:
         for (Customer c : customerList) {
             String nameCusFound = customerService.printNameCustomer(c.getCustomerID());
-            System.out.println("Naam klant: " + nameCusFound);
             //  vergelijk de achternaam van de ontvanger met de namen uit de lijst
             if (nameCusFound.toLowerCase().contains(nameFilledIn.toLowerCase())) {
                 return true;
             }
         }
-        System.out.println("Klantnaam ingevoerd niet gevonden in " + customerList);
+        log.error("Klantnaam ingevoerd [" + nameFilledIn + "] niet gevonden in " + customerList);
         return false;
     }
 }
