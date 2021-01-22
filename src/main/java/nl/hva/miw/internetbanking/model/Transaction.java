@@ -19,28 +19,6 @@ public class Transaction implements Serializable {
     private Account account;
     private List<String> contraAccountHolderNames;
 
-
-    public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime dateTime, Account account) {
-        this.debitAccount = debitAccount;
-        this.creditAccount = creditAccount;
-        this.amount = amount;
-        this.description = description;
-        this.dateTime = dateTime;
-        this.date = dateTime.toLocalDate();
-        this.account = account;
-        this.contraAccountHolderNames = new ArrayList<>();
-    }
-
-    public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime dateTime) {
-        this.debitAccount = debitAccount;
-        this.creditAccount = creditAccount;
-        this.amount = amount;
-        this.description = description;
-        this.dateTime = dateTime;
-        this.date = dateTime.toLocalDate();
-        this.contraAccountHolderNames = new ArrayList<>();
-    }
-
     public Transaction(long transactionID, String debitAccount, String creditAccount, double amount, String description, LocalDateTime dateTime) {
         this.transactionID = transactionID;
         this.debitAccount = debitAccount;

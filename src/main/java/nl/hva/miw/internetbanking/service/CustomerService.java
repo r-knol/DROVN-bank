@@ -28,7 +28,7 @@ public class CustomerService {
     @Autowired
     public CustomerService(NaturalPersonDAO naturalPersonDAO,
                            LegalPersonDAO legalPersonDAO,
-                           CustomerDAO customerDAO) {
+                           AccountDAO accountDAO, CustomerDAO customerDAO) {
         this.naturalPersonDAO = naturalPersonDAO;
         this.legalPersonDAO = legalPersonDAO;
         this.customerDAO = customerDAO;

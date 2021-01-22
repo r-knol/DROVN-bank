@@ -129,7 +129,7 @@ public class TransactionService {
 
     public void setTransactionWithDateAsString (AccountHasTransactionsDTO accountHasTransactionsDTO) {
         accountHasTransactionsDTO.setTransactionListByDate(accountHasTransactionsDTO.getTransactionList().stream()
-                .collect(Collectors.groupingBy(Transaction :: getDate)));
+                .collect(Collectors.groupingBy(Transaction :: convertDateToString)));
     }
 
     public boolean checkValidTransaction(TransactionDetailsDTO tDto) {

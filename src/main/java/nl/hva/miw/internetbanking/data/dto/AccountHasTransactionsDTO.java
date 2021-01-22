@@ -8,21 +8,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.yaml.snakeyaml.tokens.Token.ID.Key;
+
 public class AccountHasTransactionsDTO {
 
     private Account account;
     private Transaction transaction;
     private List<Transaction> transactionList;
-    private Map<LocalDate, List<Transaction>> transactionListByDate;
+    private Map<Long, List<Transaction>> transactionMap;
+    private Map<String, List<Transaction>> transactionListByDate;
 
     public AccountHasTransactionsDTO(Account account) {
         super();
         this.account = account;
+        this.transactionMap = new HashMap<>();
         this.transactionListByDate = new HashMap<>();
     }
 
     public AccountHasTransactionsDTO() {
         super();
+        this.transactionMap = new HashMap<>();
         this.transactionListByDate = new HashMap<>();
     }
 
@@ -50,11 +55,19 @@ public class AccountHasTransactionsDTO {
         this.transactionList = transactionList;
     }
 
-    public Map<LocalDate, List<Transaction>> getTransactionListByDate() {
+    public Map<Long, List<Transaction>> getTransactionMap() {
+        return transactionMap;
+    }
+
+    public void setTransactionMap(Map<Long, List<Transaction>> transactionMap) {
+        this.transactionMap = transactionMap;
+    }
+
+    public Map<String, List<Transaction>> getTransactionListByDate() {
         return transactionListByDate;
     }
 
-    public void setTransactionListByDate(Map<LocalDate, List<Transaction>> transactionListByDate) {
+    public void setTransactionListByDate(Map<String, List<Transaction>> transactionListByDate) {
         this.transactionListByDate = transactionListByDate;
     }
 
