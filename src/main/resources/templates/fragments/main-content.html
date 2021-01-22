@@ -11,13 +11,15 @@
         </div>
         <div class="col-md-4">
             <h2 style="color: #F39200">Uw bankzaken zo geregeld</h2>
-            <p style="color: #312783">Bellen om uw pas te deblokkeren? Of om een schade te melden? Dat is helemaal niet meer
+            <p style="color: #312783">Bellen om uw pas te deblokkeren? Of om een schade te melden? Dat is helemaal niet
+                meer
                 nodig. In de DROVN app of in Internet Bankieren regelt u alledaagse bankzaken simpel zelf.</p>
             <p><a class="btn btn-outline-primary btn-block" href="#" role="button">Regel het simpel zelf »</a></p>
         </div>
         <div class="col-md-4">
             <h2 style="color: #F39200">Regel uw bankzaken online</h2>
-            <p style="color: #312783">Wilt u uw betaallimiet wijzigen of uw pas blokkeren? Dit soort bankzaken regelt u zelf gewoon
+            <p style="color: #312783">Wilt u uw betaallimiet wijzigen of uw pas blokkeren? Dit soort bankzaken regelt u
+                zelf gewoon
                 online. Wel zo makkelijk.</p>
             <br>
             <p><a class="btn btn-outline-primary btn-block" href="#" role="button">Direct online regelen »</a></p>
@@ -128,15 +130,16 @@
     <div class="row">
         <div class="col-md-4 pt-5">
             <p action="#" method="get" th:action="@{/do-transaction/}" th:object="${customerWithAccountOverview}">
-                <a class="btn btn-primary btn-block btn-group-lg; row-cols-4" style="font-size: 125%" th:href="@{/do-transaction/}" role="button"
+                <a class="btn btn-primary btn-block btn-group-lg; row-cols-4" style="font-size: 125%"
+                   th:href="@{/do-transaction/}" role="button"
                 >Geld overboeken »</a></p>
-                <a class="btn btn-primary btn-block btn-group-lg; row-cols-4" style="font-size: 125%" th:href="@{/}" role="button"
-                >« Terug naar Home</a></p>
+            <a class="btn btn-primary btn-block btn-group-lg; row-cols-4" style="font-size: 125%" th:href="@{/}"
+               role="button"
+            >« Terug naar Home</a></p>
             </p>
         </div>
 
         <div class="col-md-8 pt-0">
-
             <div class="container pt-0">
                 <div th:if="${customerWithAccountOverview.getAccountList().isEmpty()}">
                     <p style="font-size: 200%; color: #F39200" align="center"
@@ -144,38 +147,35 @@
                 </div>
             </div>
 
-
-            <div  th:unless="${customerWithAccountOverview.getAccountList().isEmpty()}"
-             th:object="${customerWithAccountOverview}">
-
+            <div th:unless="${customerWithAccountOverview.getAccountList().isEmpty()}">
                 <th:block th:each="a : ${customerWithAccountOverview.getAccountList()}">
-
-
-
-                    <div class="container pt-5" >
-                <div class="card"  style="border-color: #312783;border-width: medium
+                    <div class="container pt-5">
+                        <div class="card" style="border-color: #312783;border-width: medium
              ;background-color: rgba(243, 146, 0, 0.6)">
+                            <th:block>
+                                <h4 style="font-size: 125%; padding: 20px">
+                                    <p style="padding: 0px">
+                                        <a th:href="@{/account_details/{id}(id= ${a.getAccountID})}">
+                                            <span style="font-size: 150%; font-weight: bold; color: #312783"
+                                                  th:text="${a.iban}"></span>
+                                            <i th:href="@{/account_details/{id}(id= ${a.getAccountID})}"
+                                               class="fas fa-angle-right rotate-icon; float-right"
+                                               style="color: #312783;font-size: 200%"></i>
+                                        </a>
+                                    </p>
 
-
-                    <th:block>
-
-                <h4 style="font-size: 125%; padding: 20px" >
-                    <p style="padding: 0px">
-                        <a th:href="@{/account_details/{id}(id= ${a.getAccountID})}" >
-                        <span style="font-size: 150%; font-weight: bold; color: #312783" th:text="${a.iban}"></span>
-                            <i th:href="@{/account_details/{id}(id= ${a.getAccountID})}" class="fas fa-angle-right rotate-icon; float-right" style="color: #312783;font-size: 200%"></i>
-                        </a>
-                    </p>
-
-
-                    <dl>
-                        <dt class="col-md-6" style="color:#0066ff;font-size: 125%" th:each="customerName : ${a.getAccountHolderNames()}" th:text="${customerName}" ></dt>
-                        <dd class="col-md-2; float-md-right" style="color: #0066ff; font-size: 125%; font-weight: bold" th:text="${a.showBalance}"></dd>
-                    </dl>
-                </h4>
-                </th:block>
-                </div>
-                </div>
+                                    <dl>
+                                        <dt class="col-md-6" style="color:#0066ff;font-size: 125%"
+                                            th:each="customerName : ${a.getAccountHolderNames()}"
+                                            th:text="${customerName}"></dt>
+                                        <dd class="col-md-2; float-md-right"
+                                            style="color: #0066ff; font-size: 125%; font-weight: bold"
+                                            th:text="${a.showBalance}"></dd>
+                                    </dl>
+                                </h4>
+                            </th:block>
+                        </div>
+                    </div>
                 </th:block>
             </div>
         </div>
@@ -187,10 +187,13 @@
     <div class="row">
         <div class="col-md-4">
             <p action="#" method="get" th:action="@{/do-transaction/}" th:object="${customerWithAccountOverview}">
-                <a class="btn btn-primary btn-lg btn-block" style="font-size: 125%; width: 100%" th:href="@{/do-transaction/}" role="button"
+                <a class="btn btn-primary btn-lg btn-block" style="font-size: 125%; width: 100%"
+                   th:href="@{/do-transaction/}" role="button"
                 >Geld overboeken »</a></p>
-            <p action="#" method="post" th:action="@{/customer-with-accounts}" th:object="${customerWithAccountOverview}">
-                <a class="btn btn-primary btn-lg btn-block" style="font-size: 125%; width: 100%" th:href="@{/customer-with-accounts}" role="button"
+            <p action="#" method="post" th:action="@{/customer-with-accounts}"
+               th:object="${customerWithAccountOverview}">
+                <a class="btn btn-primary btn-lg btn-block" style="font-size: 125%; width: 100%"
+                   th:href="@{/customer-with-accounts}" role="button"
                 >« Terug naar Rekeningoverzicht</a></p>
             </p>
         </div>
@@ -204,33 +207,38 @@
                 </div>
             </div>
 
-            <th:block class="container pt-0"th:each="entry : ${accountWithTransactionsByDate}">
+            <th:block class="container pt-0" th:each="entry : ${accountWithTransactionsByDate}">
 
-<!--            Accordion wrapper-->
+                <!--            Accordion wrapper-->
                 <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="false">
 
                     <h4>
-                        <span class="mb-0" style="color: #F39200; font-weight: bold"  th:value="${entry.key}" th:text="${entry.key}">Datum></span>
+                        <span class="mb-0" style="color: #F39200; font-weight: bold" th:value="${entry.key}"
+                              th:text="${entry.key}">Datum></span>
                     </h4>
 
                     <!-- Accordion card -->
-                    <div class="card"  style="border-color: #312783;border-width: medium
-                         ;background-color: white" th:if="${not #lists.isEmpty(accountWithTransactionsByDate)}" th:each="t : ${entry.value}">
+                    <div class="card" style="border-color: #312783;border-width: medium
+                         ;background-color: white" th:if="${not #lists.isEmpty(accountWithTransactionsByDate)}"
+                         th:each="t : ${entry.value}">
 
 
                         <!-- Card header -->
-                        <div >
+                        <div>
                             <h5>
                                 <th:block>
-                                        <div class = card-header style="border-color: #312783;border-width: medium
+                                    <div class=card-header style="border-color: #312783;border-width: medium
                                                 ;background-color: rgba(0,102,255, 0.2)">
-                                            <i class="fas fa-angle-down rotate-icon; float-right" style="color: #F39200;font-size: x-large"></i>
-                                    <dl data-toggle="collapse" href="#collapse" aria-expanded="false"
-                                        aria-controls="collapseOne1">
-                                        <dt class="col-md-10" style="color: #312783" th:each="name : ${t.contraAccountHolderNames}" th:text="${name}" ></dt>
-                                        <dd class="col-md-2; float-md-right" style="color: #312783" th:each="amount :${t.amount}"th:text="${t.showAmount()}"></dd>
-                                    </dl>
-                                        </div>
+                                        <i class="fas fa-angle-down rotate-icon; float-right"
+                                           style="color: #F39200;font-size: x-large"></i>
+                                        <dl data-toggle="collapse" href="#collapse" aria-expanded="false"
+                                            aria-controls="collapseOne1">
+                                            <dt class="col-md-10" style="color: #312783"
+                                                th:each="name : ${t.contraAccountHolderNames}" th:text="${name}"></dt>
+                                            <dd class="col-md-2; float-md-right" style="color: #312783"
+                                                th:each="amount :${t.amount}" th:text="${t.showAmount()}"></dd>
+                                        </dl>
+                                    </div>
                                 </th:block>
                             </h5>
 
@@ -239,7 +247,8 @@
                         <!-- Card body -->
                         <div id="collapse" class="collapse hide" role="tabpanel" aria-labelledby="heading">
                             <div class="card-body" style="background-color: rgba(243, 146, 0, 0.6)">
-                                <p style="color: #312783; font-size: large; font-weight: bold" th:each="description : ${t.description}" th:text="${t.showTransactionDetails()}"> </p>
+                                <p style="color: #312783; font-size: large; font-weight: bold"
+                                   th:each="description : ${t.description}" th:text="${t.showTransactionDetails()}"></p>
                             </div>
                         </div>
 
@@ -248,19 +257,16 @@
 
                 </div>
                 <!-- Accordion wrapper -->
-               <br>
+                <br>
 
 
             </th:block>
 
-            </div>
-
-
         </div>
 
+
     </div>
+
 </div>
-
-
-
+</div>
 </html>
