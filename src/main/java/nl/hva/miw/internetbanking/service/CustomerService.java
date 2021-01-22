@@ -165,9 +165,10 @@ public class CustomerService {
         return  customerDAO.getCustomerListByIban(iban);
     }
 
-    public Customer getCustomerByIban (String iban) {
-        return customerDAO.getCustomerByIban(iban);
-    }
+    // Nina: volgens mij kan deze weg
+//    public Customer getCustomerByIban (String iban) {
+//        return customerDAO.getCustomerByIban(iban);
+//    }
 
     // TODO: Get name from CustomerController (RESTController)?
     public String printNameCustomer(long customerId) {
