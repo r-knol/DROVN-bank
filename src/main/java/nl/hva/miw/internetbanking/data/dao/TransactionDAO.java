@@ -41,7 +41,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
             ps.setString(2, transaction.getCreditAccount());
             ps.setDouble(3, transaction.getAmount());
             ps.setString(4, transaction.getDescription());
-            ps.setTimestamp(5, Timestamp.valueOf(transaction.getDateTime()));
+            ps.setTimestamp(5, Timestamp.valueOf(transaction.getDateTime().plusHours(1)));
             return ps;
         }, keyHolder);
         long id = Objects.requireNonNull(keyHolder.getKey().longValue());
