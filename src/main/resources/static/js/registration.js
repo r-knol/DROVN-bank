@@ -1,13 +1,6 @@
 (function () {
 
     const $buttonPrivate = $("#private");
-    const $buttonLegal = $("#legal");
-
-    $buttonLegal.on('click', function (event) {
-        event.preventDefault();
-        $(this).toggleClass('active');
-        $buttonPrivate.toggleClass('active');
-    });
 
     $buttonPrivate.on('click', function (event) {
         event.preventDefault();
