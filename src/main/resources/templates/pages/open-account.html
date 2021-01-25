@@ -26,49 +26,51 @@
                 <form action="/saveaccount" method="post" name="ibanForm">
                     <input type="text" th:field="*{customer.customerID}" value="customer.customerID" hidden/>
 
-                                    <div class="col-auto form-group">
-                                        <label for="ibanGenerator"><h4> Uw nieuwe rekeningnummer: </h4></label>
-                                        <input type="text" style="text-align: center" th:field="*{account.iban}"
-                                               id="ibanGenerator"
-                                               placeholder="IBAN" readonly required/>
-                                    </div>
-                                    <div class="col-auto form-group">
-                                        <input type="text" size="3" th:field="*{account.balance}" id="balance"
-                                               placeholder="Saldo" hidden/>
-                                    </div>
-                                    <div class="col-auto form-group">
-                                        <p>Door te bevestigen gaat u akkoord met de
-                                            <a data-href="https://www.termsandconditionsgenerator.com/live.php?token=WMGxy8SYoQkOH2QDFKuWdAqUeZ9mgMuS" class="openTerms"> algemene voorwaarden</a>
-                                            <br></p>
-                                        <br>
-                                    </div>
-                                </form>
-                                <div class="row">
-                                    <div class=" col-auto">
-                                        <div class="col-md-4">
-                                            <input type="submit" id="submit"
-                                                   class="btn btn-primary confirmation-button"
-                                                   value="Bevestigen"
-                                                   onclick="$('#confirmationNewAccount').modal();">
-                                        </div>
-                                    </div>
+                            <div class="col-auto form-group">
+                                <label for="ibanGenerator"><h4> Uw nieuwe rekeningnummer: </h4></label>
+                                <input type="text" style="align-content: center" th:field="*{account.iban}"
+                                       id="ibanGenerator"
+                                       placeholder="IBAN" readonly required/>
+                            </div>
+                            <div class="col-auto form-group">
+                                <input type="text" size="3" th:field="*{account.balance}" id="balance"
+                                       placeholder="Saldo" hidden/>
+                            </div>
+                            <div class="col-auto form-group">
+                                <p>Door te bevestigen gaat u akkoord met de
+                                    <a data-href="https://www.termsandconditionsgenerator.com/live.php?token=WMGxy8SYoQkOH2QDFKuWdAqUeZ9mgMuS"
+                                       class="openTerms"> algemene voorwaarden</a>
+                                    <br></p>
+                                <br>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class=" col-auto">
+                                <div class="col-md-3">
+                                    <input type="submit" id="submit"
+                                           class="btn btn-primary confirmation-button"
+                                           value="Bevestigen"
+                                           onclick="$('#confirmationNewAccount').modal();">
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="col-auto">
-                                        <input type="button" class="btn btn-primary accountoverview-button"
-                                               value="Rekeningoverzicht" id="back-button">
-                                        <form action="#" method="get" th:action="@{/customer-with-accounts}">
-                                        </form>
-                                    </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="col-auto">
+                                    <input type="button" class="btn btn-primary accountoverview-button"
+                                           value="Rekeningoverzicht" id="back-button">
+                                    <form action="#" method="get" th:action="@{/customer-with-accounts}">
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
     </div>
+    </main>
 </div>
+
+</div>
+<
 <div class="row footer-default" id="footer">
     <footer th:replace="fragments/footer :: footer-default"></footer>
 </div>
