@@ -7,12 +7,40 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
 </head>
+
+<style>
+    .opnieuw-inloggen {
+        font-weight: bold;
+        background-color: #fd7e14;
+        border-color: #fd7e14;
+        padding: 10px;
+        min-width: 150px;
+        border-radius: 12px;
+    }
+
+    .opnieuw-inloggen:hover {
+        background-color: #fd7e14!important;
+        border-color: #fd7e14!important;
+        -webkit-box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+        box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .opnieuw-inloggen:active,
+    .opnieuw-inloggen:focus {
+        color: #ffffff !important;
+        background-color: #fd7e14!important;
+        border-color: #fd7e14!important;
+        box-shadow: 0 0 0 0.2rem rgba(253, 126, 20, 0.5) !important
+    }
+
+</style>
+
 <body>
 <div class="container">
     <div align="center">
         <h1>Oeps, er ging iets mis</h1>
         <h2>Inloggen mislukt, probeer het nog een keer</h2>
-        <a href="/login" class="btn btn-primary">Opnieuw inloggen</a>
+        <a href="/login" class="btn btn-primary opnieuw-inloggen">Opnieuw inloggen</a>
     </div>
 </div>
 </body>

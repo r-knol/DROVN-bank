@@ -1,12 +1,20 @@
 package nl.hva.miw.internetbanking.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+@Getter
+@Setter
+@ToString
 public class Transaction implements Serializable {
 
     private long transactionID;
@@ -17,7 +25,29 @@ public class Transaction implements Serializable {
     private LocalDateTime dateTime;
     private LocalDate date;
     private Account account;
+    private long numberOfTransactions;
     private List<String> contraAccountHolderNames;
+
+    public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime dateTime, Account account) {
+        this.debitAccount = debitAccount;
+        this.creditAccount = creditAccount;
+        this.amount = amount;
+        this.description = description;
+        this.dateTime = dateTime;
+        this.date = dateTime.toLocalDate();
+        this.account = account;
+        this.contraAccountHolderNames = new ArrayList<>();
+    }
+
+    public Transaction(String debitAccount, String creditAccount, double amount, String description, LocalDateTime dateTime) {
+        this.debitAccount = debitAccount;
+        this.creditAccount = creditAccount;
+        this.amount = amount;
+        this.description = description;
+        this.dateTime = dateTime;
+        this.date = dateTime.toLocalDate();
+        this.contraAccountHolderNames = new ArrayList<>();
+    }
 
     public Transaction(long transactionID, String debitAccount, String creditAccount, double amount, String description, LocalDateTime dateTime) {
         this.transactionID = transactionID;
@@ -30,12 +60,12 @@ public class Transaction implements Serializable {
         this.contraAccountHolderNames = new ArrayList<>();
     }
 
-    public void addTransactionToAccount (Account account) {
-        this.account = account;
+    public Transaction(long numberOfTransactions) {
+        this.numberOfTransactions = numberOfTransactions;
     }
 
-    public Transaction(long transactionID){
-        this.transactionID = transactionID;
+    public void addTransactionToAccount(Account account) {
+        this.account = account;
     }
 
     public Transaction() {
@@ -69,8 +99,7 @@ public class Transaction implements Serializable {
         if (account.getIban().equals(debitAccount)) {
             amount = 0 - amount;
         }
-        if(account.getIban().equals(creditAccount)) {
-
+        if (account.getIban().equals(creditAccount)) {
         }
         return amount;
     }
@@ -117,7 +146,7 @@ public class Transaction implements Serializable {
         this.contraAccountHolderNames = contraAccountHolderNames;
     }
 
-    public void addDebetAccountHolderName (String name) {
+    public void addDebetAccountHolderName(String name) {
         contraAccountHolderNames.add(name);
     }
 
@@ -152,7 +181,6 @@ public class Transaction implements Serializable {
                 description);
     }
 
-
     @Override
     public String toString() {
         return "Transaction{" +
@@ -161,9 +189,31 @@ public class Transaction implements Serializable {
                 ", creditAccount='" + creditAccount + '\'' +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
+                ", dateTime=" + dateTime +
                 ", date=" + date +
-                ", date as String=" + convertDateToString() +
+                ", account=" + account +
                 ", contraAccountHolderNames=" + contraAccountHolderNames +
                 '}';
+    }
+
+    @Override // nodig voor TransactionDAOTest
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return transactionID == that.transactionID &&
+                Double.compare(that.amount, amount) == 0 &&
+                debitAccount.equals(that.debitAccount) &&
+                creditAccount.equals(that.creditAccount) &&
+                description.equals(that.description) &&
+                dateTime.equals(that.dateTime) &&
+                date.equals(that.date) &&
+                Objects.equals(account, that.account) &&
+                Objects.equals(contraAccountHolderNames, that.contraAccountHolderNames);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(transactionID, debitAccount, creditAccount, amount, description, dateTime, date, account, contraAccountHolderNames);
     }
 }

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import nl.hva.miw.internetbanking.data.dao.AccountDAO;
+import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dto.AccountHasTransactionsDTO;
 import nl.hva.miw.internetbanking.data.dto.OpenAccountDTO;
 import nl.hva.miw.internetbanking.model.Account;
@@ -24,7 +25,7 @@ public class AccountService {
     private AccountHasTransactionsDTO accountTransactionDTO;
 
     @Autowired
-    public AccountService(AccountDAO accountDAO) {
+    public AccountService(CustomerDAO customerDAO, AccountDAO accountDAO) {
         this.accountDao = accountDAO;
     }
 

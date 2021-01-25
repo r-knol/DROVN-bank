@@ -20,12 +20,10 @@ import static nl.hva.miw.internetbanking.model.CustomerType.NATURAL;
 class CustomerServiceTest {
     Customer nina = new Customer(1, "nvanloo", "myPassword", NATURAL);
 
-    // is me niet duidelijk of ninaNp zoals hieronder nodig is, of dat je dit uit de DB moet halen:
     NaturalPerson ninaNp = new NaturalPerson(1, "N.", "Nina", "van", "Loo", "07-02-1987",
                                              "123456789", "ninavanloo@gmail.com", "06-10087058",
                                              "1056 AC", "2-H",
                                              "James Rosskade", "Amsterdam");
-    //
     List<Account> accountsNina = List.of(
             new Account(1, 99.95, "84NL0563171251"),
             new Account(2, 1234.56, "56NL0563172222")
@@ -35,10 +33,9 @@ class CustomerServiceTest {
 
     NaturalPersonDAO naturalPersonDAO = Mockito.mock(NaturalPersonDAO.class);
     LegalPersonDAO legalPersonDAO = Mockito.mock(LegalPersonDAO.class);
-    AccountDAO accountDAO = Mockito.mock(AccountDAO.class);
     CustomerDAO customerDAO = Mockito.mock(CustomerDAO.class);
 
-    CustomerService customerService = new CustomerService(naturalPersonDAO, legalPersonDAO, accountDAO, customerDAO);
+    CustomerService customerService = new CustomerService(naturalPersonDAO, legalPersonDAO, customerDAO);
 
     public CustomerServiceTest() {
         super();
@@ -46,14 +43,16 @@ class CustomerServiceTest {
 
     @BeforeEach
     public void testSetup() {
-        Mockito.when(customerService.getCustomerById(1)).thenReturn(Optional.of(ninaNp));
+
     }
 
     @Test
     void printNameCustomerTest() {
-//                System.out.println("printNameCustomerTest");
-//                String actual = customerService.printNameCustomer(1);
-//                String expected = "Nina van Loo";
-//                Assertions.assertEquals(expected, actual);
+        Mockito.when(customerDAO.read(1L)).thenReturn(Optional.of(nina));
+        Mockito.when(naturalPersonDAO.read(1L)).thenReturn(Optional.of(ninaNp));
+        System.out.println("printNameCustomerTest");
+        String actual = customerService.printNameCustomer(1);
+        String expected = "Nina van Loo";
+        Assertions.assertEquals(expected, actual);
     }
 }

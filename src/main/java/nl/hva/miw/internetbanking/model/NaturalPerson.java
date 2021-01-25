@@ -89,7 +89,8 @@ public class NaturalPerson extends Customer implements Serializable {
         super(Customer.ZERO, Customer.EMPTY_STRING, Customer.EMPTY_STRING, CustomerType.NATURAL);
     }
 
-    public NaturalPerson(String firstName, String preposition, String surName, String dateOfBirth, String email, String phone, String address) {
+    public NaturalPerson(String firstName, String preposition, String surName, String dateOfBirth,
+                         String email, String phone, String address) {
         this.firstName = firstName;
         this.preposition = preposition;
         this.surName = surName;

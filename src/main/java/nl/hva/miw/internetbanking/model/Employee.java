@@ -31,4 +31,10 @@ public class Employee implements Serializable {
         this.surName = surName;
         this.employeeRole = employeeRole;
     }
+
+    public Employee(String firstName, String preposition, String surName) {
+        this.firstName = firstName;
+        this.preposition = preposition;
+        this.surName = surName;
+    }
 }

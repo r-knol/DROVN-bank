@@ -1,6 +1,8 @@
 package nl.hva.miw.internetbanking.data.dao;
 
 import lombok.extern.slf4j.Slf4j;
+import nl.hva.miw.internetbanking.data.dto.CompanyTransactionDTO;
+import nl.hva.miw.internetbanking.data.mapper.CompanyTransactionRowMapper;
 import nl.hva.miw.internetbanking.data.mapper.TransactionRowMapper;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Transaction;
@@ -112,5 +114,22 @@ public class TransactionDAO implements DAO<Transaction, Long> {
     public Transaction getDebitTransaction (String iban) {
         final String sql = "SELECT * FROM transaction WHERE debitAccount =?";
         return  jdbcTemplate.queryForObject(sql, new TransactionRowMapper(), iban);
+    }
+
+    public List<CompanyTransactionDTO> getMostActiveClients() {
+        final String sql = "SELECT L.companyName, COUNT(T.transactionID) numberOfTransactions, L" +
+                ".kvkNumber, \n" +
+                "CONCAT(L.street, \" \", L.homeNumber, \", \", L.residence) AS " +
+                "address, \n" +
+                "E.firstName, E.preposition, E.surName\n" +
+                "FROM transaction_has_account T JOIN account A ON T.accountID=A" +
+                ".accountID\n" +
+                "JOIN customer_has_account C ON C.accountID=T.accountID JOIN " +
+                "legalperson L\n" +
+                "ON L.companyID=C.customerID JOIN employee E ON E.employeeID=L" +
+                ".accountmanagerID\n" +
+                "GROUP BY L.companyName\n" +
+                "ORDER BY numberOfTransactions DESC LIMIT 10;";
+        return jdbcTemplate.query(sql, new CompanyTransactionRowMapper());
     }
 }

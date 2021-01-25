@@ -33,17 +33,17 @@ public class AccountOverviewController {
         this.customerService = customerService;
     }
 
-    // Onderstaand als een customerId beschikbaar is:
-    @GetMapping("/account-overview/{id}") // http://localhost:8080/rekeningoverzicht
-    public String accountOverviewHandler(@ModelAttribute Account account,
-                                         @PathVariable ("id") long accountID, Model model) {
-        System.out.println(account.getAccountID());
-        Optional <Account> acc = accountService.getAccountById(accountID);
-        model.addAttribute(acc);
-        System.out.println(acc);
-        return "/account-overview";
-    }
-
+    // Nina: volgens mij kan deze weg, daarom out-comment
+//    // Onderstaand als een customerId beschikbaar is:
+//    @GetMapping("/account-overview/{id}") // http://localhost:8080/rekeningoverzicht
+//    public String accountOverviewHandler(@ModelAttribute Account account,
+//                                         @PathVariable ("id") long accountID, Model model) {
+//        System.out.println(account.getAccountID());
+//        Optional <Account> acc = accountService.getAccountById(accountID);
+//        model.addAttribute(acc);
+//        System.out.println(acc);
+//        return "/account-overview";
+//    }
 
     @PostMapping("/account-overview/{id}")
     public String PostHandlerAccountDetails (@PathVariable ("id") long accountID, Model model) {

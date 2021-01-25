@@ -26,20 +26,24 @@ public class Account implements Serializable {
         this.iban = iban;
     }
 
+    public Account(double balance) {
+        this.balance = balance;
+    }
+
     public List<Customer> getAccountHolders() {
         return accountHolders;
     }
 
-  public void setAccountHolders(List<Customer> accountHolders) {
-    this.accountHolders = accountHolders;
-  }
+    public void setAccountHolders(List<Customer> accountHolders) {
+        this.accountHolders = accountHolders;
+    }
 
-  public void addAccountHolder(Customer customer) {
-    this.accountHolders.add(customer);
-  }
+    public void addAccountHolder(Customer customer) {
+        this.accountHolders.add(customer);
+    }
 
-  @Autowired
-  public Account(long accountID, double balance, String iban) {
+    @Autowired
+    public Account(long accountID, double balance, String iban) {
         this.accountID = accountID;
         this.balance = balance;
         this.iban = iban;
@@ -56,7 +60,7 @@ public class Account implements Serializable {
     }
 
     public Account(double balance, String iban) {
-        this(0,balance, iban);
+        this(0, balance, iban);
     }
 
     public Account() {
@@ -110,8 +114,8 @@ public class Account implements Serializable {
         accountHolderNames.add(name);
     }
 
-    public void addTransaction (Transaction transaction) {
-      transactions.add(transaction);
+    public void addTransaction(Transaction transaction) {
+        transactions.add(transaction);
     }
 
     public Map<String, List<Transaction>> getTransactionListByDate() {
@@ -132,9 +136,9 @@ public class Account implements Serializable {
 
     public String showBalance() {
         if (balance > 0) {
-            return String.format("+%.2f",balance);
+            return String.format("%.2f", balance);
         } else {
-            return String.format("-%.2f", balance);
+            return String.format("%.2f", balance);
         }
     }
 

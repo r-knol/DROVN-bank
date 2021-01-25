@@ -16,10 +16,9 @@ public class NaturalPersonHasAccountDTO {
     private NaturalPerson naturalPerson;
     private Account account;
 
-    public NaturalPersonHasAccountDTO(String firstName, String preposition, String surName, String iban,
-                                      double balance, String address, String phoneNumber, String email, String dateOfBirth) {
-        this.naturalPerson = new NaturalPerson(firstName, preposition, surName,address, phoneNumber, email, dateOfBirth);
-        this.account = new Account(iban, balance);
+    public NaturalPersonHasAccountDTO(NaturalPerson np, Account account) {
+        this.naturalPerson = new NaturalPerson(np.getFirstName(), np.getPreposition(), np.getSurName(), np.getDateOfBirth(), np.getAddress(), np.getEmail(), np.getPhone());
+        this.account = new Account(account.getIban(), account.getBalance());
     }
 
     public String getFullName() {

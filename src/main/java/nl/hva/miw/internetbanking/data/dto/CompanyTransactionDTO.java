@@ -3,36 +3,30 @@ package nl.hva.miw.internetbanking.data.dto;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import nl.hva.miw.internetbanking.model.Employee;
+import nl.hva.miw.internetbanking.model.LegalPerson;
+import nl.hva.miw.internetbanking.model.Transaction;
 
 @Getter
 @Setter
 @ToString
 public class CompanyTransactionDTO {
 
-    private String companyName;
-    private long numberOfTransactions;
-    private long kvkNumber;
-    private String address;
-    private String firstNameAccountmanager;
-    private String prepositionAccountmanager;
-    private String surNameAccountmanager;
+    private LegalPerson legalPerson;
+    private Transaction transaction;
+    private Employee employee;
 
-    public CompanyTransactionDTO(String companyName, long numberOfTransactions, long kvkNumber, String address,
-                                 String firstNameAccountmanager, String prepositionAccountmanager, String surNameAccountmanager) {
-        this.companyName = companyName;
-        this.numberOfTransactions = numberOfTransactions;
-        this.kvkNumber = kvkNumber;
-        this.address = address;
-        this.firstNameAccountmanager = firstNameAccountmanager;
-        this.prepositionAccountmanager = prepositionAccountmanager;
-        this.surNameAccountmanager = surNameAccountmanager;
+    public CompanyTransactionDTO(LegalPerson lp, Transaction transaction, Employee employee) {
+        this.legalPerson = new LegalPerson(lp.getCompanyName(), lp.getKvkNumber(), lp.getAddress());
+        this.transaction = new Transaction(transaction.getNumberOfTransactions());
+        this.employee = new Employee(employee.getFirstName(), employee.getPreposition(), employee.getSurName());
     }
 
     public String getFullName() {
-        if (prepositionAccountmanager == null) {
-            return firstNameAccountmanager + " " + surNameAccountmanager;
+        if (employee.getPreposition() == null) {
+            return employee.getFirstName() + " " + employee.getSurName();
         } else {
-            return firstNameAccountmanager + " " + prepositionAccountmanager + " " + surNameAccountmanager;
+            return employee.getFirstName() + " " + employee.getPreposition() + " " + employee.getSurName();
         }
     }
 }
