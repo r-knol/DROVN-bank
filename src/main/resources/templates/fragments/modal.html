@@ -18,36 +18,44 @@
     </div>
 </div>
 
-<div class="modal fade" id="confirmationNewAccount" tabindex="-1" th:fragment="modal-confirmationNewAccount" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="confirmationNewAccount" tabindex="-1" th:fragment="modal-confirmationNewAccount" role="dialog">
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="confirmationModal">Gelukt!</h5>
+            <h5 class="modal-title">Gelukt!</h5>
         </div>
         <div class="modal-body">
             Uw nieuwe rekening is toegevoegd aan uw account
         </div>
         <div class="modal-footer">
+            <button type="button" onclick="window.location.reload()" class="btn btn-secondary" data-dismiss="modal">Nog een rekening openen?</button>
             <form action="#" method="get" th:action="@{/customer-with-accounts}">
                 <div class="col-md-4">
                     <input type="submit" class="btn btn-primary" value="Rekeningoverzicht">
                 </div>
             </form>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Nog een rekening openen?"></button>
-            <span aria-hidden="true">&times;</span>
         </div>
     </div>
 </div>
 </div>
 
-<div class="modal fade" id="termsConditions" tabindex="-1" th:fragment="modal-termsConditions" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal pmd-modal fade" id="termsConditions" tabindex="-1" th:fragment="modal-termsConditions" style="display: none;" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" >Algemene voorwaarden </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Sluiten">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">X</button>
+            </div>
+            <div class="modal-body">
+                <h2><strong>Algemene Voorwaarden voor DROVN-Bank</strong></h2>
+                <p>Op deze pagina vindt u de algemene voorwaarden van DROVN-Bank.nl , zoals deze beschikbaar is gesteld door DROVN Bank . In deze algemene voorwaarden geven wij aan onder welk voorbehoud wij de informatie op onze website aan u aanbieden.</p>
+                <p><strong>Intellectueel eigendom </strong></p><p>Het gebruik van de informatie op deze website is gratis zolang u deze informatie niet kopieert, verspreidt of op een andere manier gebruikt of misbruikt. U mag de informatie op deze website alleen hergebruiken volgens de regelingen van het dwingend recht.</p><p>Zonder uitdrukkelijke schriftelijke toestemming van DROVN Bank is het niet toegestaan tekst, fotomateriaal of andere materialen op deze website her te gebruiken. Het intellectueel eigendom berust bij DROVN Bank.</p>
+                <p><strong>Indien van toepassing: </strong></p><p>Voor de prijzen die op onze website staan, geldt dat wij streven naar een zo zorgvuldig mogelijke weergave van de realiteit en de bedoelde prijzen. Fouten die daarbij ontstaan en herkenbaar zijn als programmeer dan wel typefouten, vormen nooit een aanleiding om een contract dan wel overeenkomst met DROVN Bank te mogen claimen of te veronderstellen.</p><p>DROVN Bank streeft naar een zo actueel mogelijke website. Mocht ondanks deze inspanningen de informatie van of de inhoud op DROVN-Bank.nl onvolledig en of onjuist zijn, dan kunnen wij daarvoor geen aansprakelijkheid aanvaarden.</p><p>De informatie en/of producten op deze website worden aangeboden zonder enige vorm van garantie en of aanspraak op juistheid. Wij behouden ons het recht voor om deze materialen te wijzigen, te verwijderen of opnieuw te plaatsen zonder enige voorafgaande mededeling. DROVN Bank aanvaardt geen aansprakelijkheid voor enige informatie die op websites staat waarnaar wij via hyper<a href="https://www.linknuttig.nl/" target="_blank">link</a>s verwijzen.</p><p>
+                <strong>Wijzigingen </strong></p><p>Mochten deze algemene voorwaarden wijzigen, dan vindt u de meest recente versie van de disclaimer van DROVN-Bank.nl op deze pagina.</p>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-primary" data-dismiss="modal">Sluiten</button>
             </div>
         </div>
     </div>
