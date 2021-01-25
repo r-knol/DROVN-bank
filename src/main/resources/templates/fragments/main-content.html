@@ -219,12 +219,11 @@
 
 
                         <!-- Card header -->
-                        <div >
+                        <div href="collapseOne">
                             <h5>
                                 <th:block>
-                                        <div class = panel-heading style="border-color: #312783;border-width: medium
-                                                " data-toggle="collapse" th:href="'#collapse' + ${iterStat.index} ">
-                                            <i class="fas fa-angle-down rotate-icon; float-right" style="color: #F39200;font-size: x-large"></i>
+                                        <div class = panel-heading style="border-color: #312783;border-width: medium" >
+                                            <i data-toggle="card-collapse" data-parent="#accordion"  class="fas fa-angle-down rotate-icon; float-right" style="color: #F39200;font-size: x-large" ></i>
                                     <dl>
                                         <dt class="col-md-10" style="color: #312783" th:each="name : ${t.contraAccountHolderNames}" th:text="${name}" ></dt>
                                         <dd class="col-md-2; float-md-right" style="color: #312783" th:each="amount :${t.amount}"th:text="${t.showAmount()}"></dd>
@@ -236,7 +235,7 @@
                         </div>
 
                         <!-- Card body -->
-                        <div th:id="'collapse' + ${iterStat.index}" class="panel-collapse collapse in">
+                        <div id="collapseOne">
                             <div class="card-body" style="background-color: rgba(243, 146, 0, 0.6)">
                                 <p style="color: #312783; font-size: large; font-weight: bold" th:each="description : ${t.description}" th:text="${t.showTransactionDetails()}"> </p>
                             </div>

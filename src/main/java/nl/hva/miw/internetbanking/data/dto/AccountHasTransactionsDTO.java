@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import static org.yaml.snakeyaml.tokens.Token.ID.Key;
 
@@ -78,5 +80,8 @@ public class AccountHasTransactionsDTO {
                 ", transactionListByDate=" + transactionListByDate +
                 ", transactionList=" + transactionList +
                 '}';
+    }
+
+    public <R, T, K> void setTransactionListByDate(R collect, Collector<T,?, Map<K, List<T>>> groupingBy) {
     }
 }
