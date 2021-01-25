@@ -1,7 +1,18 @@
 // eerste script
-document.querySelector('#iban').addEventListener('focusout', checkForIbanPart);
+document.querySelector('#iban').addEventListener("input", checkForIbanPart);
 const selectElement = document.querySelector('#selecteerRekening');
 const ibanError = document.querySelector('#iban_error');
+
+console.log("Value selectElement: " + selectElement.value);
+if (selectElement.value !== 0){
+    loadCustomerNames(selectElement.value);
+}
+
+let empty = "";
+let iban = document.querySelector('#iban').value;
+if (iban !== empty){
+    checkForIbanPart();
+}
 
 function checkForIbanPart() {
     let regex = new RegExp(/^[A-Za-z]{2}[0-9]{2}[A-Za-z0-9]{1,30}$/i)
