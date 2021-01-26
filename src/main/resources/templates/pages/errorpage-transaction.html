@@ -11,7 +11,12 @@
     <div>
         <h1>Oeps, er ging iets mis!</h1>
         <h3>Transactie mislukt vanwege een ongeldige IBAN of niet bestaande IBAN/Ontvanger combinatie. Probeer het nog een keer.</h3>
-        <a href="/do-transaction/" class="btn btn-primary">Opnieuw een transactie starten</a>
+
+        <form action="#" method="get" th:action="@{/do-transaction/}" >
+            <div class="col-md-4">
+                <input type="submit" class="btn btn-outline-secondary" value="Terug naar overboeking">
+            </div>
+        </form>
     </div>
 </div>
 </div>

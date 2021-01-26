@@ -2,6 +2,8 @@ package nl.hva.miw.internetbanking.data.dto;
 
 import lombok.*;
 import nl.hva.miw.internetbanking.model.Transaction;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -9,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class TransactionDetailsDTO implements DTO<Transaction>{
+public class TransactionDetailsDTO implements DTO<Transaction>, Serializable {
 
     private String nameDebitCustomer;
     private String nameCreditCustomer;

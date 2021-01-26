@@ -1,76 +1,98 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://thymeleaf.org">
-<link rel="stylesheet" src="bootstrap.css">
-<link rel="stylesheet" src="custom.css">
+
 <head th:replace="fragments/head :: head-transaction-do (pageTitle='Geld overmaken', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')">
-    <style>
-        .error {
-            background-color: red;
-        }
-    </style>
 </head>
 <body>
-<div class="container-fluid min-vh-100" id="page">
+<style>
+    .transaction-box {
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border-radius: 10px 10px 10px 10px;
+        background: #fff;
+        width: 90%;
+        max-width: 500px;
+        position: relative;
+        padding: 10px 10px 30px 10px;
+        -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+        box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+        margin-top: 35px;
+        overflow: hidden;
+    }
+
+    .transactionpage {
+        background-color: #eee;
+    }
+</style>
+
+<div class="container-fluid min-vh-100 transactionpage" id="page">
     <div id="header" class="row header-default">
         <header th:replace="fragments/header :: header-default"></header>
     </div>
 
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-        <h1>Geld overmaken naar een andere rekening</h1>
-        <form action="#" method="post" th:action="@{/do-transaction/}" th:object="${transactionDTO}" class="needs-validation">
-        <div class="col-md-6 form-group">
-            <i class="fa fa-address-card icon"></i>
-            <label for="selecteerRekening">Rekening</label>
-            <select class="form-control" id="selecteerRekening" name="debitAccount"
-                    th:required="true">
-                <option value="">Selecteer uw rekening</option>
-                <option th:each="account : ${customerWithAccountOverview.getAccountList()}"
-                        th:text="${account.iban + ' € ' + account.balance}" th:value="${account.iban}">
-            </select>
-            <div class="invalid-feedback"></div>
-        </div>
+    <div class="col-md-6 mx-auto transaction-box">
+        <form action="#" method="post" th:action="@{/do-transaction/}" th:object="${transactionDTO}">
+            <h3 style="color: darkorange; font-weight: bold;">Geld overmaken</h3>
+            <div class="col-auto form-group">
+                <i class="fa fa-address-card icon"></i>
+                <label for="selecteerRekening">Rekening</label>
+                <select class="form-control" id="selecteerRekening" name="debitAccount"
+                        th:required="true">
+                    <option th:value="0">Selecteer uw rekening</option>
+                    <option th:each="account : ${customerWithAccountOverview.getAccountList()}"
+                            th:text="${account.iban + ' € ' + account.balance}" th:value="${account.iban}"
+                            th:selected="${account.iban == transactionDTO.getDebitAccount()}">
+                </select>
+            </div>
 
-        <div class="col-md-6 form-group">
-            <i class="fa fa-user-o icon"></i>
-            <label>Van</label>
-        <div id="rekeningHouders"></div>
-            <input type="hidden" class="form-control" name="nameDebitCustomer" th:value="${nameCurrentCus}">
-        </div>
+            <div class="col-auto form-group">
+                <i class="fa fa-user-o icon"></i>
+                <label>Van</label>
+                <div id="rekeningHouders"></div>
+                <input type="hidden" class="form-control" name="nameDebitCustomer" th:value="${nameCurrentCus}">
+            </div>
 
-        <div class="col-md-6 form-group">
-        <i class="fa fa-eur icon"></i>
-        <label>Bedrag, euro's en centen gescheiden door "," (komma) of "." (punt)</label>
-            <input type="text" class="form-control" name="amount" required>
-    </div>
+            <div class="col-auto form-group">
+                <i class="fa fa-eur icon"></i>
+                <label>Bedrag, euro's en centen gescheiden door "," (komma) of "." (punt)</label>
+                <input type="text" class="form-control" name="amount" th:value="${transactionDTO.getAmount()}" required>
+            </div>
 
-    <div class="col-md-6 form-group">
-        <i class="fa fa-user icon"></i>
-        <label>Achternaam ontvanger,  zonder voorvoegsels</label>
-        <input type="text" class="form-control" name="nameCreditCustomer" required>
-    </div>
+            <div class="col-auto form-group">
+                <i class="fa fa-user icon"></i>
+                <label>Achternaam ontvanger, zonder voorvoegsels</label>
+                <input type="text" class="form-control" name="nameCreditCustomer"
+                       th:value="${transactionDTO.getNameCreditCustomer()}" required>
+            </div>
 
-        <div class="col-md-6 form-group">
-            <i class="fa fa-university icon"></i>
-            <label>IBAN</label>
-            <input id="iban" type="text" class="form-control" name="creditAccount" required>
-            <label id="iban_error"></label>
-        </div>
-        <div class="col-md-6 form-group">
-            <i class="fa fa-commenting icon"></i>
-            <label>Omschrijving</label>
-            <input type="text" class="form-control" name="description" required>
-        </div>
-    <div class="col-md-4">
-        <input type="submit" class="btn btn-primary" value="Verder">
-    </div>
-    </form>
-    <form action="#" method="get" th:action="@{/customer-with-accounts}">
-        <div class="col-md-4">
-            <input type="submit" class="btn btn-outline-secondary" value="Terug">
-        </div>
-    </form>
-        </div>
+            <div class="col-auto form-group">
+                <i class="fa fa-university icon"></i>
+                <label>IBAN</label>
+                <input id="iban" type="text" class="form-control" name="creditAccount"
+                       th:value="${transactionDTO.getCreditAccount()}" required>
+                <label id="iban_error"></label>
+            </div>
+
+            <div class="col-auto form-group">
+                <i class="fa fa-commenting icon"></i>
+                <label>Omschrijving</label>
+                <input type="text" class="form-control" name="description" th:value="${transactionDTO.getDescription()}"
+                       required>
+            </div>
+
+            <div class="col-auto">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="submit" class="btn btn-primary" value="Verder">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <form action="#" method="get" th:action="@{/customer-with-accounts}">
+            <div class="col-md-6">
+                <input type="submit" class="btn btn-outline-secondary" value="Annuleren">
+            </div>
+        </form>
     </div>
 </div>
 </body>

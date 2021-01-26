@@ -19,7 +19,7 @@ import java.util.List;
 
 @Controller
 @Slf4j
-@SessionAttributes({"customer", "nameCurrentCus"})
+@SessionAttributes({"customer", "nameCurrentCus", "transactionDTO"})
 public class DoTransactionController {
 
     private TransactionService transactionService;
@@ -34,14 +34,20 @@ public class DoTransactionController {
     }
 
     @GetMapping("/do-transaction/")
-    public String doTransactionHandler(@ModelAttribute("customer") Customer c, @ModelAttribute("nameCurrentCus") String currentCusName, Model model){
+    public String doTransactionHandler(@ModelAttribute("customer") Customer c, @ModelAttribute("nameCurrentCus") String currentCusName, @ModelAttribute("transactionDTO") TransactionDetailsDTO tDto, Model model){
         CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(c);
         customerDto.setAccountList(accountService.getAccountsForCustomer(c));
         customerService.setCustomerWithAccounts(customerDto);
         model.addAttribute("nameCurrentCus", currentCusName);
         model.addAttribute("customerWithAccountOverview", customerDto);
-        model.addAttribute("transactionDTO", new TransactionDetailsDTO());
+        model.addAttribute("transactionDTO", tDto);
+        System.out.println(tDto);
         return "pages/do-transaction";
+    }
+
+    @ModelAttribute("transactionDTO")
+    public TransactionDetailsDTO getTransactionDetailsDTO(){
+        return new TransactionDetailsDTO();
     }
 
     @PostMapping("/do-transaction/")
@@ -65,8 +71,9 @@ public class DoTransactionController {
         customerDto.setAccountList(accountService.getAccountsForCustomer(c));
         customerService.setCustomerWithAccounts(customerDto);
         model.addAttribute("customerWithAccountOverview", customerDto);
-        model.addAttribute("transactionDTO", tDto);
+        model.addAttribute("transactionDTO", new TransactionDetailsDTO());
         model.addAttribute("customer", c);
+        model.addAttribute("transactionConfirmed", "true");
         return "pages/account-overview";
     }
 
