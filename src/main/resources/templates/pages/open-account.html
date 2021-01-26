@@ -3,28 +3,82 @@
 <head th:replace="fragments/head :: head-openAccount (pageTitle='Rekening Openen', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <body>
 <style>
-    #submit {
-        position: fixed;
-        left: 550px;
-        top: 585px;
+    .openaccountPage {
+        align-content: center;
     }
+
+    .openaccountframe {
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border-radius: 10px 10px 10px 10px;
+        background: white;
+        width: 150%;
+        max-width: 450px;
+        position: center;
+        padding: 10px 10px 30px 10px;
+        -webkit-box-shadow: 30px 30px 60px 20px rgba(0, 0, 0, 0.3);
+        box-shadow: 30px 30px 60px 20px rgba(0, 0, 0, 0.3);
+        margin-top: 35px;
+        overflow: hidden;
+    }
+
+    .headframe {
+        background-color: #312783;
+        background-position: center;
+        text-align: center;
+    }
+
+    .confirmation-button {
+        font-weight: bold;
+        background-color: #fd7e14;
+        border-color: #fd7e14;
+        padding: 10px;
+        min-width: 150px;
+        border-radius: 12px;
+
+    }
+
+    .accountoverview-button {
+        font-weight: bold;
+        background-color: #fd7e14;
+        border-color: #fd7e14;
+        padding: 10px;
+        min-width: 150px;
+        border-radius: 12px;
+        position: center;
+    }
+
+    .openTerms {
+        cursor: pointer;
+    }
+
+    .openaccountframe {
+        position: center;
+        text-align: center;
+    }
+
+
 </style>
-<div class="jumbotron jumbotron-fluid"
-     style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover; width: 100%; max-height: 60%">
+<div class="container justify-content-center openaccountPage">
     <div id="header" class="row header-default">
         <header th:replace="fragments/header :: head-openAccount"></header>
     </div>
-    <div class="mainContainer" align="center">
-        <div class="container pt-sm-2 pb-sm-2 text-white">
-            <div class="container">
+    <div id="mainContent" class="row">
+        <main role="main" class="min-vh-100">
+            <div class="container-fluid headframe justify-content-center">
                 <h1><span class="text-orange">Fijn dat u een rekening bij ons wilt openen.</span></h1>
-                <h3> U kunt direct uw nieuwe rekening bevestigen.</h3>
-
-                <h2 align="center"><span class="text-orange"> Rekeninghouder: </span><span
-                        style="color: #0066ff" th:text="${nameCurrentCus}"></span></h2>
-                <p><br></p>
-                <form action="/saveaccount" method="post" name="ibanForm">
-                    <input type="text" th:field="*{customer.customerID}" value="customer.customerID" hidden/>
+                <h3><span class="text-white"> U kunt direct uw nieuwe rekening bevestigen.</span></h3>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12 mx-auto openaccountframe">
+                        <div class="row">
+                            <h2><span class="text-orange"> Rekeninghouder: </span>
+                                    <span style="color: #0066ff" th:text="${nameCurrentCus}"></span>
+                            </h2>
+                            <p><br></p>
+                        <form action="/saveaccount" method="post" name="ibanForm">
+                            <input type="text" th:field="*{customer.customerID}" value="customer.customerID"
+                                   hidden/>
 
                             <div class="col-auto form-group">
                                 <label for="ibanGenerator"><h4> Uw nieuwe rekeningnummer: </h4></label>
