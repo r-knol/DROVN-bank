@@ -19,6 +19,8 @@ public class Account implements Serializable {
     private List<Customer> accountHolders;
     private List<String> accountHolderNames;
     private Map<String, List<Transaction>> transactionListByDate;
+    private Map<Long, List<Transaction>> transactionMap;
+    private Transaction transaction;
 
     public Account(String iban) {
         this.iban = iban;
@@ -49,6 +51,7 @@ public class Account implements Serializable {
         this.accountHolders = new ArrayList<>();
         this.accountHolderNames = new ArrayList<>();
         this.transactionListByDate = new HashMap<>();
+        this.transactionMap = new HashMap<>();
     }
 
     public Account(String iban, double balance) {
@@ -121,6 +124,14 @@ public class Account implements Serializable {
 
     public void setTransactionListByDate(Map<String, List<Transaction>> transactionListByDate) {
         this.transactionListByDate = transactionListByDate;
+    }
+
+    public Map<Long, List<Transaction>> getTransactionMap() {
+        return transactionMap;
+    }
+
+    public void setTransactionMap(Map<Long, List<Transaction>> transactionMap) {
+        this.transactionMap = transactionMap;
     }
 
     public String showBalance() {
