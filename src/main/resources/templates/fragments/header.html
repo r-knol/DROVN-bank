@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl" xmlns:th="http://www.thymeleaf.org">
+<html lang="nl" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <body>
 <header class="header min-vw-100 navbar-light bg-light" id="header-main" th:fragment="header-home">
     <div class="container pl-0 pr-0">
@@ -298,15 +298,17 @@
 <!--</header>-->
 
 <header class="header" id="openAccount" th:fragment="head-openAccount">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-white">
         <a class="navbar-brand ">
-            <img src="images/DROVN BANK_1-02.png" width="80" height="80"
+            <img src="images/DROVN BANK_1-02.png" width="90" height="90"
                  class="d-inline-block align-top" alt=""></a>
         <div class="container pl-0 pr-0">
+            <div class="col-12 d-flex flex-row align-items-lg-end justify-content-lg-end">
+                <a class="btn btn-outline-primary rightIframe" id="uitloggen"
+                   href="/login">Uitloggen</a>
+            </div>
         </div>
     </nav>
 </header>
-
-
 </body>
 </html>

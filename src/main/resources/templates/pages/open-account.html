@@ -3,61 +3,192 @@
 <head th:replace="fragments/head :: head-openAccount (pageTitle='Rekening Openen', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
 <body>
 <style>
-    #submit {
-        position: fixed;
-        left: 550px;
-        top: 585px;
+    .openaccountPage {
+        align-content: center;
     }
+
+    .openaccountframe {
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border-radius: 10px 10px 10px 10px;
+        background: white;
+        width: 160%;
+        max-width: 500px;
+        position: center;
+        text-align: center;
+        padding: 10px 10px 30px 10px;
+        -webkit-box-shadow: 30px 30px 60px 20px rgba(0, 0, 0, 0.3);
+        box-shadow: 30px 30px 60px 20px rgba(0, 0, 0, 0.3);
+        margin-top: 40px;
+        overflow: hidden;
+    }
+
+    .headframe {
+        background-color: #312783;
+        background-position: center;
+        text-align: center;
+    }
+
+    .confirmation-button {
+        font-weight: bold;
+        background-color: #fd7e14;
+        border-color: #fd7e14;
+        padding: 10px;
+        min-width: 150px;
+        border-radius: 12px;
+        position: center;
+
+    }
+
+    .accountoverview-button {
+        font-weight: bold;
+        background-color: #fd7e14;
+        border-color: #fd7e14;
+        padding: 10px;
+        min-width: 150px;
+        border-radius: 12px;
+        position: center;
+    }
+
+    .openTerms {
+        cursor: pointer;
+    }
+
+    .accordionFrame {
+        position: center;
+        margin-top: 40px;
+        width: 80%;
+    }
+
+    .accordion {
+        background-color: #eee;
+        color: #312783;
+        cursor: pointer;
+        padding: 30px;
+        width: 50%;
+        border: #312783;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
+        transition: 0.4s;
+    }
+
+    .accordion:hover {
+        background-color: #ccc;
+    }
+
+    .panel {
+        margin-top: 0;
+        margin-bottom: 5px;
+        padding: 0 18px;
+        background-color: white;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+    }
+
 </style>
-<div class="jumbotron jumbotron-fluid"
-     style="filter: brightness(1.25); background: linear-gradient(65deg, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0) ), url('/images/DROVN5.svg'); background-position: left center; background-repeat: no-repeat; background-size: cover; width: 100%; max-height: 60%">
+<div class=" jumbotron-fluid justify-content-center openaccountPage">
     <div id="header" class="row header-default">
         <header th:replace="fragments/header :: head-openAccount"></header>
     </div>
-    <div class="mainContainer" align="center">
-        <div class="container pt-sm-2 pb-sm-2 text-white">
-            <div class="container">
+    <div id="mainContent" class="row">
+        <main role="main" class="min-vh-100">
+            <div class="jumbotron-fluid headframe justify-content-center">
                 <h1><span class="text-orange">Fijn dat u een rekening bij ons wilt openen.</span></h1>
-                <h3> U kunt direct uw nieuwe rekening bevestigen.</h3>
+                <h3><span class="text-white"> U kunt direct uw nieuwe rekening bevestigen.</span></h3>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 mx-auto openaccountframe">
+                        <div class="row">
+                            <h2><span class="text-orange" style="text-align: center">  Rekeninghouder: </span>
+                                <span style="color: #0066ff" th:text="${nameCurrentCus}"></span>
+                            </h2>
+                            <p><br></p>
+                            <form action="/saveaccount" method="post" name="ibanForm">
+                                <input type="text" th:field="*{customer.customerID}" value="customer.customerID"
+                                       hidden/>
 
-                <h2 align="center"><span class="text-orange"> Rekeninghouder: </span><span
-                        style="color: #0066ff" th:text="${nameCurrentCus}"></span></h2>
-                <p><br></p>
-                <form action="/saveaccount" method="post" name="ibanForm">
-                    <input type="text" th:field="*{customer.customerID}" value="customer.customerID" hidden/>
-
-                    <div class="form-group mb-sm-4">
-                        <label for="ibanGenerator"><h4> Uw nieuwe rekeningnummer: </h4></label>
-                        <input type="text" th:field="*{account.iban}" id="ibanGenerator"
-                               placeholder="IBAN" readonly required/>
-                    </div>
-                    <div class="form-group mb-sm-4">
-                        <label for="balance"><h4>Uw huidige saldo: <i class="fa fa-eur"></i></h4></label>
-                        <input type="text" size="3" th:field="*{account.balance}" id="balance"
-                               placeholder="Saldo" readonly/>
-                    </div>
-                    <div class="form-group mb-sm-4">
-                    <p>Door te bevestigen gaat u akkoord met de <a href="https://www.termsandconditionsgenerator.com/live.php?token=WMGxy8SYoQkOH2QDFKuWdAqUeZ9mgMuS">algemene
-                            voorwaarden</a>
-                    <br> </p>
-                    <br>
-                        <div class="row-cols-2">
-                    <input type="submit" id="submit" class="btn btn-primary" value="Bevestigen"
-                                       data-toggle="modal" data-target="#confirmationNewAccount">
+                                <div class="col-auto form-group">
+                                    <label for="ibanGenerator"><h4> Uw nieuwe rekeningnummer: </h4></label>
+                                    <input type="text" style="align-content: center" th:field="*{account.iban}"
+                                           id="ibanGenerator"
+                                           placeholder="IBAN" readonly required/>
+                                </div>
+                                <div class="col-auto form-group">
+                                    <input type="text" size="3" th:field="*{account.balance}" id="balance"
+                                           placeholder="Saldo" hidden/>
+                                </div>
+                                <div class="col-auto form-group">
+                                    <p>Door te bevestigen gaat u akkoord met de
+                                        <a data-href="https://www.termsandconditionsgenerator.com/live.php?token=WMGxy8SYoQkOH2QDFKuWdAqUeZ9mgMuS"
+                                           class="openTerms"> algemene voorwaarden</a>
+                                        <br></p>
+                                    <br>
+                                </div>
+                            </form>
+                            <div class="row">
+                                <div class="col-md-auto">
+                                <div class=" col-2">
+                                        <input type="submit" id="submit"
+                                               class="btn btn-primary confirmation-button"
+                                               value="Bevestigen"
+                                               onclick="$('#confirmationNewAccount').modal();">
+                                    </div>
+                                </div>
+                                <div class="col-md-auto">
+                                <div class="col-auto">
+                                        <input type="button" class="btn btn-primary accountoverview-button"
+                                               value="Rekeningoverzicht" id="back-button">
+                                        <form action="#" method="get" th:action="@{/customer-with-accounts}">
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </form>
-                <div class="row-cols-3">
-                <form action="#" method="get" th:action="@{/customer-with-accounts}">
-                    <div class="col-md-4">
-                        <input type="submit" class="btn btn-primary" value="Rekeningoverzicht">
+                    <div class="container accordionFrame">
+                        <div class="col-md-12 mx-auto">
+                        <h2><span class="text-orange"
+                                  style="text-align: center"> Meest gestelde vragen </span></h2>
+                        <button class="accordion">Hoe kan ik een bankrekening openen?</button>
+                        <div class="panel">
+                            <p>U kunt een rekening openen via de DROVN website, of door online een afspraak
+                                te
+                                maken. Het is niet
+                                nodig een kantoor te bezoeken. Om een bankrekening te openen, hoeft u
+                                slechts te
+                                bevestigen.</p>
+                        </div>
+                        <button class="accordion">Wat kost een bankrekening?</button>
+                        <div class="panel">
+                            <p> Bij DROVN Bank waarderen we u als klant en daarom bedragen de maandelijkse
+                                kosten
+                                slechts 1,50.</p>
+                        </div>
+
+                        <button class="accordion">Ik ben al klant, kan ik een extra rekening openen?
+                        </button>
+                        <div class="panel">
+                            <p>Een extra rekening is snel en simpel geopend. Met een extra rekening kunt u
+                                geld
+                                apart zetten voor
+                                bijvoorbeeld uw boodschappen of vaste lasten. Zo heeft u altijd voldoende
+                                geld
+                                achter de hand voor
+                                onverwachte uitgaven of om iets leuks mee te doen..</p>
+                        </div>
                     </div>
-                </form>
                 </div>
             </div>
-        </div>
+
+            </div>
+        </main>
+
     </div>
 </div>
+
+
 <div class="row footer-default" id="footer">
     <footer th:replace="fragments/footer :: footer-default"></footer>
 </div>
