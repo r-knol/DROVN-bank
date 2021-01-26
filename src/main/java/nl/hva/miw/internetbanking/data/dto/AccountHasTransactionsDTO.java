@@ -4,13 +4,7 @@ import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Transaction;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
-import static org.yaml.snakeyaml.tokens.Token.ID.Key;
+import java.util.*;
 
 public class AccountHasTransactionsDTO {
 
@@ -18,19 +12,19 @@ public class AccountHasTransactionsDTO {
     private Transaction transaction;
     private List<Transaction> transactionList;
     private Map<Long, List<Transaction>> transactionMap;
-    private Map<String, List<Transaction>> transactionListByDate;
+    private Map<LocalDate, List<Transaction>> transactionMapByDate;
 
     public AccountHasTransactionsDTO(Account account) {
         super();
         this.account = account;
         this.transactionMap = new HashMap<>();
-        this.transactionListByDate = new HashMap<>();
+        this.transactionMapByDate = new HashMap<>();
     }
 
     public AccountHasTransactionsDTO() {
         super();
         this.transactionMap = new HashMap<>();
-        this.transactionListByDate = new HashMap<>();
+        this.transactionMapByDate = new HashMap<>();
     }
 
     public Account getAccount() {
@@ -50,10 +44,12 @@ public class AccountHasTransactionsDTO {
     }
 
     public List<Transaction> getTransactionList() {
+        transactionList.sort(Comparator.comparing(Transaction :: getDate));
         return transactionList;
     }
 
     public void setTransactionList(List<Transaction> transactionList) {
+        transactionList.sort(Comparator.comparing(Transaction :: getDate));
         this.transactionList = transactionList;
     }
 
@@ -65,23 +61,20 @@ public class AccountHasTransactionsDTO {
         this.transactionMap = transactionMap;
     }
 
-    public Map<String, List<Transaction>> getTransactionListByDate() {
-        return transactionListByDate;
+    public Map<LocalDate, List<Transaction>> getTransactionMapByDate() {
+        return transactionMapByDate;
     }
 
-    public void setTransactionListByDate(Map<String, List<Transaction>> transactionListByDate) {
-        this.transactionListByDate = transactionListByDate;
+    public void setTransactionMapByDate(Map<LocalDate, List<Transaction>> transactionMapByDate) {
+        this.transactionMapByDate = transactionMapByDate;
     }
 
     @Override
     public String toString() {
         return "AccountHasTransactionsDTO{" +
                 "account=" + account +
-                ", transactionListByDate=" + transactionListByDate +
+                ", transactionListByDate=" + transactionMapByDate +
                 ", transactionList=" + transactionList +
                 '}';
-    }
-
-    public <R, T, K> void setTransactionListByDate(R collect, Collector<T,?, Map<K, List<T>>> groupingBy) {
     }
 }

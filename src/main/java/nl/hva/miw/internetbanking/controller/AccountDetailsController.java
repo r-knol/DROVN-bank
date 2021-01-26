@@ -1,11 +1,9 @@
 package nl.hva.miw.internetbanking.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import nl.hva.miw.internetbanking.data.dto.*;
 import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Customer;
-import nl.hva.miw.internetbanking.model.Transaction;
 import nl.hva.miw.internetbanking.service.AccountService;
 import nl.hva.miw.internetbanking.service.CustomerService;
 import nl.hva.miw.internetbanking.service.TransactionService;
@@ -14,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -49,10 +45,9 @@ public class AccountDetailsController {
         AccountHasTransactionsDTO accountHasTransactionsDTO = new AccountHasTransactionsDTO(account.get());
         accountHasTransactionsDTO.setTransactionList(transactionService.getTransactionsForAccount(account.get()));
         transactionService.setTransactionWithContraAccountNames(accountHasTransactionsDTO, account.get());
-//        System.out.println(accountHasTransactionsDTO);
         transactionService.setTransactionWithDateAsString(accountHasTransactionsDTO);
-        System.out.println("Transacties grouped by date: " + accountHasTransactionsDTO.getTransactionListByDate());
-        model.addAttribute("accountWithTransactionsByDate", accountHasTransactionsDTO.getTransactionListByDate());
+        System.out.println("Transacties grouped by date: " + accountHasTransactionsDTO.getTransactionMapByDate());
+        model.addAttribute("accountWithTransactionsByDate", accountHasTransactionsDTO.getTransactionMapByDate());
         model.addAttribute("accountWithTransactions", accountHasTransactionsDTO.getTransactionList());
         return "pages/account_details";
     }

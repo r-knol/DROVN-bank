@@ -141,14 +141,4 @@ public class Account implements Serializable {
             return String.format("%.2f", balance);
         }
     }
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "accountID=" + accountID +
-                ", iban='" + iban + '\'' +
-                ", balance=" + balance +
-                ", transactions=" + transactions +
-                '}';
-    }
 }
