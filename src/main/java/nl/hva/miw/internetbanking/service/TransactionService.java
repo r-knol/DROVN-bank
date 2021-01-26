@@ -141,6 +141,7 @@ public class TransactionService {
     public void setTransactionWithDateAsString(AccountHasTransactionsDTO accountHasTransactionsDTO) {
         accountHasTransactionsDTO.setTransactionMapByDate(accountHasTransactionsDTO.getTransactionList().stream()
                 .collect(Collectors.groupingBy(Transaction:: getDate)));
+        
     }
 
     public boolean checkValidTransaction(TransactionDetailsDTO tDto) {

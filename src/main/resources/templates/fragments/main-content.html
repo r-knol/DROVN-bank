@@ -202,33 +202,33 @@
         <div class="col-md-8">
 
             <div class="container pt-0">
-                <div th:if="${accountWithTransactionsByDate.isEmpty()}">
+                <div th:if="${accountWithTransactions.isEmpty()}">
                     <p style="font-size: 200%; color: #F39200" align="center"
                     >Er zijn geen bij- en/of afschrijvingen om weer te geven.</p>
                 </div>
             </div>
 
-            <th:block class="container pt-0"th:each="entry : ${accountWithTransactionsByDate}">
+            <th:block class="container pt-0">
 
 <!--            Accordion wrapper-->
-                <div class="accordion md-accordion" role="tablist" aria-multiselectable="false">
-
-                    <h4>
-                        <span class="mb-0" style="color: #F39200; font-weight: bold"  th:value="${entry.key}" th:text="${#temporals.format(entry.key, 'd MMMM yyyy')}">Datum></span>
-                    </h4>
+                <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="false">
 
                     <!-- Accordion card -->
-                    <div class="card"  style="border-color: #312783;border-width: medium
-                         ;background-color:rgba(0,102,255, 0.2)" th:if="${not #lists.isEmpty(accountWithTransactionsByDate)}" th:each="t : ${entry.value}">
+                    <div class="card" style="border-color: #312783;border-width: medium
+                         ;background-color:rgba(0,102,255, 0.2)" th:if="${not #lists.isEmpty(accountWithTransactions)}" th:each="t : ${accountWithTransactions}">
 
                         <!-- Card header -->
-                        <div href="collapse">
+                        <div >
+
+                            <h5 class="col-md-10" style="color: #F39200" th:each="date : ${t.getDate()}" th:text="${#temporals.format(t.getDate(), 'd MMMM yyyy')}" ></h5>
                             <h5>
                                 <th:block>
                                         <div class = panel-heading style="border-color: #312783;border-width: medium" >
-                                            <i class="fas fa-angle-down rotate-icon; float-right" data-toggle="collapse" data-parent="#collapseOne"
+
+                                            <i class="fas fa-angle-down rotate-icon; float-right" data-toggle="collapse" data-parent="#collapse" href="#collapse"
                                                aria-expanded="false" aria-controls="collapseOne" style="color: #F39200;font-size: x-large" ></i>
                                     <dl>
+
                                         <dt class="col-md-10" style="color: #312783" th:each="name : ${t.contraAccountHolderNames}" th:text="${name}" ></dt>
                                         <dd class="col-md-2; float-md-right" style="color: #312783" th:each="amount :${t.amount}"th:text="${t.showAmount()}"></dd>
                                     </dl>
@@ -239,9 +239,9 @@
                         </div>
 
                         <!-- Card body -->
-                        <div id="collapse" class="collapse">
+                        <div id="collapse" class="collapse hide" role="textbox" aria-labelledby="heading">
                             <div class="card-body" style="background-color: rgba(243, 146, 0, 0.6)">
-                                <p style="color: #312783; font-size: large; font-weight: bold" th:each="description : ${t.description}" th:text="${t.showTransactionDetails()}"> </p>
+                                <span style="color: #312783; font-size: large; font-weight: bold" th:content="${t.description}" th:text="${t.showTransactionDetails()}"> </span>
                             </div>
                         </div>
 
@@ -263,16 +263,25 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('.collapseOne').on('shown.bs.collapse', function() {
-            $(this).parent().find('.fa-angle-down').removeClass('fa-angle-down').addClass('fa-angle-right')
-        });
-        $('.collapseTwo').on('shown.bs.collapse', function () {
-            $(this).parent().find('.fa-angle-right').addClass('collapseOne')
+<script>
+    $(function(){
+        $('ul li a').on('click', function(){
+            $(this).parent().addClass('active').siblings().removeClass('active');
+
+            var to_toggle = $(this).attr('href');
+
+            $("#collapse").find('div').each(function(){
+                if ( ('#'+$(this).attr("id")) != to_toggle )
+                    $(this).filter('.collapse.in').collapse('hide');
+            });
+
+            $(to_toggle+':not(".in")').collapse('show');
         });
     });
+
+
 </script>
+
 
 
 

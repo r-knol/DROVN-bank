@@ -11,19 +11,19 @@ public class AccountHasTransactionsDTO {
     private Account account;
     private Transaction transaction;
     private List<Transaction> transactionList;
-    private Map<Long, List<Transaction>> transactionMap;
+//    private Map<Long, List<Transaction>> transactionMap;
     private Map<LocalDate, List<Transaction>> transactionMapByDate;
 
     public AccountHasTransactionsDTO(Account account) {
         super();
         this.account = account;
-        this.transactionMap = new HashMap<>();
+//        this.transactionMap = new HashMap<>();
         this.transactionMapByDate = new HashMap<>();
     }
 
     public AccountHasTransactionsDTO() {
         super();
-        this.transactionMap = new HashMap<>();
+//        this.transactionMap = new HashMap<>();
         this.transactionMapByDate = new HashMap<>();
     }
 
@@ -44,22 +44,20 @@ public class AccountHasTransactionsDTO {
     }
 
     public List<Transaction> getTransactionList() {
-        transactionList.sort(Comparator.comparing(Transaction :: getDate));
         return transactionList;
     }
 
     public void setTransactionList(List<Transaction> transactionList) {
-        transactionList.sort(Comparator.comparing(Transaction :: getDate));
         this.transactionList = transactionList;
     }
 
-    public Map<Long, List<Transaction>> getTransactionMap() {
-        return transactionMap;
-    }
+//    public Map<Long, List<Transaction>> getTransactionMap() {
+//        return transactionMap;
+//    }
 
-    public void setTransactionMap(Map<Long, List<Transaction>> transactionMap) {
-        this.transactionMap = transactionMap;
-    }
+//    public void setTransactionMap(Map<Long, List<Transaction>> transactionMap) {
+//        this.transactionMap = transactionMap;
+//    }
 
     public Map<LocalDate, List<Transaction>> getTransactionMapByDate() {
         return transactionMapByDate;
