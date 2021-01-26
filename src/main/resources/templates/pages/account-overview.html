@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-
-<head th:replace="fragments/head :: head-accounts (pageTitle='Rekeningoverzicht', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')"></head>
+<head th:replace="fragments/head :: head-accounts (pageTitle='Rekeningoverzicht', metaRobots='noindex, nofollow', metaDescription='', metaKeywords='')">
+</head>
 <body>
 <div class="container-fluid min-vh-100" id="page">
     <div class="row header-default" id="header">
@@ -14,6 +14,7 @@
         <footer th:replace="fragments/footer :: footer-default"></footer>
     </div>
 </div>
+<div th:replace="fragments/modal :: modal-transaction-confirmed"></div>
+<div th:replace="fragments/scripts :: script-trigger-modal-transaction-done"></div>
 </body>
-
 </html>
