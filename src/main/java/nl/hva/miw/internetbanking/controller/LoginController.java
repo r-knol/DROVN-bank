@@ -83,19 +83,15 @@ public class LoginController {
     @PostMapping("/loginemployee")
     public String handleLoginEmployee(@RequestParam(name = "userName") String userName, @RequestParam(name = "password")
             String password, Model model) {
-
         Optional<Employee> employee = employeeService.getEmployeeByUsername(userName);
-
         if (employee.isPresent()) {
             Employee employeeFound = employee.get();
             if (loginService.validEmployee(employeeFound, password)) {
                 model.addAttribute("employee", employeeFound);
-
                 if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_PRIVATE) {
                     model.addAttribute("npWithHighestBalance", balanceService.getNaturalAccountsWithHighestBalance());
                     return "pages/employee-dashboard-private";
                 }
-
                 if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_LEGAL) {
                     model.addAttribute("lpWithHighestBalance", balanceService.getClientsWithHighestBalance());
                     model.addAttribute("balancePerSector", balanceService.getAvgBalancePerSector());
