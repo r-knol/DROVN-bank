@@ -181,21 +181,6 @@ public class Transaction implements Serializable {
                 description);
     }
 
-    @Override
-    public String toString() {
-        return "Transaction{" +
-                "transactionID=" + transactionID +
-                ", debitAccount='" + debitAccount + '\'' +
-                ", creditAccount='" + creditAccount + '\'' +
-                ", amount=" + amount +
-                ", description='" + description + '\'' +
-                ", dateTime=" + dateTime +
-                ", date=" + date +
-                ", account=" + account +
-                ", contraAccountHolderNames=" + contraAccountHolderNames +
-                '}';
-    }
-
     @Override // nodig voor TransactionDAOTest
     public boolean equals(Object o) {
         if (this == o) return true;
