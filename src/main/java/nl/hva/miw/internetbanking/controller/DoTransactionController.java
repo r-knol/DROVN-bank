@@ -73,6 +73,7 @@ public class DoTransactionController {
         model.addAttribute("customerWithAccountOverview", customerDto);
         model.addAttribute("transactionDTO", new TransactionDetailsDTO());
         model.addAttribute("customer", c);
+        model.addAttribute("transactionConfirmed", "true");
         return "pages/account-overview";
     }
 

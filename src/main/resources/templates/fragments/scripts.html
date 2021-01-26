@@ -64,4 +64,10 @@
     </script>
 </div>
 
+<div th:fragment="script-trigger-modal-transaction-done">
+    <script th:if="${transactionConfirmed == 'true'}">
+        $('#transactionConfirmed').modal();
+    </script>
+</div>
+
 </html>
