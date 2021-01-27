@@ -1,6 +1,8 @@
 package nl.hva.miw.internetbanking.data.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import nl.hva.miw.internetbanking.data.validator.KvkNumberConstraint;
 import nl.hva.miw.internetbanking.data.validator.SectorConstraint;
 import nl.hva.miw.internetbanking.data.validator.UsernameExistsConstraint;
@@ -11,12 +13,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import static nl.hva.miw.internetbanking.model.Customer.EMPTY_STRING;
+
 @Builder
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
 public class BusinessRegistrationDTO implements DTO<LegalPerson> {
     
     @NotBlank
@@ -70,4 +71,17 @@ public class BusinessRegistrationDTO implements DTO<LegalPerson> {
     @Size(max = 45)
     private String residence;
     
+    public BusinessRegistrationDTO() {
+        userName = EMPTY_STRING;
+        password = EMPTY_STRING;
+        passwordConfirmation = EMPTY_STRING;
+        companyName = EMPTY_STRING;
+        kvkNumber = 0L;
+        sector = null;
+        vatNumber = EMPTY_STRING;
+        postalCode = EMPTY_STRING;
+        homeNumber = EMPTY_STRING;
+        street = EMPTY_STRING;
+        residence = EMPTY_STRING;
+    }
 }

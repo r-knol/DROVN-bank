@@ -5,11 +5,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import nl.hva.miw.internetbanking.service.CustomerService;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @SuperBuilder
 @NoArgsConstructor
@@ -48,14 +48,35 @@ public class Customer implements Serializable {
     public Customer(long id) {
         this.customerID = id;
     }
-
+    
     public void addAccount(Account acc) {
         accounts.add(acc);
     }
-
-    public void addCustomerName (String name) {
-
+    
+    public void addCustomerName(String name) {
+    
     }
-
-
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj != null && obj.getClass() == getClass()) {
+            return Objects.equals(customerID, ((Customer) obj).customerID) &&
+                    Objects.equals(userName, ((Customer) obj).userName) &&
+                    Objects.equals(password, ((Customer) obj).password) &&
+                    Objects.equals(accounts, ((Customer) obj).accounts) &&
+                    Objects.equals(customerType, ((Customer) obj).customerType) &&
+                    Objects.equals(customerName, ((Customer) obj).customerName);
+//            return customerID == ((Customer) obj).customerID &&
+//                    userName == ((Customer) obj).userName &&
+//                    password == ((Customer) obj).password &&
+//                    accounts == ((Customer) obj).accounts &&
+//                    customerType == ((Customer) obj).customerType &&
+//                    customerName == ((Customer) obj).customerName;
+        }
+        return false;
+    }
+    
 }

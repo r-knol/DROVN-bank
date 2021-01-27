@@ -2,7 +2,7 @@ package nl.hva.miw.internetbanking.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nl.hva.miw.internetbanking.exception.ApiError;
+import nl.hva.miw.internetbanking.data.CustomerTestData;
 import nl.hva.miw.internetbanking.service.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 // Integration test, that also tests the HTTP-layer
 @WebMvcTest(CustomerController.class)
-class CustomerControllerTest extends AbstractControllerTestData {
+class CustomerControllerTest extends CustomerTestData {
     
     private static final String URL_ID = "/api/customer/find/id/";
     private static final String URL_USERNAME = "/api/customer/find/username/";
@@ -84,7 +84,8 @@ class CustomerControllerTest extends AbstractControllerTestData {
             // CustomerController should throw EntityNotFoundException which is handled in
             // exception.RestExceptionHandler
             mockMvc.perform(getUrl(URL_ID + NOT_FOUND_ID))
-                    .andExpect(content().json(toJson(new ApiError(NOT_FOUND, NOT_FOUND_ID_MSG))))
+                    .andExpect(jsonPath("$.status").value(NOT_FOUND.name()))
+                    .andExpect(jsonPath("$.message").value(NOT_FOUND_ID_MSG))
                     .andExpect(content().contentType(APPLICATION_JSON))
                     .andExpect(status().isNotFound());
         }
@@ -95,18 +96,20 @@ class CustomerControllerTest extends AbstractControllerTestData {
             // CustomerController should throw ConstraintViolationException which is handled in
             // exception.RestExceptionHandler
             mockMvc.perform(getUrl(URL_ID + VIOLATION_ID))
-                    .andExpect(content().json(toJson(new ApiError(BAD_REQUEST, VIOLATION_ID_MSG))))
+                    .andExpect(jsonPath("$.status").value(BAD_REQUEST.name()))
+                    .andExpect(jsonPath("$.message").value(VIOLATION_ID_MSG))
                     .andExpect(content().contentType(APPLICATION_JSON))
                     .andExpect(status().isBadRequest());
         }
-        
+    
         @Test
         @DisplayName("Returns HTTP 400 BAD REQUEST & ApiError JSON when id type mismatch")
-        void WhenIdTypeMismatch_Then_Returns400AndApiError() throws Exception {
+        void When_IdTypeMismatch_Then_Returns400AndApiError() throws Exception {
             // CustomerController should throw MethodArgumentTypeMismatchException which is handled
             // in exception.RestExceptionHandler
             mockMvc.perform(getUrl(URL_ID + MISMATCH_ID))
-                    .andExpect(content().json(toJson(new ApiError(BAD_REQUEST, MISMATCH_ID_MSG))))
+                    .andExpect(jsonPath("$.status").value(BAD_REQUEST.name()))
+                    .andExpect(jsonPath("$.message").value(MISMATCH_ID_MSG))
                     .andExpect(content().contentType(APPLICATION_JSON))
                     .andExpect(status().isBadRequest());
         }
@@ -115,7 +118,7 @@ class CustomerControllerTest extends AbstractControllerTestData {
     
     @Nested
     @DisplayName("Tests endpoint '" + URL_USERNAME + "'")
-    class findCustomerByUsernameTests {
+    class FindCustomerByUsernameTests {
         
         private static final String NOT_FOUND_USER = "does_not_exist"; // only "ppost" will be found
         private static final String NOT_FOUND_USER_MSG =
@@ -145,7 +148,8 @@ class CustomerControllerTest extends AbstractControllerTestData {
             // CustomerController should throw EntityNotFoundException which is handled in
             // exception.RestExceptionHandler
             mockMvc.perform(getUrl(URL_USERNAME + NOT_FOUND_USER))
-                    .andExpect(content().json(toJson(new ApiError(NOT_FOUND, NOT_FOUND_USER_MSG))))
+                    .andExpect(jsonPath("$.status").value(NOT_FOUND.name()))
+                    .andExpect(jsonPath("$.message").value(NOT_FOUND_USER_MSG))
                     .andExpect(content().contentType(APPLICATION_JSON))
                     .andExpect(status().isNotFound());
         }
@@ -157,8 +161,8 @@ class CustomerControllerTest extends AbstractControllerTestData {
             // CustomerController should throw ConstraintViolationException which is handled in
             // exception.RestExceptionHandler
             mockMvc.perform(getUrl(URL_USERNAME + VIOLATION_USER))
-                    .andExpect(
-                            content().json(toJson(new ApiError(BAD_REQUEST, VIOLATION_USER_MSG))))
+                    .andExpect(jsonPath("$.status").value(BAD_REQUEST.name()))
+                    .andExpect(jsonPath("$.message").value(VIOLATION_USER_MSG))
                     .andExpect(content().contentType(APPLICATION_JSON))
                     .andExpect(status().isBadRequest());
         }
@@ -167,7 +171,7 @@ class CustomerControllerTest extends AbstractControllerTestData {
     
     @Nested
     @DisplayName("Tests endpoint '" + URL_SSN + "'")
-    class findCustomerBySocialSecurityNumberTests {
+    class FindCustomerBySocialSecurityNumberTests {
         
         private static final String NOT_FOUND_SSN = "999999999"; // only "123456789" will be found
         private static final String NOT_FOUND_SSN_MSG =
@@ -200,7 +204,8 @@ class CustomerControllerTest extends AbstractControllerTestData {
             // CustomerController should throw EntityNotFoundException which is handled in
             // exception.RestExceptionHandler
             mockMvc.perform(getUrl(URL_SSN + NOT_FOUND_SSN))
-                    .andExpect(content().json(toJson(new ApiError(NOT_FOUND, NOT_FOUND_SSN_MSG))))
+                    .andExpect(jsonPath("$.status").value(NOT_FOUND.name()))
+                    .andExpect(jsonPath("$.message").value(NOT_FOUND_SSN_MSG))
                     .andExpect(content().contentType(APPLICATION_JSON))
                     .andExpect(status().isNotFound());
         }
@@ -211,7 +216,8 @@ class CustomerControllerTest extends AbstractControllerTestData {
             // CustomerController should throw ConstraintViolationException which is handled in
             // exception.RestExceptionHandler
             mockMvc.perform(getUrl(URL_SSN + VIOLATION_SSN))
-                    .andExpect(content().json(toJson(new ApiError(BAD_REQUEST, VIOLATION_SSN_MSG))))
+                    .andExpect(jsonPath("$.status").value(BAD_REQUEST.name()))
+                    .andExpect(jsonPath("$.message").value(VIOLATION_SSN_MSG))
                     .andExpect(content().contentType(APPLICATION_JSON))
                     .andExpect(status().isBadRequest());
         }
@@ -252,7 +258,8 @@ class CustomerControllerTest extends AbstractControllerTestData {
             // CustomerController should throw EntityNotFoundException which is handled in
             // exception.RestExceptionHandler
             mockMvc.perform(getUrl(URL_KVK + NOT_FOUND_KVK))
-                    .andExpect(content().json(toJson(new ApiError(NOT_FOUND, NOT_FOUND_KVK_MSG))))
+                    .andExpect(jsonPath("$.status").value(NOT_FOUND.name()))
+                    .andExpect(jsonPath("$.message").value(NOT_FOUND_KVK_MSG))
                     .andExpect(content().contentType(APPLICATION_JSON))
                     .andExpect(status().isNotFound());
         }
@@ -264,7 +271,8 @@ class CustomerControllerTest extends AbstractControllerTestData {
             // CustomerController should throw ConstraintViolationException which is handled in
             // exception.RestExceptionHandler
             mockMvc.perform(getUrl(URL_KVK + VIOLATION_KVK))
-                    .andExpect(content().json(toJson(new ApiError(BAD_REQUEST, VIOLATION_KVK_MSG))))
+                    .andExpect(jsonPath("$.status").value(BAD_REQUEST.name()))
+                    .andExpect(jsonPath("$.message").value(VIOLATION_KVK_MSG))
                     .andExpect(content().contentType(APPLICATION_JSON))
                     .andExpect(status().isBadRequest());
         }

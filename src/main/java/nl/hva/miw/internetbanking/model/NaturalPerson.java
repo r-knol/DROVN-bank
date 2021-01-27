@@ -5,6 +5,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 @SuperBuilder
 @Getter
@@ -117,5 +118,42 @@ public class NaturalPerson extends Customer implements Serializable {
                 ", residence='" + residence + '\'' +
                 '}' + "\n" + super.toString();
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof NaturalPerson) {
+            return super.equals(obj) &&
+                    Objects.equals(initials, ((NaturalPerson) obj).initials) &&
+                    Objects.equals(firstName, ((NaturalPerson) obj).firstName) &&
+                    Objects.equals(preposition, ((NaturalPerson) obj).preposition) &&
+                    Objects.equals(surName, ((NaturalPerson) obj).surName) &&
+                    Objects.equals(dateOfBirth, ((NaturalPerson) obj).dateOfBirth) &&
+                    Objects.equals(socialSecurityNumber,
+                            ((NaturalPerson) obj).socialSecurityNumber) &&
+                    Objects.equals(email, ((NaturalPerson) obj).email) &&
+                    Objects.equals(phone, ((NaturalPerson) obj).phone) &&
+                    Objects.equals(postalCode, ((NaturalPerson) obj).postalCode) &&
+                    Objects.equals(homeNumber, ((NaturalPerson) obj).homeNumber) &&
+                    Objects.equals(street, ((NaturalPerson) obj).street) &&
+                    Objects.equals(residence, ((NaturalPerson) obj).residence);
+//                    initials == ((NaturalPerson) obj).initials &&
+//                    firstName == ((NaturalPerson) obj).firstName &&
+//                    preposition == ((NaturalPerson) obj).preposition &&
+//                    surName == ((NaturalPerson) obj).surName &&
+//                    dateOfBirth == ((NaturalPerson) obj).dateOfBirth &&
+//                    socialSecurityNumber == ((NaturalPerson) obj).socialSecurityNumber &&
+//                    email == ((NaturalPerson) obj).email &&
+//                    phone == ((NaturalPerson) obj).phone &&
+//                    postalCode == ((NaturalPerson) obj).postalCode &&
+//                    homeNumber == ((NaturalPerson) obj).homeNumber &&
+//                    street == ((NaturalPerson) obj).street &&
+//                    residence == ((NaturalPerson) obj).residence;
+        }
+        return false;
+    }
+    
 }
 
