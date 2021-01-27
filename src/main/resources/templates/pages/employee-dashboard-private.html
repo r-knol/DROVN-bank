@@ -67,7 +67,9 @@
                                 <td>
                                     <button type="button" class="btn btn-outline-primary meer-info" data-toggle="modal"
                                             data-target=".bd-example-modal-lg"
-                                            th:onclick="showMoreInfo([[${np.naturalPerson.getDateOfBirth()}]],[[${np.naturalPerson.getAddress()}]],[[${np.naturalPerson.getEmail()}]],[[${np.naturalPerson.getPhone()}]])">
+                                            th:onclick="showMoreInfo([[${np.naturalPerson.getDateOfBirth()}]],
+                                            [[${np.naturalPerson.getAddress()}]],[[${np.naturalPerson.getEmail()}]],
+                                            [[${np.naturalPerson.getPhone()}]])">
                                             Meer info
                                     </button>
                                 </td>
@@ -125,7 +127,7 @@
 <script>
     function showMoreInfo(dateOfBirth, address, email, telephone) {
         $('#myLargeModalLabel').modal('show')
-        console.log(dateOfBirth, address, email)
+        console.log(dateOfBirth, address, email, telephone)
         document.getElementById("modalDateOfBirth").innerHTML = dateOfBirth;
         document.getElementById("modalAddress").innerHTML = address;
         document.getElementById("modalEmail").innerHTML = email;
