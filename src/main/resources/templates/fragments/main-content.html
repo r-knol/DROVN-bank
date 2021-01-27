@@ -211,16 +211,18 @@
             <th:block class="container pt-0">
 
 <!--            Accordion wrapper-->
-                <div class="accordion md-accordion" id="accordionEx" role="tablist" aria-multiselectable="false">
+                <div class="accordion md-accordion; pt-3" id="accordionEx" role="tablist" aria-multiselectable="false"
+                     th:if="${not #lists.isEmpty(accountWithTransactions)}" th:each="t, iterStat : ${accountWithTransactions}">
+                    <h5 class="col-md-10" style="color: #F39200" th:each="date : ${t.getDate()}" th:text="${#temporals.format(t.getDate(), 'd MMMM yyyy')}" ></h5>
 
                     <!-- Accordion card -->
                     <div class="card" style="border-color: #312783;border-width: medium
-                         ;background-color:rgba(0,102,255, 0.2)" th:if="${not #lists.isEmpty(accountWithTransactions)}" th:each="t : ${accountWithTransactions}">
+                         ;background-color:rgba(0,102,255, 0.2)" >
 
                         <!-- Card header -->
                         <div >
 
-                            <h5 class="col-md-10" style="color: #F39200" th:each="date : ${t.getDate()}" th:text="${#temporals.format(t.getDate(), 'd MMMM yyyy')}" ></h5>
+
                             <h5>
                                 <th:block>
                                         <div class = panel-heading style="border-color: #312783;border-width: medium" >
