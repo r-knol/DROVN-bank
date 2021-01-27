@@ -41,11 +41,6 @@ class CustomerServiceTest {
         super();
     }
 
-    @BeforeEach
-    public void testSetup() {
-
-    }
-
     @Test
     void printNameCustomerTest() {
         Mockito.when(customerDAO.read(1L)).thenReturn(Optional.of(nina));
