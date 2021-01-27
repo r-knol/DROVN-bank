@@ -14,7 +14,7 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@ToString
+
 public class Transaction implements Serializable {
 
     private long transactionID;
@@ -196,5 +196,22 @@ public class Transaction implements Serializable {
                 date.equals(that.date) &&
                 Objects.equals(account, that.account) &&
                 Objects.equals(contraAccountHolderNames, that.contraAccountHolderNames);
+    }
+
+
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "transactionID=" + transactionID +
+                ", debitAccount='" + debitAccount + '\'' +
+                ", creditAccount='" + creditAccount + '\'' +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", dateTime=" + dateTime +
+                ", date=" + date +
+                ", numberOfTransactions=" + numberOfTransactions +
+                ", contraAccountHolderNames=" + contraAccountHolderNames +
+                '}';
     }
 }

@@ -35,14 +35,10 @@ class TransactionDAOTest extends JDBCSetupDAOTest {
     @Test
     void createAndgetTransactionsByIbanTest () {
         TransactionDAO transactionDAO = new TransactionDAO(jdbcTemplate);
-        LocalDateTime testLocalDateTime = LocalDateTime.of(2021, 01, 01, 01, 20, 00);
-        Transaction testTransaction1 = new Transaction(10001L, "NL77DRVN0541478414", "NL97DROVN527874997", 1.00, "TestTransactie1", testLocalDateTime);
-        Transaction testTransaction2 = new Transaction(10002L, "NL77DRVN0541478414", "NL97DROVN527874997", 2.00, "TestTransactie2", testLocalDateTime);
+        LocalDateTime testLocalDateTime = LocalDateTime.of(2021, 01, 01, 01, 20, 00).plusHours(1);
         Account testAccount = new Account(1L, 100.00,"NL77DRVN0541478414");
-        transactionDAO.create(testTransaction1);
-        transactionDAO.create(testTransaction2);
-        List<Transaction> transactionTestList = List.of( new Transaction(10001L, "NL77DRVN0541478414", "NL97DROVN527874997", 1.00, "TestTransactie1", testLocalDateTime),
-                                                        new Transaction(10002L, "NL77DRVN0541478414","NL97DROVN527874997", 2.00, "TestTransactie2", testLocalDateTime));
+        List<Transaction> transactionTestList = List.of( new Transaction(1001L, "NL77DRVN0541478414", "NL97DROVN527874997", 1.00, "TestTransactie1", testLocalDateTime),
+                                                        new Transaction(1002L, "NL77DRVN0541478414","NL97DROVN527874997", 2.00, "TestTransactie2", testLocalDateTime));
         assertEquals(transactionTestList, transactionDAO.getTransactionsByIban(testAccount.getIban()));
     }
 }
