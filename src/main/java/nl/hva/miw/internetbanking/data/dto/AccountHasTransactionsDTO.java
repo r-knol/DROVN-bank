@@ -4,26 +4,19 @@ import nl.hva.miw.internetbanking.model.Account;
 import nl.hva.miw.internetbanking.model.Transaction;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AccountHasTransactionsDTO {
 
     private Account account;
     private Transaction transaction;
     private List<Transaction> transactionList;
-    private Map<LocalDate, List<Transaction>> transactionListByDate;
+    private Map<LocalDate, List<Transaction>> transactionMapByDate;
 
     public AccountHasTransactionsDTO(Account account) {
         super();
         this.account = account;
-        this.transactionListByDate = new HashMap<>();
-    }
-
-    public AccountHasTransactionsDTO() {
-        super();
-        this.transactionListByDate = new HashMap<>();
+        this.transactionMapByDate = new HashMap<>();
     }
 
     public Account getAccount() {
@@ -50,19 +43,19 @@ public class AccountHasTransactionsDTO {
         this.transactionList = transactionList;
     }
 
-    public Map<LocalDate, List<Transaction>> getTransactionListByDate() {
-        return transactionListByDate;
+    public Map<LocalDate, List<Transaction>> getTransactionMapByDate() {
+        return transactionMapByDate;
     }
 
-    public void setTransactionListByDate(Map<LocalDate, List<Transaction>> transactionListByDate) {
-        this.transactionListByDate = transactionListByDate;
+    public void setTransactionMapByDate(Map<LocalDate, List<Transaction>> transactionMapByDate) {
+        this.transactionMapByDate = transactionMapByDate;
     }
 
     @Override
     public String toString() {
         return "AccountHasTransactionsDTO{" +
                 "account=" + account +
-                ", transactionListByDate=" + transactionListByDate +
+                ", transactionListByDate=" + transactionMapByDate +
                 ", transactionList=" + transactionList +
                 '}';
     }

@@ -1,6 +1,7 @@
 package nl.hva.miw.internetbanking.controller;
 
 import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
+import nl.hva.miw.internetbanking.data.dto.TransactionDetailsDTO;
 import nl.hva.miw.internetbanking.model.Customer;
 import nl.hva.miw.internetbanking.model.Employee;
 import nl.hva.miw.internetbanking.model.EmployeeRole;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @Controller
-@SessionAttributes({"customer", "nameCurrentCus"})
+@SessionAttributes({"customer", "nameCurrentCus", "transactionDTO"})
 public class LoginController {
 
     private CustomerService customerService;
@@ -39,9 +40,14 @@ public class LoginController {
         return "pages/login";
     }
 
+    @ModelAttribute("transactionDTO")
+    public TransactionDetailsDTO getTransactionDetailsDTO(){
+        return new TransactionDetailsDTO();
+    }
+
     @PostMapping("/customer-with-accounts")
-    public String handleLogin(@RequestParam(name = "userName") String userName, @RequestParam(name = "password")
-            String password, Model model) {
+    public String handleLogin(@RequestParam(name = "userName") String userName, @RequestParam(name = "password") String password, Model model, @ModelAttribute("transactionDTO") TransactionDetailsDTO tDto) {
+        model.addAttribute("transactionDTO", new TransactionDetailsDTO());
         Optional<Customer> customer = customerService.getCustomerByUsername(userName);
         if (customer.isPresent()) {
             Customer customerFound = customer.get();
@@ -59,7 +65,8 @@ public class LoginController {
     }
 
     @GetMapping("/customer-with-accounts")
-    public String showCustomerWithAccounts(@ModelAttribute("customer") Customer c, Model model) {
+    public String showCustomerWithAccounts(@ModelAttribute("customer") Customer c, Model model, @ModelAttribute("transactionDTO") TransactionDetailsDTO tDto) {
+        model.addAttribute("transactionDTO", new TransactionDetailsDTO());
         model.addAttribute("nameCurrentCus", customerService.printNameCustomer(c.getCustomerID()));
         CustomerHasAccountsDTO customerDto = new CustomerHasAccountsDTO(c);
         customerDto.setAccountList(accountService.getAccountsForCustomer(c));
@@ -76,19 +83,15 @@ public class LoginController {
     @PostMapping("/loginemployee")
     public String handleLoginEmployee(@RequestParam(name = "userName") String userName, @RequestParam(name = "password")
             String password, Model model) {
-
         Optional<Employee> employee = employeeService.getEmployeeByUsername(userName);
-
         if (employee.isPresent()) {
             Employee employeeFound = employee.get();
             if (loginService.validEmployee(employeeFound, password)) {
                 model.addAttribute("employee", employeeFound);
-
                 if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_PRIVATE) {
                     model.addAttribute("npWithHighestBalance", balanceService.getNaturalAccountsWithHighestBalance());
                     return "pages/employee-dashboard-private";
                 }
-
                 if (employeeFound.getEmployeeRole() == EmployeeRole.HEAD_LEGAL) {
                     model.addAttribute("lpWithHighestBalance", balanceService.getClientsWithHighestBalance());
                     model.addAttribute("balancePerSector", balanceService.getAvgBalancePerSector());
