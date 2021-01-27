@@ -218,7 +218,7 @@
                             <h5>
                                 <th:block>
                                     <div class = panel-heading style="border-color: #312783;border-width: medium" >
-                                        <i class="fas fa-angle-down rotate-icon; float-right" data-toggle="collapse" data-parent="#collapse" href="#collapse"
+                                        <i class="fas fa-angle-down rotate-icon; float-right" data-toggle="collapse" data-parent="#collapse" th:href="'#collapse'"
                                            aria-expanded="false" aria-controls="collapseOne" style="color: #F39200;font-size: x-large" ></i>
                                         <dl>
                                             <dt class="col-md-10" style="color: #312783" th:each="name : ${t.contraAccountHolderNames}" th:text="${name}" ></dt>
@@ -229,7 +229,7 @@
                             </h5>
                         </div>
                         <!-- Card body -->
-                        <div id="collapse" class="collapse hide" role="textbox" aria-labelledby="heading">
+                        <div th:id="'collapse'" class="collapse hide" role="textbox" aria-labelledby="heading">
                             <div class="card-body" style="background-color: rgba(243, 146, 0, 0.6)">
                                 <span style="color: #312783; font-size: large; font-weight: bold" th:content="${t.description}" th:text="${t.showTransactionDetails()}"> </span>
                             </div>
