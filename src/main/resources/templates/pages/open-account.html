@@ -7,6 +7,7 @@
         align-content: center;
     }
 
+
     .openaccountframe {
         -webkit-border-radius: 10px 10px 10px 10px;
         border-radius: 10px 10px 10px 10px;
@@ -35,8 +36,9 @@
         padding: 10px;
         min-width: 150px;
         border-radius: 12px;
-        position: center;
-
+        position: relative;
+        right: 170px;
+        top: 50px;
     }
 
     .accountoverview-button {
@@ -46,7 +48,6 @@
         padding: 10px;
         min-width: 150px;
         border-radius: 12px;
-        position: center;
     }
 
     .openTerms {
@@ -54,8 +55,9 @@
     }
 
     .accordionFrame {
-        position: center;
-        margin-top: 40px;
+        position: relative;
+        left: 18%;
+        margin-top: 60px;
         width: 80%;
     }
 
@@ -64,7 +66,7 @@
         color: #312783;
         cursor: pointer;
         padding: 30px;
-        width: 50%;
+        width: 80%;
         border: #312783;
         text-align: left;
         outline: none;
@@ -91,21 +93,18 @@
     <div id="header" class="row header-default">
         <header th:replace="fragments/header :: head-openAccount"></header>
     </div>
-    <div id="mainContent" class="row">
-        <main role="main" class="min-vh-100">
-            <div class="jumbotron-fluid headframe justify-content-center">
+        <div class="jumbotron-fluid justify-content-center headframe">
                 <h1><span class="text-orange">Fijn dat u een rekening bij ons wilt openen.</span></h1>
                 <h3><span class="text-white"> U kunt direct uw nieuwe rekening bevestigen.</span></h3>
-            </div>
+        </div>
             <div class="container-fluid">
-                <div class="row">
                     <div class="col-md-12 mx-auto openaccountframe">
                         <div class="row">
-                            <h2><span class="text-orange" style="text-align: center">  Rekeninghouder: </span>
+                            <h2><span class="text-orange" style="text-align: center"> &nbsp; Rekeninghouder: </span>
                                 <span style="color: #0066ff" th:text="${nameCurrentCus}"></span>
                             </h2>
                             <p><br></p>
-                            <form action="/saveaccount" method="post" name="ibanForm">
+                            <form action="/saveaccount" method="post" id="ibanForm" name="ibanForm">
                                 <input type="text" th:field="*{customer.customerID}" value="customer.customerID"
                                        hidden/>
 
@@ -119,6 +118,7 @@
                                     <input type="text" size="3" th:field="*{account.balance}" id="balance"
                                            placeholder="Saldo" hidden/>
                                 </div>
+                                <br>
                                 <div class="col-auto form-group">
                                     <p>Door te bevestigen gaat u akkoord met de
                                         <a data-href="https://www.termsandconditionsgenerator.com/live.php?token=WMGxy8SYoQkOH2QDFKuWdAqUeZ9mgMuS"
@@ -126,29 +126,22 @@
                                         <br></p>
                                     <br>
                                 </div>
-                            </form>
-                            <div class="row">
-                                <div class="col-md-auto">
-                                <div class=" col-2">
-                                        <input type="submit" id="submit"
+                                        <input type="submit" id="submit-button"
                                                class="btn btn-primary confirmation-button"
-                                               value="Bevestigen"
-                                               onclick="$('#confirmationNewAccount').modal();">
-                                    </div>
-                                </div>
-                                <div class="col-md-auto">
-                                <div class="col-auto">
-                                        <input type="button" class="btn btn-primary accountoverview-button"
-                                               value="Rekeningoverzicht" id="back-button">
-                                        <form action="#" method="get" th:action="@{/customer-with-accounts}">
+                                               value="Bevestigen" style="margin-left: 80px">
+                            </form>
+                            <div class="row-cols-2">
+                                    <form action="#" method="get" th:action="@{/customer-with-accounts}">
+                                        <input type="submit" class="btn btn-primary accountoverview-button"
+                                               value="Rekeningoverzicht" style="margin-left: 300px" >
                                         </form>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="container accordionFrame">
-                        <div class="col-md-12 mx-auto">
+                    <div class="jumbotron-fluid accordionFrame">
+                        <div class="col-md-auto">
                         <h2><span class="text-orange"
                                   style="text-align: center"> Meest gestelde vragen </span></h2>
                         <button class="accordion">Hoe kan ik een bankrekening openen?</button>
@@ -156,9 +149,8 @@
                             <p>U kunt een rekening openen via de DROVN website, of door online een afspraak
                                 te
                                 maken. Het is niet
-                                nodig een kantoor te bezoeken. Om een bankrekening te openen, hoeft u
-                                slechts te
-                                bevestigen.</p>
+                                nodig een kantoor te bezoeken. Om een bankrekening te<br>
+                                openen, hoeft u slechts te bevestigen.</p>
                         </div>
                         <button class="accordion">Wat kost een bankrekening?</button>
                         <div class="panel">
@@ -173,26 +165,23 @@
                             <p>Een extra rekening is snel en simpel geopend. Met een extra rekening kunt u
                                 geld
                                 apart zetten voor
-                                bijvoorbeeld uw boodschappen of vaste lasten. Zo heeft u altijd voldoende
+                                bijvoorbeeld uw boodschappen of vaste lasten. <br> Zo heeft u altijd voldoende
                                 geld
                                 achter de hand voor
-                                onverwachte uitgaven of om iets leuks mee te doen..</p>
+                                onverwachte uitgaven of om iets leuks mee te doen.</p>
                         </div>
                     </div>
                 </div>
             </div>
-
-            </div>
-        </main>
-
-    </div>
-</div>
-
-
 <div class="row footer-default" id="footer">
     <footer th:replace="fragments/footer :: footer-default"></footer>
 </div>
 <div th:replace="fragments/modal :: modal-confirmationNewAccount"></div>
 <div th:replace="fragments/modal :: modal-termsConditions"></div>
+
+<script th:if="${accountSaved == 'true'}">
+    $('#confirmationNewAccount').modal();
+
+</script>
 </body>
 </html>

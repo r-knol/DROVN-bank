@@ -32,6 +32,7 @@ public class OpenAccountController {
    @GetMapping("/openaccount")
     public String showNewAccount(@ModelAttribute("customer") Customer customer,  Model model){
         Account newAccount = new Account();
+        model.addAttribute("accountSaved", "false");
         model.addAttribute("account", newAccount);
         model.addAttribute("nameCurrentCus", customerService.printNameCustomer(customer.getCustomerID()));
         model.addAttribute("customer", customer);
@@ -40,10 +41,12 @@ public class OpenAccountController {
     }
 
     @PostMapping("/saveaccount")
-    public String saveAccount (@ModelAttribute ("account") Account account, @ModelAttribute ("customer") Customer customer){
+    public String saveAccount (@ModelAttribute ("account") Account account, @ModelAttribute ("customer") Customer customer, Model model){
         logger.info(" Dit is huidige: " + account + customer);
+        model.addAttribute("accountSaved", "true");
         accountService.saveNewAccount(account, customer);
         return "pages/open-account";
     }
+
 
 }
