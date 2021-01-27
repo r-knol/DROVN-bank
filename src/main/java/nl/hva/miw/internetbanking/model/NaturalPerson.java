@@ -90,14 +90,14 @@ public class NaturalPerson extends Customer implements Serializable {
     }
 
     public NaturalPerson(String firstName, String preposition, String surName, String dateOfBirth,
-                         String email, String phone, String address) {
+                         String address, String email, String phone) {
         this.firstName = firstName;
         this.preposition = preposition;
         this.surName = surName;
         this.dateOfBirth = dateOfBirth;
+        this.address = address;
         this.email = email;
         this.phone = phone;
-        this.address = address;
     }
 
     @Override
