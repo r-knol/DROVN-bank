@@ -187,9 +187,9 @@
 </div>
 
 
-<div class="container pt-5" th:fragment="content-mutations">
+<div class="container pt-lg-0" th:fragment="content-mutations">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 pt-lg-4" >
             <p action="#" method="get" th:action="@{/do-transaction/}" th:object="${customerWithAccountOverview}">
                 <a class="btn btn-primary btn-lg btn-block" style="font-size: 125%; width: 100%" th:href="@{/do-transaction/}" role="button"
                 >Geld overboeken »</a></p>
@@ -198,93 +198,49 @@
                 >« Terug naar Rekeningoverzicht</a></p>
             </p>
         </div>
-
         <div class="col-md-8">
-
             <div class="container pt-0">
                 <div th:if="${accountWithTransactions.isEmpty()}">
                     <p style="font-size: 200%; color: #F39200" align="center"
                     >Er zijn geen bij- en/of afschrijvingen om weer te geven.</p>
                 </div>
             </div>
-
             <th:block class="container pt-0">
-
-<!--            Accordion wrapper-->
-                <div class="accordion md-accordion; pt-3" id="accordionEx" role="tablist" aria-multiselectable="false"
+                <!--            Accordion wrapper-->
+                <div class="accordion md-accordion; pt-lg-4" id="accordionEx" role="tablist" aria-multiselectable="false"
                      th:if="${not #lists.isEmpty(accountWithTransactions)}" th:each="t, iterStat : ${accountWithTransactions}">
                     <h5 class="col-md-10" style="color: #F39200" th:each="date : ${t.getDate()}" th:text="${#temporals.format(t.getDate(), 'd MMMM yyyy')}" ></h5>
-
                     <!-- Accordion card -->
                     <div class="card" style="border-color: #312783;border-width: medium
                          ;background-color:rgba(0,102,255, 0.2)" >
-
                         <!-- Card header -->
                         <div >
-
-
                             <h5>
                                 <th:block>
-                                        <div class = panel-heading style="border-color: #312783;border-width: medium" >
-
-                                            <i class="fas fa-angle-down rotate-icon; float-right" data-toggle="collapse" data-parent="#collapse" href="#collapse"
-                                               aria-expanded="false" aria-controls="collapseOne" style="color: #F39200;font-size: x-large" ></i>
-                                    <dl>
-
-                                        <dt class="col-md-10" style="color: #312783" th:each="name : ${t.contraAccountHolderNames}" th:text="${name}" ></dt>
-                                        <dd class="col-md-2; float-md-right" style="color: #312783" th:each="amount :${t.amount}"th:text="${t.showAmount()}"></dd>
-                                    </dl>
-                                        </div>
+                                    <div class = panel-heading style="border-color: #312783;border-width: medium" >
+                                        <i class="fas fa-angle-down rotate-icon; float-right" data-toggle="collapse" data-parent="#collapse" href="#collapse"
+                                           aria-expanded="false" aria-controls="collapseOne" style="color: #F39200;font-size: x-large" ></i>
+                                        <dl>
+                                            <dt class="col-md-10" style="color: #312783" th:each="name : ${t.contraAccountHolderNames}" th:text="${name}" ></dt>
+                                            <dd class="col-md-2; float-md-right" style="color: #312783" th:each="amount :${t.amount}"th:text="${t.showAmount()}"></dd>
+                                        </dl>
+                                    </div>
                                 </th:block>
                             </h5>
-
                         </div>
-
                         <!-- Card body -->
                         <div id="collapse" class="collapse hide" role="textbox" aria-labelledby="heading">
                             <div class="card-body" style="background-color: rgba(243, 146, 0, 0.6)">
                                 <span style="color: #312783; font-size: large; font-weight: bold" th:content="${t.description}" th:text="${t.showTransactionDetails()}"> </span>
                             </div>
                         </div>
-
                     </div>
                     <!-- Accordion card -->
-
                 </div>
                 <!-- Accordion wrapper -->
-               <br>
-
-
+                <br>
             </th:block>
-
-            </div>
-
-
         </div>
-
     </div>
 </div>
-
-<script>
-    $(function(){
-        $('ul li a').on('click', function(){
-            $(this).parent().addClass('active').siblings().removeClass('active');
-
-            var to_toggle = $(this).attr('href');
-
-            $("#collapse").find('div').each(function(){
-                if ( ('#'+$(this).attr("id")) != to_toggle )
-                    $(this).filter('.collapse.in').collapse('hide');
-            });
-
-            $(to_toggle+':not(".in")').collapse('show');
-        });
-    });
-
-
-</script>
-
-
-
-
 </html>

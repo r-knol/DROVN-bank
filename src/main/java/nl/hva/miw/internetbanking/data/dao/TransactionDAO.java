@@ -85,12 +85,10 @@ public class TransactionDAO implements DAO<Transaction, Long> {
 
     public List<Transaction> getTransactionsForAccount (Account account) {
         List<Transaction> transactions = getTransactionsByIban(account.getIban());
-//        System.out.println(account.getAccountID());
         for (Transaction t : transactions) {
             t.addTransactionToAccount(account);
             account.addTransaction(t);
         }
-        System.out.println(transactions);
         return transactions;
     }
 

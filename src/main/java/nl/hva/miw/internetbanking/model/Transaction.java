@@ -15,7 +15,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-public class Transaction implements Comparable  {
+public class Transaction implements Serializable {
 
     private long transactionID;
     private String debitAccount;
@@ -182,7 +182,6 @@ public class Transaction implements Comparable  {
     }
 
 
-
     @Override // nodig voor TransactionDAOTest
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -197,20 +196,5 @@ public class Transaction implements Comparable  {
                 date.equals(that.date) &&
                 Objects.equals(account, that.account) &&
                 Objects.equals(contraAccountHolderNames, that.contraAccountHolderNames);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(transactionID, debitAccount, creditAccount, amount, description, dateTime, date, account, contraAccountHolderNames);
-    }
-
-//    @Override
-//    public int compareTo(Transaction compareT) {
-//        return this.getDate().compareTo(compareT.getDate());
-//    }
-
-    @Override
-    public int compareTo(Object o) {
-        return 0;
     }
 }
