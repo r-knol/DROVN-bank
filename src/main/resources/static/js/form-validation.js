@@ -53,14 +53,10 @@ function validateForms(forms, dataVerificationFields) {
             });
         });
 
-        // Set EventListener to selectboxes to validate on focusout
+        // Set EventListener to selectboxes to validate on change
         formSelects.forEach(select => {
-            select.addEventListener('focusout', function () {
-                if (select.validity.valueMissing) { // Required, but no value selected.
-                    select.setCustomValidity(select.validationMessage);
-                    updateCss(select);
-                    select.nextElementSibling.innerHTML = select.validationMessage;
-                }
+            select.addEventListener('change', function () {
+                validateSelect(select);
             });
         });
 
@@ -76,8 +72,11 @@ function validateForms(forms, dataVerificationFields) {
                 form.dataFields.forEach(element => {
                     element.forEach(field => {
                         verifyData(field);
-                    })
-                })
+                    });
+                });
+                formSelects.forEach(select => {
+                    validateSelect(select);
+                });
             }
             form.classList.add('was-validated');
         }, false);
@@ -92,7 +91,7 @@ function validateForms(forms, dataVerificationFields) {
         const errorDisplayElement = field.nextElementSibling;
         errorDisplayElement.innerHTML = ''; // clear previous messages, if any
 
-        // Create an bject that will contain custom vaLidation messages
+        // Create an object that will contain custom vaLidation messages
         // Additional types that could be used are: badInput, rangeOverflow, rangeUnderflow, stepMismatch, typeMismatch
         let validationMessages = {
             patternMismatch: '', tooLong: '', tooShort: '', valueMissing: ''
@@ -202,6 +201,26 @@ function validateForms(forms, dataVerificationFields) {
                 console.log(error);
             });
 
+    }
+
+    function validateSelect(select) {
+        select.nextElementSibling.innerHTML = ""; // Reset message
+
+        console.log(select.selectedIndex);
+        console.log(select.options[select.selectedIndex].value);
+        console.log(select.validity);
+
+        const isValid = select.checkValidity();
+
+        if (!isValid) {
+            select.nextElementSibling.innerHTML = select.validationMessage;
+        }
+        updateCss(select);
+        // if (select.validity.valueMissing) { // Required, but no value selected.
+        //     select.setCustomValidity(select.validationMessage);
+        //     updateCss(select);
+        //     select.nextElementSibling.innerHTML = select.validationMessage;
+        // }
     }
 
     // Set the appropriate CSS-classes, depending on the ValidityState
