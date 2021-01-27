@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 // Integration test, that also tests the HTTP-layer
 @WebMvcTest(CustomerController.class)
-class CustomerControllerTestData extends AbstractControllerTestData {
+class CustomerControllerTest extends AbstractControllerTestData {
     
     private static final String URL_ID = "/api/customer/find/id/";
     private static final String URL_USERNAME = "/api/customer/find/username/";
@@ -39,7 +39,7 @@ class CustomerControllerTestData extends AbstractControllerTestData {
     @MockBean
     private CustomerService customerService;
     
-    public CustomerControllerTestData() {
+    public CustomerControllerTest() {
         super();
     }
     
