@@ -1,5 +1,8 @@
 package nl.hva.miw.internetbanking.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
@@ -8,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@ToString
+@Getter
+@Setter
 public class Account implements Serializable {
 
     private static final long serialVersionUID = 8922473667746953263L;
