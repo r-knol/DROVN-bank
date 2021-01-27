@@ -35,7 +35,7 @@ public class CustomerController {
     
     @GetMapping(path = {"/find/id/{id}"})
     public ResponseEntity<Customer> findCustomerById(
-            @PathVariable @PositiveOrZero(message = "moet een positief getal zijn") long id) {
+            @PathVariable @PositiveOrZero(message = "moet positief getal zijn") long id) {
         Optional<Customer> customerOptional = customerService.getCustomerById(id);
         if (customerOptional.isEmpty()) {
             throw new EntityNotFoundException(NOT_FOUND + WITH_ID + id);
@@ -56,7 +56,8 @@ public class CustomerController {
     
     @GetMapping("/find/socialsecuritynumber/{socialSecurityNumber}")
     public ResponseEntity<Customer> findCustomerBySocialSecurityNumber(
-            @PathVariable String socialSecurityNumber) {
+            @PathVariable @Pattern(regexp = "^[0-9]{8,9}$",
+                    message = "moet 8 of 9 cijfers zijn") String socialSecurityNumber) {
         Optional<Customer> customerOptional =
                 customerService.getCustomerBySocialSecurityNumber(socialSecurityNumber);
         if (customerOptional.isEmpty()) {
@@ -69,7 +70,7 @@ public class CustomerController {
     @GetMapping("/find/kvknumber/{kvknumber}")
     public ResponseEntity<Customer> findCustomerKvkNumber(
             @PathVariable @Pattern(regexp = "^[0-9]{8}$",
-                    message = "moet uit 8-cijfers bestaan") String kvknumber) {
+                    message = "moet uit 8 cijfers bestaan") String kvknumber) {
         Long asLong = Long.parseLong(kvknumber);
         Optional<Customer> customerOptional = customerService.getCustomerByKvkNumber(asLong);
         if (customerOptional.isEmpty()) {
