@@ -1,37 +1,38 @@
-package nl.hva.miw.internetbanking.controller;
+package nl.hva.miw.internetbanking.data;
 
-import nl.hva.miw.internetbanking.model.CustomerType;
-import nl.hva.miw.internetbanking.model.LegalPerson;
-import nl.hva.miw.internetbanking.model.NaturalPerson;
-import nl.hva.miw.internetbanking.model.Sector;
+import nl.hva.miw.internetbanking.model.*;
 
-public abstract class AbstractControllerTestData {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class CustomerTestData {
     
-    protected static final String USERNAME = "ppost";
     protected static final long CUSTOMER_ID = 999L;
-    private static final String PASSWORD = "Aa!123";
-    private static final String INITIALS = "P.";
-    private static final String FIRSTNAME = "Pieter";
-    private static final String PREPOSITION = "";
-    private static final String SURNAME = "Post";
-    private static final String DATE_OF_BIRTH = "1981-09-16";
+    protected static final String USERNAME = "ppost";
+    protected static final String PASSWORD = "Aa!123";
+    protected static final List<Account> ACCOUNTS = new ArrayList<>();
+    protected static final String INITIALS = "P.";
+    protected static final String FIRSTNAME = "Pieter";
+    protected static final String PREPOSITION = "";
+    protected static final String SURNAME = "Post";
+    protected static final String DATE_OF_BIRTH = "1981-09-16";
     protected static final String SOCIAL_SECURITY_NUMBER = "123456789";
-    private static final String EMAIL = "pieter@post.nl";
-    private static final String PHONE = "06-12345678";
-    private static final String POSTAL_CODE = "1234 AB";
-    private static final String HOME_NUMBER = "1A-F";
-    private static final String STREET = "Briefstraat";
-    private static final String RESIDENCE = "Poststad";
-    private static final String COMPANY = "Post Unlimited";
+    protected static final String EMAIL = "pieter@post.nl";
+    protected static final String PHONE = "06-12345678";
+    protected static final String POSTAL_CODE = "1234 AB";
+    protected static final String HOME_NUMBER = "1A-F";
+    protected static final String STREET = "Briefstraat";
+    protected static final String RESIDENCE = "Poststad";
+    protected static final String COMPANY = "Post Unlimited";
     protected static final long KVK_NUMBER = 12345678L;
-    private static final String VAT_NUMBER = "NL12345678B01";
+    protected static final String VAT_NUMBER = "NL12345678B01";
     
     protected final NaturalPerson privateCustomer;
     protected final LegalPerson businessCustomer;
     
-    protected AbstractControllerTestData() {
-        this.privateCustomer = setUpPrivateCustomer();
-        this.businessCustomer = setUpBusinessCustomer();
+    protected CustomerTestData() {
+        privateCustomer = setUpPrivateCustomer();
+        businessCustomer = setUpBusinessCustomer();
     }
     
     private NaturalPerson setUpPrivateCustomer() {
@@ -40,6 +41,7 @@ public abstract class AbstractControllerTestData {
                 .userName(USERNAME)
                 .password(PASSWORD)
                 .customerType(CustomerType.NATURAL)
+                .accounts(ACCOUNTS)
                 .initials(INITIALS)
                 .firstName(FIRSTNAME)
                 .preposition(PREPOSITION)
@@ -61,6 +63,7 @@ public abstract class AbstractControllerTestData {
                 .userName(USERNAME)
                 .password(PASSWORD)
                 .customerType(CustomerType.LEGAL)
+                .accounts(ACCOUNTS)
                 .companyName(COMPANY)
                 .kvkNumber(KVK_NUMBER)
                 .sector(Sector.TRANSPORT)

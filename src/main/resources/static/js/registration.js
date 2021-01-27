@@ -15,6 +15,9 @@
         $buttonLegal.toggleClass('active');
     });
 
+    // Hide 0 in input field
+    document.querySelector('#kvkNumber').value = '';
+
     // Select the forms that need validation
     const forms = document.querySelectorAll('.needs-validation');
 
