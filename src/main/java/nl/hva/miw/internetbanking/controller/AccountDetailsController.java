@@ -45,9 +45,6 @@ public class AccountDetailsController {
         AccountHasTransactionsDTO accountHasTransactionsDTO = new AccountHasTransactionsDTO(account.get());
         accountHasTransactionsDTO.setTransactionList(transactionService.getTransactionsForAccount(account.get()));
         transactionService.setTransactionWithContraAccountNames(accountHasTransactionsDTO, account.get());
-        transactionService.setTransactionWithDateAsString(accountHasTransactionsDTO);
-        System.out.println("Transacties grouped by date: " + accountHasTransactionsDTO.getTransactionMapByDate());
-        model.addAttribute("accountWithTransactionsByDate", accountHasTransactionsDTO.getTransactionMapByDate());
         model.addAttribute("accountWithTransactions", accountHasTransactionsDTO.getTransactionList());
         return "pages/account_details";
     }

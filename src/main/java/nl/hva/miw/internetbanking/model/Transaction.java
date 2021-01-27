@@ -181,6 +181,7 @@ public class Transaction implements Serializable {
                 description);
     }
 
+
     @Override // nodig voor TransactionDAOTest
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -195,10 +196,5 @@ public class Transaction implements Serializable {
                 date.equals(that.date) &&
                 Objects.equals(account, that.account) &&
                 Objects.equals(contraAccountHolderNames, that.contraAccountHolderNames);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(transactionID, debitAccount, creditAccount, amount, description, dateTime, date, account, contraAccountHolderNames);
     }
 }

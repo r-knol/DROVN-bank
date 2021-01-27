@@ -11,19 +11,11 @@ public class AccountHasTransactionsDTO {
     private Account account;
     private Transaction transaction;
     private List<Transaction> transactionList;
-//    private Map<Long, List<Transaction>> transactionMap;
     private Map<LocalDate, List<Transaction>> transactionMapByDate;
 
     public AccountHasTransactionsDTO(Account account) {
         super();
         this.account = account;
-//        this.transactionMap = new HashMap<>();
-        this.transactionMapByDate = new HashMap<>();
-    }
-
-    public AccountHasTransactionsDTO() {
-        super();
-//        this.transactionMap = new HashMap<>();
         this.transactionMapByDate = new HashMap<>();
     }
 
@@ -50,14 +42,6 @@ public class AccountHasTransactionsDTO {
     public void setTransactionList(List<Transaction> transactionList) {
         this.transactionList = transactionList;
     }
-
-//    public Map<Long, List<Transaction>> getTransactionMap() {
-//        return transactionMap;
-//    }
-
-//    public void setTransactionMap(Map<Long, List<Transaction>> transactionMap) {
-//        this.transactionMap = transactionMap;
-//    }
 
     public Map<LocalDate, List<Transaction>> getTransactionMapByDate() {
         return transactionMapByDate;
