@@ -98,7 +98,7 @@ public class TransactionDAO implements DAO<Transaction, Long> {
                 "transaction.description,\n" +
                 "transaction.dateTime, transaction.creditAccount, transaction.debitAccount " +
                 "FROM transaction JOIN account ON account.iban = transaction.creditAccount \n" +
-                "OR account.iban = Transaction.debitAccount\n" +
+                "OR account.iban = transaction.debitAccount\n" +
                 "WHERE account.iban = ?\n" +
                 "ORDER BY transaction.dateTime DESC;";
         return jdbcTemplate.query(sql, new TransactionRowMapper(), iban);
