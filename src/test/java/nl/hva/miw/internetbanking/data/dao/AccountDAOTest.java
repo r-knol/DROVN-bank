@@ -33,10 +33,10 @@ class AccountDAOTest {
         assertTrue(optionaleAccount.isPresent());
     }
 
-    @Test
-    public void DAOTestReadIBAN(){
-        AccountDAO dao = new AccountDAO(jdbcTemplate);
-        Optional<Account> optionaleAccount = dao.read("NL34DROVN8392873654");
-        assertTrue(optionaleAccount.isPresent());
-    }
+//    @Test
+//    public void DAOTestReadIBAN(){
+//        AccountDAO dao = new AccountDAO(jdbcTemplate);
+//        Optional<Account> optionaleAccount = dao.read("NL34DROVN8392873654");
+//        assertTrue(optionaleAccount.isPresent());
+//    }
 }
