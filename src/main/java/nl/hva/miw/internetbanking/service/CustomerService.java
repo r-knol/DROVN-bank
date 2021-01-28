@@ -1,11 +1,11 @@
 package nl.hva.miw.internetbanking.service;
 
 import lombok.extern.slf4j.Slf4j;
-import nl.hva.miw.internetbanking.data.dao.AccountDAO;
 import nl.hva.miw.internetbanking.data.dao.CustomerDAO;
 import nl.hva.miw.internetbanking.data.dao.LegalPersonDAO;
 import nl.hva.miw.internetbanking.data.dao.NaturalPersonDAO;
-import nl.hva.miw.internetbanking.data.dto.*;
+import nl.hva.miw.internetbanking.data.dto.CustomerHasAccountsDTO;
+import nl.hva.miw.internetbanking.data.dto.DTO;
 import nl.hva.miw.internetbanking.model.*;
 import nl.hva.miw.internetbanking.util.DtoMapperUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,17 @@ import java.util.Optional;
 @Service
 @Slf4j(topic = "CustomerService")
 public class CustomerService {
-
+    
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
+    
     private final NaturalPersonDAO naturalPersonDAO;
     private final LegalPersonDAO legalPersonDAO;
     private final CustomerDAO customerDAO;
-
+    
     @Autowired
     public CustomerService(NaturalPersonDAO naturalPersonDAO,
-                           LegalPersonDAO legalPersonDAO, CustomerDAO customerDAO) {
+            LegalPersonDAO legalPersonDAO, CustomerDAO customerDAO) {
         this.naturalPersonDAO = naturalPersonDAO;
         this.legalPersonDAO = legalPersonDAO;
         this.customerDAO = customerDAO;
@@ -38,8 +41,8 @@ public class CustomerService {
         T customer = DtoMapperUtil.mapDtoToEntity(dto, customerClass);
         saveCustomer(customer);
     }
-
-    private <T extends Customer> void saveCustomer(T entity) {
+    
+    protected <T extends Customer> void saveCustomer(T entity) {
         try {
             customerDAO.create(entity);
             if (entity instanceof NaturalPerson) {
@@ -49,7 +52,7 @@ public class CustomerService {
             }
         } catch (DataAccessException e) {
             log.warn("Failed to save customer [{} - {}]", e.getClass().getSimpleName(),
-                     e.getMessage());
+                    e.getMessage());
         }
     }
 
@@ -68,8 +71,9 @@ public class CustomerService {
             Optional<NaturalPerson> naturalPersonOptional =
                     naturalPersonDAO.read(socialSecurityNumber);
             if (naturalPersonOptional.isPresent()) {
-                Customer customer = naturalPersonOptional.get();
-                return Optional.of(customer);
+                NaturalPerson naturalPerson = naturalPersonOptional.get();
+                setCredentials(naturalPerson);
+                return Optional.of(naturalPerson);
             }
             return Optional.empty();
         } catch (DataAccessException e) {
@@ -83,6 +87,7 @@ public class CustomerService {
             Optional<LegalPerson> legalPersonOptional = legalPersonDAO.readByKvkNumber(kvkNumber);
             if (legalPersonOptional.isPresent()) {
                 Customer customer = legalPersonOptional.get();
+                setCredentials(customer);
                 return Optional.of(customer);
             }
             return Optional.empty();
@@ -91,8 +96,8 @@ public class CustomerService {
             return Optional.empty();
         }
     }
-
-    private Optional<Customer> getCustomerDetails(Optional<Customer> optionalCustomer)
+    
+    protected Optional<Customer> getCustomerDetails(Optional<Customer> optionalCustomer)
             throws DataAccessException {
         // TODO: Create CustomerConverter ???
         if (optionalCustomer.isPresent()) {
@@ -106,8 +111,8 @@ public class CustomerService {
         }
         return Optional.empty();
     }
-
-    private Optional<Customer> getPrivateCustomerDetails(Customer customer)
+    
+    protected Optional<Customer> getPrivateCustomerDetails(Customer customer)
             throws DataAccessException {
         Optional<NaturalPerson> naturalPersonOptional =
                 naturalPersonDAO.read(customer.getCustomerID());
@@ -120,8 +125,8 @@ public class CustomerService {
         }
         return Optional.empty();
     }
-
-    private Optional<Customer> getBusinessCustomerDetails(Customer customer)
+    
+    protected Optional<Customer> getBusinessCustomerDetails(Customer customer)
             throws DataAccessException {
         Optional<LegalPerson> legalPersonOptional = legalPersonDAO.read(customer.getCustomerID());
         if (legalPersonOptional.isPresent()) {
@@ -133,14 +138,23 @@ public class CustomerService {
         }
         return Optional.empty();
     }
-
+    
+    protected void setCredentials(Customer customer) {
+        Optional<Customer> customerOptional = customerDAO.read(customer.getCustomerID());
+        if (customerOptional.isPresent()) {
+            Customer credentials = customerOptional.get();
+            customer.setUserName(credentials.getUserName());
+            customer.setPassword(credentials.getPassword());
+        }
+    }
+    
     // TODO: Refactor?
     public List<Customer> getCustomerByAccountId(long accountId) {
         try {
             return customerDAO.getCustomerByAccountId(accountId);
         } catch (DataAccessException e) {
             log.warn("Exception occurred while attempting to read customer data: {}",
-                     e.getMessage());
+                    e.getMessage());
         }
         return new ArrayList<>();
     }

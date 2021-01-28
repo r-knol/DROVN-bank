@@ -29,10 +29,14 @@ public abstract class CustomerTestData {
     
     protected final NaturalPerson privateCustomer;
     protected final LegalPerson businessCustomer;
+    protected final Customer customerNatural;
+    protected final Customer customerLegal;
     
     protected CustomerTestData() {
         privateCustomer = setUpPrivateCustomer();
         businessCustomer = setUpBusinessCustomer();
+        customerNatural = setUpCustomerNatural();
+        customerLegal = setUpCustomerLegal();
     }
     
     private NaturalPerson setUpPrivateCustomer() {
@@ -74,6 +78,22 @@ public abstract class CustomerTestData {
                 .residence(RESIDENCE)
                 .accountmanagerID(LegalPerson.DEFAULT_ACCOUNTMANAGER_ID)
                 .build();
+    }
+    
+    private Customer setUpCustomerNatural() {
+        return Customer.builder()
+                .customerID(CUSTOMER_ID)
+                .userName(USERNAME)
+                .password(PASSWORD)
+                .customerType(CustomerType.NATURAL)
+                .accounts(ACCOUNTS)
+                .build();
+    }
+    
+    private Customer setUpCustomerLegal() {
+        Customer customer = setUpCustomerNatural();
+        customer.setCustomerType(CustomerType.LEGAL);
+        return customer;
     }
     
 }

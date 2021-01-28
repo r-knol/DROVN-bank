@@ -1,18 +1,18 @@
 package nl.hva.miw.internetbanking.data.dao;
 
+import org.springframework.boot.test.autoconfigure.data.jdbc.DataJdbcTest;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
-@DataJpaTest
+@DataJdbcTest
 @ActiveProfiles("test-h2")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class AbstractDAOTest {
+public class AbstractDAOIntegrationTest {
     
-    protected final JdbcTemplate jdbcTemplate;
+    protected JdbcTemplate jdbcTemplate;
     
-    AbstractDAOTest(JdbcTemplate jdbcTemplate) {
+    AbstractDAOIntegrationTest(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
     
