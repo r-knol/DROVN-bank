@@ -174,7 +174,7 @@
 
                     <dl>
                         <dt class="col-md-6" style="color:#0066ff;font-size: 125%" th:each="customerName : ${a.getAccountHolderNames()}" th:text="${customerName}" ></dt>
-                        <dd class="col-md-2; float-md-right" style="color: #0066ff; font-size: 125%; font-weight: bold" th:text="${a.showBalance}"></dd>
+                        <dd class="col-md-2; float-md-right" style="color: #0066ff; font-size: 125%; font-weight: bold" th:text="${'€ ' + a.showBalance}"></dd>
                     </dl>
                 </h4>
                 </th:block>
